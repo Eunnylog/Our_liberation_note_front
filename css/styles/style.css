@@ -64,14 +64,16 @@ body>.site-body {
   display: flex;
   height: 70px;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .site-header .logo {
+  display: flex;
+  justify-content: space-between;
   width: 110px;
 }
 
-ul.navbar {
+/* ul.navbar {
   display: flex;
   margin: 0;
   padding: 0;
@@ -103,7 +105,7 @@ ul.navba2 li {
   font-size: 17px;
   letter-spacing: -0.26px;
   color: var(--navbar);
-}
+} */
 
 .site-body {
   width: 100%;
