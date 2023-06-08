@@ -63,14 +63,14 @@ body>.site-body {
 .site-header .content {
   display: flex;
   height: 70px;
-  justify-content: space-between;
+  justify-content: space-between
   /* align-items: center; */
 }
 
 .site-header .logo {
   display: flex;
-  justify-content: space-between;
   width: 110px;
+  justify-content: space-between
 }
 
 /* ul.navbar {
@@ -524,6 +524,6 @@ ul.navba2 li {
 
 /* 추가한 css */
 
-.navbar .nav-item.dropdown li {
+/* .navbar .nav-item.dropdown li {
   margin-left: 0px;
-}
+} */
