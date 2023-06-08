@@ -63,7 +63,7 @@ body>.site-body {
 .site-header .content {
   display: flex;
   height: 70px;
-  justify-content: space-between
+  justify-content: space-between;
   /* align-items: center; */
 }
 
