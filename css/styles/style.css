@@ -68,7 +68,9 @@ body>.site-body {
 }
 
 .site-header .logo {
+  display: flex;
   width: 110px;
+  justify-content: space-between
 }
 
 /* ul.navbar {
@@ -522,6 +524,6 @@ ul.navba2 li {
 
 /* 추가한 css */
 
-.navbar .nav-item.dropdown li {
+/* .navbar .nav-item.dropdown li {
   margin-left: 0px;
-}
+} */

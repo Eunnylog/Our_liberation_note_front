@@ -1,44 +1,55 @@
 <div class="content max-width">
-  <nav class="navbar  bg-white" style="position:fixed">
+  <nav class="navbar  bg-white">
     <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
-        aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item" id="nav-login">
-            <a class="nav-link active" href="/templates/signin.html">login</a>
-          </li>
-          <li class="nav-item" id="nav-signup">
-            <a class="nav-link active" href="/templates/signup.html">signup</a>
-          </li>
-          <li class="nav-item" id="nav-info">
-            <a class="nav-link active" href="/templates/deleteuser.html">info</a>
-          </li>
-          <li class="nav-item" id="nav-developers">
-            <a class="nav-link active" href="/templates/profileadmin.html">developers</a>
-          </li>
-
-          <li class="nav-item" id="nav-mydiary">
-            <a class="nav-link active" href="/templates/profileadmin.html">mydiary</a>
-          </li>
-          <div class="navbar-nav" id="nav-right">
-            <li class="nav-item">
-              <a class="nav-link active" id="intro"></a>
+            <li class="nav-item" id="nav-login">
+                <a class="nav-link active" href="" data-bs-toggle="modal" data-bs-target="#login" id="login-button">login</a>
             </li>
-          </div>
+            <li class="nav-item" id="nav-signup">
+                <a class="nav-link active" href="" data-bs-toggle="modal" data-bs-target="#signup" id="signup-button">signup</a>
+            </li>
+            <li class="nav-item" id="nav-developers">
+                <a class="nav-link active" href="/">developers</a>
+            </li>
+            
+            <li class="nav-item" id="nav-mydiary" >
+                <a class="nav-link active" href="/my_diary.html">mydiary</a>
+            </li>
+            <li class="nav-item" id="nav-info">
+              <a class="nav-link active" href="">make group</a>
+            </li>
+            <div class="navbar-nav" id="nav-right">
+                <li class="nav-item">
+                    <a class="nav-link active" id="intro"></a>
+                </li>
+            </div>
         </ul>
       </div>
     </div>
-  </nav>
-  <a href="/index.html">
-    <img class="logo" src="/css/assets/finalproject_logo.png" alt="Logo">
-  </a>
-  <nav>
+</nav>
+<a href="/index.html">
+  <img class="logo" src="/css/assets/finalproject_logo.png" alt="Logo">
+</a>
+  <!-- <nav>
     <ul class="navbar">
-      <a href="/index.html"><img class="logo" src="/css/assets/logo.png" alt="Logo"></a>
+      <li><a href="/my_diary.html">my diary</a></li>
+      <li><a href="#" onclick="navigateToDetailPage()">멤버십 구독</a></li>
+      <li><a href="#" onclick=handleAi()>AI 사용하러 가기</a></li>
+      <li id="authorized"> -->
+        <!-- 로그인 O -->
+      <!-- <li class="nav-item"><a href="#" onclick="handleLogout()" id="logout"></a></li>
+      <li class="nav-item"><a href="" data-bs-toggle="modal" data-bs-target="#deleteuser" id="userdelete"></a></li> -->
+      <!-- 로그인 X -->
+      <!-- <li class="nav-item"><a href="" data-bs-toggle="modal" data-bs-target="#login" id="login-button">로그인</a> -->
+      <!-- </li>
+      <li>
+        <a href="" data-bs-toggle="modal" data-bs-target="#signup" id="signup-button">회원가입</a>
+      </li>
+      </li>
     </ul>
-  </nav>
-
+  </nav> -->
 </div>
