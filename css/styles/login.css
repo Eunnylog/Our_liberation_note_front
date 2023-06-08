@@ -1,0 +1,430 @@
+.clearfix {
+  clear: both
+}
+
+.global-cont {
+  background-color: #FFF;
+  margin: auto;
+  padding: 20px;
+}
+
+.inner-cont {
+  margin: auto;
+  overflow: hidden;
+  background-color: #FFF;
+  text-align: center;
+}
+
+.inner-cont .sign-in-up form>span,
+.inner-cont .sign-in-up form>a {
+  float: left;
+  width: 50%;
+  font-size: 12px;
+}
+
+.inner-cont .sign-in-up form>span {
+  text-align: left;
+}
+
+.inner-cont .sign-in-up form>a {
+  text-align: right;
+  text-decoration: none;
+  color: #1f9a50;
+}
+
+.inner-cont .sign-in-up form>a:hover {
+  text-decoration: underline;
+}
+
+.inner-cont .sign-in-up form input:not([type="checkbox"]) {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #C2C7D0;
+  border-radius: 5px;
+  box-sizing: border-box
+}
+
+.inner-cont .sign-in-up button {
+  margin-top: 10px;
+  background-color: #1f9a50;
+  color: #FFF;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #C2C7D0;
+  border-radius: 5px;
+  box-sizing: border-box
+}
+
+
+.inner-cont .sign-in-up form.active {
+  display: block;
+}
+
+.inner-cont .divider {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.inner-cont .divider::after {
+  content: "";
+  height: 1px;
+  width: 100%;
+  background-color: #C2C7D0;
+  position: absolute;
+  top: 9px;
+  left: 0;
+}
+
+.inner-cont .divider span {
+  padding: 0 10px;
+  background-color: #FFF;
+  z-index: 2;
+  position: relative;
+}
+
+.inner-cont .social-login button {
+  padding: 10px 0 10px 30px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #C2C7D0;
+  border-radius: 5px;
+  position: relative;
+  color: #FFF;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s
+}
+
+.inner-cont .social-login button.google {
+  padding: 10px 0 10px 30px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #C2C7D0;
+  border-radius: 5px;
+  position: relative;
+  color: #dd4b39;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s
+}
+
+.inner-cont .social-login button.kakao {
+  padding: 10px 0 10px 30px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #C2C7D0;
+  border-radius: 5px;
+  position: relative;
+  color: #423630;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s
+}
+
+.inner-cont .social-login button.kakao {
+  background-color: #FEE500;
+}
+
+.inner-cont .social-login button.kakao::before {
+  content: "";
+  background-image: url('/css/assets/kakao-logo.png');
+  background-size: cover;
+  width: 50px;
+  height: 100%;
+}
+
+.inner-cont .social-login button.google {
+  background-color: #f1eeee;
+}
+
+.inner-cont .social-login button.google::before {
+  content: "";
+  background-image: url('/css/assets/google-logo.png');
+  background-size: cover;
+  width: 40px;
+  height: 100%;
+}
+
+.inner-cont .social-login button.github {
+  background-color: #333;
+}
+
+.inner-cont .social-login button.github::before {
+  content: "";
+  background-image: url('/css/assets/github-logo.png');
+  background-size: cover;
+  width: 40px;
+  height: 100%;
+}
+
+.inner-cont .social-login button.naver {
+  background-color: #36C65C;
+}
+
+.inner-cont .social-login button.naver::before {
+  content: "\f0e1";
+  font-family: fontAwesome;
+}
+
+.inner-cont .social-login button.kakao::before,
+.inner-cont .social-login button.google::before,
+.inner-cont .social-login button.github::before,
+.inner-cont .social-login button.naver::before {
+  font-family: fontAwesome;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 22px;
+  padding: 0 5px;
+  line-height: 40px;
+}
+
+.inner-cont .social-login .why {
+  overflow: hidden;
+  margin: 0 0 10px;
+}
+
+.inner-cont .social-login .why a,
+.inner-cont .social-login .policy a {
+  font-size: 10px;
+  text-decoration: none;
+  color: #1f9a50
+}
+
+.inner-cont .social-login .why a:hover,
+.inner-cont .social-login .policy a:hover {
+  text-decoration: underline;
+}
+
+.inner-cont .social-login .policy {
+  font-size: 10px;
+}
+
+.inner-cont .sign-in-up form input[type="submit"]:hover,
+.inner-cont .social-login button:hover {
+  opacity: .7
+}
+
+
+.global-cont {
+  background-color: #FFF;
+  margin: auto;
+  padding: 20px;
+}
+
+.inner-cont {
+  margin: auto;
+  overflow: hidden;
+  background-color: #FFF;
+  text-align: center;
+}
+
+.inner-cont .sign-in-up form>span,
+.inner-cont .sign-in-up form>a {
+  float: left;
+  width: 50%;
+  font-size: 12px;
+}
+
+.inner-cont .sign-in-up form>span {
+  text-align: left;
+}
+
+.inner-cont .sign-in-up form>a {
+  text-align: right;
+  text-decoration: none;
+  color: #1f9a50;
+}
+
+.inner-cont .sign-in-up form>a:hover {
+  text-decoration: underline;
+}
+
+.inner-cont .sign-in-up form input:not([type="checkbox"]) {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #C2C7D0;
+  border-radius: 5px;
+  box-sizing: border-box
+}
+
+.inner-cont .sign-in-up button {
+  margin-top: 10px;
+  background-color: #1f9a50;
+  color: #FFF;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #C2C7D0;
+  border-radius: 5px;
+  box-sizing: border-box
+}
+
+.inner-cont .sign-in-up form.active {
+  display: block;
+}
+
+.inner-cont .divider {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.inner-cont .divider::after {
+  content: "";
+  height: 1px;
+  width: 100%;
+  background-color: #C2C7D0;
+  position: absolute;
+  top: 9px;
+  left: 0;
+}
+
+.inner-cont .divider span {
+  padding: 0 10px;
+  background-color: #FFF;
+  z-index: 2;
+  position: relative;
+}
+
+.inner-cont .social-login button {
+  padding: 10px 0 10px 30px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #C2C7D0;
+  border-radius: 5px;
+  position: relative;
+  color: #FFF;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s
+}
+
+.inner-cont .social-login button.google {
+  padding: 10px 0 10px 30px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #C2C7D0;
+  border-radius: 5px;
+  position: relative;
+  color: #dd4b39;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s
+}
+
+.inner-cont .social-login button.kakao {
+  padding: 10px 0 10px 30px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #C2C7D0;
+  border-radius: 5px;
+  position: relative;
+  color: #423630;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s
+}
+
+.inner-cont .social-login button.kakao {
+  background-color: #FEE500;
+}
+
+.inner-cont .social-login button.kakao::before {
+  content: "";
+  background-image: url('/css/assets/kakao-logo.png');
+  background-size: cover;
+  width: 50px;
+  height: 100%;
+}
+
+.inner-cont .social-login button.google {
+  background-color: #f1eeee;
+}
+
+.inner-cont .social-login button.google::before {
+  content: "";
+  background-image: url('/css/assets/google-logo.png');
+  background-size: cover;
+  width: 40px;
+  height: 100%;
+}
+
+.inner-cont .social-login button.github {
+  background-color: #333;
+}
+
+.inner-cont .social-login button.github::before {
+  content: "";
+  background-image: url('/css/assets/github-logo.png');
+  background-size: cover;
+  width: 40px;
+  height: 100%;
+}
+
+.inner-cont .social-login button.naver {
+  background-color: #36C65C;
+}
+
+.inner-cont .social-login button.naver::before {
+  content: "";
+  background-image: url('/css/assets/naver-logo.png');
+  background-size: cover;
+  width: 40px;
+  height: 100%;
+}
+
+.inner-cont .social-login button.kakao::before,
+.inner-cont .social-login button.google::before,
+.inner-cont .social-login button.github::before,
+.inner-cont .social-login button.naver::before {
+  font-family: fontAwesome;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 22px;
+  padding: 0 5px;
+  line-height: 40px;
+}
+
+.inner-cont .social-login .why {
+  overflow: hidden;
+  margin: 0 0 10px;
+}
+
+.inner-cont .social-login .why a,
+.inner-cont .social-login .policy a {
+  font-size: 10px;
+  text-decoration: none;
+  color: #1f9a50
+}
+
+.inner-cont .social-login .why a:hover,
+.inner-cont .social-login .policy a:hover {
+  text-decoration: underline;
+}
+
+.inner-cont .social-login .policy {
+  font-size: 10px;
+}
+
+.inner-cont .sign-in-up form input[type="submit"]:hover,
+.inner-cont .social-login button:hover {
+  opacity: .7
+}

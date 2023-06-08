@@ -1,0 +1,23 @@
+<div class="content max-width">
+  <a href="/index.html">
+    <img class="logo" src="/css/assets/logo.png" alt="Logo">
+  </a>
+  <nav>
+    <ul class="navbar">
+      <li><a href="/my_diary.html">my diary</a></li>
+      <li><a href="#" onclick="navigateToDetailPage()">멤버십 구독</a></li>
+      <li><a href="#" onclick=handleAi()>AI 사용하러 가기</a></li>
+      <li id="authorized">
+        <!-- 로그인 O -->
+      <li class="nav-item"><a href="#" onclick="handleLogout()" id="logout"></a></li>
+      <li class="nav-item"><a href="" data-bs-toggle="modal" data-bs-target="#deleteuser" id="userdelete"></a></li>
+      <!-- 로그인 X -->
+      <li class="nav-item"><a href="" data-bs-toggle="modal" data-bs-target="#login" id="login-button">로그인</a>
+      </li>
+      <li>
+        <a href="" data-bs-toggle="modal" data-bs-target="#signup" id="signup-button">회원가입</a>
+      </li>
+      </li>
+    </ul>
+  </nav>
+</div>
