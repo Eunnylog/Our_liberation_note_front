@@ -260,7 +260,7 @@
 
 .inner-cont .sign-in-up button {
   margin-top: 10px;
-  background-color: #1f9a50;
+  background-color: #1f489a;
   color: #FFF;
   font-size: 18px;
   font-weight: bold;
@@ -412,7 +412,7 @@
 .inner-cont .social-login .policy a {
   font-size: 10px;
   text-decoration: none;
-  color: #1f9a50
+  color: #6087cb
 }
 
 .inner-cont .social-login .why a:hover,

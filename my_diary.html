@@ -33,13 +33,13 @@
   <!-- nav end -->
   <!-- content start -->
   <main class="site-body">
-    <div class=" content-list max-content-width" style="background-color: #CDECFA; padding: 10px 30px 30px 30px">
+    <div class=" content-list max-content-width" style="background-color: #e8efff; padding: 10px 30px 30px 30px">
       <div class="header">
         <h2>my diary</h2>
       </div>
       <div class="contents" id="recipe_list">
         <a href="/review_detail.html" data-bs-toggle="modal" data-bs-target="#create_note">
-          <section class="cp-card content" style="background-color: #779ddf;">
+          <section class="cp-card content" style="background-color: #bbcaf3;">
           </section>
         </a>
         <a href="/review_detail.html">
@@ -155,7 +155,7 @@
   <!--노트 추가 모달-->
   <div class="modal fade" id="create_note" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content" style="width:100%">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
             Create Note</h5>
@@ -168,9 +168,36 @@
                 <form class="sign-in-form active">
                   <input name="group_name" id="group_name" type="text" class="form-control" placeholder="그룹명">
                   <div class="note_category" id="note_category">
-                    <img src="/css/note_img/note_1.png">
-                    <button style="width: 49%;"> 이전 </button>
-                    <button style="width: 49%;"> 다음 </button>
+                    <div
+                      style="width: 100px; height: 170px; text-align:center; display:inline-block; margin: auto 20px 20px auto;">
+                      <img src="/css/note_img/note_1.png" style="width: 100px; height: 150px;"><br>
+                      <input type="radio" name="note_category" value="note_1" style="width:10px">
+                    </div>
+                    <div
+                      style="width: 100px; height: 170px; text-align:center; display:inline-block; margin: auto 20px 20px auto;">
+                      <img src="/css/note_img/note_2.png" style="width: 100px; height: 150px;"><br>
+                      <input type="radio" name="note_category" value="note_2" style="width:10px">
+                    </div>
+                    <div
+                      style="width: 100px; height: 170px; text-align:center; display:inline-block; margin: auto 20px 20px auto;">
+                      <img src="/css/note_img/note_3.png" style="width: 100px; height: 150px;"><br>
+                      <input type="radio" name="note_category" value="note_3" style="width:10px">
+                    </div>
+                    <div
+                      style="width: 100px; height: 170px; text-align:center; display:inline-block; margin: auto 20px 20px auto;">
+                      <img src="/css/note_img/note_4.png" style="width: 100px; height: 150px;"><br>
+                      <input type="radio" name="note_category" value="note_4" style="width:10px">
+                    </div>
+                    <div
+                      style="width: 100px; height: 170px; text-align:center; display:inline-block; margin: auto 20px 20px auto;">
+                      <img src="/css/note_img/note_5.png" style="width: 100px; height: 150px;"><br>
+                      <input type="radio" name="note_category" value="note_5" style="width:10px">
+                    </div>
+                    <div
+                      style="width: 100px; height: 170px; text-align:center; display:inline-block; margin: auto 20px 20px auto;">
+                      <img src="/css/note_img/note_6.png" style="width: 100px; height: 150px;"><br>
+                      <input type="radio" name="note_category" value="note_6" style="width:10px">
+                    </div>
                   </div>
                   <button type="button" onclick="NoteCreate()" class="btn btn-primary" style="float: center">
                     Create
