@@ -413,3 +413,16 @@ function handleAi() {
 // Check_user_data();
 
 
+// 그룹 만들기 모달
+// 작성 취소
+function cancel() {
+  window.location.href = `${frontend_base_url}/index.html`;
+}
+// 그룹 생성
+function addGroup() {
+  alert("그룹이 저장되었습니다.")
+}
+// 멤버 추가
+function addMember() {
+  alert("멤버가 추가되었습니다.")
+}
