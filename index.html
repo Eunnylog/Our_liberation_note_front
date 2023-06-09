@@ -60,6 +60,11 @@
                                         placeholder="password">
                                     <input name="password2" id="password2" type="password" class="form-control"
                                         placeholder="password2">
+                                    <div style="display: flex;">
+                                        <input name="confirmcode" id="confirmcode" type="confirmcode" class="form-control"
+                                            placeholder="email 인증코드" style="width: 250px;">
+                                        <button type="button" class="signup" onclick="sendCode()" style="background-color: #60749d; width: 200px; margin-left: 10px;">인증코드 보내기</button> 
+                                    </div>
                                     <div class="sign-up">
                                         <button type="button" class="signup" onclick="handleSignup()">Sign up</button>
                                     </div>
@@ -94,8 +99,8 @@
                         <div class="inner-cont">
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
-                                    <input name="email" id="login-email" type="email" class="form-control"
-                                        placeholder="Email">
+                                    <input name="nickname" id="login-nickname" type="nickname" class="form-control"
+                                        placeholder="nickname">
                                     <input name="password" id="login-password" type="password" class="form-control"
                                         placeholder="Password">
                                     <button type="button" onclick="handleSignin()" class="btn btn-primary"
@@ -161,7 +166,7 @@
                                     <input name="groupname" id="groupname" type="name" class="form-control"
                                         placeholder="그룹이름">
                                     <div style="display: flex;">
-                                        <input name="nickname" id="nickname" type="nickname" class="form-control"
+                                        <input name="addnickname" id="addnickname" type="nickname" class="form-control"
                                             placeholder="추가할 멤버 닉네임" style="width: 300px;">
                                         <button type="button" class="signup" onclick="addMember()" style="width: 100px; margin-left: 10px;">추가</button>
                                     </div>

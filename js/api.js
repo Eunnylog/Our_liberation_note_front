@@ -104,6 +104,10 @@ async function handleSignin() {
     alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
   }
 }
+// 이메일 인증코드 보내기
+function sendCode(){
+  alert("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
+}
 
 // 쿠키에 있는 값을 로컬스토리지에 저장
 function savePayloadToLocalStorage() {
