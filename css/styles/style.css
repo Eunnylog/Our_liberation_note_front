@@ -288,6 +288,18 @@ ul.navba2 li {
   background-position: center;
 }
 
+.main-header .content2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+
 .main-header .content>h1 {
   margin: 220px 10px 200px;
   text-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
@@ -296,6 +308,17 @@ ul.navba2 li {
   text-align: center;
   word-break: keep-all;
   color: var(--main-header);
+  position: relative;
+  z-index: 1;
+}
+
+.main-header .content2>h1 {
+  margin: 220px 10px 200px;
+  text-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+  font-size: 20px;
+  letter-spacing: 15.4px;
+  text-align: center;
+  word-break: keep-all;
   position: relative;
   z-index: 1;
 }

@@ -210,14 +210,26 @@
       var calendarEl = document.getElementById('calendar');
       var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
-          left: 'myCustomButton',
+          left: 'myCustomButton AiButton PhotoButton',
           center: 'title',
         },
         customButtons: {
           myCustomButton: {
-            text: '일정 추가',
+            text: 'Add plan ',
             click: function () {
               $('#save_plan_modal').modal('show');
+            }
+          },
+          AiButton: {
+            text: 'AI랑 놀기',
+            click: function () {
+              window.location.href = '/Ai.html'
+            }
+          },
+          PhotoButton: {
+            text: 'Photo Book',
+            click: function () {
+              window.location.href = '/photo_page.html'
             }
           }
         },
@@ -260,6 +272,7 @@
           var eventInfoDiv = document.getElementById('plan_info');
           eventInfoDiv.innerHTML = `
             <h3>Title: ${info.event.title}</h3>
+            <h5>Date: ${info.event.start}</h5>
             <h5>Location: ${info.event.extendedProps.location}</h5>
             <h5>Time: ${info.event.extendedProps.time}</h5>
             <h5>Memo: ${info.event.extendedProps.memo}</h5>
