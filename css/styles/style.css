@@ -46,7 +46,7 @@ body>.site-body {
 
 .site-header.navbar {
   background-color: var(--site-header-background);
-  border-bottom: solid 1px var(--border);
+  border-bottom: solid 10px #8AEFFD;
   position: sticky;
   top: 0;
   left: 0;
@@ -57,7 +57,7 @@ body>.site-body {
 .site-header .content,
 .site-footer .content {
   margin: 0 auto;
-  padding: 0 10px;
+  /* padding: 0px; */
 }
 
 .site-header .content {
@@ -69,10 +69,18 @@ body>.site-body {
 
 .site-header .logo {
   display: flex;
-  width: 110px;
+  width: 150px;
+  margin-top: 30px;
+  margin-right: 10px;
   justify-content: space-between
 }
+.nav-item{
+  margin-left: 20px;
+}
 
+.navbar-toggler:focus{
+  box-shadow: none !important;
+}
 /* ul.navbar {
   display: flex;
   margin: 0;
@@ -279,14 +287,26 @@ ul.navba2 li {
   justify-content: center;
   align-items: center;
   max-width: 100%;
-  width: 70%;
-  height: 50%;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
   background-image: url('https://philshot0007.files.wordpress.com/2014/03/1308835431_3.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.main-header .content2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
 
 .main-header .content>h1 {
   margin: 220px 10px 200px;
@@ -300,11 +320,22 @@ ul.navba2 li {
   z-index: 1;
 }
 
+.main-header .content2>h1 {
+  margin: 220px 10px 200px;
+  text-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+  font-size: 20px;
+  letter-spacing: 15.4px;
+  text-align: center;
+  word-break: keep-all;
+  position: relative;
+  z-index: 1;
+}
+
 
 /* review-detail */
 
 .review-detail {
-  margin: 80px auto 340px;
+  margin: 80px auto 0px;
 }
 
 .review-detail .review-info {
