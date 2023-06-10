@@ -22,11 +22,11 @@ async function injectNavbar() {
 
         const payload = localStorage.getItem("payload")
         const payload_parse = JSON.parse(payload)
-        console.log(payload_parse.username)
+        console.log(payload_parse.nickname)
 
         const intro = document.getElementById("intro")
 
-        intro.innerText = `${payload_parse.username} 님 안녕하세요!`
+        intro.innerText = `${payload_parse.nickname} 님 안녕하세요!`
 
 
         let navbarRight = document.getElementById("nav-right")

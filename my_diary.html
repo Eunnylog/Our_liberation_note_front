@@ -33,8 +33,11 @@
   <!-- content start -->
   <main class="site-body">
     <div class=" content-list max-content-width" style="background-color: #e8efff; padding: 10px 30px 30px 30px">
-      <div class="header">
-        <h2>my diary</h2>
+      <div style="display: flex; align-items: center; margin-bottom:30px">
+        <h2 style="margin-right: 10px;">my diary</h2>
+        <select name="객실" id="select_group" onchange="showNoteList()">
+          <option value="">그룹 선택</option>
+        </select>
       </div>
       <div class="contents" id="note_list">
         <a href="/" data-bs-toggle="modal" data-bs-target="#create_note">

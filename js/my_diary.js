@@ -1,7 +1,30 @@
 let access_token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2NDUyNDM1LCJpYXQiOjE2ODYzNjYwMzUsImp0aSI6ImVkOWE4NzU1MDcxZTQyZTY5YjVjMjQ4OTg3MTUxMzkwIiwidXNlcl9pZCI6MSwibmlja25hbWUiOiJtaXllb25nIiwiZW1haWwiOiJtaXllb25nQG5hdmVyLmNvbSIsImlzX2FkbWluIjp0cnVlfQ.UJhoL0NgWtrnjRw6oG9qg_WuW_KcZdxcyb5u6Fy74SE'
 let back_url = 'https://api.miyeong.net'
+
+
+async function getGroup() {
+    const response = await fetch(`${back_url}/user/group/`, {
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': `${access_token}`,
+        },
+        method: 'GET',
+    })
+    const response_json = await response.json()
+    response_json.forEach((a) => {
+        let id = a['id']
+        let name = a['name']
+        let temp_html = `<option value="${id}">${name}</option>`
+        $('#select_group').append(temp_html)
+    })
+    console.log(response_json)
+}
+getGroup()
+
+
 async function showNoteList() {
-    const response = await fetch(`${back_url}/note/1`, {
+    const group_id = document.getElementById("select_group").value
+    const response = await fetch(`${back_url}/note/${group_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `${access_token}`,
@@ -9,11 +32,17 @@ async function showNoteList() {
         method: 'GET',
     })
     const response_json = await response.json()
-    // $('#note_list').empty()
+    $('#note_list').empty()
+    let temp_html2 = `
+                        <a href="/" data-bs-toggle="modal" data-bs-target="#create_note">
+                            <section class="cp-card content" style="background-color: #bbcaf3;">
+                            </section>
+                        </a>
+                    `
+    $('#note_list').append(temp_html2);
     response_json.forEach((a) => {
         console.log(a)
         const category = a['category']
-        const group = a['group']
         const name = a['name']
         const note_id = a['id']
 
@@ -24,7 +53,6 @@ async function showNoteList() {
                                 </div>
                                 </section>
                                 <div style="text-align: center;">${name}</div>
-                                <div style="text-align: center;">${group}</div>
                             </a>
                         `
         $('#note_list').append(temp_html);

@@ -137,8 +137,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            Plan Info</h5>
+          <h5 class="modal-title" id="plan_modal_title">
+            Plan Info_</h5>
+          <h6 class="modal-title" id="plan_modal_id"></h6>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="container">
@@ -148,11 +149,10 @@
                 <form class="sign-in-form active">
                   <div id="plan_info" style="padding: 10px;; text-align:left">
                   </div>
-                  <button type="button" onclick="handleSignin()" class="btn btn-primary"
-                    style="float: center; width:49%">
+                  <button type="button" onclick="deletePlan()" class="btn btn-primary" style="float: center; width:49%">
                     삭제
                   </button>
-                  <button type="button" onclick="handleSignin()" class="btn btn-primary"
+                  <button id="patch_box" type="button" onclick="patchBox()" class="btn btn-primary"
                     style="float: center; width:49%">
                     수정
                   </button>
@@ -179,7 +179,8 @@
               <div class="sign-in-up">
                 <form class="sign-in-form active">
                   <input name="title" id="title" type="text" class="form-control" placeholder="장소명">
-                  <input name="location" id="location" type="text" class="form-control" placeholder="주소">
+                  <input name="location" id="location" type="text" class="form-control"
+                    placeholder="주소(미작성시 AI사용이 불가합니다!)">
                   <input name="start" id="start" type="date" class="form-control">
                   <input name="time" id="time" type="text" class="form-control" placeholder="시간">
                   <textarea name="memo" id="memo" type="textarea" class="form-control" placeholder="memo"></textarea>
@@ -187,8 +188,7 @@
                     class="btn btn-primary" style="float: center; width:49%">
                     취소
                   </button>
-                  <button type="button" onclick="handleSignin()" class="btn btn-primary"
-                    style="float: center; width:49%">
+                  <button type="button" onclick="savePlan()" class="btn btn-primary" style="float: center; width:49%">
                     저장
                   </button>
                 </form>
