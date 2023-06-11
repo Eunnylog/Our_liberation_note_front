@@ -51,6 +51,10 @@
                   <input name="email" id="email" type="email" class="form-control" placeholder="email">
                   <input name="password" id="password" type="password" class="form-control" placeholder="password">
                   <input name="password2" id="password2" type="password" class="form-control" placeholder="password2">
+                  <div style="display: flex;">
+                    <input name="confirmcode" id="confirmcode" type="confirmcode" class="form-control" placeholder="email 인증코드" style="width: 250px; height:60px">
+                    <button type="button" class="signup" onclick="sendCode()" style="background-color: #60749d; width: 200px; margin-left: 10px; height:50px">인증코드 보내기</button> 
+                  </div>
                   <div class="sign-up">
                     <button type="button" class="signup" onclick="handleSignup()">Sign up</button>
                   </div>
@@ -229,8 +233,7 @@
                     </ul>
                   </div>
                   <div class="sign-up" style="display: flex;">
-                    <button type="button" class="cancle" onclick="cancle()"
-                      style="margin-right: 10px; background-color: #60749d;">취소</button>
+                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()" style="margin-right: 10px; background-color: #60749d;" >취소</button>
                     <button type="button" class="signup" onclick="addGroup()">저장</button>
                   </div>
                 </form>
