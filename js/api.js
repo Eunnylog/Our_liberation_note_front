@@ -430,3 +430,7 @@ function addGroup() {
 function addMember() {
   alert("멤버가 추가되었습니다.")
 }
+// 닉네임 추가
+function addNickname() {
+  alert("닉네임이 추가되었습니다!")
+}
