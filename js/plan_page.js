@@ -1,5 +1,5 @@
 let plan_data = []
-let access_token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2NDUyNDM1LCJpYXQiOjE2ODYzNjYwMzUsImp0aSI6ImVkOWE4NzU1MDcxZTQyZTY5YjVjMjQ4OTg3MTUxMzkwIiwidXNlcl9pZCI6MSwibmlja25hbWUiOiJtaXllb25nIiwiZW1haWwiOiJtaXllb25nQG5hdmVyLmNvbSIsImlzX2FkbWluIjp0cnVlfQ.UJhoL0NgWtrnjRw6oG9qg_WuW_KcZdxcyb5u6Fy74SE'
+let access_token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2NTQwNDExLCJpYXQiOjE2ODY0NTQwMTEsImp0aSI6IjRjZGM3NmM0ZTAzMDRkNDA5ZmI1NzY5MDA3YTQ1OTliIiwidXNlcl9pZCI6MSwibmlja25hbWUiOiJtaXllb25nIiwiZW1haWwiOiJtaXllb25nQG5hdmVyLmNvbSIsImlzX2FkbWluIjp0cnVlfQ.7fzQOTq2_j8wXthwIa_utwaoAkKIIMiKJ_tGnu_x2es'
 let back_url = 'https://api.miyeong.net'
 
 async function showPlanPage() {
@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
             }
         },
+
         locale: 'ko',
         initialView: 'dayGridMonth',
         editable: true,
@@ -79,7 +80,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                                     `;
             $('#plan_modal').modal('show');
         },
-
         eventDrop: function (info) {
             var event = info.event;
             var plan_id = event.id
@@ -220,3 +220,5 @@ async function patchPlan() {
         alert('문제가 발생했습니다!')
     }
 }
+
+

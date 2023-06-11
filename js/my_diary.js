@@ -1,4 +1,4 @@
-let access_token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2NDUyNDM1LCJpYXQiOjE2ODYzNjYwMzUsImp0aSI6ImVkOWE4NzU1MDcxZTQyZTY5YjVjMjQ4OTg3MTUxMzkwIiwidXNlcl9pZCI6MSwibmlja25hbWUiOiJtaXllb25nIiwiZW1haWwiOiJtaXllb25nQG5hdmVyLmNvbSIsImlzX2FkbWluIjp0cnVlfQ.UJhoL0NgWtrnjRw6oG9qg_WuW_KcZdxcyb5u6Fy74SE'
+let access_token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2NTQwNDExLCJpYXQiOjE2ODY0NTQwMTEsImp0aSI6IjRjZGM3NmM0ZTAzMDRkNDA5ZmI1NzY5MDA3YTQ1OTliIiwidXNlcl9pZCI6MSwibmlja25hbWUiOiJtaXllb25nIiwiZW1haWwiOiJtaXllb25nQG5hdmVyLmNvbSIsImlzX2FkbWluIjp0cnVlfQ.7fzQOTq2_j8wXthwIa_utwaoAkKIIMiKJ_tGnu_x2es'
 let back_url = 'https://api.miyeong.net'
 
 
@@ -35,7 +35,7 @@ async function showNoteList() {
     $('#note_list').empty()
     let temp_html2 = `
                         <a href="/" data-bs-toggle="modal" data-bs-target="#create_note">
-                            <section class="cp-card content" style="background-color: #bbcaf3;">
+                            <section class="cp-card content" style="background-color: #dff2f9;">
                             </section>
                         </a>
                     `
