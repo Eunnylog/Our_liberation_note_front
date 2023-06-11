@@ -32,17 +32,30 @@ async function showAiFeed() {
     }
   });
   $('#checkAll').on('change', function () {
+    const checkboxes = $('#ai_feed_box input[type=checkbox]').not('#checkAll2');
     if ($(this).prop('checked')) {
-      $('input[type=checkbox]').not('#checkAll2').prop('checked', true);
+      if (checkboxes.length > 0) {
+        checkboxes.prop('checked', true);
+      } else {
+        $(this).prop('checked', false); // "전체 선택" 체크 해제
+        alert('선택할 항목이 없습니다.'); // 한글 알림 메시지 표시
+      }
     } else {
-      $('input[type=checkbox]').not('#checkAll2').prop('checked', false);
+      checkboxes.prop('checked', false);
     }
   });
+
   $('#checkAll2').on('change', function () {
+    const checkboxes = $('#ai_work_box input[type=checkbox]').not('#checkAll');
     if ($(this).prop('checked')) {
-      $('input[type=checkbox]').not('#checkAll').prop('checked', true);
+      if (checkboxes.length > 0) {
+        checkboxes.prop('checked', true);
+      } else {
+        $(this).prop('checked', false); // "전체 선택" 체크 해제
+        alert('선택할 항목이 없습니다.'); // 한글 알림 메시지 표시
+      }
     } else {
-      $('input[type=checkbox]').not('#checkAll').prop('checked', false);
+      checkboxes.prop('checked', false);
     }
   });
 }
@@ -50,23 +63,66 @@ async function showAiFeed() {
 showAiFeed()
 
 function saveAiFeed() {
-  $('input[type=checkbox]:checked').not('#checkAll').each(function () {
+  if ($('#ai_feed_box input[type=checkbox]:checked').not('#checkAll').length === 0) {
+    alert('선택한 요소가 없습니다!');
+    return;
+  }
+
+  $('#ai_feed_box input[type=checkbox]:checked').not('#checkAll').each(function () {
     let checkedDiv = $(this).parent().parent().parent();
     $('#ai_work_box').append(checkedDiv);
+
+    // 체크 표시 해제
+    $(this).prop('checked', false);
   });
-  // checkAll 체크박스의 체크 해제
-  $('#checkAll').prop('checked', false);
-  // checkAll2 체크박스의 체크
-  $('#checkAll2').prop('checked', true);
+
+  // 왼쪽 영역의 checkAll2 체크박스의 체크 해제
+  $('#checkAll2').prop('checked', false);
+
+  // 전체 선택 체크 여부 갱신
+  updateCheckAllStatus();
 }
 
 function deleteAiFeed() {
-  $('input[type=checkbox]:checked').not('#checkAll2').each(function () {
+  if ($('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').length === 0) {
+    alert('선택한 요소가 없습니다!');
+    return;
+  }
+
+  $('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').each(function () {
     let checkedDiv = $(this).parent().parent().parent();
     $('#ai_feed_box').append(checkedDiv);
+
+    // 체크 표시 해제
+    $(this).prop('checked', false);
   });
-  // checkAll2 체크박스의 체크 해제
+
+  // 오른쪽 영역의 checkAll2 체크박스의 체크 해제
   $('#checkAll2').prop('checked', false);
-  // checkAll 체크박스의 체크
-  $('#checkAll').prop('checked', true)
+
+  // 전체 선택 체크 여부 갱신
+  updateCheckAllStatus();
+}
+
+
+function updateCheckAllStatus() {
+  const totalLeft = $('#ai_feed_box input[type=checkbox]').not('#checkAll').length;
+  const checkedLeft = $('#ai_feed_box input[type=checkbox]:checked').not('#checkAll').length;
+
+  const totalRight = $('#ai_work_box input[type=checkbox]').not('#checkAll2').length;
+  const checkedRight = $('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').length;
+
+  // 왼쪽 영역의 전체 선택 체크 여부 갱신
+  if (totalLeft === checkedLeft && checkedLeft > 0) {
+    $('#checkAll').prop('checked', true);
+  } else {
+    $('#checkAll').prop('checked', false);
+  }
+
+  // 오른쪽 영역의 전체 선택 체크 여부 갱신
+  if (totalRight === checkedRight && checkedRight > 0) {
+    $('#checkAll2').prop('checked', true);
+  } else {
+    $('#checkAll2').prop('checked', false);
+  }
 }
