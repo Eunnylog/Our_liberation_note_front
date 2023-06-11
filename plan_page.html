@@ -17,7 +17,6 @@
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <script src="/js/loader.js"></script>
   <script src="/js/api.js"></script>
-  <script src="/js/index.js"></script>
   <style>
     .fc-daygrid-day-frame {
       max-height: 50px;
@@ -142,8 +141,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            Plan Info</h5>
+          <h5 class="modal-title" id="plan_modal_title">
+            Plan Info_</h5>
+          <h6 class="modal-title" id="plan_modal_id"></h6>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="container">
@@ -153,11 +153,10 @@
                 <form class="sign-in-form active">
                   <div id="plan_info" style="padding: 10px;; text-align:left">
                   </div>
-                  <button type="button" onclick="handleSignin()" class="btn btn-primary"
-                    style="float: center; width:49%">
+                  <button type="button" onclick="deletePlan()" class="btn btn-primary" style="float: center; width:49%">
                     삭제
                   </button>
-                  <button type="button" onclick="handleSignin()" class="btn btn-primary"
+                  <button id="patch_box" type="button" onclick="patchBox()" class="btn btn-primary"
                     style="float: center; width:49%">
                     수정
                   </button>
@@ -184,7 +183,8 @@
               <div class="sign-in-up">
                 <form class="sign-in-form active">
                   <input name="title" id="title" type="text" class="form-control" placeholder="장소명">
-                  <input name="location" id="location" type="text" class="form-control" placeholder="주소">
+                  <input name="location" id="location" type="text" class="form-control"
+                    placeholder="주소(미작성시 AI사용이 불가합니다!)">
                   <input name="start" id="start" type="date" class="form-control">
                   <input name="time" id="time" type="text" class="form-control" placeholder="시간">
                   <textarea name="memo" id="memo" type="textarea" class="form-control" placeholder="memo"></textarea>
@@ -192,8 +192,7 @@
                     class="btn btn-primary" style="float: center; width:49%">
                     취소
                   </button>
-                  <button type="button" onclick="handleSignin()" class="btn btn-primary"
-                    style="float: center; width:49%">
+                  <button type="button" onclick="savePlan()" class="btn btn-primary" style="float: center; width:49%">
                     저장
                   </button>
                 </form>
@@ -204,130 +203,49 @@
       </div>
     </div>
   </div>
-  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales/ko.js'></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var calendarEl = document.getElementById('calendar');
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: {
-          left: 'myCustomButton AiButton PhotoButton',
-          center: 'title',
-        },
-        customButtons: {
-          myCustomButton: {
-            text: 'Add plan ',
-            click: function () {
-              $('#save_plan_modal').modal('show');
-            }
-          },
-          AiButton: {
-            text: 'AI랑 놀기',
-            click: function () {
-              window.location.href = '/Ai.html'
-            }
-          },
-          PhotoButton: {
-            text: 'Photo Book',
-            click: function () {
-              window.location.href = '/photo_page.html'
-            }
-          }
-        },
-        locale: 'ko',
-        initialView: 'dayGridMonth',
-        editable: true,
-        dayMaxEvents: 2, // Use dayMaxEvents instead of eventLimit
-        events: [
-          {
-            title: '장소명1',
-            start: '2023-06-10',
-            location: '주소지(ai 사용 위해)',
-            time: '14:00 - 16:00',
-            memo: '이것은 메모이다!',
-          },
-          {
-            title: '장소명2',
-            start: '2023-06-10',
-            location: '주소지(ai 사용 위해)',
-            time: '14:00 - 16:00',
-            memo: '이것은 메모이다!',
-          },
-          {
-            title: '장소명3',
-            start: '2023-06-10',
-            location: '주소지(ai 사용 위해)',
-            time: '14:00 - 16:00',
-            memo: '이것은 메모이다!',
-          },
-          {
-            title: '장소명4',
-            start: '2023-06-10',
-            location: '주소지(ai 사용 위해)',
-            time: '14:00 - 16:00',
-            memo: '이것은 메모이다!',
-          },
-        ],
-        eventClick: function (info) {
-          info.jsEvent.preventDefault();
-          var eventInfoDiv = document.getElementById('plan_info');
-          eventInfoDiv.innerHTML = `
-            <h3>Title: ${info.event.title}</h3>
-            <h5>Date: ${info.event.start}</h5>
-            <h5>Location: ${info.event.extendedProps.location}</h5>
-            <h5>Time: ${info.event.extendedProps.time}</h5>
-            <h5>Memo: ${info.event.extendedProps.memo}</h5>
-          `;
-          $('#plan_modal').modal('show');
-        },
-      });
-      calendar.render();
-    });
-  </script>
   <!-- 그룹만들기 모달창 -->
   <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="su">
-                    Make Group</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="container">
-                <div class="global-cont">
-                    <div class="inner-cont">
-                        <div class="sign-in-up">
-                            <form class="sign-in-form active">
-                                <input name="groupname" id="groupname" type="name" class="form-control"
-                                    placeholder="그룹이름">
-                                <div style="display: flex;">
-                                    <input name="addnickname" id="addnickname" type="nickname" class="form-control"
-                                        placeholder="추가할 멤버 닉네임" style="width: 300px;">
-                                    <button type="button" class="signup" onclick="addMember()" style="width: 100px; margin-left: 10px;">추가</button>
-                                </div>
-                                <div style="display:flex;">
-                                    <p style="justify-content: left;"> 닉네임 </p>
-                                    <ul>
-                                        <li>닉네임1</li><br>
-                                        <li>닉네임2</li><br>
-                                        <li>닉네임3</li><br>
-                                    </ul>
-                                </div>
-                                <div class="sign-up" style="display: flex;">
-                                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()" style="margin-right: 10px; background-color: #60749d;" >취소</button>
-                                    <button type="button" class="signup" onclick="addGroup()">저장</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="su">
+            Make Group</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="container">
+          <div class="global-cont">
+            <div class="inner-cont">
+              <div class="sign-in-up">
+                <form class="sign-in-form active">
+                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="그룹이름">
+                  <div style="display: flex;">
+                    <input name="addnickname" id="addnickname" type="nickname" class="form-control"
+                      placeholder="추가할 멤버 닉네임" style="width: 300px;">
+                    <button type="button" class="signup" onclick="addMember()"
+                      style="width: 100px; margin-left: 10px;">추가</button>
+                  </div>
+                  <div style="display:flex;">
+                    <p style="justify-content: left;"> 닉네임 </p>
+                    <ul>
+                      <li>닉네임1</li><br>
+                      <li>닉네임2</li><br>
+                      <li>닉네임3</li><br>
+                    </ul>
+                  </div>
+                  <div class="sign-up" style="display: flex;">
+                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()" style="margin-right: 10px; background-color: #60749d;" >취소</button>
+                    <button type="button" class="signup" onclick="addGroup()">저장</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+  <script src="/js/plan_page.js"></script>
 </body>
 
 </html>
