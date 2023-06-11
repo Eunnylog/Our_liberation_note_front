@@ -1,5 +1,5 @@
 async function searchLocation() {
-    const REST_API_KEY = '';
+    const REST_API_KEY = api_key.KAKAO;
     const query = document.getElementById('title').value;
 
     const url = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(query)}`;
