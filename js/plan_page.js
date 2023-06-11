@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
             }
         },
+
         locale: 'ko',
         initialView: 'dayGridMonth',
         editable: true,
@@ -79,7 +80,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                                     `;
             $('#plan_modal').modal('show');
         },
-
         eventDrop: function (info) {
             var event = info.event;
             var plan_id = event.id
@@ -220,3 +220,5 @@ async function patchPlan() {
         alert('문제가 발생했습니다!')
     }
 }
+
+
