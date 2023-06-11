@@ -575,3 +575,35 @@ input[type="checkbox"]:checked+label {
   grid-gap: 10px;
   width: 100%;
 }
+
+/* info modal */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-image: none;
+}
+
+.carousel-control-prev::before,
+.carousel-control-next::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: #60749d;
+}
+
+.carousel-control-prev::before {
+  border-right: 3px solid;
+  border-bottom: 3px solid;
+  transform: rotate(135deg);
+}
+
+.carousel-control-next::before {
+  border-right: 3px solid;
+  border-top: 3px solid;
+  transform: rotate(-45deg);
+}
+
+.carousel-inner {
+  padding: 0 15%;
+  /* Adjust this value to your liking */
+}
