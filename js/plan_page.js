@@ -29,6 +29,8 @@ async function showPlanPage() {
 
 document.addEventListener('DOMContentLoaded', async function () {
     await showPlanPage();
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
@@ -45,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             AiButton: {
                 text: 'AI랑 놀기',
                 click: function () {
-                    window.location.href = '/Ai.html'
+                    window.location.href = `/ai.html?note_id=${note_id}`
                 }
             },
             PhotoButton: {
