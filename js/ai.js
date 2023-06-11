@@ -11,7 +11,7 @@ async function showAiFeed() {
   })
   const response_json = await response.json()
 
-  $('#ai_feed_box').empty()
+  // $('#ai_feed_box').empty()
 
   response_json.forEach((a) => {
     if (a['location'] && a['location'] != '주소가 없으면 ai 사용이 어렵습니다!') {
@@ -30,21 +30,43 @@ async function showAiFeed() {
                       `
       $('#ai_feed_box').append(temp_html)
     }
-  })
+  });
+  $('#checkAll').on('change', function () {
+    if ($(this).prop('checked')) {
+      $('input[type=checkbox]').not('#checkAll2').prop('checked', true);
+    } else {
+      $('input[type=checkbox]').not('#checkAll2').prop('checked', false);
+    }
+  });
+  $('#checkAll2').on('change', function () {
+    if ($(this).prop('checked')) {
+      $('input[type=checkbox]').not('#checkAll').prop('checked', true);
+    } else {
+      $('input[type=checkbox]').not('#checkAll').prop('checked', false);
+    }
+  });
 }
 
 showAiFeed()
 
 function saveAiFeed() {
-  $('input[type=checkbox]:checked').each(function () {
+  $('input[type=checkbox]:checked').not('#checkAll').each(function () {
     let checkedDiv = $(this).parent().parent().parent();
     $('#ai_work_box').append(checkedDiv);
   });
+  // checkAll 체크박스의 체크 해제
+  $('#checkAll').prop('checked', false);
+  // checkAll2 체크박스의 체크
+  $('#checkAll2').prop('checked', true);
 }
 
 function deleteAiFeed() {
-  $('input[type=checkbox]:checked').each(function () {
+  $('input[type=checkbox]:checked').not('#checkAll2').each(function () {
     let checkedDiv = $(this).parent().parent().parent();
     $('#ai_feed_box').append(checkedDiv);
   });
+  // checkAll2 체크박스의 체크 해제
+  $('#checkAll2').prop('checked', false);
+  // checkAll 체크박스의 체크
+  $('#checkAll').prop('checked', true)
 }

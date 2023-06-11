@@ -35,15 +35,18 @@
                 style="width:49%; height:500px; float:left; border: solid 3px #b0e7ff; padding:20px; position: relative;">
                 <div id="ai_feed_box" style="width: 100%;"></div>
                 <div style="display: flex; justify-content: center; position: absolute; bottom: 30px; width: 100%;">
-                    <button class="btn btn-secondary" onclick="saveAiFeed()"
-                        style="margin-bottom: 30px; background-color: #4e79ce;">AI 밥
-                        주기</button>
+                    <input type="checkbox" id="checkAll" style="width: auto;">전체 선택
+                    <label for="checkAll"></label>
+                    <button type="button" class="btn btn-secondary" onclick="saveAiFeed()"
+                        style="margin-bottom: 30px; background-color: #4e79ce;">AI 밥 주기</button>
                 </div>
             </div>
             <div class="content2"
                 style="width:49%; height:500px; float:right; border: solid 3px #b0e7ff; padding:20px; position: relative;">
                 <div id="ai_work_box" style="width: 100%;"></div>
                 <div style="display: flex; justify-content: center; position: absolute; bottom: 30px; width: 100%;">
+                    <input type="checkbox" id="checkAll2">전체 선택
+                    <label for="checkAll2"></label>
                     <button class="btn btn-secondary" onclick="deleteAiFeed()"
                         style="margin-bottom: 30px; background-color: #4e79ce; margin-right:20px">버리기</button>
                     <button class="btn btn-secondary" style="margin-bottom: 30px; background-color: #4e79ce;">AI 일
