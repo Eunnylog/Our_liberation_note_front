@@ -65,12 +65,30 @@ async function showAiFeed() {
 showAiFeed()
 
 function saveAiFeed() {
-  if ($('#ai_feed_box input[type=checkbox]:checked').not('#checkAll').length === 0) {
+  const selItems = $('#ai_feed_box input[type=checkbox]:checked').not('#checkAll');
+  const existItems = $('#ai_work_box').children().length;
+  const availSpace = 10 - existItems;
+
+  if (selItems.length === 0) {
     alert('선택한 요소가 없습니다!');
     return;
   }
 
-  $('#ai_feed_box input[type=checkbox]:checked').not('#checkAll').each(function () {
+  if (availSpace <= 0) {
+    alert('이미 10개의 아이템이 있습니다. 더 이상 추가할 수 없습니다!');
+    return;
+  }
+
+  selItems.each(function (idx) {
+    // If adding this item will exceed 10 items, stop adding.
+    if (idx >= availSpace) {
+      alert('최대 10개의 항목만 추가 가능합니다!');
+      // Remaining items and 'Select All' checkbox should be unchecked
+      selItems.slice(idx).prop('checked', false);
+      $('#checkAll').prop('checked', false);
+      return false; // Stop .each loop
+    }
+
     let checkedDiv = $(this).parent().parent().parent();
     $('#ai_work_box').append(checkedDiv);
 
@@ -84,6 +102,7 @@ function saveAiFeed() {
   // 전체 선택 체크 여부 갱신
   updateCheckAllStatus();
 }
+
 
 function deleteAiFeed() {
   if ($('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').length === 0) {
