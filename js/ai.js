@@ -1,91 +1,128 @@
-// More API functions here:
-// https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
-
-// the link to your model provided by Teachable Machine export panel
-const URL = './my_model/';
-
-let model, webcam, labelContainer, maxPredictions;
-
-// Load the image model and setup the webcam
-async function init() {
-  const modelURL = URL + 'model.json';
-  const metadataURL = URL + 'metadata.json';
-  // load the model and metadata
-  // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-  // or files from your local hard drive
-  // Note: the pose library adds "tmImage" object to your window (window.tmImage)
-  model = await tmImage.load(modelURL, metadataURL);
-  maxPredictions = model.getTotalClasses();
-  labelContainer = document.getElementById('label-container');
-  for (let i = 0; i < maxPredictions; i++) {
-    // and class labels
-    labelContainer.appendChild(document.createElement('div'));
-  }
-}
-// run the webcam image through the image model
-async function predict() {
-  // predict can take in an image, video or canvas html element
-  var image = document.getElementById('face-image');
-  const prediction = await model.predict(image, false);
-  let pensByColors = prediction.sort((a, b) => (b.probability - a.probability));
-  result_data = pensByColors[0]['className']
-  result = `당신이 선택한 재료는 ${result_data}입니다!`
-  $('#result_data').append(result)
-  $('#extra_data').empty()
-  btn = `
-          <input id="extra" name="extra" type="text" class="form-control" placeholder="재료 추가하기~"
-          style="width: 80%; height:50px; float:left;">
-          <button id="save_btn" class="cp-button secondary" onclick="extraSearch('${result_data}')"
-            style="float:right; margin-top: 10px; margin-bottom: 30px background-color:#ffbb00;">
-            추가
-          </button>
-        `
-  $('#extra_data').append(btn)
-  search(result_data)
-}
-init()
-
-async function search(result_data) {
-  search_data = result_data
-  const response = await fetch(`${backend_base_url}/search/`, {
+let back_url = 'https://api.miyeong.net'
+async function showAiFeed() {
+  params = new URLSearchParams(window.location.search);
+  note_id = params.get("note_id");
+  const response = await fetch(`${back_url}/note/plan/${note_id}`, {
     headers: {
       'content-type': 'application/json',
+      // "Authorization": `${access_token}`,
     },
-    method: 'POST',
-    body: JSON.stringify({
-      "search": search_data
-    })
-  });
-  const response_json = await response.json()
-  $('#recommend_recipe').empty()
-  response_json.forEach((a) => {
-    const name = a['name']
-    const ingredients = a['ingredients']
-    const recipe_id = a['id']
-    result = `
-              <div class="media" style="padding: 20px; margin-top: 30px">
-                  <div>
-                      <div style="float: left">
-                          <a href="/recipe_detail.html?recipe_id=${recipe_id}" class="back-link">${name}</a>
-                      </div>
-                      <br><br>
-                      <div style="float: right;">
-                          <h5 style="font-size: 13px">재료 : ${ingredients}</h5>
-                      </div>
-                  </div>
-              </div><br>
-              <hr>
-            `
-    $('#recommend_recipe').append(result)
+    method: 'GET',
   })
+  const response_json = await response.json()
+
+  // $('#ai_feed_box').empty()
+
+  response_json.forEach((a) => {
+    if (a['location'] && a['location'] != '주소가 없으면 ai 사용이 어렵습니다!') {
+      console.log(a)
+      let temp_html = `
+                        <div id='${a['id']}'>
+                          <div style="display: flex; justify-content: space-between;">
+                            <h5 style="font-size:15px">목적지 : ${a['title']}</h5>
+                            <div>
+                              <input type="checkbox" id="check${a['id']}"><label for="check${a['id']}"></label>
+                            </div>
+                          </div>
+                          <h5 style="font-size:15px">주소 : ${a['location']}</h5>
+                          <hr>
+                        </div>
+                      `
+      $('#ai_feed_box').append(temp_html)
+    }
+  });
+  $('#checkAll').on('change', function () {
+    const checkboxes = $('#ai_feed_box input[type=checkbox]').not('#checkAll2');
+    if ($(this).prop('checked')) {
+      if (checkboxes.length > 0) {
+        checkboxes.prop('checked', true);
+      } else {
+        $(this).prop('checked', false); // "전체 선택" 체크 해제
+        alert('선택할 항목이 없습니다.'); // 한글 알림 메시지 표시
+      }
+    } else {
+      checkboxes.prop('checked', false);
+    }
+  });
+
+  $('#checkAll2').on('change', function () {
+    const checkboxes = $('#ai_work_box input[type=checkbox]').not('#checkAll');
+    if ($(this).prop('checked')) {
+      if (checkboxes.length > 0) {
+        checkboxes.prop('checked', true);
+      } else {
+        $(this).prop('checked', false); // "전체 선택" 체크 해제
+        alert('선택할 항목이 없습니다.'); // 한글 알림 메시지 표시
+      }
+    } else {
+      checkboxes.prop('checked', false);
+    }
+  });
 }
 
-function extraSearch(result_data) {
-  const result = result_data
-  const extra = document.getElementById("extra").value
-  const new_data = `${result},${extra}`
-  search(new_data)
+showAiFeed()
+
+function saveAiFeed() {
+  if ($('#ai_feed_box input[type=checkbox]:checked').not('#checkAll').length === 0) {
+    alert('선택한 요소가 없습니다!');
+    return;
+  }
+
+  $('#ai_feed_box input[type=checkbox]:checked').not('#checkAll').each(function () {
+    let checkedDiv = $(this).parent().parent().parent();
+    $('#ai_work_box').append(checkedDiv);
+
+    // 체크 표시 해제
+    $(this).prop('checked', false);
+  });
+
+  // 왼쪽 영역의 checkAll2 체크박스의 체크 해제
+  $('#checkAll2').prop('checked', false);
+
+  // 전체 선택 체크 여부 갱신
+  updateCheckAllStatus();
 }
 
-checkLogin()
-checkSubscribe()
+function deleteAiFeed() {
+  if ($('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').length === 0) {
+    alert('선택한 요소가 없습니다!');
+    return;
+  }
+
+  $('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').each(function () {
+    let checkedDiv = $(this).parent().parent().parent();
+    $('#ai_feed_box').append(checkedDiv);
+
+    // 체크 표시 해제
+    $(this).prop('checked', false);
+  });
+
+  // 오른쪽 영역의 checkAll2 체크박스의 체크 해제
+  $('#checkAll2').prop('checked', false);
+
+  // 전체 선택 체크 여부 갱신
+  updateCheckAllStatus();
+}
+
+
+function updateCheckAllStatus() {
+  const totalLeft = $('#ai_feed_box input[type=checkbox]').not('#checkAll').length;
+  const checkedLeft = $('#ai_feed_box input[type=checkbox]:checked').not('#checkAll').length;
+
+  const totalRight = $('#ai_work_box input[type=checkbox]').not('#checkAll2').length;
+  const checkedRight = $('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').length;
+
+  // 왼쪽 영역의 전체 선택 체크 여부 갱신
+  if (totalLeft === checkedLeft && checkedLeft > 0) {
+    $('#checkAll').prop('checked', true);
+  } else {
+    $('#checkAll').prop('checked', false);
+  }
+
+  // 오른쪽 영역의 전체 선택 체크 여부 갱신
+  if (totalRight === checkedRight && checkedRight > 0) {
+    $('#checkAll2').prop('checked', true);
+  } else {
+    $('#checkAll2').prop('checked', false);
+  }
+}
