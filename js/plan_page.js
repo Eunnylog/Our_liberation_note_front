@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": `${access_token}`,
+                    "Authorization": `Bearer ${access_token}`,
                 },
                 body: JSON.stringify({
                     // start만 옮기기 때문!
@@ -136,7 +136,7 @@ async function savePlan() {
     const response = await fetch(`${back_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'POST',
         body: JSON.stringify({
@@ -161,7 +161,7 @@ async function deletePlan() {
     const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'DELETE',
     });
@@ -226,7 +226,7 @@ async function patchPlan() {
     const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'PATCH',
         body: JSON.stringify({

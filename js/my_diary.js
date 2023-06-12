@@ -75,7 +75,7 @@ async function saveNote() {
 
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `${access_token}`
+                "Authorization": `Bearer ${access_token}`
             },
             method: "POST",
             body: JSON.stringify({
