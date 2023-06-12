@@ -221,6 +221,7 @@ async function patchPlan() {
     let time = document.getElementById('time');
     let memo = document.getElementById('memo');
     let start = document.getElementById('start');
+    let category = document.getElementById('category');
 
     const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
         headers: {
@@ -234,6 +235,7 @@ async function patchPlan() {
             "start": start.value ?? start.placeholder,
             "memo": memo.value ?? memo.placeholder,
             "time": time.value ?? time.placeholder,
+            "category": category.value ?? category.placeholder,
         })
     });
     if (response.status == 200) {
