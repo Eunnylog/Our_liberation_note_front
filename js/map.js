@@ -15,19 +15,20 @@ async function searchLocation() {
             searchBox.style.padding = '20px';
             searchBox.style.margin = '20px auto 20px auto';
             // 검색 결과 처리
-            $(`#search_box`).empty();
+      
+            $('#search_box').empty();
+      
             places.forEach((place, index) => {
-                //address_name
-                //place_name
-                //place_url
                 const address_name = place.address_name
                 const place_name = place.place_name
                 const place_url = place.place_url
+                const place_category = place.category_group_name
+                console.log(place)
 
                 let temp_html = `
                                 <div style="display: flex; align-items: center; justify-content: space-between; margin: 20px auto;">
                                     <div>
-                                        <h3 style="font-size: 15px; margin-bottom: 5px;" id='name_${index}' >${place_name}</h3>
+                                        <h3 style="font-size: 15px; margin-bottom: 5px;" id='name_${index}' >${place_name} - ${place_category}</h3>
                                         <a href="${place_url}" id='address_${index}' target="_blank" style="font-size: 15px; color: black;">${address_name}</a>
                                     </div>
                                     <div style="display: flex; align-items: center;">
@@ -51,11 +52,14 @@ async function searchLocation() {
 function handleRadio() {
     var selectedRadio = document.querySelector('input[name="address_radio"]:checked');
     if (selectedRadio) {
-        var selectedIndex = selectedRadio.value;
-        var selected_address = document.getElementById(`address_${selectedIndex}`).innerText;
-        var selected_name = document.getElementById(`name_${selectedIndex}`).innerText;
+        let selectedIndex = selectedRadio.value;
+        let selected_address = document.getElementById(`address_${selectedIndex}`).innerText;
+        let selected_name = document.getElementById(`name_${selectedIndex}`).innerText;
+        let name = selected_name.split('-')[0].trim();
+        let category = selected_name.split('-')[1].trim();
         // 선택한 요소에 대한 처리
         document.getElementById("location").value = selected_address;
-        document.getElementById("title").value = selected_name;
+        document.getElementById("title").value = name;
+        document.getElementById("category").value = category;
     }
 }
