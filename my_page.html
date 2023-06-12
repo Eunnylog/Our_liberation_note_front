@@ -6,18 +6,10 @@
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" type="image/png" href="/css/coplate/favicon/favicon.ico">
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-    crossorigin="anonymous"></script> -->
   <link href="/css/styles/recipe_card.css" rel="stylesheet" type="text/css" />
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
   <link href="/css/styles/theme.css" rel="stylesheet" type="text/css" />
   <link href="/css/styles/login.css" rel="stylesheet" type="text/css" />
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-    crossorigin="anonymous"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -26,6 +18,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
 </head>
 
 <body>
@@ -34,9 +27,9 @@
   </header>
   <main class="site-body">
     <article class="review-detail max-content-width">
-      <div class="content">
+      <div class="content" style="display: grid; grid-template-columns: 200px 50px 200px 200px; grid-template-rows: 100px 200px 100px 100px 200px 200px; ">
         <div id="user_info"
-          style="border-radius: 10px; float:left; margin-top:10px; margin-left: 10px; width: 300px; height: 100px; background-color: #D7F2FF; text-align: center; flex-direction: column;">
+          style="border-radius: 10px; float:left; margin-top:10px; margin-left: 10px; grid-column: 1; background-color: #D7F2FF; text-align: center; flex-direction: column;">
           <p style="text-align: center; font-size:20px; margin-top: 10px;">유저 닉네임</p>
           <button onclick=""
             style="text-align: center; font-size:20px;justify-items: center; margin:auto; border: transparent; background-color: transparent; ">회원
@@ -46,15 +39,15 @@
             로그아웃</button>
         </div>
         <div
-          style="float:right; background-color: #D7F2FF; width: 600px; height: 800px; margin-right: 40px; border-radius: 10px;"
+          style="float:right; background-color: #D7F2FF; grid-column: 3/6; grid-row: 1/6; margin-right: 40px; border-radius: 10px;"
           id="map_box">
           <div style="margin: 10px; font-size: 30px; float: left;">Map</div>
           <div
-            style="float: right; background-color: aliceblue; width: 80%; height: 95%; margin: 10px; border-radius: 10px;">
+            style="float: right; background-color: aliceblue; width: 600px; height: 650px; margin: 10px; border-radius: 10px;">
             지도 들어갈 자리 </div>
         </div>
         <div id="user_info"
-          style=" border-radius: 10px; float:left; margin-top:10px; margin-left: 10px; width: 300px; height: 200px; background-color: #D7F2FF;">
+          style=" border-radius: 10px; float:left; margin-top:10px; margin-left: 10px; grid-row: 2; background-color: #D7F2FF;">
           <p style="text-align: center; font-size:20px; margin-top: 10px;">내 그룹</p>
           <ul>
             <li> 그룹1</li>
@@ -65,7 +58,7 @@
           </ul>
         </div>
         <div id="user_info"
-          style=" border-radius: 10px; float:left; margin-top:10px; margin-left: 10px; width: 300px; height: 100px; background-color: #D7F2FF; text-align: center;">
+          style=" border-radius: 10px; float:left; margin-top:10px; margin-left: 10px; grid-row: 3; background-color: #D7F2FF; text-align: center;">
           <a href="" data-bs-toggle="modal" data-bs-target="#makegroup" id="makegroup-button"
             style="text-align: center; font-size:20px;"> 그룹 만들기 </a>
         </div>
@@ -83,10 +76,10 @@
           style="display:inline-block; width: 40%; margin-left:30px; height:50px; margin-bottom:0px">
         </div> -->
       </div>
-      <div class="test" style="margin-top: 30px; width:100%">
+      <!-- <div class="test" style="margin-top: 30px; width:100%">
         <div id="recipe_info" style="height:10px; width: 400px; text-align:center; padding:10px; ">
         </div>
-      </div>
+      </div> -->
     </article>
   </main>
   <!-- 회원가입 모달창 -->
@@ -106,6 +99,11 @@
                   <input name="email" id="email" type="email" class="form-control" placeholder="Email">
                   <input name="password" id="password" type="password" class="form-control" placeholder="Password">
                   <input name="password2" id="password2" type="password" class="form-control" placeholder="Password2">
+                  <div style="display: flex;">
+                    <input name="confirmcode" id="confirmcode" type="confirmcode" class="form-control"
+                        placeholder="email 인증코드" style="width: 250px;">
+                    <button type="button" class="signup" onclick="sendCode()" style="background-color: #60749d; width: 200px; margin-left: 10px;">인증코드 보내기</button> 
+                  </div>
                   <div>
                     <button type="button" onclick="handleSignup()" class="btn btn-primary" style="float: center">
                       Signup
@@ -146,7 +144,7 @@
                   <input name="password" id="login-password" type="password" class="form-control"
                     placeholder="Password">
                   <button type="button" onclick="handleSignin()" class="btn btn-primary" style="float: center">
-                    Signin
+                    Sign in
                   </button>
               </div>
               </form>
@@ -253,7 +251,7 @@
                                     </ul>
                                 </div>
                                 <div class="sign-up" style="display: flex;">
-                                    <button type="button" class="cancle" onclick="cancle()" style="margin-right: 10px; background-color: #60749d;" >취소</button>
+                                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()" style="margin-right: 10px; background-color: #60749d;" >취소</button>
                                     <button type="button" class="signup" onclick="addGroup()">저장</button>
                                 </div>
                             </form>

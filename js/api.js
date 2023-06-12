@@ -68,16 +68,16 @@ async function handleSignup() {
 
 // 로그인
 async function handleSignin() {
-  const email = document.getElementById("login-email").value
+  const nickname = document.getElementById("login-nickname").value
   const password = document.getElementById("login-password").value
 
-  const response = await fetch(`${backend_base_url}/users/logins/`, {
+  const response = await fetch(`https://api.miyeong.net/user/login/`, {
     headers: {
       'content-type': 'application/json',
     },
     method: 'POST',
     body: JSON.stringify({
-      "email": email,
+      "nickname": nickname,
       "password": password,
     })
   })
@@ -105,7 +105,7 @@ async function handleSignin() {
   }
 }
 // 이메일 인증코드 보내기
-function sendCode(){
+function sendCode() {
   alert("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
 }
 
@@ -429,4 +429,8 @@ function addGroup() {
 // 멤버 추가
 function addMember() {
   alert("멤버가 추가되었습니다.")
+}
+// 닉네임 추가
+function addNickname() {
+  alert("닉네임이 추가되었습니다!")
 }

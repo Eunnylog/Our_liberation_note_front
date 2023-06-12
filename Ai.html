@@ -16,7 +16,7 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="/js/loader.js"></script>
     <script src="/js/api.js"></script>
-    <script src="/js/index.js"></script>
+    <script src="/js/ai.js"></script>
 </head>
 
 <body>
@@ -27,16 +27,31 @@
     <!-- nav end -->
     <!-- content start -->
     <main class="site-body">
-        <div class="main-header" style="margin-top: 30px;">
-            <div class="content2" style="width:49%; float:left; border-right: solid 3px #1f489a;">
-                <h1>목적지 목록</h1>
-                <button class="btn btn-secondary" style="margin-bottom: 30px; background-color: #1f489a;">AI 밥
-                    주기</button>
+        <div class="main-header" style="margin-top: 30px; ">
+            <div class="content2" style="border: solid 3px #b0e7ff; margin-bottom:30px; height:100px;">
+                <h3>AI 설명 칸 입니다</h3>
             </div>
-            <div class="content2" style="width:49%; float:right;">
-                <h1>AI 사용 공간</h1>
-                <a href="/my_diary.html" class="btn btn-secondary"
-                    style="margin-bottom: 30px; background-color: #1f489a;">AI 일 하기</a>
+            <div class="content2"
+                style="width:49%; height:500px; float:left; border: solid 3px #b0e7ff; padding:20px; position: relative;">
+                <div id="ai_feed_box" style="width: 100%;"></div>
+                <div style="display: flex; justify-content: center; position: absolute; bottom: 30px; width: 100%;">
+                    <input type="checkbox" id="checkAll" style="width: auto;">전체 선택
+                    <label for="checkAll"></label>
+                    <button type="button" class="btn btn-secondary" onclick="saveAiFeed()"
+                        style="margin-bottom: 30px; background-color: #4e79ce;">AI 밥 주기</button>
+                </div>
+            </div>
+            <div class="content2"
+                style="width:49%; height:500px; float:right; border: solid 3px #b0e7ff; padding:20px; position: relative;">
+                <div id="ai_work_box" style="width: 100%;"></div>
+                <div style="display: flex; justify-content: center; position: absolute; bottom: 30px; width: 100%;">
+                    <input type="checkbox" id="checkAll2">전체 선택
+                    <label for="checkAll2"></label>
+                    <button class="btn btn-secondary" onclick="deleteAiFeed()"
+                        style="margin-bottom: 30px; background-color: #4e79ce; margin-right:20px">버리기</button>
+                    <button class="btn btn-secondary" style="margin-bottom: 30px; background-color: #4e79ce;">AI 일
+                        하기</button>
+                </div>
             </div>
         </div>
     </main>
@@ -61,6 +76,11 @@
                                         placeholder="password">
                                     <input name="password2" id="password2" type="password" class="form-control"
                                         placeholder="password2">
+                                    <div style="display: flex;">
+                                        <input name="confirmcode" id="confirmcode" type="confirmcode" class="form-control"
+                                            placeholder="email 인증코드" style="width: 250px;">
+                                        <button type="button" class="signup" onclick="sendCode()" style="background-color: #60749d; width: 200px; margin-left: 10px;">인증코드 보내기</button> 
+                                    </div>
                                     <div class="sign-up">
                                         <button type="button" class="signup" onclick="handleSignup()">Sign up</button>
                                     </div>
@@ -164,7 +184,8 @@
                                     <div style="display: flex;">
                                         <input name="addnickname" id="addnickname" type="nickname" class="form-control"
                                             placeholder="추가할 멤버 닉네임" style="width: 300px;">
-                                        <button type="button" class="signup" onclick="addMember()" style="width: 100px; margin-left: 10px;">추가</button>
+                                        <button type="button" class="signup" onclick="addMember()"
+                                            style="width: 100px; margin-left: 10px;">추가</button>
                                     </div>
                                     <div style="display:flex;">
                                         <p style="justify-content: left;"> 닉네임 </p>
@@ -175,7 +196,7 @@
                                         </ul>
                                     </div>
                                     <div class="sign-up" style="display: flex;">
-                                        <button type="button" class="cancle" onclick="cancle()" style="margin-right: 10px; background-color: #60749d;" >취소</button>
+                                        <button type="button" class="cancle"  data-bs-dismiss="modal" aria-label="Close" onclick="cancle()" style="margin-right: 10px; background-color: #60749d;" >취소</button>
                                         <button type="button" class="signup" onclick="addGroup()">저장</button>
                                     </div>
                                 </form>
