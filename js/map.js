@@ -15,15 +15,17 @@ async function searchLocation() {
             searchBox.style.padding = '20px';
             searchBox.style.margin = '20px auto 20px auto';
             // 검색 결과 처리
-      
+
             $('#search_box').empty();
-      
+
             places.forEach((place, index) => {
                 const address_name = place.address_name
                 const place_name = place.place_name
                 const place_url = place.place_url
                 const place_category = place.category_group_name
-                console.log(place)
+                const location_x = place.x
+                const location_y = place.y
+
 
                 let temp_html = `
                                 <div style="display: flex; align-items: center; justify-content: space-between; margin: 20px auto;">
@@ -34,6 +36,8 @@ async function searchLocation() {
                                     <div style="display: flex; align-items: center;">
                                     <input type="radio" name="address_radio" value="${index}" style="width: 10px; margin-right: 10px;" onclick="handleRadio()">
                                         <label for="${index}" style="font-size: 15px;">선택</label>
+                                    <input id='x_${index}' value="${location_x}" hidden>
+                                    <input id='y_${index}' value="${location_y}" hidden>
                                     </div>
                                 </div>
                                 <hr>
@@ -55,11 +59,15 @@ function handleRadio() {
         let selectedIndex = selectedRadio.value;
         let selected_address = document.getElementById(`address_${selectedIndex}`).innerText;
         let selected_name = document.getElementById(`name_${selectedIndex}`).innerText;
+        let location_x = document.getElementById(`x_${selectedIndex}`).value;
+        let location_y = document.getElementById(`y_${selectedIndex}`).value;
         let name = selected_name.split('-')[0].trim();
         let category = selected_name.split('-')[1].trim();
         // 선택한 요소에 대한 처리
         document.getElementById("location").value = selected_address;
         document.getElementById("title").value = name;
         document.getElementById("category").value = category;
+        document.getElementById("location_x").value = location_x;
+        document.getElementById("location_y").value = location_y;
     }
 }

@@ -122,7 +122,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     calendar.render();
 });
 
-
 async function savePlan() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
@@ -132,6 +131,10 @@ async function savePlan() {
     const memo = document.getElementById("memo").value
     const time = document.getElementById("time").value
     const category = document.getElementById("category").value
+    const location_x = document.getElementById("location_x").value
+    const location_y = document.getElementById("location_y").value
+
+    console.log(location_x, location_y)
 
     const response = await fetch(`${back_url}/note/plan/${note_id}`, {
         headers: {
@@ -146,6 +149,8 @@ async function savePlan() {
             "memo": memo,
             "time": time,
             "category": category,
+            "location_x": location_x,
+            "location_y": location_y,
         })
     });
     if (response.status == 200) {
@@ -222,6 +227,9 @@ async function patchPlan() {
     let memo = document.getElementById('memo');
     let start = document.getElementById('start');
     let category = document.getElementById('category');
+    let location_x = document.getElementById("location_x").value
+    let location_y = document.getElementById("location_y").value
+
 
     const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
         headers: {
@@ -236,6 +244,8 @@ async function patchPlan() {
             "memo": memo.value ?? memo.placeholder,
             "time": time.value ?? time.placeholder,
             "category": category.value ?? category.placeholder,
+            "location_x": location_x,
+            "location_y": location_y,
         })
     });
     if (response.status == 200) {
