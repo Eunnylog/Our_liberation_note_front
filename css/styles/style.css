@@ -800,3 +800,11 @@ input[type="checkbox"]:checked+label {
   cursor: default;
   color: #777;
 }
+
+
+.feed_item {
+  display: inline-block;
+  vertical-align: top;
+  width: 200px;
+  margin-right: 20px;
+}

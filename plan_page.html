@@ -140,8 +140,8 @@
   </div>
   <!--show_plan 모달-->
   <div class="modal fade" id="plan_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 700px;">
+      <div class="modal-content" style="width:700px;">
         <div class="modal-header">
           <h5 class="modal-title" id="plan_modal_title">
             Plan Info_</h5>
@@ -172,7 +172,7 @@
   </div>
   <!--save_plan 모달-->
   <div class="modal fade" id="save_plan_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 700px;">
       <div class="modal-content" style="width:700px;">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
@@ -185,12 +185,14 @@
               <div class="sign-in-up">
                 <form class="sign-in-form active">
                   <div class="input-group" style="flex-wrap: nowrap;">
-                    <input name="title" id="title" type="text" class="form-control"
-                      placeholder="장소명(지역명을 함께 검색하면 2배 더 정확해 진다는 사실!)" style="width: 89%; height:40px;">
+                    <input name="title" id="title" type="text" class="form-control" placeholder="장소명(지역명+상호명)"
+                      style="width: 60%; height:40px;">
                     <div class="input-group-append" style="width: 10%;">
                       <button type="button" onclick="searchLocation()" class="btn btn-primary"
                         style="margin-top:0px;height:40px; font-size:15px">검색</button>
                     </div>
+                    <input name="category" id="category" type="text" class="form-control" placeholder="category"
+                      style="width: 29%; height:40px;">
                   </div>
                   <div id="search_box" style="width: 100%;  overflow: auto;"></div>
                   <input name="location" id="location" type="text" class="form-control"
