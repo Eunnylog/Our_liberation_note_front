@@ -17,16 +17,18 @@ async function showAiFeed() {
     if (a['location'] && a['location'] != '주소가 없으면 ai 사용이 어렵습니다!') {
       console.log(a)
       let temp_html = `
-                        <div id='${a['id']}' class="feed_item">
-                          <div style="display: flex; justify-content: space-between;">
-                            <h5 style="font-size:15px">목적지 : ${a['title']}(${a['category'] ?? '카테고리없음'})</h5>
-                            <div>
-                              <input type="checkbox" id="check${a['id']}"><label for="check${a['id']}"></label>
-                            </div>
+      <div id='${a['id']}'>
+                        <div style="display: flex; justify-content: space-between;">
+                          <div>
+                            <h5 style="font-size:13px ">목적지 : ${a['title']}</h5>
+                            <h5 style="font-size:13px ">카테고리 : ${a['category'] ?? '카테고리없음'}</h5>
+                            <h5 style="font-size:12px">주소 : ${a['location']}</h5>
                           </div>
-                          <h5 style="font-size:15px">주소 : ${a['location']}</h5>
-                          <hr>
+                          <div>
+                            <input type="checkbox" id="check${a['id']}"><label for="check${a['id']}"></label>
+                          </div>
                         </div>
+                        <hr>
                       `
       $('#ai_feed_box').append(temp_html)
     }
