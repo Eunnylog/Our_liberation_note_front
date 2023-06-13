@@ -22,100 +22,53 @@
         <!-- navbar -->
     </header>
     <div class="container">
-
         <h1 class="heading">우리들의 해방일기<span>Photo gallery</span></h1>
-
-        <!-- <div class="gallery">
-            <div class="gallery">
-                <div class="gallery-item">
-                    <img class="gallery-image" src="" alt="">
-                </div>
-
-                <div class="gallery-item">
-                    <img class="gallery-image" src="" alt="">
-                </div>
-
-                <div class="gallery-item">
-                    <img class="gallery-image" src="" alt="">
-                </div>
-
-                <div class="gallery-item">
-                    <img class="gallery-image" src="" alt="">
-                </div>
-
-                <div class="gallery-item">
-                    <img class="gallery-image" src="" alt="">
-                </div>
-
-                <div class="gallery-item">
-                    <img class="gallery-image" src="" alt="">
-                </div>
-            </div>
-        </div> -->
-        <!-- <div class="gallery-item">
-            <img class="gallery-image" src="{% url 'diary:photo-detail/1' photo.id %}" alt="여행을 떠나요 to ocean">
-        </div> -->
-
         <div class="gallery">
             <div class="gallery-item">
-                <!-- gallery-item을 temp.html로 만들 수 있도록 하는 것이 중요 -->
-                <img class="gallery-image"
-                    src="https://www.visakorea.com/content/dam/VCOM/regional/ap/southkorea/travelwithvisa/marquee-travel-with-visa-800x450.jpg"
-                    alt="sunset behind San Francisco city skyline">
-            </div>
-
-            <div class="gallery-item">
-                <img class="gallery-image"
-                    src="https://images.unsplash.com/photo-1506045412240-22980140a405?w=500&h=500&fit=crop"
-                    alt="people holding umbrellas on a busy street at night lit by street lights and illuminated signs in Tokyo, Japan">
-            </div>
-
-            <div class="gallery-item">
-                <img class="gallery-image"
-                    src="https://images.unsplash.com/photo-1514041181368-bca62cceffcd?w=500&h=500&fit=crop"
-                    alt="car interior from central back seat position showing driver and blurred view through windscreen of a busy road at night">
-            </div>
-
-            <div class="gallery-item">
-                <img class="gallery-image"
-                    src="https://images.unsplash.com/photo-1445810694374-0a94739e4a03?w=500&h=500&fit=crop"
-                    alt="back view of woman wearing a backpack and beanie waiting to cross the road on a busy street at night in New York City, USA">
-            </div>
-
-            <div class="gallery-item">
-                <img class="gallery-image"
-                    src="https://images.unsplash.com/photo-1486334803289-1623f249dd1e?w=500&h=500&fit=crop"
-                    alt="man wearing a black jacket, white shirt, blue jeans, and brown boots, playing a white electric guitar while sitting on an amp">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="pin"> </th>
+                            <th></th>
+                            <th>제목</th>
+                        </tr>
+                    </thead>
+                    <tbody id="photo_info">
+                        <!-- 사진 정보가 여기에 추가될 것입니다. -->
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
-    <div class="modal fade" id="dairy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        사진 추가</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+        <div class="modal fade" id="dairy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            사진 추가</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="album" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <input id="img" name="files" multiple accept=".jpg, .png, .jpeg" type="file"
+                                class="form-control" placeholder="사진">
+                            <input name="location" id="location" type="text" class="form-control" placeholder="주소">
+                            <input id="memo" type="text" class="form-control" placeholder="메모">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
+                            </button>
+                            <button id="submitBtn" type="button" class="btn btn-primary" style="float: right">
+                                등록하기
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <form id="album" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <input id="img" name="files" multiple accept=".jpg, .png, .jpeg" type="file"
-                            class="form-control" placeholder="사진">
-                        <input name="location" id="location" type="text" class="form-control" placeholder="주소">
-                        <input id="memo" type="text" class="form-control" placeholder="메모">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
-                        </button>
-                        <button id="submitBtn" type="button" onclick="addPhoto()" class="btn btn-primary"
-                            style="float: right">
-                            등록하기
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
+
+    <script src="/js/photo_page.js"></script>
 </body>
 
 </html>
