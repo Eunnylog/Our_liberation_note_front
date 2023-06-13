@@ -11,7 +11,7 @@ async function showAiFeed() {
   })
   const response_json = await response.json()
 
-  // $('#ai_feed_box').empty()
+  $('#ai_feed_box').empty()
 
   response_json.forEach((a) => {
     if (a['location'] && a['location'] != '주소가 없으면 ai 사용이 어렵습니다!') {

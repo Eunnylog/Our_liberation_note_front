@@ -5,6 +5,10 @@ let back_url = 'https://api.miyeong.net'
 async function showPlanPage() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
+    let note_name = localStorage.getItem('noteName')
+
+    $('#note_title').text(note_name);
+
     const response = await fetch(`${back_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
