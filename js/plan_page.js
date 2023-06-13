@@ -5,6 +5,10 @@ let back_url = 'https://api.miyeong.net'
 async function showPlanPage() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
+    let note_name = localStorage.getItem('noteName')
+
+    $('#note_title').text(note_name);
+
     const response = await fetch(`${back_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
@@ -14,13 +18,15 @@ async function showPlanPage() {
     })
     const response_json = await response.json()
     response_json.forEach((a) => {
+        console.log(a['category'])
         let dic = {
             id: a['id'],
             title: a['title'],
             start: a['start'],
             location: a['location'] ?? '주소가 없으면 ai 사용이 어렵습니다!',
             time: a['time'] ?? '내용없음',
-            memo: a['memo'] ?? '내용없음'
+            memo: a['memo'] ?? '내용없음',
+            place_category: a['category'] ?? '없음',
         };
         plan_data.push(dic)
     })
@@ -53,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             PhotoButton: {
                 text: 'Photo Book',
                 click: function () {
-                    window.location.href = '/photo_page.html'
+                    window.location.href = `/photo_page.html?=note_id=${note_id}`
                 }
             }
         },
@@ -70,15 +76,21 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             var titleElement = document.getElementById('plan_modal_id');
             titleElement.innerHTML = `${info.event.id}`; // ID 추가
+            console.log(info.event)
 
             eventInfoDiv.innerHTML = `
-                                        <h3 id='plan_title'>Title: ${info.event.title}</h3>
+                                        <h3 id='plan_title'>${info.event.title}</h3>
+                                        <h5 id='plan_category'>카테고리:${info.event.extendedProps.place_category}</h5>
                                         <h5 id='plan_date'>Date: ${formattedDate}</h5>
                                         <h5 id='plan_location'>Location: ${info.event.extendedProps.location}</h5>
                                         <h5 id='plan_time'>Time: ${info.event.extendedProps.time}</h5>
                                         <h5 id='plan_memo'>Memo: ${info.event.extendedProps.memo}</h5>
                                     `;
             $('#plan_modal').modal('show');
+
+            const btnElement = document.getElementById('patch_box');
+            btnElement.innerText = '수정';
+            btnElement.setAttribute("onClick", `patchBox()`)
         },
         eventDrop: function (info) {
             var event = info.event;
@@ -96,7 +108,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": `${access_token}`,
+                    "Authorization": `Bearer ${access_token}`,
                 },
                 body: JSON.stringify({
                     // start만 옮기기 때문!
@@ -114,7 +126,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     calendar.render();
 });
 
-
 async function savePlan() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
@@ -123,11 +134,16 @@ async function savePlan() {
     const start = document.getElementById("start").value
     const memo = document.getElementById("memo").value
     const time = document.getElementById("time").value
+    const category = document.getElementById("category").value
+    const location_x = document.getElementById("location_x").value
+    const location_y = document.getElementById("location_y").value
+
+    console.log(location_x, location_y)
 
     const response = await fetch(`${back_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'POST',
         body: JSON.stringify({
@@ -136,6 +152,9 @@ async function savePlan() {
             "start": start,
             "memo": memo,
             "time": time,
+            "category": category,
+            "location_x": location_x,
+            "location_y": location_y,
         })
     });
     if (response.status == 200) {
@@ -151,7 +170,7 @@ async function deletePlan() {
     const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'DELETE',
     });
@@ -166,10 +185,11 @@ async function deletePlan() {
 function patchBox() {
     // 수정 창으로 변경합니다.
     let planInfoDiv = document.getElementById('plan_info');
-    let title = document.getElementById('plan_title').innerHTML.split(':')[1].trim();
+    let title = document.getElementById('plan_title').innerHTML;
     let location = document.getElementById('plan_location').innerHTML.split(':')[1].trim();
     let time = document.getElementById('plan_time').innerHTML.split(':')[1].trim();
     let memo = document.getElementById('plan_memo').innerHTML.split(':')[1].trim();
+    let category = document.getElementById('plan_category').innerHTML.split(':')[1].trim();
     // date 포멧팅
     let dateString = document.getElementById('plan_date').innerHTML.split(':')[1].trim();
     let dateParts = dateString.split('.').map(part => part.trim());
@@ -179,11 +199,23 @@ function patchBox() {
     let date = `${year}-${month}-${day}`;
 
     planInfoDiv.innerHTML = `
-            <input name="title" id="pat_title" type="text" class="form-control" value="${title}" placeholder="장소명">
-            <input name="location" id="pat_location" type="text" class="form-control" value="${location}" placeholder="주소(미작성시 AI사용이 불가합니다!)">
-            <input name="start" id="pat_start" type="date" class="form-control" value="${date}">
-            <input name="time" id="pat_time" type="text" class="form-control" value="${time}" placeholder="시간">
-            <textarea name="memo" id="pat_memo" type="textarea" class="form-control" placeholder="memo">${memo}</textarea>
+                            <div class="input-group" style="flex-wrap: nowrap;">
+                                <input name="title" id="title" type="text" value='${title}' class="form-control" placeholder="장소명(지역명+상호명)"
+                                style="width: 60%; height:40px;">
+                                <div class="input-group-append" style="width: 10%;">
+                                    <button type="button" onclick="searchLocation()" class="btn btn-primary"
+                                    style="margin-top:0px;height:40px; font-size:15px">검색</button>
+                                </div>
+                                <input name="category" id="category" value='${category}' type="text" class="form-control" placeholder="category"
+                                    style="width: 29%; height:40px;">
+                            </div>
+                            <div id="search_box" style="width: 100%;  overflow: auto;"></div>
+                            <input name="location" id="location" value='${location}' type="text" class="form-control"
+                                placeholder="주소(미작성시 AI사용이 불가합니다!)">
+                            <input name="start" id="start" value='${date}' type="date" class="form-control">
+                            <input name="time" id="time" value='${time}' type="text" class="form-control" placeholder="시간">
+                            <textarea name="memo" id="memo" value='${memo}'  type="textarea" class="form-control" placeholder="memo"
+                                style="height:200px; min-height:200px; max-height:200px"></textarea>
     `;
 
     const btnElement = document.getElementById('patch_box');
@@ -193,16 +225,20 @@ function patchBox() {
 
 async function patchPlan() {
     plan_id = document.getElementById('plan_modal_id').innerHTML;
-    let title = document.getElementById('pat_title');
-    let location = document.getElementById('pat_location');
-    let time = document.getElementById('pat_time');
-    let memo = document.getElementById('pat_memo');
-    let start = document.getElementById('pat_start');
+    let title = document.getElementById('title');
+    let location = document.getElementById('location');
+    let time = document.getElementById('time');
+    let memo = document.getElementById('memo');
+    let start = document.getElementById('start');
+    let category = document.getElementById('category');
+    let location_x = document.getElementById("location_x").value
+    let location_y = document.getElementById("location_y").value
+
 
     const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'PATCH',
         body: JSON.stringify({
@@ -211,6 +247,9 @@ async function patchPlan() {
             "start": start.value ?? start.placeholder,
             "memo": memo.value ?? memo.placeholder,
             "time": time.value ?? time.placeholder,
+            "category": category.value ?? category.placeholder,
+            "location_x": location_x,
+            "location_y": location_y,
         })
     });
     if (response.status == 200) {
