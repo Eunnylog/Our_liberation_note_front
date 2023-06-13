@@ -30,7 +30,14 @@
     <!-- navbar -->
   </header>
   <main class="site-body">
+
     <article class="review-detail max-content-width">
+      <div style="text-align: left;">
+        <h1 id="note_title"></h1>
+      </div>
+      <div style="text-align: right;">
+        <a class="back-link" href="/my_diary.html">&lt; 목록으로</a>
+      </div>
       <div id='calendar'></div>
     </article>
   </main>
@@ -140,8 +147,8 @@
   </div>
   <!--show_plan 모달-->
   <div class="modal fade" id="plan_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 700px;">
+      <div class="modal-content" style="width:700px;">
         <div class="modal-header">
           <h5 class="modal-title" id="plan_modal_title">
             Plan Info_</h5>
@@ -172,7 +179,7 @@
   </div>
   <!--save_plan 모달-->
   <div class="modal fade" id="save_plan_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 700px;">
       <div class="modal-content" style="width:700px;">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
@@ -185,18 +192,22 @@
               <div class="sign-in-up">
                 <form class="sign-in-form active">
                   <div class="input-group" style="flex-wrap: nowrap;">
-                    <input name="title" id="title" type="text" class="form-control"
-                      placeholder="장소명(지역명을 함께 검색하면 2배 더 정확해 진다는 사실!)" style="width: 89%; height:40px;">
+                    <input name="title" id="title" type="text" class="form-control" placeholder="장소명(지역명+상호명)"
+                      style="width: 60%; height:40px;">
                     <div class="input-group-append" style="width: 10%;">
                       <button type="button" onclick="searchLocation()" class="btn btn-primary"
                         style="margin-top:0px;height:40px; font-size:15px">검색</button>
                     </div>
+                    <input name="category" id="category" type="text" class="form-control" placeholder="category"
+                      style="width: 29%; height:40px;">
                   </div>
                   <div id="search_box" style="width: 100%;  overflow: auto;"></div>
                   <input name="location" id="location" type="text" class="form-control"
                     placeholder="주소(미작성시 AI사용이 불가합니다!)">
                   <input name="start" id="start" type="date" class="form-control">
                   <input name="time" id="time" type="text" class="form-control" placeholder="시간">
+                  <input name="location_x" id="location_x" type="text" class="form-control" hidden>
+                  <input name="location_y" id="location_y" type="text" class="form-control" hidden>
                   <textarea name="memo" id="memo" type="textarea" class="form-control" placeholder="memo"
                     style="height:200px; min-height:200px; max-height:200px"></textarea>
                   <div class="button-group">

@@ -82,7 +82,7 @@ body>.site-body {
 .navbar-toggler:focus {
   box-shadow: none !important;
 }
-
+ 
 /* ul.navbar {
   display: flex;
   margin: 0;
@@ -799,4 +799,12 @@ input[type="checkbox"]:checked+label {
   font-weight: bold;
   cursor: default;
   color: #777;
+}
+
+
+.feed_item {
+  display: inline-block;
+  vertical-align: top;
+  width: 200px;
+  margin-right: 20px;
 }

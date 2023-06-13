@@ -1,4 +1,4 @@
-const backend_base_url = "http://127.0.0.1:8000"
+const backend_base_url = "https://api.miyeong.net"
 const frontend_base_url = "http://127.0.0.1:5500"
 
 // 백엔드 연결하기
@@ -6,29 +6,31 @@ const frontend_base_url = "http://127.0.0.1:5500"
 
 // 사진 추가하기
 async function addPhoto() {
-    const img = document.getElementById("img");
+    const image = document.getElementById("image");
     const title = document.getElementById("title").value;
     const location = document.getElementById("location").value;
     const memo = document.getElementById("memo").value;
 
 
     const formData = new FormData();
-    formData.append("image", img.files[0]);
+    formData.append("image", image.files[0]);
     formData.append("title", title);
     formData.append("location", location);
     formData.append("memo", memo);
 
+    console.log(formData)
 
     try {
         const urlParams = new URLSearchParams(window.location.search);
         const note_id = urlParams.get('note_id');
 
         const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
+            // headers: {
+            //     // "Authorization": `Bearer ${access_token}`,
+            // },
             method: 'POST',
-            body: formData,
-            headers: {
-                // 'Authorization': `Bearer ${accessToken}`,
-            }
+
+            body: formData
         });
 
         if (response.ok) {
@@ -42,6 +44,41 @@ async function addPhoto() {
         console.error(error);
     }
 }
+
+
+async function album() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const note_id = urlParams.get('note_id');
+    const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            // 'Authorization': `Bearer ${accessToken}`
+        },
+        method: 'GET',
+    })
+
+    const response_json = await response.json()
+
+    response_json.forEach((a) => {
+        const image = backend_base_url + a["image"];
+        const title = a['title']
+        const location = a['location']
+        const memo = a['memo']
+        const photo_id = a['id']
+        console.log(image)
+
+        let temp_html = `
+            <div class="gallery-item">
+                <img class="gallery-image" src="${image}" alt="${title}">
+            </div>
+            `
+        $('#photo_info').append(temp_html)
+    });
+}
+// 페이지 로드 시 앨범 표시
+window.addEventListener('DOMContentLoaded', album);
+
+
 
 // const saveButton = document.getElementById("save-button");
 // saveButton.addEventListener("click", addPhoto)
@@ -86,39 +123,5 @@ async function addPhoto() {
 
 // // 페이지 로드 후 이미지 URL 가져오기
 // window.addEventListener('load', fetchImageUrls);
-
-
-async function album() {
-    // const accessToken = localStorage.getItem('access')
-    const response = await fetch(`http://127.0.0.1:8000/note/photo/${note_id}`, {
-        headers: {
-            'content-type': 'application/json',
-            // 'Authorization': `Bearer ${accessToken}`
-        },
-        method: 'GET',
-    })
-
-    const response_json = await response.json()
-
-    response_json.forEach((a) => {
-        const img = a['img']
-        const title = a['title']
-        const location = a['location']
-        const memo = a['memo']
-        const photo_id = a['id']
-
-
-        let temp_html = `<tr>
-              <th>${a.id}</th>
-              <th>${img}</th>
-              <th>${title}</th>
-              <td>${memo}</td>
-              <td>${location}</td>
-              <td><button class="btn btn-danger"
-              onclick="handlePhotoDelete(${photo_id})">삭제하기</button></td>
-          </tr>`
-        $('#photo_info').append(temp_html)
-    });
-}
-// 페이지 로드 시 앨범 표시
-window.addEventListener('DOMContentLoaded', album);
+// 포토 아이디 볼때 씀
+/* <th>${a.id}</th> */
