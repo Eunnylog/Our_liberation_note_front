@@ -223,7 +223,7 @@ async function naverLogin() {
   }
 }
 
-async function githubLogin() {
+async function facebookLogin() {
   const cookies = document.cookie.split(';');
 
   for (let i = 0; i < cookies.length; i++) {
@@ -237,7 +237,7 @@ async function githubLogin() {
   }
 
   if (!jwtToken) {
-    window.location.replace(`${backend_base_url}/users/github/login/`);
+    window.location.replace(`${backend_base_url}/users/facebook/login/`);
   }
 }
 
