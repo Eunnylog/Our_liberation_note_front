@@ -1,6 +1,6 @@
 let plan_data = []
-let access_token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2NTQwNDExLCJpYXQiOjE2ODY0NTQwMTEsImp0aSI6IjRjZGM3NmM0ZTAzMDRkNDA5ZmI1NzY5MDA3YTQ1OTliIiwidXNlcl9pZCI6MSwibmlja25hbWUiOiJtaXllb25nIiwiZW1haWwiOiJtaXllb25nQG5hdmVyLmNvbSIsImlzX2FkbWluIjp0cnVlfQ.7fzQOTq2_j8wXthwIa_utwaoAkKIIMiKJ_tGnu_x2es'
-let back_url = 'https://api.miyeong.net'
+let access_token = localStorage.getItem('access')
+let back_url = 'http://127.0.0.1:8000'
 
 async function showPlanPage() {
     params = new URLSearchParams(window.location.search);
@@ -8,7 +8,7 @@ async function showPlanPage() {
     const response = await fetch(`${back_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'GET',
     })
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": `${access_token}`,
+                    "Authorization": `Bearer ${access_token}`,
                 },
                 body: JSON.stringify({
                     // start만 옮기기 때문!
@@ -127,7 +127,7 @@ async function savePlan() {
     const response = await fetch(`${back_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'POST',
         body: JSON.stringify({
@@ -151,7 +151,7 @@ async function deletePlan() {
     const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'DELETE',
     });
@@ -202,7 +202,7 @@ async function patchPlan() {
     const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'PATCH',
         body: JSON.stringify({
@@ -220,5 +220,6 @@ async function patchPlan() {
         alert('문제가 발생했습니다!')
     }
 }
+
 
 

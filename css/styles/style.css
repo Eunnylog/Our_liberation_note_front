@@ -800,3 +800,22 @@ input[type="checkbox"]:checked+label {
   cursor: default;
   color: #777;
 }
+
+/* 마이페이지 맵 */
+.map-box{
+  background-color: #D7F2FF;
+  border-radius: 10px;
+  float: right;
+  grid-column: 3/6; 
+  grid-row: 1/6; 
+  margin-right: 40px;
+}
+
+.stamp-map{
+  /* float: right; 
+  background-color: aliceblue;  */
+  width: 600px; 
+  height: 650px; 
+  margin: 10px; 
+  /* border-radius: 10px; */
+}

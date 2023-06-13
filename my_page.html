@@ -6,7 +6,6 @@
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" type="image/png" href="/css/coplate/favicon/favicon.ico">
-  <link href="/css/styles/recipe_card.css" rel="stylesheet" type="text/css" />
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
   <link href="/css/styles/theme.css" rel="stylesheet" type="text/css" />
   <link href="/css/styles/login.css" rel="stylesheet" type="text/css" />
@@ -18,7 +17,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5976e08cd96f7fe00c3699cd1dfa0957"></script>
+  <!-- clusterer 라이브러리 불러오기 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=clusterer"></script>
 </head>
 
 <body>
@@ -27,10 +28,11 @@
   </header>
   <main class="site-body">
     <article class="review-detail max-content-width">
-      <div class="content" style="display: grid; grid-template-columns: 200px 50px 200px 200px; grid-template-rows: 100px 200px 100px 100px 200px 200px; ">
+      <div class="content"
+        style="display: grid; grid-template-columns: 200px 50px 200px 200px; grid-template-rows: 100px 200px 100px 100px 200px 200px; ">
         <div id="user_info"
           style="border-radius: 10px; float:left; margin-top:10px; margin-left: 10px; grid-column: 1; background-color: #D7F2FF; text-align: center; flex-direction: column;">
-          <p style="text-align: center; font-size:20px; margin-top: 10px;">유저 닉네임</p>
+          <p id='nickname' style="text-align: center; font-size:20px; margin-top: 10px;">유저 닉네임</p>
           <button onclick=""
             style="text-align: center; font-size:20px;justify-items: center; margin:auto; border: transparent; background-color: transparent; ">회원
             탈퇴</button>
@@ -39,29 +41,27 @@
             로그아웃</button>
         </div>
         <div
-          style="float:right; background-color: #D7F2FF; grid-column: 3/6; grid-row: 1/6; margin-right: 40px; border-radius: 10px;"
-          id="map_box">
+          class="map-box" id="map_box">
           <div style="margin: 10px; font-size: 30px; float: left;">Map</div>
-          <div
-            style="float: right; background-color: aliceblue; width: 600px; height: 650px; margin: 10px; border-radius: 10px;">
-            지도 들어갈 자리 </div>
+          <div id="stamp-map" style="width:600px;height:650px; margin:20px;"></div>
         </div>
         <div id="user_info"
           style=" border-radius: 10px; float:left; margin-top:10px; margin-left: 10px; grid-row: 2; background-color: #D7F2FF;">
-          <p style="text-align: center; font-size:20px; margin-top: 10px;">내 그룹</p>
-          <ul>
-            <li> 그룹1</li>
-            <li> 그룹1</li>
-            <li> 그룹1</li>
-            <li> 그룹1</li>
-            <li> 그룹1</li>
-          </ul>
+          <p style="text-align: center; font-size:20px; margin-top: 10px;">My group</p>
+          <div id="my_groups" style="margin-left: 15px;">
+          </div>
+          <div class="space-between-divs" style=" margin-top: 50px;"></div>
+          <div>
+            <a href="" data-bs-toggle="modal" data-bs-target="#makegroup" id="makegroup-button"
+              style="margin-left:75px; font-weight: bold; text-decoration: none; color: black;"> + New
+              group </a>
+          </div>
         </div>
-        <div id="user_info"
+        <!-- <div id="user_info"
           style=" border-radius: 10px; float:left; margin-top:10px; margin-left: 10px; grid-row: 3; background-color: #D7F2FF; text-align: center;">
           <a href="" data-bs-toggle="modal" data-bs-target="#makegroup" id="makegroup-button"
             style="text-align: center; font-size:20px;"> 그룹 만들기 </a>
-        </div>
+        </div> -->
         <!-- <div class="content" style="float:left; width: 50%;">
           <div class="Gallery">
             <div class="Gallery-wrapper">
@@ -101,8 +101,9 @@
                   <input name="password2" id="password2" type="password" class="form-control" placeholder="Password2">
                   <div style="display: flex;">
                     <input name="confirmcode" id="confirmcode" type="confirmcode" class="form-control"
-                        placeholder="email 인증코드" style="width: 250px;">
-                    <button type="button" class="signup" onclick="sendCode()" style="background-color: #60749d; width: 200px; margin-left: 10px;">인증코드 보내기</button> 
+                      placeholder="email 인증코드" style="width: 250px;">
+                    <button type="button" class="signup" onclick="sendCode()"
+                      style="background-color: #60749d; width: 200px; margin-left: 10px;">인증코드 보내기</button>
                   </div>
                   <div>
                     <button type="button" onclick="handleSignup()" class="btn btn-primary" style="float: center">
@@ -163,40 +164,6 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="review" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            리뷰 작성</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form id="myForm" enctype="multipart/form-data" style="padding: 30px">
-          <div class="modal-body">
-            <input id="title" type="text" class="form-control" placeholder="title">
-            <select id="star">
-              <option value=>별점선택</option>
-              <option value='1'>⭐️</option>
-              <option value='2'>⭐️⭐️</option>
-              <option value='3'>⭐️⭐️⭐️</option>
-              <option value='4'>⭐️⭐️⭐️⭐️</option>
-              <option value='5'>⭐️⭐️⭐️⭐️⭐️</option>
-            </select>
-            <textarea id="content" placeholder="content" style="width: 100%;"></textarea>
-            <input id="image" name="files" multiple accept=".jpg, .png, .jpeg" type="file" class="form-control"
-              placeholder="객실 이미지">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
-            </button>
-            <button id="submitBtn" type="button" onclick="createReview()" class="btn btn-primary" style="float: right">
-              후기 작성
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
   <!-- 회원탈퇴확인 모달창 -->
   <div class="modal fade" id="deleteuser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -224,47 +191,48 @@
   <!-- 그룹만들기 모달창 -->
   <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="su">
-                    Make Group</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="container">
-                <div class="global-cont">
-                    <div class="inner-cont">
-                        <div class="sign-in-up">
-                            <form class="sign-in-form active">
-                                <input name="groupname" id="groupname" type="name" class="form-control"
-                                    placeholder="그룹이름">
-                                <div style="display: flex;">
-                                    <input name="addnickname" id="addnickname" type="nickname" class="form-control"
-                                        placeholder="추가할 멤버 닉네임" style="width: 300px;">
-                                    <button type="button" class="signup" onclick="addMember()" style="width: 100px; margin-left: 10px;">추가</button>
-                                </div>
-                                <div style="display:flex;">
-                                    <p style="justify-content: left;"> 닉네임 </p>
-                                    <ul>
-                                        <li>닉네임1</li><br>
-                                        <li>닉네임2</li><br>
-                                        <li>닉네임3</li><br>
-                                    </ul>
-                                </div>
-                                <div class="sign-up" style="display: flex;">
-                                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()" style="margin-right: 10px; background-color: #60749d;" >취소</button>
-                                    <button type="button" class="signup" onclick="addGroup()">저장</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="su">
+            Make Group</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="container">
+          <div class="global-cont">
+            <div class="inner-cont">
+              <div class="sign-in-up">
+                <form class="sign-in-form active">
+                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="그룹이름">
+                  <div style="display: flex;">
+                    <input name="addnickname" id="addnickname" type="nickname" class="form-control"
+                      placeholder="추가할 멤버 닉네임" style="width: 300px;">
+                    <button type="button" class="signup" onclick="addMember()"
+                      style="width: 100px; margin-left: 10px;">추가</button>
+                  </div>
+                  <div style="display:flex;">
+                    <p style="justify-content: left;"> 닉네임 </p>
+                    <ul>
+                      <li>닉네임1</li><br>
+                      <li>닉네임2</li><br>
+                      <li>닉네임3</li><br>
+                    </ul>
+                  </div>
+                  <div class="sign-up" style="display: flex;">
+                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()"
+                      style="margin-right: 10px; background-color: #60749d;">취소</button>
+                    <button type="button" class="signup" onclick="addGroup()">저장</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
   <script src="/js/loader.js"></script>
   <script src="/js/api.js"></script>
-  <script src="/js/recipe_card.js"></script>
+  <script src="/js/my_page.js"></script>
 </body>
 
 </html>

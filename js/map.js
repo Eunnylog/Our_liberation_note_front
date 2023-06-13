@@ -15,6 +15,7 @@ async function searchLocation() {
             searchBox.style.padding = '20px';
             searchBox.style.margin = '20px auto 20px auto';
             // 검색 결과 처리
+            $('#search_box').empty();
             places.forEach((place, index) => {
                 //address_name
                 //place_name
