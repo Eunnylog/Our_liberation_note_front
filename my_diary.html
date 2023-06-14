@@ -35,8 +35,8 @@
     <div class=" content-list max-content-width" style="background-color: #c8e4fb; padding: 10px 30px 30px 30px">
       <div style="display: flex; align-items: center; margin-bottom:30px">
         <h2 style="margin-right: 10px;">my diary</h2>
-        <select name="객실" id="select_group" onchange="showNoteList()">
-          <option value="">그룹 선택</option>
+        <select name="group" id="select_group" onchange="showNoteList()">
+          <!-- <option value="-1">그룹 선택</option> -->
         </select>
       </div>
       <div class="contents" id="note_list">
@@ -166,8 +166,12 @@
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <input name="group_name" id="group_name" type="text" class="form-control" placeholder="그룹명">
-                  <input name="note_name" id="note_name" type="text" class="form-control" placeholder="노트 이름">
+                  <input name="note_name" id="note_name" type="text" class="form-control" placeholder="노트 이름"
+                    style="width: 48%; float:left;">
+                  <select name="group_name" id="group_name" onchange="showNoteList()"
+                    style="width: 48%; height:46px; float:right; margin-bottom:10px">
+                    <option value="-1">그룹 선택</option>
+                  </select>
                   <div class="note_category" id="note_category">
                     <div
                       style="width: 100px; height: 170px; text-align:center; display:inline-block; margin: auto 20px 20px auto;">

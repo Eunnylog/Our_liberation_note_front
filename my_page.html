@@ -17,9 +17,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/js/api_key.js"></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5976e08cd96f7fe00c3699cd1dfa0957"></script>
-  <!-- clusterer 라이브러리 불러오기 -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=clusterer"></script>
 </head>
 
 <body>
@@ -32,18 +31,18 @@
         style="display: grid; grid-template-columns: 200px 50px 200px 200px; grid-template-rows: 100px 200px 100px 100px 200px 200px; ">
         <div id="user_info"
           style="border-radius: 10px; float:left; margin-top:10px; margin-left: 10px; grid-column: 1; background-color: #D7F2FF; text-align: center; flex-direction: column;">
-          <p id='nickname' style="text-align: center; font-size:20px; margin-top: 10px;">유저 닉네임</p>
+          <p id='email' style="text-align: center; font-size:20px; margin-top: 10px;">유저 닉네임</p>
           <button onclick=""
             style="text-align: center; font-size:20px;justify-items: center; margin:auto; border: transparent; background-color: transparent; ">회원
             탈퇴</button>
           <button onclick="handleLogout()"
-            style="text-align: center; font-size:20px; margin: auto; border: transparent; background-color: transparent; ">
+            style="text-align: center; font-size:20px; border: transparent; background-color: transparent; ">
             로그아웃</button>
         </div>
         <div
           class="map-box" id="map_box">
-          <div style="margin: 10px; font-size: 30px; float: left;">Map</div>
-          <div id="stamp-map" style="width:600px;height:650px; margin:20px;"></div>
+          <div style="margin-left: 20px; margin-top: 10px; font-size: 30px; font-weight: bold;">Map</div>
+          <div class="stamp-map" id="stamp-map"></div>
         </div>
         <div id="user_info"
           style=" border-radius: 10px; float:left; margin-top:10px; margin-left: 10px; grid-row: 2; background-color: #D7F2FF;">
@@ -57,29 +56,7 @@
               group </a>
           </div>
         </div>
-        <!-- <div id="user_info"
-          style=" border-radius: 10px; float:left; margin-top:10px; margin-left: 10px; grid-row: 3; background-color: #D7F2FF; text-align: center;">
-          <a href="" data-bs-toggle="modal" data-bs-target="#makegroup" id="makegroup-button"
-            style="text-align: center; font-size:20px;"> 그룹 만들기 </a>
-        </div> -->
-        <!-- <div class="content" style="float:left; width: 50%;">
-          <div class="Gallery">
-            <div class="Gallery-wrapper">
-              <div class="Gallery-container js-container" id="recipe_turn">
-              </div>
-            </div>
-          </div>
-          <div class="Nav js-nav" id="recipe_turn_btn">
-          </div>
-        </div> -->
-        <!-- <div id="main_img" class="content"
-          style="display:inline-block; width: 40%; margin-left:30px; height:50px; margin-bottom:0px">
-        </div> -->
       </div>
-      <!-- <div class="test" style="margin-top: 30px; width:100%">
-        <div id="recipe_info" style="height:10px; width: 400px; text-align:center; padding:10px; ">
-        </div>
-      </div> -->
     </article>
   </main>
   <!-- 회원가입 모달창 -->
@@ -229,6 +206,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
   <script src="/js/loader.js"></script>
   <script src="/js/api.js"></script>

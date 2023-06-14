@@ -12,33 +12,44 @@ async function injectNavbar() {
     let nav_login = document.getElementById("nav-login")
     let nav_signup = document.getElementById("nav-signup")
     let nav_mydiary = document.getElementById("nav-mydiary")
+    let nav_mypage = document.getElementById("nav-mypage")
+    let nav_makegroup = document.getElementById("nav-makegroup")
+
     nav_mydiary.style.display = "none"
+    nav_mypage.style.display = "none"
+    nav_makegroup.style.display = "none"
     const payload = localStorage.getItem("payload")
 
     if (payload) {
         nav_login.style.display = "none"
         nav_signup.style.display = "none"
         nav_mydiary.style.display = "block"
+        nav_mypage.style.display = "block"
+        nav_makegroup.style.display = "block"
 
         const payload = localStorage.getItem("payload")
         const payload_parse = JSON.parse(payload)
-        console.log(payload_parse.nickname)
 
         const intro = document.getElementById("intro")
 
-        intro.innerText = `${payload_parse.nickname} 님 안녕하세요!`
+        intro.innerText = `${payload_parse.email} 님 안녕하세요!😄`
 
 
-        let navbarRight = document.getElementById("nav-right")
+        let navbarLeft = document.getElementById("nav-left")
         let newLi = document.createElement("li")
-        newLi.setAttribute("class", 'nav-link active')
+        newLi.setAttribute("class", 'nav-item')
+        newLi.setAttribute("id", 'nav-logout')
 
-        newLi.innerText = "로그아웃"
-        newLi.setAttribute("onClick", "handleLogout()")
+        let newA = document.createElement("a")
+        newA.setAttribute("class","nav-link active")
+
+        newA.innerText = "로그아웃"
+        newA.setAttribute("onClick", "handleLogout()")
 
 
 
-        navbarRight.appendChild(newLi)
+        newLi.appendChild(newA)
+        navbarLeft.appendChild(newLi)
 
 
     }

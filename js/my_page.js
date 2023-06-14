@@ -4,23 +4,21 @@ async function loadUserprofile() {
 
     const response = await getUserprofile();
 
-    console.log(response)
-    console.log(response.groups)
-
-    const nickname = document.getElementById("nickname")
-    nickname.innerText = `${response.profile.nickname}님`
+    const email = document.getElementById("email")
+    email.innerText = `${response.profile.email}님`
 
     const groups = response.groups
     const profile = response.profile
 
+    console.log(response)
+
     $('#my_groups').empty()
     groups.forEach((group) => {
         const name = group.name
-        console.log(name)
 
         let temp_html = `<li>${name}`
 
-        if (group.master == profile.nickname) {
+        if (group.master == profile.email) {
             temp_html += ' <span style="color: red">(master)</span>';
         }
 
@@ -32,27 +30,60 @@ async function loadUserprofile() {
 
 loadUserprofile();
 
-var container = document.getElementById('stamp-map'); //지도를 담을 영역의 DOM 레퍼런스
-var options = { //지도를 생성할 때 필요한 기본 옵션
-	center: new kakao.maps.LatLng(35.9424,127.661), //지도의 중심좌표.
-	level: 13 //지도의 레벨(확대, 축소 정도)
-};
+async function loadStampmap() {
 
-var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+    var container = document.getElementById('stamp-map');
+    var options = {
+        center: new kakao.maps.LatLng(35.9424, 127.661),
+        level: 13
+    };
+    var map = new kakao.maps.Map(container, options);
 
-var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
-    imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
-    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-      
-// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-    markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치입니다
+    var imageSrc = "/css/assets/stamp-marker3.png",
+        imageSize = new kakao.maps.Size(64, 69),
+        imageOption = { offset: new kakao.maps.Point(27, 69) };
 
-// 마커를 생성합니다
-var marker = new kakao.maps.Marker({
-    position: markerPosition, 
-    image: markerImage // 마커이미지 설정 
-});
+    const response = await getUserprofile();
 
-// 마커가 지도 위에 표시되도록 설정합니다
-marker.setMap(map);  
+    const stamps = response.stamps
+
+    stamps.forEach((stamp) => {
+        const location_x = stamp.photo.location_x
+        const location_y = stamp.photo.location_y
+        const memo = stamp.photo.memo
+        const diary = stamp.photo.diary
+
+        console.log(diary)
+
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
+        var markerPosition = new kakao.maps.LatLng(location_x, location_y)
+        var iwContent = '<div style="padding:5px;">' + memo + '</div>'
+
+        var marker = new kakao.maps.Marker({
+            position: markerPosition,
+            image: markerImage,
+            clickable: true
+        });
+
+        var infowindow = new kakao.maps.InfoWindow({
+            content: iwContent
+        });
+
+        marker.setMap(map);
+
+        kakao.maps.event.addListener(marker, 'mouseover', function () {
+            infowindow.open(map, marker);
+        });
+
+        kakao.maps.event.addListener(marker, 'mouseout', function () {
+            infowindow.close();
+        });
+
+        kakao.maps.event.addListener(marker, 'click', function () {
+            window.location.href = `/photo_page.html?=note_id=${diary}`
+        });
+
+    })
+}
+
+loadStampmap()

@@ -11,20 +11,23 @@ async function showAiFeed() {
   })
   const response_json = await response.json()
 
-  // $('#ai_feed_box').empty()
+  $('#ai_feed_box').empty()
 
   response_json.forEach((a) => {
     if (a['location'] && a['location'] != '주소가 없으면 ai 사용이 어렵습니다!') {
       console.log(a)
       let temp_html = `
-                        <div id='${a['id']}'>
-                          <div style="display: flex; justify-content: space-between;">
-                            <h5 style="font-size:15px">목적지 : ${a['title']}</h5>
+                        <div>
+                          <div name="${a['id']}" style="display: flex; justify-content: space-between;">
+                            <div>
+                              <h5 style="font-size:13px ">목적지 : ${a['title']}</h5>
+                              <h5 style="font-size:13px ">카테고리 : ${a['category'] ?? '카테고리없음'}</h5>
+                              <h5 style="font-size:12px">주소 : ${a['location']}</h5>
+                            </div>
                             <div>
                               <input type="checkbox" id="check${a['id']}"><label for="check${a['id']}"></label>
                             </div>
                           </div>
-                          <h5 style="font-size:15px">주소 : ${a['location']}</h5>
                           <hr>
                         </div>
                       `
@@ -63,12 +66,30 @@ async function showAiFeed() {
 showAiFeed()
 
 function saveAiFeed() {
-  if ($('#ai_feed_box input[type=checkbox]:checked').not('#checkAll').length === 0) {
+  const selItems = $('#ai_feed_box input[type=checkbox]:checked').not('#checkAll');
+  const existItems = $('#ai_work_box').children().length;
+  const availSpace = 10 - existItems;
+
+  if (selItems.length === 0) {
     alert('선택한 요소가 없습니다!');
     return;
   }
 
-  $('#ai_feed_box input[type=checkbox]:checked').not('#checkAll').each(function () {
+  if (availSpace <= 0) {
+    alert('이미 10개의 아이템이 있습니다. 더 이상 추가할 수 없습니다!');
+    return;
+  }
+
+  selItems.each(function (idx) {
+    // If adding this item will exceed 10 items, stop adding.
+    if (idx >= availSpace) {
+      alert('최대 10개의 항목만 추가 가능합니다!');
+      // Remaining items and 'Select All' checkbox should be unchecked
+      selItems.slice(idx).prop('checked', false);
+      $('#checkAll').prop('checked', false);
+      return false; // Stop .each loop
+    }
+
     let checkedDiv = $(this).parent().parent().parent();
     $('#ai_work_box').append(checkedDiv);
 
@@ -82,6 +103,7 @@ function saveAiFeed() {
   // 전체 선택 체크 여부 갱신
   updateCheckAllStatus();
 }
+
 
 function deleteAiFeed() {
   if ($('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').length === 0) {
@@ -125,4 +147,9 @@ function updateCheckAllStatus() {
   } else {
     $('#checkAll2').prop('checked', false);
   }
+}
+
+
+async function aiStart() {
+
 }

@@ -82,7 +82,7 @@ body>.site-body {
 .navbar-toggler:focus {
   box-shadow: none !important;
 }
-
+ 
 /* ul.navbar {
   display: flex;
   margin: 0;
@@ -812,10 +812,8 @@ input[type="checkbox"]:checked+label {
 }
 
 .stamp-map{
-  /* float: right; 
-  background-color: aliceblue;  */
-  width: 600px; 
-  height: 650px; 
-  margin: 10px; 
-  /* border-radius: 10px; */
+  width: 650px; 
+  height: 600px; 
+  margin: 15px auto auto auto; 
+  border-radius: 10px;
 }
