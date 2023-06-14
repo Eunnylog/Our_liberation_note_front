@@ -801,10 +801,19 @@ input[type="checkbox"]:checked+label {
   color: #777;
 }
 
+/* 마이페이지 맵 */
+.map-box{
+  background-color: #D7F2FF;
+  border-radius: 10px;
+  float: right;
+  grid-column: 3/6; 
+  grid-row: 1/6; 
+  margin-right: 40px;
+}
 
-.feed_item {
-  display: inline-block;
-  vertical-align: top;
-  width: 200px;
-  margin-right: 20px;
+.stamp-map{
+  width: 650px; 
+  height: 600px; 
+  margin: 15px auto auto auto; 
+  border-radius: 10px;
 }
