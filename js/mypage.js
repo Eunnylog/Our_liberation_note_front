@@ -1,11 +1,11 @@
-let back_url = 'https://api.miyeong.net'
+let back_url = 'http://127.0.0.1:8000'
 // Access Token 값 불러오기
 const access_token = localStorage.getItem("access");
 
 // payload 값 가져오기 -> name, user_id 가능!
 const payload = localStorage.getItem('payload')
 const payload_parse = JSON.parse(payload)
-const user = JSON.parse(payload)['nickname']
+const user = JSON.parse(payload)['email']
 console.log(payload_parse)
 
 // 사용자의 ID 값을 추출하여 변수에 할당

@@ -68,16 +68,16 @@ async function handleSignup() {
 
 // 로그인
 async function handleSignin() {
-  const nickname = document.getElementById("login-nickname").value
+  const email = document.getElementById("login-nickname").value
   const password = document.getElementById("login-password").value
 
-  const response = await fetch(`https://api.miyeong.net/user/login/`, {
+  const response = await fetch(`http://127.0.0.1:8000/user/login/`, {
     headers: {
       'content-type': 'application/json',
     },
     method: 'POST',
     body: JSON.stringify({
-      "nickname": nickname,
+      "email": email,
       "password": password,
     })
   })
