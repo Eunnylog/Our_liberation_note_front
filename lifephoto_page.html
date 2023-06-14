@@ -98,7 +98,7 @@
                                     <button class="kakao" onclick="KakaoLogin()">Kakao</button>
                                     <button class="google" onclick="googleLogin()">Google</button>
                                     <button class="naver" onclick="naverLogin()">Naver</button>
-                                    <button class="facebook" onclick="facebookLogin()">Facebook</button>
+                                    <!-- <button class="facebook" onclick="facebookLogin()">Facebook</button> -->
                                 </div>
                             </div>
                         </div>
@@ -121,8 +121,8 @@
                         <div class="inner-cont">
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
-                                    <input name="nickname" id="login-nickname" type="nickname" class="form-control"
-                                        placeholder="nickname">
+                                    <input name="email" id="login-email" type="email" class="form-control"
+                                        placeholder="email">
                                     <input name="password" id="login-password" type="password" class="form-control"
                                         placeholder="Password">
                                     <button type="button" onclick="handleSignin()" class="btn btn-primary"
@@ -138,7 +138,7 @@
                                 <button class="kakao" onclick="KakaoLogin()">Kakao</button>
                                 <button class="google" onclick="googleLogin()">Google</button>
                                 <button class="naver" onclick="naverLogin()">Naver</button>
-                                <button class="facebook" onclick="facebookLogin()">Facebook</button>
+                                <!-- <button class="facebook" onclick="facebookLogin()">Facebook</button> -->
                             </div>
                         </div>
                     </div>
@@ -188,17 +188,17 @@
                                     <input name="groupname" id="groupname" type="name" class="form-control"
                                         placeholder="그룹이름">
                                     <div style="display: flex;">
-                                        <input name="addnickname" id="addnickname" type="nickname" class="form-control"
-                                            placeholder="추가할 멤버 닉네임" style="width: 300px;">
+                                        <input name="addemail" id="addemail" type="email" class="form-control"
+                                            placeholder="추가할 멤버 이메일" style="width: 300px;">
                                         <button type="button" class="signup" onclick="addMember()"
                                             style="width: 100px; margin-left: 10px;">추가</button>
                                     </div>
                                     <div style="display:flex;">
-                                        <p style="justify-content: left;"> 닉네임 </p>
+                                        <p style="justify-content: left;"> 이메일 </p>
                                         <ul>
-                                            <li>닉네임1</li><br>
-                                            <li>닉네임2</li><br>
-                                            <li>닉네임3</li><br>
+                                            <li>이메일1</li><br>
+                                            <li>이메일2</li><br>
+                                            <li>이메일3</li><br>
                                         </ul>
                                     </div>
                                     <div class="sign-up" style="display: flex;">
@@ -207,31 +207,6 @@
                                             style="margin-right: 10px; background-color: #60749d;">취소</button>
                                         <button type="button" class="signup" onclick="addGroup()">저장</button>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 닉네임 생성 모달창 -->
-    <div class="modal fade" id="makenickname" tabindex="-1" aria-labelledby="su" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="su">
-                        Make Nickname</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="container">
-                    <div class="global-cont">
-                        <div class="inner-cont">
-                            <div class="sign-in-up">
-                                <form class="sign-in-form active">
-                                    <input name="makenickname" id="modal-makenickname" type="nickname"
-                                        class="form-control" placeholder="닉네임">
-                                    <button type="button" class="signup" onclick="addNickname()">저장</button>
                                 </form>
                             </div>
                         </div>

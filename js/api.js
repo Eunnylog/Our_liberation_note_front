@@ -1,5 +1,5 @@
 // 기본 URL
-const backend_base_url = "http://127.0.0.1:8000"
+const backend_base_url = "https://api.miyeong.net"
 const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
@@ -68,10 +68,10 @@ async function handleSignup() {
 
 // 로그인
 async function handleSignin() {
-  const email = document.getElementById("login-nickname").value
+  const email = document.getElementById("login-email").value
   const password = document.getElementById("login-password").value
 
-  const response = await fetch(`http://127.0.0.1:8000/user/login/`, {
+  const response = await fetch(`https://api.miyeong.net/user/login/`, {
     headers: {
       'content-type': 'application/json',
     },
@@ -429,8 +429,4 @@ function addGroup() {
 // 멤버 추가
 function addMember() {
   alert("멤버가 추가되었습니다.")
-}
-// 닉네임 추가
-function addNickname() {
-  alert("닉네임이 추가되었습니다!")
 }
