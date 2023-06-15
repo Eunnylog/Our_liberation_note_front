@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             PhotoButton: {
                 text: 'Photo Book',
                 click: function () {
-                    window.location.href = `/photo_page.html?=note_id=${note_id}`
+                    window.location.href = `/photo_page.html?note_id=${note_id}`
                 }
             }
         },
