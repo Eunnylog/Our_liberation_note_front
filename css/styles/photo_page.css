@@ -74,6 +74,33 @@ body {
 	transform: scale(1.15);
 }
 
+.filebox .upload-name {
+	display: inline-block;
+	height: 40px;
+	padding: 0 10px;
+	vertical-align: left;
+	border: 1px solid #dddddd;
+	width: 78%;
+	color: #999999;
+}
+
+/* 사진 추가 모달 속 사진추가 버튼 css */
+.filebox label {
+	display: inline-block;
+	padding: 8.5px 20px;
+	color: #fff;
+	vertical-align: right;
+	background-color: #1f489a;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: bold;
+	height: 40px;
+	margin-left: 0px;
+	border-radius: 4px;
+	color: white;
+	cursor: pointer;
+}
+
 
 
 /*
