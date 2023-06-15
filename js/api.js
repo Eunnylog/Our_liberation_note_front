@@ -167,11 +167,10 @@ function savePayIsSubscribe() {
 
 if (localStorage.getItem("social")) {
 } else if (location.href.split('=')[1]) {
-  // 인가 코드 변수에 담기
-  // const kakao_code = location.href.split('=')[1]
+  // 각 서비스 구분하기 위해 현재 url 변수 할당
   const currentUrl = location.href
   console.log("url", currentUrl)
-  // 현재 URL에서 code를 뽑아온다
+
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const state = location.href.split('=')[2] // 카카오 네이버&구글 구분
@@ -184,7 +183,7 @@ if (localStorage.getItem("social")) {
     if (state) {
       if (currentUrl.includes("google")) {
         console.log("구글", code)
-        // 인코딩된 url 디코딩 수행
+        // 구글은 인코딩된 url 디코딩 후 localStorage에 저장
         const encodeCode = code
         const decodeCode = decodeURIComponent(encodeCode.replace(/\+/g, " "))
         localStorage.setItem('code', decodeCode)
