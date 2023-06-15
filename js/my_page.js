@@ -111,90 +111,38 @@ async function getMarkerStamps(photo_location) {
     }
 }
 
-// async function loadStampPhotopage(location) {
-
-//     const response = await getMarkerStamps(location);
-
-//     const title = document.getElementById("stamp-modal-title")
-//     title.innerText = response[0].photo.location
-
-//     console.log(response)
-
-
-//     $('#stamp-modal-body').empty()
-
-//     const addedDiaryNames = []
-
-//     response.forEach((stamp) => {
-//         const diary_id = stamp.photo.diary_id
-//         const diary_name = stamp.photo.diary_name
-//         const image = backend_base_url + '/note' + stamp.photo.image
-        
-//         if (!addedDiaryNames.includes(diary_name)) {
-//             let diary_temp_html = ` <br>
-//                                     <a href='/photo_page.html?=note_id=${diary_id}' style="text-decoration: none; color: black;">
-//                                         <span class="diary-link-text">${diary_name} ></span>
-//                                     </a>
-//                                     <br>
-//                                     <img src="${image}" alt="Image description" style="max-width: 100%; max-height: 100%;">                                      
-//                                     `
-
-//             $('#stamp-modal-body').append(diary_temp_html)
-//             addedDiaryNames.push(diary_name)
-
-//         } else {
-//             let diary_temp_html = `<img src=${image} alt="Image description" style="max-width: 100%; max-height: 100%;">`
-//             $('#stamp-modal-body').append(diary_temp_html)
-//         }
-//     });
-// }
-
 async function loadStampPhotopage(location) {
+
     const response = await getMarkerStamps(location);
 
-    const title = document.getElementById("stamp-modal-title");
-    title.innerText = response[0].photo.location;
+    const title = document.getElementById("stamp-modal-title")
+    title.innerText = response[0].photo.location
 
-    console.log(response);
+    console.log(response)
 
-    $('#stamp-modal-body').empty();
 
-    const addedDiaryNames = [];
-    let photoRowHtml = '';  // 한 줄에 대한 HTML 문자열
-    let photoCount = 0;  // 사진 개수를 세는 변수
+    $('#stamp-modal-body').empty()
+
+    const addedDiaryNames = []
 
     response.forEach((stamp) => {
-        const diary_id = stamp.photo.diary_id;
-        const diary_name = stamp.photo.diary_name;
-        const image = backend_base_url + '/note' + stamp.photo.image;
-
+        const diary_id = stamp.photo.diary_id
+        const diary_name = stamp.photo.diary_name
+        const image = backend_base_url + '/note' + stamp.photo.image
+        
         if (!addedDiaryNames.includes(diary_name)) {
-            if (photoCount % 3 === 0 && photoCount !== 0) {
-                // 한 줄에 3개의 사진을 배치한 경우, 이전 줄을 추가하고 새로운 줄을 시작합니다.
-                let rowHtmlWrapper = `<div class="photo-row">${photoRowHtml}</div>`;
-                $('#stamp-modal-body').append(rowHtmlWrapper);
-                photoRowHtml = '';
-            }
+            let diary_temp_html = ` <a href='/photo_page.html?=note_id=${diary_id}' style="text-decoration: none; color: black;">
+                                        <div class="diary-link-text" style="margin-top:10px;">${diary_name} ></div></a>
+                                    <img src="${image}" alt="Image description" style="width: 142px; height: 142px; margin-left:2px;">                                      
+                                  `
+            $('#stamp-modal-body').append(diary_temp_html)
+            addedDiaryNames.push(diary_name)
 
-            // 새로운 사진을 추가합니다.
-            const photoHtml = `<div class="photo">
-                                    <a href='/photo_page.html?=note_id=${diary_id}' style="text-decoration: none; color: black;">
-                                        <span class="diary-link-text">${diary_name} ></span>
-                                    </a>
-                                    <br>
-                                    <img src="${image}" alt="Image description" style="max-width: 100%; max-height: 100%;">
-                                </div>`;
-            photoRowHtml += photoHtml;
-            addedDiaryNames.push(diary_name);
-            photoCount++;
+        } else {
+            let diary_temp_html = `<img src=${image} alt="Image description" class="stamp-photo">`
+            $('#stamp-modal-body').append(diary_temp_html)
         }
     });
-
-    // 마지막 줄에 대한 HTML을 추가합니다.
-    if (photoRowHtml !== '') {
-        let rowHtmlWrapper = `<div class="photo-row">${photoRowHtml}</div>`;
-        $('#stamp-modal-body').append(rowHtmlWrapper);
-    }
 }
     
 loadUserprofile()

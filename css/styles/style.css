@@ -825,3 +825,11 @@ input[type="checkbox"]:checked+label {
 .diary-link-text:hover {
   text-decoration: underline; 
 }
+
+.stamp-photo {
+  width: 142px; 
+  height: 142px;
+  margin: 2px 2px 2px 2px;
+  /* border-radius: 10px; */
+
+}
