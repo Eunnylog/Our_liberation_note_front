@@ -77,7 +77,7 @@ async function handleSignin() {
     },
     method: 'POST',
     body: JSON.stringify({
-      "nickname": nickname,
+      "email": nickname,
       "password": password,
     })
   })

@@ -25,7 +25,8 @@
 
         <h1 class="heading">우리들의 해방일기<span>Photo gallery</span></h1>
 
-        <a class="gallery" href="" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button">사진</a>
+        <a class="gallery" href="" data-bs-toggle="modal" data-bs-target="#photo"
+            id="photo-button"><button>사진추가하기</button></a>
     </div>
 
     <main class="site-body" style="margin-top: 30px;">
@@ -57,6 +58,27 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
                         </button>
                         <button type="button" class="btn btn-primary" onclick="addPhoto()">저장</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="photo-detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-xl">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        사진 상세</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form enctype="multipart/form-data">
+                    <div class="modal-body" id = "photo-d">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="photo_detail()">수정</button>
                     </div>
                 </form>
             </div>
