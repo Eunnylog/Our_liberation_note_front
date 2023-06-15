@@ -51,6 +51,7 @@ async function searchLocation() {
             console.error(error);
             alert('문제가 발생했습니다!')
         });
+        
 }
 
 function handleRadio() {
