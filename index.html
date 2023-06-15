@@ -19,7 +19,6 @@
     <script src="/js/api.js"></script>
     <script src="/js/index.js"></script>
 </head>
-
 <body>
     <!-- nav start -->
     <header class="site-header navbar">
@@ -77,7 +76,7 @@
                                     <span>or</span>
                                 </div>
                                 <div class="social-login">
-                                    <button class="kakao" onclick="KakaoLogin()">Kakao</button>
+                                    <button class="kakao" onclick="kakaoLogin()">Kakao</button>
                                     <button class="google" onclick="googleLogin()">Google</button>
                                     <button class="naver" onclick="naverLogin()">Naver</button>
                                     <button class="github" onclick="githubLogin()">GitHub</button>
@@ -103,8 +102,8 @@
                         <div class="inner-cont">
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
-                                    <input name="nickname" id="login-nickname" type="nickname" class="form-control"
-                                        placeholder="nickname">
+                                    <input name="email" id="login-email" type="email" class="form-control"
+                                        placeholder="email">
                                     <input name="password" id="login-password" type="password" class="form-control"
                                         placeholder="Password">
                                     <button type="button" onclick="handleSignin()" class="btn btn-primary"
@@ -117,7 +116,8 @@
                                 <span>or</span>
                             </div>
                             <div class="social-login">
-                                <button class="kakao" onclick="KakaoLogin()">Kakao</button>
+                                <!-- ㄹㅎㅇ너ㅘㅣㅇ너ㅘㅣㄴ/ -->
+                                <button class="kakao" onclick="kakaoLogin()">Kakao</button>
                                 <button class="google" onclick="googleLogin()">Google</button>
                                 <button class="naver" onclick="naverLogin()">Naver</button>
                                 <button class="github" onclick="githubLogin()">GitHub</button>
