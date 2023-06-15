@@ -1,9 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
 <head>
     <meta charset="utf-8">
-    <link href="/css/styles/photo_page.css" rel="stylesheet" />
     <link href="/css/styles/login.css" rel="stylesheet" type="text/css" />
     <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
     <link href="/css/styles/theme.css" rel="stylesheet" type="text/css" />
+    <link href="/css/styles/photo_page.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -12,51 +15,153 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="/js/loader.js"></script>
 </head>
+
 <body>
     <header class="site-header navbar">
         <!-- navbar -->
     </header>
+
     <div class="container">
 
-    <h1 class="heading">우리들의 해방일기<span>Photo gallery</span></h1>
+        <h1 class="heading">우리들의 해방일기<span>Photo gallery</span></h1>
 
-    <div class="gallery">
+        <a class="btn-close" href="" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"><button
+                type="button" class="btn btn-primary">사진추가하기</button></a>
+    </div>
 
-        <div class="gallery-item">
-            <img class="gallery-image"
-                src="https://img.kbs.co.kr/kbs/620/news.kbs.co.kr/data/fckeditor/new/image/2021/05/07/314691620354493423.jpg"
-                alt="여행을 떠나요 to ocean">
+    <main class="site-body" style="margin-top: 30px;">
+        <article class="review-detail max-content-width">
+            <div class="gallery" id="photo_info">
+                <!-- 이미지 갤러리 아이템들이 동적으로 추가될 공간 -->
+            </div>
+        </article>
+    </main>
+
+    <!-- 
+    <div class="modal fade" id="photo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-xl">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        사진 추가</h5>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="album" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <input id="image" name="files" multiple accept=".jpg, .png, .jpeg" type="file"
+                            class="form-control" placeholder="사진">
+                        <input name="title" id="title" type="text" class="form-control" placeholder="제목">
+                        <input name="location" id="location" type="text" class="form-control" placeholder="주소">
+                        <input id="memo" type="text" class="form-control" placeholder="메모">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="addPhoto()">저장</button>
+                    </div>
+                </form>
+            </div>
         </div>
+    </div> -->
 
-        <div class="gallery-item">
-            <img class="gallery-image"
-                src="https://www.visakorea.com/content/dam/VCOM/regional/ap/southkorea/travelwithvisa/marquee-travel-with-visa-800x450.jpg"
-                alt="sunset behind San Francisco city skyline">
-        </div>
-
-        <div class="gallery-item">
-            <img class="gallery-image"
-                src="https://images.unsplash.com/photo-1506045412240-22980140a405?w=500&h=500&fit=crop"
-                alt="people holding umbrellas on a busy street at night lit by street lights and illuminated signs in Tokyo, Japan">
-        </div>
-
-        <div class="gallery-item">
-            <img class="gallery-image"
-                src="https://images.unsplash.com/photo-1514041181368-bca62cceffcd?w=500&h=500&fit=crop"
-                alt="car interior from central back seat position showing driver and blurred view through windscreen of a busy road at night">
-        </div>
-
-        <div class="gallery-item">
-            <img class="gallery-image"
-                src="https://images.unsplash.com/photo-1445810694374-0a94739e4a03?w=500&h=500&fit=crop"
-                alt="back view of woman wearing a backpack and beanie waiting to cross the road on a busy street at night in New York City, USA">
-        </div>
-
-        <div class="gallery-item">
-            <img class="gallery-image"
-                src="https://images.unsplash.com/photo-1486334803289-1623f249dd1e?w=500&h=500&fit=crop"
-                alt="man wearing a black jacket, white shirt, blue jeans, and brown boots, playing a white electric guitar while sitting on an amp">
+    <div class="modal fade" id="photo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 700px;">
+            <div class="modal-content" style="width:700px;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        사진 추가</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="container">
+                    <div class="global-cont">
+                        <div class="inner-cont">
+                            <div class="sign-in-up">
+                                <form class="sign-in-form active">
+                                    <!-- <div>
+                                        <label class="image-upload-button" for="image-upload">
+                                            사진업로드
+                                        </label>
+                                        <input type="file" id="image-upload" multiple accept=".jpg, .png, .jpeg"
+                                            style="display: none" />
+                                    </div> -->
+                                    <div class="filebox">
+                                        <input class="upload-name" value="첨부파일" placeholder="첨부파일" multiple
+                                            accept=".jpg, .png, .jpeg" style="width: 85.3%">
+                                        <label for="image">사진추가</label>
+                                        <input type="file" id="image" style="display: none" />
+                                    </div>
+                                    <div class="input-group-append" style="width: 100%;">
+                                        <input name="name" id="name" type="text" class="form-control"
+                                            placeholder="사진 타이틀" style="width: 100%; height:40px;">
+                                    </div>
+                                    <div class="input-group-append" style="width: 100%;">
+                                        <input name="title" id="title" type="text" class="form-control"
+                                            placeholder="주소 검색" style="width: 100%; height:40px;">
+                                    </div>
+                                    <div class="input-group" style="flex-wrap: nowrap;">
+                                        <div class="input-group-append" style="width: 100%;">
+                                            <input name="location" id="location" type="text" class="form-control"
+                                                placeholder="장소" style="width: 99%; height:40px;">
+                                        </div>
+                                        <div class="input-group-append" style="width: 10%;">
+                                            <button type="button" onclick="searchLocation()" class="btn btn-primary"
+                                                style="margin-top:0px;height:40px; font-size:15px">검색</button>
+                                        </div>
+                                    </div>
+                                    <div id="search_box" style="width: 100%;  overflow: auto;"></div>
+                                    <input name="start" id="start" type="date" class="form-control">
+                                    <input name="location_x" id="location_x" type="text" class="form-control" hidden>
+                                    <input name="location_y" id="location_y" type="text" class="form-control" hidden>
+                                    <textarea name="memo" id="memo" type="textarea" class="form-control"
+                                        placeholder="memo"
+                                        style="height:200px; min-height:200px; max-height:200px"></textarea>
+                                    <div class="button-group">
+                                        <button type="button" data-bs-dismiss="modal" aria-label="Close"
+                                            onclick="handleSignin()" class="btn btn-primary"
+                                            style="width: 49%;">취소</button>
+                                        <button type="button" onclick="addPhoto()" class="btn btn-primary"
+                                            style="width: 49%;">저장</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+
+    <div class="modal fade" id="photo-detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-xl">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        사진 상세</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form enctype="multipart/form-data">
+                    <div class="modal-body" id="photo-d">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="patchPhotoBox()">수정</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/js/api_key.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/map.js"></script>
+    <script src="/js/photo_page.js"></script>
 </body>
+
+</html>
+
+<!-- 
+<div class="input-group-append" style="width: 10%;">
+    <button type="button" onclick="searchLocation()" class="btn btn-primary"
+      style="margin-top:0px;height:40px; font-size:15px">검색</button>
+  </div> -->
