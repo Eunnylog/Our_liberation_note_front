@@ -39,16 +39,14 @@
             style="text-align: center; font-size:20px; border: transparent; background-color: transparent; ">
             로그아웃</button>
         </div>
-        <div
-          class="map-box" id="map_box">
+        <div class="map-box" id="map_box">
           <div style="margin-left: 20px; margin-top: 10px; font-size: 30px; font-weight: bold;">Map</div>
           <div class="stamp-map" id="stamp-map"></div>
         </div>
         <div id="user_info"
           style=" border-radius: 10px; float:left; margin-top:10px; margin-left: 10px; grid-row: 2; background-color: #D7F2FF;">
           <p style="text-align: center; font-size:20px; margin-top: 10px;">My group</p>
-          <div id="my_groups" style="margin-left: 15px;">
-          </div>
+          <div id="my_groups" style="margin-left: 15px;"></div>
           <div class="space-between-divs" style=" margin-top: 50px;"></div>
           <div>
             <a href="" data-bs-toggle="modal" data-bs-target="#makegroup" id="makegroup-button"
@@ -59,6 +57,24 @@
       </div>
     </article>
   </main>
+  <!-- 스탬프 사진 모달 -->
+  <div id="stamp-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="stamp-modal-title" class="modal-title">주소</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div id="stamp-modal-body" class="modal-body">
+          내용
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="">사진첩 가기?</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- 회원가입 모달창 -->
   <div class="modal fade" id="signup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
     <div class="modal-dialog">

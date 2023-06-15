@@ -817,3 +817,11 @@ input[type="checkbox"]:checked+label {
   margin: 15px auto auto auto; 
   border-radius: 10px;
 }
+
+.diary-link-text {
+  transition: color 0.15s ease;
+}
+
+.diary-link-text:hover {
+  text-decoration: underline; 
+}

@@ -2,6 +2,51 @@
 const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 
+if (localStorage.getItem("kakao")){
+} else if (location.href.split('=')[1]){
+    const kakao_code = location.href.split('=')[1]
+    kakaoLoginApi(kakao_code)
+}
+
+//카카오로그인
+function kakao_login_code() {
+  const kakao_id = '27386ded36fc888c04457952c6150915'
+  const redirect_uri = 'http://127.0.0.1:5500/'
+  window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${kakao_id}&redirect_uri=${redirect_uri}&response_type=code`
+}
+
+//카카오 로그인 back으로 전달
+async function kakaoLoginApi(kakao_code) {
+  const response = await fetch(`${backend_base_url}/user/kakao/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ "code": kakao_code }),
+  })
+  response_json = await response.json()
+
+  if (response.status === 200) {
+    localStorage.setItem("access", response_json.access);
+    localStorage.setItem("refresh", response_json.refresh);
+    localStorage.setItem('review_cnt', response_json.review_cnt);
+
+    const base64Url = response_json.access.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64).split('').map(function (c) {
+        return '%' + (
+          '00' + c.charCodeAt(0).toString(16)
+        ).slice(-2);
+      }).join('')
+    );
+    localStorage.setItem("payload", jsonPayload);
+  } else {
+    alert(response_json['error'])
+    window.history.back()
+  }
+}
+
 let jwtToken;
 
 async function navigateToDetailPage() {
@@ -282,7 +327,7 @@ async function handlesUserDelete() {
   const payload = localStorage.getItem("payload");
   const payload_parse = JSON.parse(payload)
 
-  const response = await fetch(`${backend_base_url}/users/delete/${payload_parse.user_id}/`, {
+  const response = await fetch(`${backend_base_url}/user/delete/${payload_parse.user_id}/`, {
     headers: {
       "Authorization": `Bearer ${access_token}`
     },
@@ -458,3 +503,4 @@ async function getUserprofile() {
 
 
 }
+
