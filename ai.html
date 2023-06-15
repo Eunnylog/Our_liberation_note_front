@@ -52,7 +52,7 @@
                     <label for="checkAll2"></label>
                     <button class="btn btn-secondary" onclick="deleteAiFeed()"
                         style="margin-bottom: 30px; background-color: #4e79ce; margin-right:20px">버리기</button>
-                    <button class="btn btn-secondary" onclick="aiStart()"
+                    <button class="btn btn-secondary" onclick="aiStart()" id="ai_start_btn"
                         style="margin-bottom: 30px; background-color: #4e79ce;">AI 일
                         하기</button>
                 </div>
@@ -211,6 +211,44 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Carousel 형식의 모달 -->
+    <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content" style="height: 500px;">
+                <div class="modal-header">
+                    <h5 class="modal-title">Info</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="position: relative;">
+                    <!-- Carousel -->
+                    <div id="carouselExampleIndicators" class="carousel slide">
+                        <ol class="carousel-indicators" id="control_info">
+                            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" hidden class="active">
+                            </li>
+                        </ol>
+                        <div class="carousel-inner" id="info_box">
+
+                        </div>
+                    </div>
+                    <div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

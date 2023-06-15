@@ -1,6 +1,6 @@
 let plan_data = []
 let access_token = localStorage.getItem('access')
-let back_url = 'http://127.0.0.1:8000'
+let back_url = 'http://api.miyeong.net'
 
 async function showPlanPage() {
     params = new URLSearchParams(window.location.search);
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             PhotoButton: {
                 text: 'Photo Book',
                 click: function () {
-                    window.location.href = `/photo_page.html?=note_id=${note_id}`
+                    window.location.href = `/photo_page.html?note_id=${note_id}`
                 }
             }
         },
