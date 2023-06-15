@@ -19,7 +19,7 @@ async function loadUserprofile() {
         let temp_html = `<li>${name}`
 
         if (group.master == profile.email) {
-            temp_html += ' <span style="color: red">(master)</span>';
+            temp_html += ' <span style="color: red">(Captain)</span>';
         }
 
         temp_html += '</li>'
@@ -117,9 +117,6 @@ async function loadStampPhotopage(location) {
 
     const title = document.getElementById("stamp-modal-title")
     title.innerText = response[0].photo.location
-
-    console.log(response)
-
 
     $('#stamp-modal-body').empty()
 

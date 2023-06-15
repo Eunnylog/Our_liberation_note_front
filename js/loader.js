@@ -29,6 +29,7 @@ async function injectNavbar() {
 
         const payload = localStorage.getItem("payload")
         const payload_parse = JSON.parse(payload)
+        console.log(payload_parse.email)
 
         const intro = document.getElementById("intro")
 

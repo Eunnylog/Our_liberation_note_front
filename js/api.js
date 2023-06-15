@@ -1,5 +1,5 @@
 // 기본 URL
-const backend_base_url = "https://api.miyeong.net"
+const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
@@ -68,7 +68,7 @@ async function handleSignup() {
 
 // 로그인
 async function handleSignin() {
-  const nickname = document.getElementById("login-nickname").value
+  const email = document.getElementById("login-email").value
   const password = document.getElementById("login-password").value
 
   const response = await fetch(`${backend_base_url}/user/login/`, {
@@ -77,7 +77,7 @@ async function handleSignin() {
     },
     method: 'POST',
     body: JSON.stringify({
-      "email": nickname,
+      "email": email,
       "password": password,
     })
   })
@@ -223,7 +223,7 @@ async function naverLogin() {
   }
 }
 
-async function githubLogin() {
+async function facebookLogin() {
   const cookies = document.cookie.split(';');
 
   for (let i = 0; i < cookies.length; i++) {
@@ -237,7 +237,7 @@ async function githubLogin() {
   }
 
   if (!jwtToken) {
-    window.location.replace(`${backend_base_url}/users/github/login/`);
+    window.location.replace(`${backend_base_url}/users/facebook/login/`);
   }
 }
 
