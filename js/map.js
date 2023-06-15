@@ -28,7 +28,7 @@ async function searchLocation() {
                 let temp_html = `
                                 <div style="display: flex; align-items: center; justify-content: space-between; margin: 20px auto;">
                                     <div>
-                                        <h3 style="font-size: 15px; margin-bottom: 5px;" id='name_${index}' >${place_name} - ${place_category}</h3>
+                                        <h3 style="font-size: 15px; margin-bottom: 5px;" id='name_${index}' >${place_name} / ${place_category}</h3>
                                         <a href="${place_url}" id='address_${index}' target="_blank" style="font-size: 15px; color: black;">${address_name}</a>
                                     </div>
                                     <div style="display: flex; align-items: center;">
@@ -49,6 +49,7 @@ async function searchLocation() {
             console.error(error);
             alert('문제가 발생했습니다!')
         });
+        
 }
 
 function handleRadio() {
@@ -59,8 +60,9 @@ function handleRadio() {
         let selected_name = document.getElementById(`name_${selectedIndex}`).innerText;
         let location_x = document.getElementById(`x_${selectedIndex}`).value;
         let location_y = document.getElementById(`y_${selectedIndex}`).value;
-        let name = selected_name.split('-')[0].trim();
-        let category = selected_name.split('-')[1].trim();
+        let name = selected_name.split('/')[0].trim();
+        let splitName = selected_name.split('/');
+        let category = splitName[splitName.length - 1].trim();
         // 선택한 요소에 대한 처리
         document.getElementById("location").value = selected_address;
         document.getElementById("title").value = name;

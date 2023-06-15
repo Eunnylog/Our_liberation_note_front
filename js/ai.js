@@ -20,9 +20,11 @@ async function showAiFeed() {
                         <div>
                           <div name="${a['id']}" style="display: flex; justify-content: space-between;">
                             <div>
-                              <h5 style="font-size:13px ">목적지 : ${a['title']}</h5>
-                              <h5 style="font-size:13px ">카테고리 : ${a['category'] ?? '카테고리없음'}</h5>
-                              <h5 style="font-size:12px">주소 : ${a['location']}</h5>
+                              <h5 id='title' style="font-size:13px ">목적지 : ${a['title']}</h5>
+                              <h5 id='category' style="font-size:13px ">카테고리 : ${a['category'] ?? '카테고리없음'}</h5>
+                              <h5 id='location' style="font-size:12px">주소 : ${a['location']}</h5>
+                              <h5 id='location_x' hidden>${a['location_x']}</h5>
+                              <h5 id='location_y' hidden>${a['location_y']}</h5>
                             </div>
                             <div>
                               <input type="checkbox" id="check${a['id']}"><label for="check${a['id']}"></label>
@@ -128,6 +130,14 @@ function deleteAiFeed() {
 
 
 function updateCheckAllStatus() {
+  const btnElement = document.getElementById('ai_start_btn');
+  if (btnElement.innerText == '결과보기') {
+    btnElement.innerText = 'AI 일 하기';
+    btnElement.setAttribute("onClick", `aiStart()`)
+    btnElement.setAttribute("data-bs-toggle", ``)
+    btnElement.setAttribute("data-bs-target", ``)
+  }
+
   const totalLeft = $('#ai_feed_box input[type=checkbox]').not('#checkAll').length;
   const checkedLeft = $('#ai_feed_box input[type=checkbox]:checked').not('#checkAll').length;
 
@@ -151,5 +161,58 @@ function updateCheckAllStatus() {
 
 
 async function aiStart() {
+  let destinations = [];
+  $('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').each(function () {
+    let checkedDiv = $(this).closest('div[name]');
+    let title = checkedDiv.find('#title').text().split(':')[1].trim();
+    let category = checkedDiv.find('#category').text().split(':')[1].trim();
+    let location_x = checkedDiv.find('#location_x').text();
+    let location_y = checkedDiv.find('#location_y').text();
+    let destination = {
+      category: category,
+      title: title,
+      x: location_x,
+      y: location_y
+    };
+
+    destinations.push(destination);
+
+  });
+  const response = await fetch(`${back_url}/note/search`, {
+    headers: {
+      'content-type': 'application/json',
+      // "Authorization": `${access_token}`,
+    },
+    method: 'POST',
+    body: JSON.stringify({ destinations: destinations })
+  })
+  if (response.status == 200) {
+    const response_json = await response.json()
+    console.log(response_json)
+
+    let formatted_titles = response_json['title_list'].join(" -> ");
+
+    $('#info_box').empty()
+
+    let temp_html1 = `
+                      <div class="carousel-item active" style="padding: 10px;">
+                          <h3>결과)</h3>
+                          <h5>${formatted_titles}</h5>
+                      </div>
+                    `
+
+    $('#info_box').append(temp_html1)
+
+    const btnElement = document.getElementById('ai_start_btn');
+    btnElement.innerText = '결과보기';
+    btnElement.setAttribute("onClick", ``)
+    btnElement.setAttribute("data-bs-toggle", `modal`)
+    btnElement.setAttribute("data-bs-target", `#carouselModal`)
+
+    $('#carouselModal').modal('show');
+
+  } else {
+    alert('문제가 발생했습니다!')
+  }
 
 }

@@ -74,8 +74,7 @@ async function handleSignin() {
   const email = document.getElementById("login-email").value
   const password = document.getElementById("login-password").value
 
-  const response = await fetch(`https://api.miyeong.net/user/login/`, {
-    // const response = await fetch(`http://127.0.0.1:8000/user/login/`, {
+  const response = await fetch(`${backend_base_url}/user/login/`, {
     headers: {
       'content-type': 'application/json',
     },
@@ -188,12 +187,12 @@ if (localStorage.getItem("social")) {
         const decodeCode = decodeURIComponent(encodeCode.replace(/\+/g, " "))
         localStorage.setItem('code', decodeCode)
         console.log("디코딩", decodeCode)
-        googleLoginApi(decodeCode)
+        googleLoginApi(decodeCode) // googleLoginApi 함수 호출
       } else {
         console.log("네이버")
         localStorage.setItem('code', code);
         localStorage.setItem('state', state);
-        naverLoginApi(code)
+        naverLoginApi(code) // naverLoginApi 함수 호출
       }
 
     } else {
@@ -361,7 +360,7 @@ async function naverLoginApi(Code) {
   }
 }
 
-async function githubLogin() {
+async function facebookLogin() {
   const cookies = document.cookie.split(';');
 
   for (let i = 0; i < cookies.length; i++) {
@@ -375,7 +374,7 @@ async function githubLogin() {
   }
 
   if (!jwtToken) {
-    window.location.replace(`${backend_base_url}/users/github/login/`);
+    window.location.replace(`${backend_base_url}/users/facebook/login/`);
   }
 }
 
@@ -573,4 +572,28 @@ function addMember() {
 // 닉네임 추가
 function addNickname() {
   alert("닉네임이 추가되었습니다!")
+}
+
+// 마이페이지 유저프로필
+async function getUserprofile() {
+  let token = localStorage.getItem("access")
+  const payload = localStorage.getItem("payload");
+  const payload_parse = JSON.parse(payload)
+
+  const response = await fetch(`${backend_base_url}/user/my-page/${payload_parse.user_id}/`, {
+    headers: {
+      "Authorization": `Bearer ${token}`
+    },
+    method: 'GET'
+  })
+
+  if (response.status == 200) {
+    const response_json = await response.json()
+
+    return response_json
+  } else {
+    alert("불러오는데 실패했습니다")
+  }
+
+
 }
