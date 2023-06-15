@@ -1,5 +1,5 @@
 // 기본 URL
-const backend_base_url = "http://127.0.0.1:8000"
+const backend_base_url = "https://api.miyeong.net"
 const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
@@ -27,11 +27,12 @@ async function navigateToDetailPage() {
   }
 }
 
-
+// 회원 가입
 async function handleSignup() {
   const email = document.getElementById("email").value
   const password = document.getElementById("password").value
   const password2 = document.getElementById("password2").value
+  const confirmcode = document.getElementById("confirmcode").value
 
   const response = await fetch(`${backend_base_url}/user/signup/`, {
     headers: {
@@ -41,7 +42,8 @@ async function handleSignup() {
     body: JSON.stringify({
       "email": email,
       "password": password,
-      "password2": password2
+      "password2": password2,
+      "code": confirmcode
     })
   })
   console.log()
@@ -49,6 +51,7 @@ async function handleSignup() {
   if (response.status == 201) {
     document.getElementById("signup").querySelector('[data-bs-dismiss="modal"]').click();
     alert("회원가입이 완료되었습니다!")
+    window.location.replace(`${frontend_base_url}/index.html`)
   }
   else {
 
@@ -71,8 +74,8 @@ async function handleSignin() {
   const email = document.getElementById("login-email").value
   const password = document.getElementById("login-password").value
 
-  // const response = await fetch(`https://api.miyeong.net/user/login/`, {
-  const response = await fetch(`http://127.0.0.1:8000/user/login/`, {
+  const response = await fetch(`https://api.miyeong.net/user/login/`, {
+    // const response = await fetch(`http://127.0.0.1:8000/user/login/`, {
     headers: {
       'content-type': 'application/json',
     },
@@ -106,7 +109,18 @@ async function handleSignin() {
 }
 
 // 이메일 인증코드 보내기
-function sendCode() {
+async function sendCode() {
+  const email = document.getElementById("email").value
+
+  const response = await fetch(`https://api.miyeong.net/user/sendemail/`, {
+    headers: {
+      'content-type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify({
+      "email": email,
+    })
+  })
   alert("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
 }
 
@@ -149,25 +163,6 @@ function savePayIsSubscribe() {
   const isSubscribe = payload_parse.is_subscribe
 
   localStorage.setItem("is_subscribe", isSubscribe);
-}
-
-async function KakaoSignup() {
-  const cookies = document.cookie.split(';');
-
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    const [name, value] = cookie.split('=');
-
-    if (name === "jwt_token") {
-      jwtToken = value;
-      break;
-    }
-  }
-
-  if (!jwtToken) {
-    alert("※ 카카오 계정으로 회원가입을 원하신다면 이메일 제공 선택에 꼭 동의해주세요!!")
-    window.location.replace(`${backend_base_url}/users/kakao/login/`);
-  }
 }
 
 if (localStorage.getItem("social")) {
