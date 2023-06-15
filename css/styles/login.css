@@ -136,10 +136,11 @@
 
 .inner-cont .social-login button.kakao::before {
   content: "";
-  background-image: url('/css/assets/kakao-logo.png');
-  background-size: cover;
+  background-image: url('/css/assets/kakao-logo1.png');
+  background-size: contain;
   width: 50px;
   height: 100%;
+  background-repeat: no-repeat;
 }
 
 .inner-cont .social-login button.google {
@@ -149,21 +150,23 @@
 .inner-cont .social-login button.google::before {
   content: "";
   background-image: url('/css/assets/google-logo.png');
-  background-size: cover;
+  background-size: contain;
   width: 40px;
   height: 100%;
+  background-repeat: no-repeat;
 }
 
-.inner-cont .social-login button.github {
-  background-color: #333;
+.inner-cont .social-login button.facebook {
+  background-color: #1877F2;
 }
 
-.inner-cont .social-login button.github::before {
+.inner-cont .social-login button.facebook::before {
   content: "";
-  background-image: url('/css/assets/github-logo.png');
-  background-size: cover;
+  background-image: url('/css/assets/facebook-logo.png');
+  background-size: contain;
   width: 40px;
   height: 100%;
+  background-repeat: no-repeat;
 }
 
 .inner-cont .social-login button.naver {
@@ -177,7 +180,7 @@
 
 .inner-cont .social-login button.kakao::before,
 .inner-cont .social-login button.google::before,
-.inner-cont .social-login button.github::before,
+.inner-cont .social-login button.facebook::before,
 .inner-cont .social-login button.naver::before {
   font-family: fontAwesome;
   position: absolute;
@@ -348,10 +351,11 @@
 
 .inner-cont .social-login button.kakao::before {
   content: "";
-  background-image: url('/css/assets/kakao-logo.png');
-  background-size: cover;
+  background-image: url('/css/assets/kakao-logo1.png');
+  background-size: contain;
   width: 50px;
   height: 100%;
+  background-repeat: no-repeat;
 }
 
 .inner-cont .social-login button.google {
@@ -361,21 +365,23 @@
 .inner-cont .social-login button.google::before {
   content: "";
   background-image: url('/css/assets/google-logo.png');
-  background-size: cover;
+  background-size: contain;
   width: 40px;
   height: 100%;
+  background-repeat: no-repeat;
 }
 
-.inner-cont .social-login button.github {
-  background-color: #333;
+.inner-cont .social-login button.facebook {
+  background-color: #1877F2;
 }
 
-.inner-cont .social-login button.github::before {
+.inner-cont .social-login button.facebook::before {
   content: "";
-  background-image: url('/css/assets/github-logo.png');
-  background-size: cover;
-  width: 40px;
+  background-image: url('/css/assets/facebook-logo.png');
+  background-size: contain;
+  width: 50px;
   height: 100%;
+  background-repeat: no-repeat;
 }
 
 .inner-cont .social-login button.naver {
@@ -385,14 +391,15 @@
 .inner-cont .social-login button.naver::before {
   content: "";
   background-image: url('/css/assets/naver-logo.png');
-  background-size: cover;
-  width: 40px;
+  background-size: contain;
+  width: 60px;
   height: 100%;
+  background-repeat: no-repeat;
 }
 
 .inner-cont .social-login button.kakao::before,
 .inner-cont .social-login button.google::before,
-.inner-cont .social-login button.github::before,
+.inner-cont .social-login button.facebook::before,
 .inner-cont .social-login button.naver::before {
   font-family: fontAwesome;
   position: absolute;
