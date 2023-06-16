@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         <div class="text-center">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <a class="dropdown-item styled-dropdown-item" href="#" onclick="$('#save_plan_modal').modal('show');"><span class="link-text">일정추가</span></a>
+                                    <a class="dropdown-item styled-dropdown-item" href="#" data-bs-dismiss="modal" aria-label="Close" onclick="$('#save_plan_modal').modal('show');"><span class="link-text">일정추가</span></a>
                                     <a class="dropdown-item styled-dropdown-item" href="#" onclick="window.location.href = '/ai.html?note_id=${note_id}'"><span class="link-text">AI랑 놀기</span></a>
                                     <a class="dropdown-item styled-dropdown-item" href="#" onclick="window.location.href = '/photo_page.html?note_id=${note_id}'"><span class="link-text">사진첩</span></a>
                                     <a class="dropdown-item styled-dropdown-item" href="#" onclick="window.location.href = '/lifephoto_page.html'"><span class="link-text">해방 필름</span></a>
