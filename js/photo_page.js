@@ -11,6 +11,7 @@ async function addPhoto() {
     const image = document.getElementById("image");
     const name = document.getElementById("name").value;
     const title = document.getElementById("title").value;
+    const start = document.getElementById("start").value;
     const location = document.getElementById("location").value;
     const memo = document.getElementById("memo").value;
     let location_x = document.getElementById("location_x").value
@@ -23,6 +24,7 @@ async function addPhoto() {
     formData.append("image", image.files[0]);
     formData.append("name", name);
     formData.append("title", title);
+    formData.append("start", start);
     formData.append("location", location);
     formData.append("memo", memo);
     formData.append("location_x", location_x);
@@ -109,7 +111,7 @@ async function photo_detail(photo_id) {
 
     const image = backend_base_url + '/note' + response_json["image"];
     const name = response_json["name"]
-    const title = response_json["title"]
+    const start = response_json["start"]
     const location = response_json["location"]
     const memo = response_json["memo"]
 
@@ -118,7 +120,7 @@ async function photo_detail(photo_id) {
     let temp_html = `
                     <img class="gallery-image" src="${image}">
                     <div>${name}</div>
-                    <div>${title}</div>
+                    <div>${start}</div>
                     <div>${location}</div>
                     <div>${memo}</div>
                     `
@@ -129,7 +131,8 @@ async function photo_detail(photo_id) {
 function patchPhotoBox() {
     // 수정 창으로 변경합니다.
     let image = document.getElementById("image");
-    let title = document.getElementById('photo_title').innerHTML;
+    let name = document.getElementById('photo_title').innerHTML;
+    let title = document.getElementById('location_title').innerHTML;
     let location = document.getElementById('photo_location').innerHTML;
     let memo = document.getElementById('photo_memo').innerHTML;
 
