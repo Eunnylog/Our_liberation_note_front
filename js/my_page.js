@@ -8,21 +8,26 @@ async function loadUserprofile() {
     const groups = response.groups
     const profile = response.profile
 
-    console.log(groups)
-  
+    let id = [];
+
     $('#my_groups').empty()
     groups.forEach((group) => {
         const name = group.name
-  
-        let temp_html = `<li>${name}`
-  
-        if (group.master == profile.email) {
-            temp_html += ' <span style="color: red">(Captain)</span>';
+        const group_id = group.id
+
+        if (!id.includes(group_id)) {
+
+            let temp_html = `<li>${name}`
+
+            if (group.master == profile.email) {
+                temp_html += ' <span style="color: red">(captain)</span>';
+            }
+
+            temp_html += '</li>'
+            $('#my_groups').append(temp_html)
+
+            id.push(group_id)
         }
-  
-        temp_html += '</li>'
-        $('#my_groups').append(temp_html)
-  
     })
   }
   
@@ -46,8 +51,9 @@ async function loadStampmap() {
 
     stamps.forEach((stamp) => {
         const location = stamp.photo.location
-        const location_x = stamp.photo.location_x
-        const location_y = stamp.photo.location_y
+        // 이게 맞아요!
+        const location_x = stamp.photo.location_y
+        const location_y = stamp.photo.location_x
         const photo_status = stamp.photo.status
         const status = stamp.status
 

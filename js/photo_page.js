@@ -8,10 +8,11 @@ async function addPhoto() {
     const image = document.getElementById("image");
     const name = document.getElementById("name").value;
     const title = document.getElementById("title").value;
+    const start = document.getElementById("start").value;
     const location = document.getElementById("location").value;
     const memo = document.getElementById("memo").value;
-    let location_x = document.getElementById("location_x").value
-    let location_y = document.getElementById("location_y").value
+    const location_x = document.getElementById("location_x").value
+    const location_y = document.getElementById("location_y").value
 
     // const location_x = document.getElementById("location_x").value
     // const location_y = document.getElementById("location_y").value
@@ -20,6 +21,7 @@ async function addPhoto() {
     formData.append("image", image.files[0]);
     formData.append("name", name);
     formData.append("title", title);
+    formData.append("start", start);
     formData.append("location", location);
     formData.append("memo", memo);
     formData.append("location_x", location_x);
@@ -44,6 +46,9 @@ async function addPhoto() {
         if (response.ok) {
             const data = await response.json();
             console.log('image 업로드 성공')
+            document.getElementById("photo").querySelector('[data-bs-dismiss="modal"]').click();
+            window.location.reload()
+
         } else {
             throw new Error("서버가 응답하지 않습니다.");
         }
@@ -52,7 +57,6 @@ async function addPhoto() {
         console.error(error);
     }
 }
-
 
 async function album() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -91,8 +95,8 @@ async function album() {
                             </a> `
 
         if (existPhoto.includes(photo_id)) {
-            temp_html += `<img class="exist-stamp" id="exist-stamp" src="/css/assets/stamp2.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
-        }else{
+            temp_html += `<img class="exist-stamp" id="exist-stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
+        } else {
             temp_html += `<img class="stamp" id="stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
         }
 
@@ -119,26 +123,31 @@ async function photo_detail(photo_id) {
     })
     //해당 url에 저장된 값을 수정
     const response_json = await response.json()
-    // json 형태의 데이터를 가져오고 해당 데이터를 patch로 수정
+
+
     console.log(response_json)
 
     const image = backend_base_url + '/note' + response_json["image"];
-
+    const name = response_json["name"]
+    const start = response_json["start"]
+    const location = response_json["location"]
+    const memo = response_json["memo"]
 
     let temp_html = `
                     <img class="gallery-image" src="${image}">
-                    <input name="title" id="title" type="text" class="form-control" placeholder="제목">
-                    <input name="location" id="location" type="text" class="form-control" placeholder="주소">
-                    <input id="memo" type="text" class="form-control" placeholder="메모">
+                    <div>${name}</div>
+                    <div>${start}</div>
+                    <div>${location}</div>
+                    <div>${memo}</div>
                     `
     $('#photo-d').append(temp_html)
-
 }
 
 function patchPhotoBox() {
     // 수정 창으로 변경합니다.
     let image = document.getElementById("image");
-    let title = document.getElementById('photo_title').innerHTML;
+    let name = document.getElementById('photo_title').innerHTML;
+    let title = document.getElementById('location_title').innerHTML;
     let location = document.getElementById('photo_location').innerHTML;
     let memo = document.getElementById('photo_memo').innerHTML;
 
@@ -239,7 +248,7 @@ async function handleStamp(photo_id) {
         window.location.reload()
         return response_json
     }
-    if(response.status == 201) {
+    if (response.status == 201) {
         const response_json = await response.json()
         window.location.reload()
         return response_json
@@ -253,14 +262,14 @@ async function handleStamp(photo_id) {
 function toggleStampClass(photo_id) {
     const stampElement = document.getElementById(photo_id);
     if (stampElement) {
-      if (stampElement.classList.contains("exist-stamp")) {
-        stampElement.classList.remove("exist-stamp");
-        stampElement.classList.add("stamp");
-      } else {
-        stampElement.classList.remove("stamp");
-        stampElement.classList.add("exist-stamp");
-      }
+        if (stampElement.classList.contains("exist-stamp")) {
+            stampElement.classList.remove("exist-stamp");
+            stampElement.classList.add("stamp");
+        } else {
+            stampElement.classList.remove("stamp");
+            stampElement.classList.add("exist-stamp");
+        }
     }
-  }
+}
 
 checkLogin()

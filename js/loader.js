@@ -14,10 +14,12 @@ async function injectNavbar() {
     let nav_mydiary = document.getElementById("nav-mydiary")
     let nav_mypage = document.getElementById("nav-mypage")
     let nav_makegroup = document.getElementById("nav-makegroup")
+    let nav_trash = document.getElementById("nav-trash")
 
     nav_mydiary.style.display = "none"
     nav_mypage.style.display = "none"
     nav_makegroup.style.display = "none"
+    nav_trash.style.display = "none"
     const payload = localStorage.getItem("payload")
 
     if (payload) {
@@ -26,6 +28,7 @@ async function injectNavbar() {
         nav_mydiary.style.display = "block"
         nav_mypage.style.display = "block"
         nav_makegroup.style.display = "block"
+        nav_trash.style.display = "block"
 
         const payload = localStorage.getItem("payload")
         const payload_parse = JSON.parse(payload)
