@@ -41,12 +41,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
-            left: 'myCustomButton AiButton PhotoButton',
+            left: 'myCustomButton PhotoButton LifeButton AiButton',
             center: 'title',
         },
         customButtons: {
             myCustomButton: {
-                text: 'Add plan ',
+                text: '일정추가',
                 click: function () {
                     $('#save_plan_modal').modal('show');
                 }
@@ -58,9 +58,15 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
             },
             PhotoButton: {
-                text: 'Photo Book',
+                text: '사진첩',
                 click: function () {
                     window.location.href = `/photo_page.html?note_id=${note_id}`
+                }
+            },
+            LifeButton: {
+                text: '해방 필름',
+                click: function () {
+                    window.location.href = `/lifephoto_page.html`
                 }
             }
         },
