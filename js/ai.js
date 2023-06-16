@@ -178,6 +178,8 @@ async function aiStart() {
     destinations.push(destination);
 
   });
+
+  console.log(destinations)
   const response = await fetch(`${back_url}/note/search`, {
     headers: {
       'content-type': 'application/json',
@@ -213,6 +215,7 @@ async function aiStart() {
 
   } else {
     alert('문제가 발생했습니다!')
+    console.log(response)
   }
 
 }
