@@ -1,33 +1,31 @@
-checkLogin()
-
 async function loadUserprofile() {
 
     const response = await getUserprofile();
-
-    console.log(response)
-
+  
     const email = document.getElementById("email")
     email.innerText = `${response.profile.email}님`
-
+  
     const groups = response.groups
     const profile = response.profile
 
+    console.log(groups)
+  
     $('#my_groups').empty()
     groups.forEach((group) => {
         const name = group.name
-
+  
         let temp_html = `<li>${name}`
-
+  
         if (group.master == profile.email) {
             temp_html += ' <span style="color: red">(Captain)</span>';
         }
-
+  
         temp_html += '</li>'
         $('#my_groups').append(temp_html)
-
+  
     })
-}
-
+  }
+  
 async function loadStampmap() {
     var container = document.getElementById('stamp-map');
     var options = {
@@ -128,7 +126,7 @@ async function loadStampPhotopage(location) {
         const image = backend_base_url + '/note' + stamp.photo.image
         
         if (!addedDiaryNames.includes(diary_name)) {
-            let diary_temp_html = ` <a href='/photo_page.html?=note_id=${diary_id}' style="text-decoration: none; color: black;">
+            let diary_temp_html = ` <a href='/photo_page.html?note_id=${diary_id}' onclick="" style="text-decoration: none; color: black;">
                                         <div class="diary-link-text" style="margin-top:10px;">${diary_name} ></div></a>
                                     <img src="${image}" alt="Image description" style="width: 142px; height: 142px; margin-left:2px;">                                      
                                   `
@@ -141,6 +139,7 @@ async function loadStampPhotopage(location) {
         }
     });
 }
-    
+
+checkLogin()
 loadUserprofile()
 loadStampmap()

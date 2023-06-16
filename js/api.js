@@ -456,6 +456,5 @@ async function getUserprofile() {
     alert("불러오는데 실패했습니다")
   }
 
-
 }
 

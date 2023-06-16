@@ -32,7 +32,6 @@ getGroup()
 
 async function showNoteList() {
     const group_id = document.getElementById("select_group").value
-
     if (group_id) {
         const response = await fetch(`${back_url}/note/${group_id}`, {
             headers: {
@@ -68,8 +67,6 @@ async function showNoteList() {
             $('#note_list').append(temp_html);
         })
     }
-
-
 }
 
 showNoteList()
