@@ -2,6 +2,7 @@ let plan_data = []
 let access_token = localStorage.getItem('access')
 let back_url = 'https://api.miyeong.net'
 
+
 async function showPlanPage() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");

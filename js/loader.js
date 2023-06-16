@@ -29,6 +29,7 @@ async function injectNavbar() {
 
         const payload = localStorage.getItem("payload")
         const payload_parse = JSON.parse(payload)
+        console.log(payload_parse.email)
 
         const intro = document.getElementById("intro")
 
@@ -41,7 +42,7 @@ async function injectNavbar() {
         newLi.setAttribute("id", 'nav-logout')
 
         let newA = document.createElement("a")
-        newA.setAttribute("class","nav-link active")
+        newA.setAttribute("class", "nav-link active")
 
         newA.innerText = "로그아웃"
         newA.setAttribute("onClick", "handleLogout()")
