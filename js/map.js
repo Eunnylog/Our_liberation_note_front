@@ -24,6 +24,8 @@ async function searchLocation() {
                 const location_x = place.x
                 const location_y = place.y
 
+                console.log(location_x, location_y)
+
 
                 let temp_html = `
                                 <div style="display: flex; align-items: center; justify-content: space-between; margin: 20px auto;">
@@ -49,7 +51,7 @@ async function searchLocation() {
             console.error(error);
             alert('문제가 발생했습니다!')
         });
-        
+
 }
 
 function handleRadio() {

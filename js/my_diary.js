@@ -32,7 +32,6 @@ getGroup()
 
 async function showNoteList() {
     const group_id = document.getElementById("select_group").value
-
     if (group_id) {
         const response = await fetch(`${back_url}/note/${group_id}`, {
             headers: {
@@ -45,7 +44,7 @@ async function showNoteList() {
         $('#note_list').empty()
         let temp_html2 = `
                             <a href="/" data-bs-toggle="modal" data-bs-target="#create_note">
-                                <section class="cp-card content" style="background-color: #dff2f9;">
+                                <section class="cp-card content" style="background-color: #d9e2f6;">
                                 </section>
                             </a>
                         `
@@ -68,8 +67,6 @@ async function showNoteList() {
             $('#note_list').append(temp_html);
         })
     }
-
-
 }
 
 showNoteList()

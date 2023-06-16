@@ -1,6 +1,7 @@
 let plan_data = []
 let access_token = localStorage.getItem('access')
-let back_url = 'http://api.miyeong.net'
+let back_url = 'https://api.miyeong.net'
+
 
 async function showPlanPage() {
     params = new URLSearchParams(window.location.search);
@@ -12,7 +13,7 @@ async function showPlanPage() {
     const response = await fetch(`${back_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `Bearer ${access_token}`,
+            // "Authorization": `Bearer ${access_token}`,
         },
         method: 'GET',
     })
@@ -40,12 +41,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
-            left: 'myCustomButton AiButton PhotoButton',
+            left: 'myCustomButton PhotoButton LifeButton AiButton',
             center: 'title',
         },
         customButtons: {
             myCustomButton: {
-                text: 'Add plan ',
+                text: '일정추가',
                 click: function () {
                     $('#save_plan_modal').modal('show');
                 }
@@ -57,9 +58,15 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
             },
             PhotoButton: {
-                text: 'Photo Book',
+                text: '사진첩',
                 click: function () {
                     window.location.href = `/photo_page.html?note_id=${note_id}`
+                }
+            },
+            LifeButton: {
+                text: '해방 필름',
+                click: function () {
+                    window.location.href = `/lifephoto_page.html`
                 }
             }
         },
@@ -138,30 +145,34 @@ async function savePlan() {
     const location_x = document.getElementById("location_x").value
     const location_y = document.getElementById("location_y").value
 
-    console.log(location_x, location_y)
+
+    let plan_set = [];
+    let plan = {
+        "title": title,
+        "location": location,
+        "start": start,
+        "memo": memo,
+        "time": time,
+        "category": category,
+        "location_x": location_x,
+        "location_y": location_y,
+    };
+    plan_set.push(plan)
 
     const response = await fetch(`${back_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `Bearer ${access_token}`,
+            // "Authorization": `Bearer ${access_token}`,
         },
         method: 'POST',
-        body: JSON.stringify({
-            "title": title,
-            "location": location,
-            "start": start,
-            "memo": memo,
-            "time": time,
-            "category": category,
-            "location_x": location_x,
-            "location_y": location_y,
-        })
+        body: JSON.stringify({ "plan_set": plan_set })
     });
     if (response.status == 200) {
         alert("새로운 계획이 생성되었습니다!")
         window.location.reload()
     } else {
         alert('문제가 발생했습니다!')
+        console.log(response.error)
     }
 }
 
