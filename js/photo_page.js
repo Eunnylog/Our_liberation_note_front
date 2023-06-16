@@ -11,6 +11,7 @@ async function addPhoto() {
     const image = document.getElementById("image");
     const name = document.getElementById("name").value;
     const title = document.getElementById("title").value;
+    const start = document.getElementById("start").value;
     const location = document.getElementById("location").value;
     const memo = document.getElementById("memo").value;
     let location_x = document.getElementById("location_x").value
@@ -23,6 +24,7 @@ async function addPhoto() {
     formData.append("image", image.files[0]);
     formData.append("name", name);
     formData.append("title", title);
+    formData.append("start", start);
     formData.append("location", location);
     formData.append("memo", memo);
     formData.append("location_x", location_x);
@@ -72,6 +74,7 @@ async function album() {
 
     response_json.forEach((a) => {
         const image = backend_base_url + '/note' + a["image"];
+        const name = a["name"]
         const title = a['title']
         const location = a['location']
         const memo = a['memo']
@@ -102,17 +105,24 @@ async function photo_detail(photo_id) {
     })
     //해당 url에 저장된 값을 수정
     const response_json = await response.json()
-    // json 형태의 데이터를 가져오고 해당 데이터를 patch로 수정
+
+
     console.log(response_json)
 
     const image = backend_base_url + '/note' + response_json["image"];
+    const name = response_json["name"]
+    const start = response_json["start"]
+    const location = response_json["location"]
+    const memo = response_json["memo"]
+
 
 
     let temp_html = `
                     <img class="gallery-image" src="${image}">
-                    <input name="title" id="title" type="text" class="form-control" placeholder="제목">
-                    <input name="location" id="location" type="text" class="form-control" placeholder="주소">
-                    <input id="memo" type="text" class="form-control" placeholder="메모">
+                    <div>${name}</div>
+                    <div>${start}</div>
+                    <div>${location}</div>
+                    <div>${memo}</div>
                     `
     $('#photo-d').append(temp_html)
 
@@ -121,7 +131,8 @@ async function photo_detail(photo_id) {
 function patchPhotoBox() {
     // 수정 창으로 변경합니다.
     let image = document.getElementById("image");
-    let title = document.getElementById('photo_title').innerHTML;
+    let name = document.getElementById('photo_title').innerHTML;
+    let title = document.getElementById('location_title').innerHTML;
     let location = document.getElementById('photo_location').innerHTML;
     let memo = document.getElementById('photo_memo').innerHTML;
 
