@@ -19,13 +19,13 @@ jobs:
       - name: Upload binary to S3 bucket
         uses: jakejarvis/s3-sync-action@master
         with:
-          args: --acl public-read --exclude '*' --include 'index.html'
+          args: --exclude '*' --include 'index.html'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
 
       - name: Invalidate cache CloudFront
         uses: chetan/invalidate-cloudfront-action@master
         env:
-          DISTRIBUTTON: ${{ secrets.DISTRIBUTTON_ID }}
+          DISTRIBUTION: ${{ secrets.DISTRIBUTION_ID }}
           PATHS: '/index.html'
         continue-on-error: true
