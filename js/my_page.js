@@ -10,20 +10,27 @@ async function loadUserprofile() {
     const groups = response.groups
     const profile = response.profile
 
-    console.log(response)
+    let li = [];
 
     $('#my_groups').empty()
     groups.forEach((group) => {
         const name = group.name
 
-        let temp_html = `<li>${name}`
+        console.log(group)
+        if (!li.includes(name)) {
+            let temp_html = `<li>${name}`
 
-        if (group.master == profile.email) {
-            temp_html += ' <span style="color: red">(master)</span>';
+            if (group.master == profile.email) {
+                temp_html += ' <span style="color: red">(master)</span>';
+            }
+
+            temp_html += '</li>'
+            $('#my_groups').append(temp_html)
+
+            li.push(name)
         }
 
-        temp_html += '</li>'
-        $('#my_groups').append(temp_html)
+
 
     })
 }

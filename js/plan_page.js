@@ -13,7 +13,7 @@ async function showPlanPage() {
     const response = await fetch(`${back_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `Bearer ${access_token}`,
+            // "Authorization": `Bearer ${access_token}`,
         },
         method: 'GET',
     })
@@ -139,12 +139,12 @@ async function savePlan() {
     const location_x = document.getElementById("location_x").value
     const location_y = document.getElementById("location_y").value
 
-    console.log(location_x, location_y)
+
 
     const response = await fetch(`${back_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            "Authorization": `Bearer ${access_token}`,
+            // "Authorization": `Bearer ${access_token}`,
         },
         method: 'POST',
         body: JSON.stringify({

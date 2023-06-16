@@ -24,6 +24,8 @@ async function searchLocation() {
                 const location_x = place.x
                 const location_y = place.y
 
+                console.log(location_x, location_y)
+
 
                 let temp_html = `
                                 <div style="display: flex; align-items: center; justify-content: space-between; margin: 20px auto;">
@@ -34,8 +36,8 @@ async function searchLocation() {
                                     <div style="display: flex; align-items: center;">
                                     <input type="radio" name="address_radio" value="${index}" style="width: 10px; margin-right: 10px;" onclick="handleRadio()">
                                         <label for="${index}" style="font-size: 15px;">선택</label>
-                                    <input id='x_${index}' value="${location_x}" hidden>
-                                    <input id='y_${index}' value="${location_y}" hidden>
+                                    <input id='x_${index}' value="${location_x}">
+                                    <input id='y_${index}' value="${location_y}">
                                     </div>
                                 </div>
                                 <hr>
@@ -49,7 +51,7 @@ async function searchLocation() {
             console.error(error);
             alert('문제가 발생했습니다!')
         });
-        
+
 }
 
 function handleRadio() {
