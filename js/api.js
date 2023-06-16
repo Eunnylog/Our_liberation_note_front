@@ -27,11 +27,12 @@ async function navigateToDetailPage() {
   }
 }
 
-
+// 회원 가입
 async function handleSignup() {
   const email = document.getElementById("email").value
   const password = document.getElementById("password").value
   const password2 = document.getElementById("password2").value
+  const confirmcode = document.getElementById("confirmcode").value
 
   const response = await fetch(`${backend_base_url}/user/signup/`, {
     headers: {
@@ -41,7 +42,8 @@ async function handleSignup() {
     body: JSON.stringify({
       "email": email,
       "password": password,
-      "password2": password2
+      "password2": password2,
+      "code": confirmcode
     })
   })
   console.log()
@@ -49,6 +51,7 @@ async function handleSignup() {
   if (response.status == 201) {
     document.getElementById("signup").querySelector('[data-bs-dismiss="modal"]').click();
     alert("회원가입이 완료되었습니다!")
+    window.location.replace(`${frontend_base_url}/index.html`)
   }
   else {
 
@@ -85,7 +88,6 @@ async function handleSignin() {
   if (response.status == 200) {
     const response_json = await response.json()
 
-
     // localstorage에 저장하기
     localStorage.setItem('refresh', response_json.refresh)
     localStorage.setItem('access', response_json.access)
@@ -104,8 +106,20 @@ async function handleSignin() {
     alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
   }
 }
+
 // 이메일 인증코드 보내기
-function sendCode() {
+async function sendCode() {
+  const email = document.getElementById("email").value
+
+  const response = await fetch(`https://api.miyeong.net/user/sendemail/`, {
+    headers: {
+      'content-type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify({
+      "email": email,
+    })
+  })
   alert("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
 }
 
@@ -150,76 +164,199 @@ function savePayIsSubscribe() {
   localStorage.setItem("is_subscribe", isSubscribe);
 }
 
-async function KakaoSignup() {
-  const cookies = document.cookie.split(';');
+if (localStorage.getItem("social")) {
+} else if (location.href.split('=')[1]) {
+  // 각 서비스 구분하기 위해 현재 url 변수 할당
+  const currentUrl = location.href
+  console.log("url", currentUrl)
 
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    const [name, value] = cookie.split('=');
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const state = location.href.split('=')[2] // 카카오 네이버&구글 구분
 
-    if (name === "jwt_token") {
-      jwtToken = value;
-      break;
+  const code = urlParams.get('code'); // 로그인하기 위한 인가 코드
+  console.log(code)
+
+  // 값이 있으면 localStorage에 저장
+  if (code) {
+    if (state) {
+      if (currentUrl.includes("google")) {
+        console.log("구글", code)
+        // 구글은 인코딩된 url 디코딩 후 localStorage에 저장
+        const encodeCode = code
+        const decodeCode = decodeURIComponent(encodeCode.replace(/\+/g, " "))
+        localStorage.setItem('code', decodeCode)
+        console.log("디코딩", decodeCode)
+        googleLoginApi(decodeCode) // googleLoginApi 함수 호출
+      } else {
+        console.log("네이버")
+        localStorage.setItem('code', code);
+        localStorage.setItem('state', state);
+        naverLoginApi(code) // naverLoginApi 함수 호출
+      }
+
+    } else {
+      console.log('카카오:', code);
+      localStorage.setItem('code', code);
+      kakaoLoginApi(code); // kakaoLoginApi 함수 호출
     }
+
+  } else {
+    console.log('인가 코드가 존재하지 않습니다.');
   }
 
-  if (!jwtToken) {
-    alert("※ 카카오 계정으로 회원가입을 원하신다면 이메일 제공 선택에 꼭 동의해주세요!!")
-    window.location.replace(`${backend_base_url}/users/kakao/login/`);
+}
+
+if (localStorage.getItem("payload")) {
+  if (JSON.parse(localStorage.getItem("payload")).password_expired == true) {
+    expired_password_confirm()
   }
 }
 
-async function KakaoLogin() {
-  const cookies = document.cookie.split(';');
+// 카카오 로그인 페이지로 이동
+async function kakaoLogin() {
+  console.log("소셜")
+  const response = await fetch(`${backend_base_url}/user/social/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ "social": "kakao" }),
+  })
+  const data_url = await response.json(); // 서버로부터 받은 응답을 JSON 데이터로 파싱합니다.
+  const response_url = data_url.url
+  window.location.href = response_url
+}
 
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    const [name, value] = cookie.split('=');
+// 카카오 로그인 데이터 서버로 전송
+async function kakaoLoginApi(code) {
+  const response = await fetch(`${backend_base_url}/user/kakao/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ "code": code }),
+  })
+  response_json = await response.json()
+  console.log("response_json", response_json)
 
-    if (name === "jwt_token") {
-      jwtToken = value;
-      break;
-    }
-  }
+  if (response.status === 200) {
+    localStorage.setItem("access", response_json.access);
+    localStorage.setItem("refresh", response_json.refresh);
 
-  if (!jwtToken) {
-    window.location.replace(`${backend_base_url}/users/kakao/login/`);
+    const base64Url = response_json.access.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64).split('').map(function (c) {
+        return '%' + (
+          '00' + c.charCodeAt(0).toString(16)
+        ).slice(-2);
+      }).join('')
+    );
+    localStorage.setItem("payload", jsonPayload);
+    // window.location.reload();
+    window.location.href = frontend_base_url
+  } else {
+    alert(response_json['error'])
+    window.location.href = frontend_base_url
   }
 }
 
+// 구글 로그인 페이지로 이동
 async function googleLogin() {
-  const cookies = document.cookie.split(';');
+  const response = await fetch(`${backend_base_url}/user/social/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ "social": "google" }),
+  })
+  const data_url = await response.json(); // 서버로부터 받은 JSON으로 할당
+  const response_url = data_url.url
+  console.log(response_url)
+  window.location.href = response_url
+}
 
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    const [name, value] = cookie.split('=');
+// 구글 로그인 데이터 서버로 전송
+async function googleLoginApi(decodeCode) {
+  const response = await fetch(`${backend_base_url}/user/google/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ "code": decodeCode }),
+  })
+  response_json = await response.json()
+  console.log(response_json)
 
-    if (name === "jwt_token") {
-      jwtToken = value;
-      break;
-    }
-  }
+  console.log("response_json", response_json)
+  if (response.status === 200) {
+    localStorage.setItem("access", response_json.access);
+    localStorage.setItem("refresh", response_json.refresh);
 
-  if (!jwtToken) {
-    window.location.replace(`${backend_base_url}/users/google/login/`);
+    const base64Url = response_json.access.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64).split('').map(function (c) {
+        return '%' + (
+          '00' + c.charCodeAt(0).toString(16)
+        ).slice(-2);
+      }).join('')
+    );
+    localStorage.setItem("payload", jsonPayload);
+    window.location.href = frontend_base_url
+  } else {
+    alert(response_json['error'])
+    window.history.back()
   }
 }
 
+// 네이버 로그인 페이지로 이동
 async function naverLogin() {
-  const cookies = document.cookie.split(';');
+  const response = await fetch(`${backend_base_url}/user/social/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ "social": "naver" }),
+  })
+  const data_url = await response.json(); // 서버로부터 받은 응답을 JSON으로 할당
+  const response_url = data_url.url
+  console.log(response_url)
+  window.location.href = response_url
+}
 
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    const [name, value] = cookie.split('=');
+// 네이버 로그인 데이터 서버로 전송
+async function naverLoginApi(Code) {
+  const response = await fetch(`${backend_base_url}/user/naver/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ "code": Code }),
+  })
+  response_json = await response.json()
+  console.log(response_json)
 
-    if (name === "jwt_token") {
-      jwtToken = value;
-      break;
-    }
-  }
+  console.log("response_json", response_json)
+  if (response.status === 200) {
+    localStorage.setItem("access", response_json.access);
+    localStorage.setItem("refresh", response_json.refresh);
 
-  if (!jwtToken) {
-    window.location.replace(`${backend_base_url}/users/naver/login/`);
+    const base64Url = response_json.access.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64).split('').map(function (c) {
+        return '%' + (
+          '00' + c.charCodeAt(0).toString(16)
+        ).slice(-2);
+      }).join('')
+    );
+    localStorage.setItem("payload", jsonPayload);
+    window.location.href = frontend_base_url
+  } else {
+    alert(response_json['error'])
+    window.history.back()
   }
 }
 
@@ -259,6 +396,8 @@ function handleLogout() {
     localStorage.removeItem("access")
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
+    localStorage.removeItem("code")
+    localStorage.removeItem("state")
     localStorage.removeItem("is_subscribe")
     localStorage.removeItem("is_subscribe")
     document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제

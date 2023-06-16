@@ -42,7 +42,7 @@ async function injectNavbar() {
         newLi.setAttribute("id", 'nav-logout')
 
         let newA = document.createElement("a")
-        newA.setAttribute("class","nav-link active")
+        newA.setAttribute("class", "nav-link active")
 
         newA.innerText = "로그아웃"
         newA.setAttribute("onClick", "handleLogout()")
