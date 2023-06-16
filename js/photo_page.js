@@ -72,6 +72,7 @@ async function album() {
 
     response_json.forEach((a) => {
         const image = backend_base_url + '/note' + a["image"];
+        const name = a["name"]
         const title = a['title']
         const location = a['location']
         const memo = a['memo']
@@ -102,17 +103,24 @@ async function photo_detail(photo_id) {
     })
     //해당 url에 저장된 값을 수정
     const response_json = await response.json()
-    // json 형태의 데이터를 가져오고 해당 데이터를 patch로 수정
+
+
     console.log(response_json)
 
     const image = backend_base_url + '/note' + response_json["image"];
+    const name = response_json["name"]
+    const title = response_json["title"]
+    const location = response_json["location"]
+    const memo = response_json["memo"]
+
 
 
     let temp_html = `
                     <img class="gallery-image" src="${image}">
-                    <input name="title" id="title" type="text" class="form-control" placeholder="제목">
-                    <input name="location" id="location" type="text" class="form-control" placeholder="주소">
-                    <input id="memo" type="text" class="form-control" placeholder="메모">
+                    <div>${name}</div>
+                    <div>${title}</div>
+                    <div>${location}</div>
+                    <div>${memo}</div>
                     `
     $('#photo-d').append(temp_html)
 
