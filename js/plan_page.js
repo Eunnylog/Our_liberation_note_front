@@ -146,6 +146,18 @@ async function savePlan() {
     const location_y = document.getElementById("location_y").value
 
 
+    let plan_set = [];
+    let plan = {
+        "title": title,
+        "location": location,
+        "start": start,
+        "memo": memo,
+        "time": time,
+        "category": category,
+        "location_x": location_x,
+        "location_y": location_y,
+    };
+    plan_set.push(plan)
 
     const response = await fetch(`${back_url}/note/plan/${note_id}`, {
         headers: {
@@ -153,22 +165,14 @@ async function savePlan() {
             // "Authorization": `Bearer ${access_token}`,
         },
         method: 'POST',
-        body: JSON.stringify({
-            "title": title,
-            "location": location,
-            "start": start,
-            "memo": memo,
-            "time": time,
-            "category": category,
-            "location_x": location_x,
-            "location_y": location_y,
-        })
+        body: JSON.stringify({ "plan_set": plan_set })
     });
     if (response.status == 200) {
         alert("새로운 계획이 생성되었습니다!")
         window.location.reload()
     } else {
         alert('문제가 발생했습니다!')
+        console.log(response.error)
     }
 }
 
