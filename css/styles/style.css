@@ -46,7 +46,7 @@ body>.site-body {
 
 .site-header.navbar {
   background-color: var(--site-header-background);
-  border-bottom: solid 10px #8AEFFD;
+  border-bottom: solid 10px #60749d;
   position: sticky;
   top: 0;
   left: 0;
