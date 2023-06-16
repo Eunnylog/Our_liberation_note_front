@@ -1,5 +1,6 @@
 // 기본 URL
-const backend_base_url = "https://api.miyeong.net"
+// const backend_base_url = "https://api.miyeong.net"
+const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
@@ -552,23 +553,376 @@ function handleAi() {
 //     });
 // }
 
+// async function updatemodal() {
+//   $("#changePassword").modal("show")
+// }
 
-// Check_user_data();
 
+
+// 비밀번호 변경 페이지 가기 전 소셜 로그인 체크
+function checkSocialLogin() {
+  console.log("checkSocialLogin")
+  const code = localStorage.getItem('code');
+
+  if (code) {
+    alert("소셜 로그인은 비밀번호를 변경할 수 없습니다");
+    location.reload();
+    return;
+  }
+}
+
+function changePasswordAndOpenModal() {
+  checkSocialLogin(); // checkSocialLogin() 함수 실행
+  $('#updatePassword').modal('show'); // 모달 창 열기
+}
+
+// 비밀번호 변경
+async function updatePassword() {
+  const access_token = localStorage.getItem("access")
+
+  const updateData = {
+    check_password: document.querySelector("#check_password").value,
+    new_password: document.querySelector("#update_password").value,
+  }
+
+  if (!updateData.check_password || !updateData.new_password) {
+    alert("빈칸을 입력해주세요.")
+    return
+  }
+
+  const response = await fetch(`${backend_base_url}/user/`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer " + access_token,
+    },
+    method: 'PATCH',
+    body: JSON.stringify(updateData)
+  }
+  )
+  const data = await response.json()
+  console.log(data["message"])
+  if (response.status == 200) {
+    alert("회원정보 수정 완료!! 다시 로그인을 진행해 주세요!")
+    localStorage.removeItem("access")
+    localStorage.removeItem("refresh")
+    localStorage.removeItem("payload")
+    location.replace(`${frontend_base_url}/index.html`)
+
+
+  } else {
+    alert(data["message"])
+  }
+
+}
 
 // 그룹 만들기 모달
 // 작성 취소
 function cancel() {
   window.location.href = `${frontend_base_url}/index.html`;
 }
+
+const usersearch = document.querySelector("#usersearch").value;
+const ul = document.querySelector("#email-ul");
+let cache = "";
+
+const checkInput = () => {
+  console.log("체크인풋")
+  const usersearch = document.querySelector("#usersearch").value;
+  const beforeInput = usersearch.value;
+  timer(beforeInput);
+}
+
+const timer = (beforeInput) => {
+  setTimeout(() => {
+
+    if (searchInput.value === beforeInput) {
+      console.log("입력멈춤");
+      loadData(searchInput.value);		// 0.5초 내에 입력창이 변했다면 데이터 로드
+      checkInput();
+
+    } else {
+      console.log("입력변함");
+      checkInput();
+    }
+
+    if (searchInput.value === "") {		// 입력창이 비었다면 추천 검색어 리스트 숨김
+      relContainer.classList.add("hide");
+    } else {
+      relContainer.classList.remove("hide");
+    }
+  }, 500);
+}
+
+const loadData = (input) => {
+  const url = `${backend_base_url}/user/userlist?usersearch=${input}`; // 새로운 URL 생성
+  if (cache === url) return;
+  else {
+    cache = url;
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res); // 전달된 데이터 출력
+        fillSearch(res);
+      })
+      .catch((err) => {
+        console.error(err);
+        // 에러 발생 시, 캐시를 초기화하여 다음 요청 시 다시 데이터를 가져올 수 있도록 함
+        cache = '';
+        li.innerHTML = "서버에서 데이터를 가져오는 중 오류가 발생했습니다.";
+        ul.appendChild(li);
+      });
+  }
+}
+
+const fillSearch = (suggestArr) => {
+  ul.innerHTML = "";
+  if (suggestArr && suggestArr.length > 0) {
+    suggestArr.forEach((el) => {
+      const { userEmail } = el;
+      if (inputIsSameAsSuggestion(userEmail)) return;
+      const li = document.createElement("li");
+      li.innerHTML = userEmail
+      li.addEventListener('click', () => {
+        setSearchInputValue(userEmail);
+      });
+      ul.appendChild(li);
+    });
+  } else {
+    const li = document.createElement("li");
+    li.innerHTML = "입력하신 이메일을 확인해주세요.";
+    ul.appendChild(li);
+  }
+};
+
+const inputIsSameAsSuggestion = (usersearch) => {
+  const [inputUserSearch = ""] = searchInput.value;
+  return usersearch === inputUserSearch;
+};
+
+const setSearchInputValue = (usersearch) => {
+  searchInput.value = `${usersearch}`;
+};
+
+ul.addEventListener('click', (event) => {
+  if (event.target.tagName === 'LI') {
+    searchInput.value = event.target.textContent;
+    relContainer.classList.add("hide");
+  }
+});
+
+
+const makeGroupButton = document.querySelector("#makegroup-button");
+
+makeGroupButton.addEventListener('click', function () {
+  console.log("출력")
+  checkInput();
+
+});
+
 // 그룹 생성
-function addGroup() {
-  alert("그룹이 저장되었습니다.")
+async function addGroup() {
+  // const access_token = localStorage.getItem("access");
+  // const groupName = document.getElementById("groupname").value;
+  // const membersList = document.getElementById("email-ul");
+
+  // const membersEmails = Array.from(membersList.getElementsByTagName("li")).map(li => li.textContent);
+
+  // // 멤버 이메일을 서버로 전송하여 멤버 객체를 받아옴
+  // const membersResponse = await fetch(`${backend_base_url}/user/userlist?usersearch=${membersEmails.join(',')}`);
+  // const membersData = await membersResponse.json();
+
+  // // 이메일 -> id
+  // const memberIdList = membersData.map(member => member.id);
+
+  // const requestData = {
+  //   name: groupName,
+  //   members: memberIdList
+  // };
+
+  // const response = await fetch(`${backend_base_url}/user/group/`, {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'Authorization': "Bearer " + access_token,
+  //   },
+  //   method: 'POST',
+  //   body: JSON.stringify(requestData)
+  // });
+
+  // if (response.status == 201) {
+  //   alert("그룹이 저장되었습니다.");
+  // } else {
+  //   alert(response.error);
+  // }
 }
+
 // 멤버 추가
-function addMember() {
-  alert("멤버가 추가되었습니다.")
+// function addMember() {
+//   const userSearchInput = document.getElementById("usersearch");
+//   const membersList = document.getElementById("email-ul");
+
+//   const memberEmail = userSearchInput.value;
+//   const existingMembers = Array.from(membersList.getElementsByTagName("li")).map(li => li.textContent);
+
+//   if (memberEmail.trim() === "") return;
+
+//   if (!existingMembers.includes(memberEmail)) {
+//     const li = document.createElement("li");
+//     li.textContent = memberEmail;
+//     membersList.appendChild(li);
+//   }
+
+//   userSearchInput.value = "";
+// }
+
+// checkInput()
+
+// 그룹 생성
+// async function addGroup() {
+// const access_token = localStorage.getItem("access")
+// const groupName = document.getElementById("groupname").value
+// const membersEmail = document.getElementById("usersearch").value
+
+// // 멤버 이메일을 서버로 전송하여 멤버 객체를 받아옴
+// const membersResponse = await fetch(`${backend_base_url}/user/userlist?usersearch=${membersEmail}`);
+// const membersData = await membersResponse.json();
+
+// // 이메일 -> id
+// const memberIdList = membersData.map(member => member.id);
+
+// const requestData = {
+//   name: groupName,
+//   members: memberIdList
+// };
+
+// const response = await fetch(`${backend_base_url}/user/group/`, {
+//   headers: {
+//     'Content-Type': 'application/json',
+//     'Authorization': "Bearer " + access_token,
+//   },
+//   method: 'POST',
+//   body: JSON.stringify(requestData)
+// }
+// )
+
+//   if (response.status == 201) {
+//     alert("그룹이 저장되었습니다.")
+//   } else {
+//     alert(response.error)
+//   }
+
+//   // 호출할 함수 등록
+//   // document.querySelector("#addmember-btn").addEventListener("click", addMember);
+// }
+
+// 선택된 이메일 리스트
+let selectedEmails = [];
+
+function handleRadioClick() {
+  let selectedRadio = document.querySelector('input[name="email_radio"]:checked')
+  if (selectedRadio) {
+    let selectedIndex = selectedRadio.value;
+    let selected_email = document.getElementById(`email_${selectedIndex}`).value
+
+    document.getElementById("usersearch").value = selected_email
+
+  }
 }
+
+// 멤버 추가
+// async function addMember() {
+//   console.log("addmember")
+//   const access_token = localStorage.getItem("access")
+//   const membersEmail = document.getElementById("usersearch").value
+//   console.log("emailinput", membersEmail)
+
+//   const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
+
+//   axios.get(url)
+//     .then(response => {
+//       console.log(response.data)
+
+//       const emails = response.data.map(item => item.email);
+//       // createEmailList(emails); // 이메일 리스트 생성
+
+//       var email = document.getElementById('email-ul');
+//       email.innerHTML = '';
+
+//       // 검색 결과 처리
+//       emails.forEach((useremail, index) => {
+//         let temp_html = `
+//         <ul id="email-ul">
+//           <li>
+//             <input type="radio" id="email_${index}" name="email_radio" value="${index}" onclick="handleRadioClick()">
+//             ${useremail}
+//           </li>
+//         </ul>
+//         `;
+//         email.innerHTML += temp_html;
+//       });
+//     })
+//     .catch(error => {
+//       // 에러 처리
+//       console.log(error);
+//       alert('문제가 발생했습니다!')
+//     });
+
+//   // alert("멤버가 추가되었습니다.")
+// }
+
+// 멤버 추가
+async function addMember() {
+  console.log("addmember")
+  const access_token = localStorage.getItem("access")
+  const membersEmail = document.getElementById("usersearch").value
+  console.log("emailinput", membersEmail)
+
+  const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
+
+  axios.get(url).then(response => {
+    console.log(response.data);
+
+    const emails = response.data.map(item => item.email);
+
+
+    var email = document.getElementById("email-ul");
+    email.innerHTML = "";
+
+    // 검색 결과 처리
+    emails.forEach((useremail, index) => {
+      let temp_html = `
+        <ul id="email-ul">
+          <li>
+            <input type="radio" id="email_${index}" name="email_radio" value="${index}" onclick="handleRadioClick()">
+            ${useremail}
+          </li>
+        </ul>
+        `;
+      email.innerHTML += temp_html;
+    });
+  })
+    .catch(error => {
+      // 에러 처리
+      console.log(error);
+      alert('문제가 발생했습니다!')
+    });
+
+  // alert("멤버가 추가되었습니다.")
+}
+
+// 멤버 추가 버튼 클릭 시 선택된 이메일 리스트를 서버로 전송
+function addMembersToGroup() {
+  // 선택된 이메일 리스트 활용
+  let selectedEmails = []; //빈 배열로 초기화
+  // 선택한 input 요소의 value 속성을 배열에 push
+  const checkedInput = document.querySelector('input[name="email_radio"]:checked');
+  const selectedEmail = checkedInput.nextSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
+  selectedEmails.push(selectedEmail);
+
+  console.log(selectedEmails);
+  // 선택된 이메일을 서버로 전송하고 멤버를 추가하는 로직 작성
+  // ...
+}
+
 // 닉네임 추가
 function addNickname() {
   alert("닉네임이 추가되었습니다!")
