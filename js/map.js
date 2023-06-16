@@ -68,8 +68,8 @@ function handleRadio() {
         // 선택한 요소에 대한 처리
         document.getElementById("location").value = selected_address;
         document.getElementById("title").value = name;
-        document.getElementById("category").value = category;
         document.getElementById("location_x").value = location_x;
         document.getElementById("location_y").value = location_y;
+        document.getElementById("category").value = category;
     }
 }

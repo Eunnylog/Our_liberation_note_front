@@ -52,7 +52,7 @@
                                 <form class="sign-in-form active">
                                     <div class="filebox">
                                         <input class="upload-name" value="첨부파일" placeholder="첨부파일" multiple
-                                            accept=".jpg, .png, .jpeg" style="width: 85.3%">
+                                            accept=".jpg, .png, .jpeg" style="width: 85%">
                                         <label for="image">사진추가</label>
                                         <input type="file" id="image" style="display: none" />
                                     </div>
@@ -112,7 +112,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
                         </button>
-                        <button type="button" class="btn btn-primary" onclick="patchPhotoBox()">수정</button>
+                        <button id="patch_photo_box" type="button" class="btn btn-primary"
+                            onclick="patchPhotoBox()">수정</button>
                     </div>
                 </form>
             </div>
@@ -125,9 +126,3 @@
 </body>
 
 </html>
-
-<!-- 
-<div class="input-group-append" style="width: 10%;">
-    <button type="button" onclick="searchLocation()" class="btn btn-primary"
-      style="margin-top:0px;height:40px; font-size:15px">검색</button>
-  </div> -->
