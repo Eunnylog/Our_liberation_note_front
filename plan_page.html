@@ -195,7 +195,7 @@
                     <input name="title" id="title" type="text" class="form-control" placeholder="장소명(지역명+상호명)"
                       style="width: 60%; height:40px;">
                     <div class="input-group-append" style="width: 10%;">
-                      <button type="button" onclick="searchLocation()" class="btn btn-primary"
+                      <button type="button" onclick="searchLocation('1')" class="btn btn-primary"
                         style="margin-top:0px;height:40px; font-size:15px">검색</button>
                     </div>
                     <input name="category" id="category" type="text" class="form-control" placeholder="category"
@@ -226,47 +226,45 @@
   <!-- 그룹만들기 모달창 -->
   <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="su">
-                    Make Group</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="container">
-                <div class="global-cont">
-                    <div class="inner-cont">
-                        <div class="sign-in-up">
-                            <form class="sign-in-form active">
-                                <input name="groupname" id="groupname" type="name" class="form-control"
-                                    placeholder="그룹이름">
-                                <div style="display: flex;">
-                                    <input name="addemail" id="addemail" type="email" class="form-control"
-                                        placeholder="추가할 멤버 이메일" style="width: 300px;">
-                                    <button type="button" class="signup" onclick="addMember()"
-                                        style="width: 100px; margin-left: 10px;">추가</button>
-                                </div>
-                                <div style="display:flex;">
-                                    <p style="justify-content: left;"> 이메일 </p>
-                                    <ul>
-                                        <li>이메일1</li><br>
-                                        <li>이메일2</li><br>
-                                        <li>이메일3</li><br>
-                                    </ul>
-                                </div>
-                                <div class="sign-up" style="display: flex;">
-                                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                                        onclick="cancle()"
-                                        style="margin-right: 10px; background-color: #60749d;">취소</button>
-                                    <button type="button" class="signup" onclick="addGroup()">저장</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="su">
+            Make Group</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="container">
+          <div class="global-cont">
+            <div class="inner-cont">
+              <div class="sign-in-up">
+                <form class="sign-in-form active">
+                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="그룹이름">
+                  <div style="display: flex;">
+                    <input name="addemail" id="addemail" type="email" class="form-control" placeholder="추가할 멤버 이메일"
+                      style="width: 300px;">
+                    <button type="button" class="signup" onclick="addMember()"
+                      style="width: 100px; margin-left: 10px;">추가</button>
+                  </div>
+                  <div style="display:flex;">
+                    <p style="justify-content: left;"> 이메일 </p>
+                    <ul>
+                      <li>이메일1</li><br>
+                      <li>이메일2</li><br>
+                      <li>이메일3</li><br>
+                    </ul>
+                  </div>
+                  <div class="sign-up" style="display: flex;">
+                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()"
+                      style="margin-right: 10px; background-color: #60749d;">취소</button>
+                    <button type="button" class="signup" onclick="addGroup()">저장</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
   <script src="/js/plan_page.js"></script>
