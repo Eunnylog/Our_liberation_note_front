@@ -1,6 +1,6 @@
 // 기본 URL
-// const backend_base_url = "https://api.miyeong.net"
-const backend_base_url = "http://127.0.0.1:8000"
+const backend_base_url = "https://api.miyeong.net"
+// const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
@@ -529,36 +529,6 @@ function handleAi() {
 
 }
 
-// async function Check_user_data() {
-//   // 클라이언트에서 API 요청 보내는 예시 (JavaScript)
-//   const access_token = localStorage.getItem("access");
-
-//   const url = `${backend_base_url}/payments/api/subscription/`;  // API 엔드포인트 URL
-
-//   fetch(url, {
-//     method: 'GET',
-//     headers: {
-//       "Authorization-Token": `${access_token}`   // 액세스 토큰 값 설정
-//     },
-//   })
-
-//     .then(response => response.json())
-//     .then(data => {
-//       // 서버로부터 받은 데이터 처리
-//       const subscription = data;
-//       console.log(subscription)
-//     })
-//     .catch(error => {
-//       // 에러 처리
-//     });
-// }
-
-// async function updatemodal() {
-//   $("#changePassword").modal("show")
-// }
-
-
-
 // 비밀번호 변경 페이지 가기 전 소셜 로그인 체크
 function checkSocialLogin() {
   console.log("checkSocialLogin")
@@ -615,206 +585,12 @@ async function updatePassword() {
 
 }
 
-// 그룹 만들기 모달
 // 작성 취소
 function cancel() {
   window.location.href = `${frontend_base_url}/index.html`;
 }
 
-const usersearch = document.querySelector("#usersearch").value;
-const ul = document.querySelector("#email-ul");
-let cache = "";
-
-const checkInput = () => {
-  console.log("체크인풋")
-  const usersearch = document.querySelector("#usersearch").value;
-  const beforeInput = usersearch.value;
-  timer(beforeInput);
-}
-
-const timer = (beforeInput) => {
-  setTimeout(() => {
-
-    if (searchInput.value === beforeInput) {
-      console.log("입력멈춤");
-      loadData(searchInput.value);		// 0.5초 내에 입력창이 변했다면 데이터 로드
-      checkInput();
-
-    } else {
-      console.log("입력변함");
-      checkInput();
-    }
-
-    if (searchInput.value === "") {		// 입력창이 비었다면 추천 검색어 리스트 숨김
-      relContainer.classList.add("hide");
-    } else {
-      relContainer.classList.remove("hide");
-    }
-  }, 500);
-}
-
-const loadData = (input) => {
-  const url = `${backend_base_url}/user/userlist?usersearch=${input}`; // 새로운 URL 생성
-  if (cache === url) return;
-  else {
-    cache = url;
-    fetch(url)
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res); // 전달된 데이터 출력
-        fillSearch(res);
-      })
-      .catch((err) => {
-        console.error(err);
-        // 에러 발생 시, 캐시를 초기화하여 다음 요청 시 다시 데이터를 가져올 수 있도록 함
-        cache = '';
-        li.innerHTML = "서버에서 데이터를 가져오는 중 오류가 발생했습니다.";
-        ul.appendChild(li);
-      });
-  }
-}
-
-const fillSearch = (suggestArr) => {
-  ul.innerHTML = "";
-  if (suggestArr && suggestArr.length > 0) {
-    suggestArr.forEach((el) => {
-      const { userEmail } = el;
-      if (inputIsSameAsSuggestion(userEmail)) return;
-      const li = document.createElement("li");
-      li.innerHTML = userEmail
-      li.addEventListener('click', () => {
-        setSearchInputValue(userEmail);
-      });
-      ul.appendChild(li);
-    });
-  } else {
-    const li = document.createElement("li");
-    li.innerHTML = "입력하신 이메일을 확인해주세요.";
-    ul.appendChild(li);
-  }
-};
-
-const inputIsSameAsSuggestion = (usersearch) => {
-  const [inputUserSearch = ""] = searchInput.value;
-  return usersearch === inputUserSearch;
-};
-
-const setSearchInputValue = (usersearch) => {
-  searchInput.value = `${usersearch}`;
-};
-
-ul.addEventListener('click', (event) => {
-  if (event.target.tagName === 'LI') {
-    searchInput.value = event.target.textContent;
-    relContainer.classList.add("hide");
-  }
-});
-
-
-const makeGroupButton = document.querySelector("#makegroup-button");
-
-makeGroupButton.addEventListener('click', function () {
-  console.log("출력")
-  checkInput();
-
-});
-
-// 그룹 생성
-async function addGroup() {
-  // const access_token = localStorage.getItem("access");
-  // const groupName = document.getElementById("groupname").value;
-  // const membersList = document.getElementById("email-ul");
-
-  // const membersEmails = Array.from(membersList.getElementsByTagName("li")).map(li => li.textContent);
-
-  // // 멤버 이메일을 서버로 전송하여 멤버 객체를 받아옴
-  // const membersResponse = await fetch(`${backend_base_url}/user/userlist?usersearch=${membersEmails.join(',')}`);
-  // const membersData = await membersResponse.json();
-
-  // // 이메일 -> id
-  // const memberIdList = membersData.map(member => member.id);
-
-  // const requestData = {
-  //   name: groupName,
-  //   members: memberIdList
-  // };
-
-  // const response = await fetch(`${backend_base_url}/user/group/`, {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': "Bearer " + access_token,
-  //   },
-  //   method: 'POST',
-  //   body: JSON.stringify(requestData)
-  // });
-
-  // if (response.status == 201) {
-  //   alert("그룹이 저장되었습니다.");
-  // } else {
-  //   alert(response.error);
-  // }
-}
-
-// 멤버 추가
-// function addMember() {
-//   const userSearchInput = document.getElementById("usersearch");
-//   const membersList = document.getElementById("email-ul");
-
-//   const memberEmail = userSearchInput.value;
-//   const existingMembers = Array.from(membersList.getElementsByTagName("li")).map(li => li.textContent);
-
-//   if (memberEmail.trim() === "") return;
-
-//   if (!existingMembers.includes(memberEmail)) {
-//     const li = document.createElement("li");
-//     li.textContent = memberEmail;
-//     membersList.appendChild(li);
-//   }
-
-//   userSearchInput.value = "";
-// }
-
-// checkInput()
-
-// 그룹 생성
-// async function addGroup() {
-// const access_token = localStorage.getItem("access")
-// const groupName = document.getElementById("groupname").value
-// const membersEmail = document.getElementById("usersearch").value
-
-// // 멤버 이메일을 서버로 전송하여 멤버 객체를 받아옴
-// const membersResponse = await fetch(`${backend_base_url}/user/userlist?usersearch=${membersEmail}`);
-// const membersData = await membersResponse.json();
-
-// // 이메일 -> id
-// const memberIdList = membersData.map(member => member.id);
-
-// const requestData = {
-//   name: groupName,
-//   members: memberIdList
-// };
-
-// const response = await fetch(`${backend_base_url}/user/group/`, {
-//   headers: {
-//     'Content-Type': 'application/json',
-//     'Authorization': "Bearer " + access_token,
-//   },
-//   method: 'POST',
-//   body: JSON.stringify(requestData)
-// }
-// )
-
-//   if (response.status == 201) {
-//     alert("그룹이 저장되었습니다.")
-//   } else {
-//     alert(response.error)
-//   }
-
-//   // 호출할 함수 등록
-//   // document.querySelector("#addmember-btn").addEventListener("click", addMember);
-// }
-
-// 선택된 이메일 리스트
+// 선택된 이메일 리스트 생성
 let selectedEmails = [];
 
 function handleRadioClick() {
@@ -827,47 +603,6 @@ function handleRadioClick() {
 
   }
 }
-
-// 멤버 추가
-// async function addMember() {
-//   console.log("addmember")
-//   const access_token = localStorage.getItem("access")
-//   const membersEmail = document.getElementById("usersearch").value
-//   console.log("emailinput", membersEmail)
-
-//   const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
-
-//   axios.get(url)
-//     .then(response => {
-//       console.log(response.data)
-
-//       const emails = response.data.map(item => item.email);
-//       // createEmailList(emails); // 이메일 리스트 생성
-
-//       var email = document.getElementById('email-ul');
-//       email.innerHTML = '';
-
-//       // 검색 결과 처리
-//       emails.forEach((useremail, index) => {
-//         let temp_html = `
-//         <ul id="email-ul">
-//           <li>
-//             <input type="radio" id="email_${index}" name="email_radio" value="${index}" onclick="handleRadioClick()">
-//             ${useremail}
-//           </li>
-//         </ul>
-//         `;
-//         email.innerHTML += temp_html;
-//       });
-//     })
-//     .catch(error => {
-//       // 에러 처리
-//       console.log(error);
-//       alert('문제가 발생했습니다!')
-//     });
-
-//   // alert("멤버가 추가되었습니다.")
-// }
 
 // 멤버 추가
 async function addMember() {
@@ -902,7 +637,6 @@ async function addMember() {
   })
     .catch(error => {
       // 에러 처리
-      console.log(error);
       alert('문제가 발생했습니다!')
     });
 
@@ -911,16 +645,75 @@ async function addMember() {
 
 // 멤버 추가 버튼 클릭 시 선택된 이메일 리스트를 서버로 전송
 function addMembersToGroup() {
-  // 선택된 이메일 리스트 활용
-  let selectedEmails = []; //빈 배열로 초기화
   // 선택한 input 요소의 value 속성을 배열에 push
   const checkedInput = document.querySelector('input[name="email_radio"]:checked');
-  const selectedEmail = checkedInput.nextSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
-  selectedEmails.push(selectedEmail);
 
-  console.log(selectedEmails);
-  // 선택된 이메일을 서버로 전송하고 멤버를 추가하는 로직 작성
-  // ...
+  if (checkedInput) {
+
+    const selectedEmail = checkedInput.nextSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
+
+    // 이미 추가된 이메일인지 확인
+    const alreadyAdded = selectedEmails.includes(selectedEmail);
+
+    if (!alreadyAdded) {
+      selectedEmails.push(selectedEmail); console.log(selectedEmails);
+
+      // 선택된 이메일을 ul에 추가
+      const selectedEmailUl = document.getElementById("selected-email-ul");
+      const newEmailLi = document.createElement("li");
+      newEmailLi.textContent = selectedEmail;
+      selectedEmailUl.appendChild(newEmailLi);
+    } else {
+      alert("이미 추가된 이메일입니다.");
+    }
+
+  } else {
+    alert("선택된 이메일이 없습니다.")
+  }
+}
+
+// 그룹 생성
+async function addGroup() {
+  const access_token = localStorage.getItem("access");
+  const groupName = document.getElementById("groupname").value;
+  const membersList = document.getElementById("selected-email-ul");
+
+  const membersEmails = Array.from(membersList.getElementsByTagName("li")).map(li => li.textContent);
+
+  // 멤버 id 저장용 빈 배열 준비 manytomany 필드는 id값이 리스트 일력해야 값이 들어감
+  const memberIdList = [];
+
+  // 멤버 이메일을 반복하면서 각각 서버로 전송하여 멤버 객체를 받아옴
+  for (const memberEmail of membersEmails) {
+    // 특수문자가 올바르게 전송되도록 보장하기 위해 인코딩한 후 쿼리 매개변수로 전달한다
+    const membersResponse = await fetch(`${backend_base_url}/user/userlist?usersearch=${encodeURIComponent(memberEmail)}`);
+    const membersData = await membersResponse.json();
+
+    // 해당 멤버의 id를 리스트에 추가
+    const memberId = membersData[0].id;
+    memberIdList.push(memberId);
+  }
+
+  const requestData = {
+    name: groupName,
+    members: memberIdList
+  };
+
+  const response = await fetch(`${backend_base_url}/user/group/`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer " + access_token,
+    },
+    method: 'POST',
+    body: JSON.stringify(requestData)
+  });
+
+  if (response.status == 201) {
+    alert("그룹이 저장되었습니다.");
+    window.location.reload()
+  } else {
+    alert(response.error);
+  }
 }
 
 // 닉네임 추가
