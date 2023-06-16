@@ -36,8 +36,8 @@ async function searchLocation() {
                                     <div style="display: flex; align-items: center;">
                                     <input type="radio" name="address_radio" value="${index}" style="width: 10px; margin-right: 10px;" onclick="handleRadio()">
                                         <label for="${index}" style="font-size: 15px;">선택</label>
-                                    <input id='x_${index}' value="${location_x}">
-                                    <input id='y_${index}' value="${location_y}">
+                                    <input id='x_${index}' value="${location_x}" hidden>
+                                    <input id='y_${index}' value="${location_y}" hidden>
                                     </div>
                                 </div>
                                 <hr>
