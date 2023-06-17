@@ -150,7 +150,7 @@ function handleRadio(box_id) {
 }
 
 $(document).ready(function () {
-    $(".delete_serarch").click(function () {
+    $(".delete_search").click(function () {
         if ($('#search_box').length) {
             $('#search_box').empty();
             var searchBox = document.getElementById('search_box');

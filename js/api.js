@@ -1,6 +1,6 @@
 // 기본 URL
-const backend_base_url = "https://api.miyeong.net"
-// const backend_base_url = "http://127.0.0.1:8000"
+// const backend_base_url = "https://api.miyeong.net"
+const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
@@ -24,6 +24,7 @@ async function navigateToDetailPage() {
 
   }
   else {
+    alert('?')
     window.location.replace(`${frontend_base_url}/window.html`)
   }
 }
@@ -92,7 +93,8 @@ async function handleSignin() {
     // localstorage에 저장하기
     localStorage.setItem('refresh', response_json.refresh)
     localStorage.setItem('access', response_json.access)
-
+    console.log(response_json)
+    alert('stop')
     const base64Url = response_json.access.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
