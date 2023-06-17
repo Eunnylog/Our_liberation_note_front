@@ -54,7 +54,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                         <div class="text-center">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <a class="dropdown-item styled-dropdown-item" href="#" data-bs-dismiss="modal" aria-label="Close" onclick="$('#save_plan_modal').modal('show');"><span class="link-text">일정추가</span></a>
+                                    <a class="dropdown-item styled-dropdown-item" href="#" data-bs-dismiss="modal" aria-label="Close" onclick="$('#save_plan_modal').modal('show');
+                                    $('#search_box').empty();"><span class="link-text">일정추가</span></a>
                                     <a class="dropdown-item styled-dropdown-item" href="#" onclick="window.location.href = '/ai.html?note_id=${note_id}'"><span class="link-text">AI랑 놀기</span></a>
                                     <a class="dropdown-item styled-dropdown-item" href="#" onclick="window.location.href = '/photo_page.html?note_id=${note_id}'"><span class="link-text">사진첩</span></a>
                                     <a class="dropdown-item styled-dropdown-item" href="#" onclick="window.location.href = '/lifephoto_page.html'"><span class="link-text">해방 필름</span></a>
@@ -209,6 +210,7 @@ function patchBox() {
     const btnElement = document.getElementById('patch_box');
     btnElement.innerText = '저장';
     btnElement.setAttribute("onClick", `patchPlan()`)
+
 }
 
 async function patchPlan() {
@@ -290,7 +292,9 @@ function addPlanList() {
 
     plan_set.push(plan);
 
-    let temp_html = `${title}(${start})`
+    let temp_html = `
+                        <button>${title}(${start})</button>
+                    `
     $('#plan_list').append(temp_html)
 
     document.getElementById("title").value = ''
@@ -302,3 +306,22 @@ function addPlanList() {
     document.getElementById("location_x").value = ''
     document.getElementById("location_y").value = ''
 }
+
+
+$(document).ready(function () {
+    $(".delete_serarch").click(function () {
+        if ($('#search_box').length) {
+            $('#search_box').empty();
+            var searchBox = document.getElementById('search_box');
+            searchBox.style.height = '0px';
+            searchBox.style.padding = '0px';
+            searchBox.style.margin = '0px';
+
+            document.getElementById("location").value = ''
+            document.getElementById("title").value = ''
+            document.getElementById("category").value = ''
+            document.getElementById("location_x").value = ''
+            document.getElementById("location_y").value = ''
+        }
+    });
+});
