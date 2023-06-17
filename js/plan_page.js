@@ -20,7 +20,6 @@ async function showPlanPage() {
     })
     const response_json = await response.json()
     response_json.forEach((a) => {
-        console.log(a['category'])
         let dic = {
             id: a['id'],
             title: a['title'],
@@ -42,32 +41,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
-            left: 'dropdownButton',
             center: 'title',
-        },
-        customButtons: {
-            dropdownButton: {
-                text: 'MENU',
-                click: function () {
-                    bootbox.dialog({
-                        message: `
-                        <div class="text-center">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <a class="dropdown-item styled-dropdown-item" href="#" data-bs-dismiss="modal" aria-label="Close" onclick="$('#save_plan_modal').modal('show');
-                                    $('#search_box').empty();"><span class="link-text">일정추가</span></a>
-                                    <a class="dropdown-item styled-dropdown-item" href="#" onclick="window.location.href = '/ai.html?note_id=${note_id}'"><span class="link-text">AI랑 놀기</span></a>
-                                    <a class="dropdown-item styled-dropdown-item" href="#" onclick="window.location.href = '/photo_page.html?note_id=${note_id}'"><span class="link-text">사진첩</span></a>
-                                    <a class="dropdown-item styled-dropdown-item" href="#" onclick="window.location.href = '/lifephoto_page.html'"><span class="link-text">해방 필름</span></a>
-                                    <a class="dropdown-item styled-dropdown-item" href="#" data-bs-dismiss="modal" aria-label="Close"><span class="link-text">닫기</span></a>
-                                </div>
-                            </div>
-                        </div>
-                        `,
-                        closeButton: false
-                    });
-                }
-            }
         },
         locale: 'ko',
         initialView: 'dayGridMonth',
@@ -293,7 +267,7 @@ function addPlanList() {
     plan_set.push(plan);
 
     let temp_html = `
-                        <button>${title}(${start})</button>
+                        <button onclick="deletePlanList('${plan}', event)" style="width:150px; border-radius:20px;">${title}<br>(${start})</button>
                     `
     $('#plan_list').append(temp_html)
 
@@ -309,7 +283,7 @@ function addPlanList() {
 
 
 $(document).ready(function () {
-    $(".delete_serarch").click(function () {
+    $(".delete_search").click(function () {
         if ($('#search_box').length) {
             $('#search_box').empty();
             var searchBox = document.getElementById('search_box');
@@ -325,3 +299,30 @@ $(document).ready(function () {
         }
     });
 });
+
+
+function deletePlanList(plan, event) {
+    // 버튼 누를시 페이지 이동 멈춤
+    event.preventDefault();
+
+    var userConfirmation = confirm("정말 삭제하시겠습니까?");
+
+    // 만약 사용자가 'OK'를 클릭하면, plan을 삭제하고 버튼을 제거합니다.
+    if (userConfirmation) {
+        deletePlanFromSet(plan, plan_set);
+
+        // 클릭된 버튼 삭제
+        event.target.remove();
+    }
+
+}
+
+function deletePlanFromSet(plan, plan_set) {
+    //  판별 함수를 만족하는 첫 번째 요소의 인덱스를 반환
+    const index = plan_set.findIndex(p => p.id === plan.id);
+
+    // 만약 plan이 plan_set에 존재한다면, 해당 plan을 삭제합니다.
+    if (index !== -1) {
+        plan_set.splice(index, 1);
+    }
+}
