@@ -10,7 +10,7 @@ async function searchLocation(box_id) {
     const headers = {
         'Authorization': `KakaoAK ${REST_API_KEY}`
     };
-    if (box_id = "2") {
+    if (box_id == "2") {
         axios.get(url, { headers })
             .then(response => {
                 const places = response.data.documents;
