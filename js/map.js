@@ -10,10 +10,14 @@ async function searchLocation() {
     axios.get(url, { headers })
         .then(response => {
             const places = response.data.documents;
+            if (places.length == 0) {
+                alert('검색결과가 없습니다!')
+                return false
+            }
             var searchBox = document.getElementById('search_box');
             searchBox.style.height = '200px';
             searchBox.style.padding = '20px';
-            searchBox.style.margin = '20px auto 20px auto';
+            // searchBox.style.margin = '20px auto 20px auto';
             // 검색 결과 처리
             $('#search_box').empty();
             places.forEach((place, index) => {
@@ -24,12 +28,9 @@ async function searchLocation() {
                 const location_x = place.x
                 const location_y = place.y
 
-                console.log(location_x, location_y)
-
-
                 let temp_html = `
-                                <div style="display: flex; align-items: center; justify-content: space-between; margin: 20px auto;">
-                                    <div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin: 0px 0px 0px 0px">
+                                    <div style=''>
                                         <h3 style="font-size: 15px; margin-bottom: 5px;" id='name_${index}' >${place_name} / ${place_category}</h3>
                                         <a href="${place_url}" id='address_${index}' target="_blank" style="font-size: 15px; color: black;">${address_name}</a>
                                     </div>
@@ -41,7 +42,6 @@ async function searchLocation() {
                                     </div>
                                 </div>
                                 <hr>
-                                <br>
                             `
                 $('#search_box').append(temp_html);
             });
