@@ -1,11 +1,15 @@
-let back_url = 'https://api.miyeong.net'
+// let back_url = 'https://api.miyeong.net'
+let back_url = 'http://127.0.0.1:8000'
+let access_token = localStorage.getItem('access')
+
+
 async function showAiFeed() {
   params = new URLSearchParams(window.location.search);
   note_id = params.get("note_id");
   const response = await fetch(`${back_url}/note/plan/${note_id}`, {
     headers: {
       'content-type': 'application/json',
-      // "Authorization": `${access_token}`,
+      "Authorization": `${access_token}`,
     },
     method: 'GET',
   })
@@ -179,11 +183,11 @@ async function aiStart() {
 
   });
 
-  console.log(destinations)
+  console.log(access_token)
   const response = await fetch(`${back_url}/note/search`, {
     headers: {
       'content-type': 'application/json',
-      // "Authorization": `${access_token}`,
+      "Authorization": `${access_token}`,
     },
     method: 'POST',
     body: JSON.stringify({ destinations: destinations })
@@ -204,6 +208,41 @@ async function aiStart() {
                     `
 
     $('#info_box').append(temp_html1)
+
+    let x_y_list = response_json['x_y_list'];
+
+    response_json['title_list'].forEach((a, idx) => {
+      let temp_html2 = `
+                    <div class="carousel-item" style="padding: 10px; width:100%; height:100%">
+                      <h3>${a}</h3>
+                      <div id="map_${idx}" style="width:49%;height:00px;"></div>
+                    </div>
+                    `;
+      $('#info_box').append(temp_html2);
+      let temp_html3 = `<li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${idx + 1}" hidden>`;
+      $('#control_info').append(temp_html3);
+
+      // setTimeout function to delay the map creation
+      setTimeout(function () {
+        var container = document.getElementById('map_' + idx);
+        var options = {
+          center: new kakao.maps.LatLng(x_y_list[idx][0], x_y_list[idx][1]),
+          level: 3
+        };
+
+        var map = new kakao.maps.Map(container, options);
+
+        var markerPosition = new kakao.maps.LatLng(x_y_list[idx][0], x_y_list[idx][1]);
+
+        var marker = new kakao.maps.Marker({
+          position: markerPosition
+        });
+
+        marker.setMap(map);
+      }, 10000);  // the delay time is set to 0 ms
+    });
+
+
 
     const btnElement = document.getElementById('ai_start_btn');
     btnElement.innerText = '결과보기';
