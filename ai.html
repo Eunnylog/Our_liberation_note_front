@@ -16,6 +16,8 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="/js/loader.js"></script>
     <script src="/js/api.js"></script>
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5976e08cd96f7fe00c3699cd1dfa0957"></script>
     <script src="/js/ai.js"></script>
 </head>
 
@@ -27,6 +29,11 @@
     <!-- nav end -->
     <!-- content start -->
     <main class="site-body">
+        <!-- 로딩창 -->
+        <div id="loading" style="display: none;">
+            <div class="overlay"></div>
+            <div class="spinner"></div>
+        </div>
         <div class="main-header" style="margin-top: 30px; ">
             <div class="content2" style="border: solid 3px #60749d; margin-bottom:30px; height:100px;">
                 <h3>AI 설명 칸 입니다</h3>
@@ -216,8 +223,8 @@
         </div>
     </div>
     <!-- Carousel 형식의 모달 -->
-    <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+    <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
+        <div class="modal-dialog modal-xl" style="margin: auto; max-width: 1000px;">
             <div class="modal-content" style="height: 500px;">
                 <div class="modal-header">
                     <h5 class="modal-title">Info</h5>
@@ -230,8 +237,7 @@
                             <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" hidden class="active">
                             </li>
                         </ol>
-                        <div class="carousel-inner" id="info_box">
-
+                        <div class="carousel-inner" id="info_box" style="width:800px; height:100%;">
                         </div>
                     </div>
                     <div>
@@ -253,6 +259,7 @@
             </div>
         </div>
     </div>
+
 </body>
 
 </html>

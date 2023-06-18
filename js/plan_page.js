@@ -2,6 +2,20 @@ let plan_data = []
 let plan_set = [];
 let access_token = localStorage.getItem('access')
 let back_url = 'https://api.miyeong.net'
+// let back_url = 'http://127.0.0.1:8000'
+
+
+window.onload = function () {
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
+
+    var aiLink = document.getElementById('goAI');
+    var photoLink = document.getElementById('goPhoto');
+
+    // 새로운 (id값을 넣은)URL로 변경
+    aiLink.href = `/ai.html?note_id=${note_id}`;
+    photoLink.href = `/photo_page.html?note_id=${note_id}`;
+};
 
 
 async function showPlanPage() {
@@ -42,6 +56,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
             center: 'title',
+            left: 'prevYear,nextYear'
         },
         locale: 'ko',
         initialView: 'dayGridMonth',
@@ -98,6 +113,22 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 
     calendar.render();
+
+    // var prevYearButton = document.querySelector('.fc-prevYear-button');
+    // var nextYearButton = document.querySelector('.fc-nextYear-button');
+
+    // prevYearButton.setAttribute('title', '이전 년도로 이동');
+    // nextYearButton.setAttribute('title', '다음 년도로 이동');
+
+    // prevYearButton.addEventListener('mouseover', function () {
+    //     // 설명 텍스트를 표시하거나 원하는 동작을 수행
+    //     alert('이전 년도로 이동');
+    // });
+
+    // nextYearButton.addEventListener('mouseover', function () {
+    //     // 설명 텍스트를 표시하거나 원하는 동작을 수행
+    //     console.log('다음 년도로 이동');
+    // });
 });
 
 
@@ -129,6 +160,13 @@ async function savePlan() {
 }
 
 async function deletePlan() {
+    var userConfirmation = confirm("정말 삭제하시겠습니까?");
+
+    // 만약 사용자가 'OK'를 클릭하면, plan을 삭제하고 버튼을 제거합니다.
+    if (!userConfirmation) {
+        return false
+    }
+
     plan_id = document.getElementById('plan_modal_id').innerHTML;
     const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
         headers: {
@@ -189,14 +227,27 @@ function patchBox() {
 
 async function patchPlan() {
     plan_id = document.getElementById('plan_modal_id').innerHTML;
-    let title = document.getElementById('title');
-    let location = document.getElementById('location');
-    let time = document.getElementById('time');
-    let memo = document.getElementById('memo');
-    let start = document.getElementById('start');
-    let category = document.getElementById('category');
+    let title = document.getElementById('title').value;
+    let location = document.getElementById('location').value;
+    let time = document.getElementById('time').value;
+    let memo = document.getElementById('memo').value;
+    let start = document.getElementById('start').value;
+    let category = document.getElementById('category').value;
     let location_x = document.getElementById("location_x").value
     let location_y = document.getElementById("location_y").value
+
+    let titleBox = document.getElementById("title")
+    let startBox = document.getElementById("start")
+
+    if (title == '' || start == '') {
+        alert('장소명과 날짜는 필수입니다!')
+        titleBox.classList.add("custom-class");
+        startBox.classList.add("custom-class");
+        return false
+    } else {
+        titleBox.classList.remove("custom-class");
+        startBox.classList.remove("custom-class");
+    }
 
 
     const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
@@ -206,12 +257,12 @@ async function patchPlan() {
         },
         method: 'PATCH',
         body: JSON.stringify({
-            "title": title.value ?? title.placeholder,
-            "location": location.value ?? location.placeholder,
-            "start": start.value ?? start.placeholder,
-            "memo": memo.value ?? memo.placeholder,
-            "time": time.value ?? time.placeholder,
-            "category": category.value ?? category.placeholder,
+            "title": title,
+            "location": location,
+            "start": start,
+            "memo": memo,
+            "time": time,
+            "category": category,
             "location_x": location_x,
             "location_y": location_y,
         })
@@ -237,9 +288,17 @@ function addPlanList() {
     const location_x = document.getElementById("location_x").value
     const location_y = document.getElementById("location_y").value
 
+    let titleBox = document.getElementById("title")
+    let startBox = document.getElementById("start")
+
     if (title == '' || start == '') {
         alert('장소명과 날짜는 필수입니다!')
+        titleBox.classList.add("custom-class");
+        startBox.classList.add("custom-class");
         return false
+    } else {
+        titleBox.classList.remove("custom-class");
+        startBox.classList.remove("custom-class");
     }
 
     let plan = {
@@ -297,6 +356,11 @@ $(document).ready(function () {
             document.getElementById("location_x").value = ''
             document.getElementById("location_y").value = ''
         }
+        let titleBox = document.getElementById("title")
+        let startBox = document.getElementById("start")
+
+        titleBox.classList.remove("custom-class");
+        startBox.classList.remove("custom-class");
     });
 });
 
@@ -324,5 +388,82 @@ function deletePlanFromSet(plan, plan_set) {
     // 만약 plan이 plan_set에 존재한다면, 해당 plan을 삭제합니다.
     if (index !== -1) {
         plan_set.splice(index, 1);
+    }
+}
+
+async function sendEmail() {
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
+
+    let checkedEmails = [];
+    $('input[type="checkbox"]:checked').each(function () {
+        checkedEmails.push($(this).attr('id'));
+    });
+
+    if (checkedEmails.length == 0) {
+        alert('이메일을 선택해주세요!')
+        return false
+    }
+
+    var loading = document.getElementById('loading');
+
+    try {
+        // 로딩창 표시
+        loading.style.display = 'block';
+
+        const response = await fetch(`${back_url}/note/email/${note_id}`, {
+            headers: {
+                'content-type': 'application/json',
+                // "Authorization": `Bearer ${access_token}`,
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                "members": checkedEmails,
+            })
+        });
+
+        if (response.status == 200) {
+            alert("이메일 전송이 완료되었습니다!")
+            window.location.reload()
+        } else {
+            alert('문제가 발생했습니다!')
+        }
+    } catch (error) {
+        alert('오류가 발생했습니다!');
+    } finally {
+        // 로딩창 숨김
+        loading.style.display = 'none';
+    }
+}
+
+async function selectEmailMember() {
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
+    const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            // "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'GET',
+    });
+    const response_json = await response.json()
+    $('#member_list').empty()
+    if (response.status == 200) {
+        console.log(response_json)
+        emails = response_json['group_set']['members'].split(", ")
+        emails.forEach((email) => {
+            console.log(email);
+            let temp_html = `
+                            <div>
+                                <h5 style="display: inline-block; vertical-align: middle;">${email}</h5>
+                                <input type="checkbox" id="${email}">
+                                <label for="${email}" style="margin-left: 10px; vertical-align: middle;"></label>
+                            </div>
+                            `;
+            $('#member_list').append(temp_html);
+        });
+        $('#select_member').modal('show');
+    } else {
+        alert('문제가 발생했습니다!')
     }
 }

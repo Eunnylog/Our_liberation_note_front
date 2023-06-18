@@ -17,12 +17,6 @@
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <script src="/js/loader.js"></script>
   <script src="/js/api.js"></script>
-  <style>
-    .fc-daygrid-day-frame {
-      max-height: 50px;
-      overflow-y: auto;
-    }
-  </style>
 </head>
 
 <body>
@@ -31,17 +25,16 @@
   </header>
   <main class="site-body">
     <!-- Dropdown Structure -->
-
-
-
     <article class="review-detail max-content-width">
       <div style="text-align: left;">
         <h1 id="note_title"></h1>
       </div>
-      <div style="text-align: right;">
-        <a class="back-link" href="/my_diary.html">&lt; 목록으로</a>
+      <!-- 로딩창 -->
+      <div id="loading" style="display: none;">
+        <div class="overlay"></div>
+        <div class="spinner"></div>
       </div>
-      <div class="dropdown">
+      <div class="dropdown" style="margin-bottom: 30px;">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
           data-bs-toggle="dropdown" aria-expanded="false">
           MENU
@@ -49,9 +42,12 @@
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <li><a class="dropdown-item" href="#"
               onclick="$('#save_plan_modal').modal('show'); $('#search_box').empty();">일정추가</a></li>
-          <li><a class="dropdown-item" href="#">AI랑 놀기</a></li>
-          <li><a class="dropdown-item" href="#">사진첩</a></li>
-          <li><a class="dropdown-item" href="/lifephoto_page.html">해방 필름</a></li>
+          <li><a class="dropdown-item" id="goAI" href="/">AI랑 놀기</a></li>
+          <li><a class="dropdown-item" id="goPhoto" href="/">사진첩</a></li>
+          <li><a class="dropdown-item" target="_blank" href="/lifephoto_page.html">해방 필름</a></li>
+          <li><a class="dropdown-item" href="#" onclick="selectEmailMember()">이메일
+              전송</a></li>
+          <li><a class="dropdown-item" href="/my_diary.html">뒤로 가기</a></li>
         </ul>
       </div>
       <div id='calendar'></div>
@@ -167,8 +163,8 @@
       <div class="modal-content" style="width:700px;">
         <div class="modal-header">
           <h5 class="modal-title" id="plan_modal_title">
-            Plan Info_</h5>
-          <h6 class="modal-title" id="plan_modal_id"></h6>
+            Plan Info</h5>
+          <h6 class="modal-title" id="plan_modal_id" hidden></h6>
           <button type="button" class="btn-close delete_search" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="container">
@@ -288,6 +284,35 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="select_member" tabindex="-1" aria-labelledby="su" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="su">
+            Send Email</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="container">
+          <div class="global-cont">
+            <div class="inner-cont">
+              <div class="sign-in-up">
+                <form class="sign-in-form active">
+                  <div style="width:100%;" id="member_list">
+                  </div>
+                  <div class="sign-up" style="display: flex;">
+                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()"
+                      style="margin-right: 10px; background-color: #60749d;">취소</button>
+                    <button type="button" class="signup" onclick="sendEmail()">이메일 보내기</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
   <script src="/js/plan_page.js"></script>
