@@ -7,8 +7,8 @@ let tossPayments = TossPayments(clientKey);
 //   //   각 파라미터별 세부 내용은 다음 링크 참고 https://docs.tosspayments.com/reference/js-sdk {% endcomment %} */}
 let paymentData = ["공통", "카드", "가상계좌", "계좌이체", "휴대폰", "문화상품권", "도서상품권", "게임문화상품권", "토스페이"];
 let path = "/";
-let successUrl = `http://miyeong.net/success.html`;
-let failUrl = `http://miyeong.net/fail.html`;
+let successUrl = `http://127.0.0.1:5500/success.html`;
+let failUrl = `http://127.0.0.1:5500/fail.html`;
 
 
 paymentData["공통"] = {
