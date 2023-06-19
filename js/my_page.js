@@ -1,6 +1,8 @@
 async function loadUserprofile() {
 
     const response = await getUserprofile();
+
+    console.log(response)
   
     const email = document.getElementById("email")
     email.innerText = `${response.profile.email}님`
@@ -39,7 +41,7 @@ async function loadStampmap() {
     };
     var map = new kakao.maps.Map(container, options);
 
-    var imageSrc = "/css/assets/stamp-marker3.png",
+    var imageSrc = "/css/assets/stamp-marker.png",
         imageSize = new kakao.maps.Size(64, 69),
         imageOption = { offset: new kakao.maps.Point(27, 69) };
 
@@ -51,7 +53,6 @@ async function loadStampmap() {
 
     stamps.forEach((stamp) => {
         const location = stamp.photo.location
-        // 이게 맞아요!
         const location_x = stamp.photo.location_y
         const location_y = stamp.photo.location_x
         const photo_status = stamp.photo.status

@@ -111,6 +111,46 @@
             </div>
         </div>
     </div>
+    <!-- 휴지통 모달 -->
+    <div class="modal" id="trash" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="trash-modal-body" class="modal-body">
+                    <form>
+                        <div>
+                            <!-- 토글 -->
+                            <div class="trash-toggle">
+                                <input type="checkbox" id="photo-toggle">
+                                <button id="photoButton">사진</button>
+                                <input type="checkbox" id="note-toggle">
+                                <button id="noteButton">노트</button>
+                                <input type="checkbox" id="group-toggle">
+                                <button id="groupButton">그룹</button>
+                            </div>
+                            <!-- <select name="group_name" id="group_name" onchange="showNoteList()"
+                                style="width: 48%; height:46px; float:right; margin-bottom:10px">
+                                <option value="-1">그룹 선택</option>
+                            </select> -->
+                        </div>
+                        <div id="trash-content" class="trash-content"> 이미지
+                            <br>
+                            <input type="radio" name="note_category" value="1" style="width:10px">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick=""
+                        style="background-color:  #60749d;">복원</button>
+                    <button type="button" class="btn btn-primary" onclick=""
+                        style="background-color: #1F489A;">삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="/js/api_key.js"></script>
     <script src="/js/api.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
