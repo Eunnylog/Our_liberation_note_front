@@ -464,7 +464,7 @@ async function selectEmailMember() {
                             `;
             $('#member_list').append(temp_html);
         });
-        $('#select_member').modal('show');
+        $('#select_email_member').modal('show');
     } else {
         alert('문제가 발생했습니다!')
     }

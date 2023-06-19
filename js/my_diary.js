@@ -171,6 +171,8 @@ async function groupUpdateModal() {
     const selectedIndex = document.getElementById('select_group').value
     console.log("selectedIndex", selectedIndex)
 
+    $('#update-selected-email-ul').empty()
+
     response_json.forEach((group, index) => {
         let id = group['id']
         let name = group['name']

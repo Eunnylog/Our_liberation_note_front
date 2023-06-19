@@ -45,7 +45,8 @@
           <li><a class="dropdown-item" id="goAI" href="/">AI랑 놀기</a></li>
           <li><a class="dropdown-item" id="goPhoto" href="/">사진첩</a></li>
           <li><a class="dropdown-item" target="_blank" href="/lifephoto_page.html">해방 필름</a></li>
-          <li><a class="dropdown-item" href="#" onclick="selectEmailMember()">이메일
+          <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#select_email_member"
+              onclick="selectEmailMember()">이메일
               전송</a></li>
           <li><a class="dropdown-item" href="/my_diary.html">뒤로 가기</a></li>
         </ul>
@@ -294,7 +295,8 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="select_member" tabindex="-1" aria-labelledby="su" aria-hidden="true">
+  <!-- 이메일전송 모달창 -->
+  <div class="modal fade" id="select_email_member" tabindex="-1" aria-labelledby="su" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
