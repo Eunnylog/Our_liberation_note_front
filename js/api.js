@@ -1,6 +1,6 @@
 // 기본 URL
-const backend_base_url = "https://api.miyeong.net"
-// const backend_base_url = "http://127.0.0.1:8000"
+// const backend_base_url = "https://api.miyeong.net"
+const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 // const frontend_base_url = "https://miyeong.net"
 
@@ -111,7 +111,7 @@ async function handleSignin() {
   }
 }
 
-// 이메일 인증코드 보내기
+// 회원가입 이메일 인증코드 보내기
 async function sendCode() {
   const email = document.getElementById("email").value
 
@@ -718,13 +718,21 @@ async function addGroup() {
     body: JSON.stringify(requestData)
   });
 
+  if (!groupName) {
+    alert('그룹 이름을 적어주세요')
+    return;
+  }
+
   if (response.status == 201) {
     alert("그룹이 저장되었습니다.");
     window.location.reload()
   } else {
-    alert(response.error);
+    const responseData = await response.json();
+    alert(responseData.error);
   }
 }
+
+
 
 // 닉네임 추가
 function addNickname() {
@@ -752,5 +760,57 @@ async function getUserprofile() {
     alert("불러오는데 실패했습니다")
   }
 
+
+}
+
+// 비밀번호 재발급 인증코드 보내기
+async function sendVerificationEmail() {
+  console.log('확인')
+  const email = document.getElementById("sendEmail").value
+
+  const response = await fetch(`${backend_base_url}/user/sendemail/`, {
+    headers: {
+      'content-type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify({
+      "email": email,
+    })
+  })
+  alert("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
+}
+
+// 비밀번호 분실 새 비밀번호 발급
+async function ChangePassword() {
+
+  const changeData = {
+    email: document.querySelector("#sendEmail").value,
+    code: document.querySelector("#confirm-code").value,
+    new_password: document.querySelector("#change_password").value,
+  }
+
+  if (!changeData.code || !changeData.new_password) {
+    alert("빈칸을 입력해주세요.")
+    return
+  }
+
+  const response = await fetch(`${backend_base_url}/user/changepassword/`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify(changeData)
+  }
+  )
+  const data = await response.json()
+  console.log(data["message"])
+  if (response.status == 200) {
+    alert("비밀번호 변경 완료!")
+    location.replace(`${frontend_base_url}/index.html`)
+
+
+  } else {
+    alert(data["message"])
+  }
 
 }

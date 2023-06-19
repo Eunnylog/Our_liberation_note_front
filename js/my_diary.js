@@ -1,6 +1,12 @@
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.miyeong.net'
-// let back_url = 'http://127.0.0.1:8000'
+// let back_url = 'https://api.miyeong.net'
+let back_url = 'http://127.0.0.1:8000'
+let group_data = []
+
+const userPayload = localStorage.getItem('payload')
+const userPayloadJson = JSON.parse(userPayload)
+const userEmail = userPayloadJson.email
+console.log('유저', userEmail)
 
 async function getGroup() {
     const response = await fetch(`${back_url}/user/group/`, {
@@ -15,6 +21,8 @@ async function getGroup() {
     response_json.forEach((a, index) => {
         let id = a['id']
         let name = a['name']
+        let master = a['master']
+        let members = a['members']
         let temp_html = `<option value="${id}">${name}</option>`
         // 페이지 그룹 샐랙트
         $('#select_group').append(temp_html)
@@ -25,12 +33,43 @@ async function getGroup() {
         if (index === 0) {
             $('#select_group').val(id);
             showNoteList();
+            // showMasterButton();
         }
+        // 변수들을 딕셔너리로 묶기
+        let groupDict = {
+            "id": id,
+            "name": name,
+            "master": master,
+            "members": members
+        }
+
+        group_data.push(groupDict)
     })
     return response_json
 }
-getGroup()
 
+// getGroup() 함수 실행 및 완료 후 group_data 출력
+getGroup().then(() => {
+    console.log('그룹', group_data);
+    showMasterButton();
+});
+
+// 마스터만 그룹 수정&삭제 버튼 display
+async function showMasterButton() {
+    console.log('버튼 실행')
+    let updateButton = document.getElementById("group-update-btn")
+    let deleteButton = document.getElementById("group-delete-btn")
+
+    const selectedGroup = group_data.find(group => group.id == $('#select_group').val());
+
+    if (selectedGroup && selectedGroup.master === userEmail) {
+        updateButton.style.display = "block";
+        deleteButton.style.display = "block";
+    } else {
+        updateButton.style.display = "none";
+        deleteButton.style.display = "none";
+    }
+}
 
 async function showNoteList() {
     const group_id = document.getElementById("select_group").value
@@ -67,6 +106,7 @@ async function showNoteList() {
                                 </a>
                             `
             $('#note_list').append(temp_html);
+            showMasterButton(); // showMasterButton 함수 호출
         })
     }
 }

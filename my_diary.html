@@ -38,12 +38,12 @@
         <select name="group" id="select_group" onchange="showNoteList()">
           <!-- <option value="-1">그룹 선택</option> -->
         </select>
-        <div style="float: inline-end;">
-          <button type="button" id="groupUpdateBtn" class="btn group-btn"
+        <div style="display: flex;">
+          <button type="button" id="group-update-btn" class="btn group-btn"
             style="background-color: #60749d; color:white; margin: 0px 10px;" onclick="groupUpdateModal()"> 그룹 수정
           </button>
-          <button type="button" class="btn group-btn" style="background-color: #92a2c5; color:white;"
-            onclick="groupDeleteModal()">그룹
+          <button type="button" id="group-delete-btn" class="btn group-btn"
+            style="background-color: #92a2c5; color:white;" onclick="groupDeleteModal()">그룹
             삭제</button>
         </div>
       </div>

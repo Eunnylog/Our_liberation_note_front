@@ -59,7 +59,7 @@
                         <div class="inner-cont">
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
-                                    <input name="email" id="email" type="email" class="form-control"
+                                    <input name="email" type="email" id="email" class="form-control"
                                         placeholder="email">
                                     <input name="password" id="password" type="password" class="form-control"
                                         placeholder="password">
@@ -125,6 +125,10 @@
                                 <button class="naver" onclick="naverLogin()">Naver</button>
                                 <button class="github" onclick="githubLogin()">GitHub</button>
                             </div>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#findPassword" id="find-password"
+                                class="findpassword"
+                                style="text-decoration: none; font-size: 18px; color: #60749d; margin: 10px 0px;">
+                                비밀번호를 잃어버리셨나요? </a>
                         </div>
                     </div>
                 </div>
@@ -280,7 +284,47 @@
             </div>
         </div>
     </div>
+    <!-- 비밀번호 재발급 모달창 -->
+    <div class="modal fade" id="findPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <p>Change Password</p>
+                        <span style="font-size: 15px; color: #7a7f83;"> 이메일 인증 후 비밀번호를 새로 변경합니다. </span>
+                    </h5>
 
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">이메일:</label>
+                            <input type="email" class="form-control" id="sendEmail" name="email"
+                                placeholder="이메일을 입력해주세요.">
+                            <button type="button" class="signup btn btn-primary" onclick="sendVerificationEmail()"
+                                style="border-color: #60749d; background-color: #60749d; margin: 20px 0px;">전송</button>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label ">인증번호 확인:</label>
+                            <input type="code" class="form-control" id="confirm-code" placeholder="인증번호를 입력해주세요.">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">새 비밀번호:</label>
+                            <input type="password" class="form-control" id="change_password"
+                                placeholder="새로운 비밀번호를 입력해주세요.">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button style="border-color: #60749d; background-color: #60749d;" type="button"
+                        class="btn btn-primary" onclick="ChangePassword()">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
