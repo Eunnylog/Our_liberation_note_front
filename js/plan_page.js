@@ -5,6 +5,8 @@ let back_url = 'https://api.miyeong.net'
 // let back_url = 'http://127.0.0.1:8000'
 
 
+
+
 window.onload = function () {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
@@ -467,3 +469,24 @@ async function selectEmailMember() {
         alert('문제가 발생했습니다!')
     }
 }
+
+
+async function savePayIsSubscribe() {
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
+    const response = await fetch(`${back_url}/payments/subscription/${note_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            // "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'GET',
+    });
+    if (response.status == 200) {
+        localStorage.setItem("is_subscribe", true);
+    } else {
+        localStorage.setItem("is_subscribe", false);
+    }
+
+}
+
+savePayIsSubscribe()
