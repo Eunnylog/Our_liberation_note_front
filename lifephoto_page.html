@@ -253,19 +253,27 @@
                                 <form class="sign-in-form active">
                                     <input name="groupname" id="groupname" type="name" class="form-control"
                                         placeholder="그룹이름">
-                                    <div style="display: flex;">
-                                        <input name="addemail" id="addemail" type="email" class="form-control"
-                                            placeholder="추가할 멤버 이메일" style="width: 300px;">
+                                    <div style="display: flex;" id="group_make_box">
+                                        <input name="addemail" id="usersearch" type="email" class="form-control"
+                                            autocomplete="off" placeholder="추가할 멤버 이메일" style="width: 300px;">
                                         <button type="button" class="signup" onclick="addMember()"
-                                            style="width: 100px; margin-left: 10px;">추가</button>
+                                            style="width: 100px; margin-left: 10px;" id="addmember-btn">검색</button>
                                     </div>
                                     <div style="display:flex;">
                                         <p style="justify-content: left;"> 이메일 </p>
-                                        <ul>
-                                            <li>이메일1</li><br>
-                                            <li>이메일2</li><br>
-                                            <li>이메일3</li><br>
-                                        </ul>
+                                        <div id="email-list">
+                                            <ul id="email-ul">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="addMembersToGroup()"
+                                        style="width: 100px; margin-left: 10px;">멤버 추가</button>
+                                    <div style="display:flex;">
+                                        <p style="justify-content: left;"> 추가한 이메일 </p>
+                                        <div id="selected-email-list">
+                                            <ul id="selected-email-ul">
+                                            </ul>
+                                        </div>
                                     </div>
                                     <div class="sign-up" style="display: flex;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
