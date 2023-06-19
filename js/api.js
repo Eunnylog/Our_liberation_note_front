@@ -94,7 +94,7 @@ async function handleSignin() {
 async function sendCode() {
   const email = document.getElementById("email").value
 
-  const response = await fetch(`https://api.miyeong.net/user/sendemail/`, {
+  const response = await fetch(`${backend_base_url}/user/sendemail/`, {
     headers: {
       'content-type': 'application/json',
     },
@@ -573,7 +573,9 @@ function handleRadioClick() {
     let selected_email = document.getElementById(`email_${selectedIndex}`).value
 
     document.getElementById("usersearch").value = selected_email
-
+    // addMembersToGroup()
+  } else {
+    alert("선택된 이메일이 없습니다.");
   }
 }
 
@@ -598,12 +600,10 @@ async function addMember() {
     // 검색 결과 처리
     emails.forEach((useremail, index) => {
       let temp_html = `
-        <ul id="email-ul">
           <li>
             <input type="radio" id="email_${index}" name="email_radio" value="${index}" onclick="handleRadioClick()">
             ${useremail}
           </li>
-        </ul>
         `;
       email.innerHTML += temp_html;
     });
@@ -612,8 +612,6 @@ async function addMember() {
       // 에러 처리
       alert('문제가 발생했습니다!')
     });
-
-  // alert("멤버가 추가되었습니다.")
 }
 
 // 멤버 추가 버튼 클릭 시 선택된 이메일 리스트를 서버로 전송
@@ -629,12 +627,21 @@ function addMembersToGroup() {
     const alreadyAdded = selectedEmails.includes(selectedEmail);
 
     if (!alreadyAdded) {
-      selectedEmails.push(selectedEmail); console.log(selectedEmails);
+      selectedEmails.push(selectedEmail);
+      console.log(selectedEmails);
 
       // 선택된 이메일을 ul에 추가
       const selectedEmailUl = document.getElementById("selected-email-ul");
       const newEmailLi = document.createElement("li");
-      newEmailLi.textContent = selectedEmail;
+
+      // input 태그 추가
+      const newInput = document.createElement("input");
+      newInput.type = "radio";
+      newInput.name = "checked_email_radio";
+
+      newEmailLi.appendChild(newInput);
+      newEmailLi.appendChild(document.createTextNode(selectedEmail));
+
       selectedEmailUl.appendChild(newEmailLi);
     } else {
       alert("이미 추가된 이메일입니다.");
