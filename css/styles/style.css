@@ -819,7 +819,7 @@ input[type="checkbox"]:checked+label {
 }
 
 /* plan page dropdown */
-.styled-dropdown-item {
+/* .styled-dropdown-item {
   background-color: #60749d;
   color: white;
   border-radius: 10px;
@@ -863,7 +863,7 @@ input[type="checkbox"]:checked+label {
 
 .diary-link-text:hover {
   text-decoration: underline; 
-}
+} */
 
 .stamp-photo {
   width: 142px; 
