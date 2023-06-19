@@ -3,6 +3,24 @@ let back_url = 'https://api.miyeong.net'
 
 let access_token = localStorage.getItem('access')
 
+function loadNoteCategory() {
+
+}
+window.onload = function () {
+    $('#note_category').empty()
+    for (let i = 1; i < 13; i++) {
+        let temp_html = `
+                        <div
+                            style="width: 100px; height: 170px; text-align:center; display:inline-block; margin: auto 20px 20px auto;">
+                            <img src="/css/note_img/note_${i}.png" style="width: 100px; height: 150px;"><br>
+                            <input type="radio" name="note_category" value="${i}" style="width:10px">
+                        </div>
+                    `
+        $('#note_category').append(temp_html)
+        console.log(i)
+    }
+};
+
 async function getGroup() {
     const response = await fetch(`${back_url}/user/group/`, {
         headers: {
