@@ -73,4 +73,3 @@ fetch(url + `?orderId=${orderId}&paymentKey=${paymentKey}&amount=${amount}`, {
     console.error(error);
     // window.location.replace(`${frontend_base_url}/fail.html`)
   });
-
