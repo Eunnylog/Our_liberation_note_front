@@ -6,8 +6,8 @@ const paymentKey = urlParams.get('paymentKey');
 // 쿠키에서 액세스 JWT 토큰 가져오기
 const access_token = localStorage.getItem("access");
 
-const url = `${backend_base_url}/payments/success`;
-const secretKey = "test_sk_qLlDJaYngroLz95eAom8ezGdRpXx";
+const url = `https://api.miyeong.net/payments/success`;
+const secretKey = "test_ck_5mBZ1gQ4YVXkllX4eX23l2KPoqNb";
 const userpass = secretKey + ':';
 const encodedU = window.btoa(userpass);
 
@@ -26,6 +26,7 @@ const params = {
 };
 
 console.log(orderId, amount, paymentKey)
+
 fetch(url + `?orderId=${orderId}&paymentKey=${paymentKey}&amount=${amount}`, {
   method: 'GET',
   headers: headers,
@@ -70,6 +71,5 @@ fetch(url + `?orderId=${orderId}&paymentKey=${paymentKey}&amount=${amount}`, {
   .catch(error => {
     // 에러 처리
     console.error(error);
-    window.location.replace(`${frontend_base_url}/fail.html`)
+    // window.location.replace(`${frontend_base_url}/fail.html`)
   });
-

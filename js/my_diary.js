@@ -1,6 +1,6 @@
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.miyeong.net'
-// let back_url = 'http://127.0.0.1:8000'
+// let back_url = 'https://api.miyeong.net'
+let back_url = 'http://127.0.0.1:8000'
 
 const userPayload = localStorage.getItem('payload')
 const userPayloadJson = JSON.parse(userPayload)
@@ -76,7 +76,6 @@ async function showNoteList() {
 }
 
 showNoteList()
-// handleGroups()
 
 async function saveNote() {
     let radios = Array.from(document.getElementsByName('note_category'));
@@ -247,7 +246,6 @@ async function updateAddMember() {
 
 // 멤버 추가 버튼 클릭 시 선택된 이메일 리스트를 서버로 전송
 function updateAddMembersToGroup() {
-    // 선택한 input 요소의 value 속성을 배열에 push
     const checkedInput = document.querySelector('input[name="email_radio"]:checked');
 
     if (checkedInput) {
@@ -255,14 +253,14 @@ function updateAddMembersToGroup() {
         const selectedEmail = checkedInput.nextSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
 
         // 이미 추가된 이메일인지 확인
-        const alreadyAdded = selectedEmail.includes(selectedEmail);
+        const alreadyAdded = selectedEmails.includes(selectedEmail);
 
         // 기존 이메일인지 확인
         const existingEmail = existingEmails.includes(selectedEmail);
 
         if (!alreadyAdded && !existingEmail) {
-            selectedEmail.push(selectedEmail); console.log(selectedEmail);
-            console.log('selectedEmails', selectedEmail)
+            selectedEmails.push(selectedEmail); console.log(selectedEmails);
+            console.log('selectedEmails', selectedEmails)
 
             // 선택된 이메일을 ul에 추가
             const selectedEmailUl = document.getElementById("update-selected-email-ul");
@@ -272,9 +270,7 @@ function updateAddMembersToGroup() {
             // input 태그 추가
             const newInput = document.createElement("input");
             newInput.type = "radio";
-            // newInput.id = `selected_update_email_${index}`;
             newInput.name = "checked_email_radio";
-            // newInput.onclick = () => updateHandleRadioClick();
             newEmailLi.appendChild(newInput);
 
             // 이메일 추가
@@ -316,9 +312,7 @@ async function updateGroup() {
             }
         }
     }
-    // const membersEmails = Array.from(membersList.getElementsByTagName("li")).map(li => li.textContent);
-    console.log(membersEmails)
-    // 멤버 id 저장용 빈 배열 준비 manytomany 필드는 id값이 리스트 일력해야 값이 들어감
+    // 멤버 id 저장용 빈 배열 준비
     const memberIdList = [];
 
     // 멤버 이메일을 반복하면서 각각 서버로 전송하여 멤버 객체를 받아옴
@@ -363,13 +357,11 @@ async function updateGroup() {
     }
 }
 
-// 그룹 삭제 모달
 async function groupDeleteModal() {
     $('#deleteGroup').modal('show')
     console.log("Deleting group ID:", updatingGroupId);
 }
 
-// 그룹 삭제
 async function deleteGroupConfirm() {
     const access_token = localStorage.getItem('access')
     const response = await fetch(`${back_url}/user/group/`, {
