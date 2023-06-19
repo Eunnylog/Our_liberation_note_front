@@ -1,6 +1,7 @@
-let access_token = localStorage.getItem('access')
 let back_url = 'https://api.miyeong.net'
 // let back_url = 'http://127.0.0.1:8000'
+
+let access_token = localStorage.getItem('access')
 
 async function getGroup() {
     const response = await fetch(`${back_url}/user/group/`, {
@@ -170,6 +171,8 @@ async function groupUpdateModal() {
 
     const selectedIndex = document.getElementById('select_group').value
     console.log("selectedIndex", selectedIndex)
+
+    $('#update-selected-email-ul').empty()
 
     response_json.forEach((group, index) => {
         let id = group['id']
