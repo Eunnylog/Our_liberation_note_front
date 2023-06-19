@@ -22,7 +22,7 @@ async function getGroup() {
 
         // 첫번째 그룹 노트 리스트 보여주기
         if (index === 0) {
-            $('#select_group').val(id);
+            document.getElementById("select_group").value = id
             showNoteList();
         }
     })
@@ -69,7 +69,7 @@ async function showNoteList() {
     }
 }
 
-showNoteList()
+// showNoteList()
 
 
 async function saveNote() {

@@ -1,8 +1,8 @@
 // 기본 URL
 const backend_base_url = "https://api.miyeong.net"
 // const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "http://127.0.0.1:5500"
-// const frontend_base_url = "https://miyeong.net"
+// const frontend_base_url = "http://127.0.0.1:5500"
+const frontend_base_url = "https://miyeong.net"
 
 let jwtToken;
 
@@ -108,6 +108,7 @@ async function handleSignin() {
   }
   else {
     alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
+    console.log(response)
   }
 }
 
