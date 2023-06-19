@@ -84,6 +84,7 @@ async function album() {
     });
 
     response_json.forEach((a) => {
+        console.log(a)
         const image = backend_base_url + '/note' + a["image"];
         const title = a['title'];
         const photo_id = a['id'];
