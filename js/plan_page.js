@@ -1,4 +1,5 @@
 let plan_data = []
+let plan_set = [];
 let access_token = localStorage.getItem('access')
 let back_url = 'https://api.miyeong.net'
 
@@ -19,7 +20,6 @@ async function showPlanPage() {
     })
     const response_json = await response.json()
     response_json.forEach((a) => {
-        console.log(a['category'])
         let dic = {
             id: a['id'],
             title: a['title'],
@@ -41,36 +41,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
-            left: 'myCustomButton PhotoButton LifeButton AiButton',
             center: 'title',
         },
-        customButtons: {
-            myCustomButton: {
-                text: '일정추가',
-                click: function () {
-                    $('#save_plan_modal').modal('show');
-                }
-            },
-            AiButton: {
-                text: 'AI랑 놀기',
-                click: function () {
-                    window.location.href = `/ai.html?note_id=${note_id}`
-                }
-            },
-            PhotoButton: {
-                text: '사진첩',
-                click: function () {
-                    window.location.href = `/photo_page.html?note_id=${note_id}`
-                }
-            },
-            LifeButton: {
-                text: '해방 필름',
-                click: function () {
-                    window.location.href = `/lifephoto_page.html`
-                }
-            }
-        },
-
         locale: 'ko',
         initialView: 'dayGridMonth',
         editable: true,
@@ -79,20 +51,19 @@ document.addEventListener('DOMContentLoaded', async function () {
         eventClick: function (info) {
             info.jsEvent.preventDefault();
             var eventInfoDiv = document.getElementById('plan_info');
-            var formattedDate = info.event.start.toLocaleDateString(); // 날짜 포멧
+            var formattedDate = info.event.start.toLocaleDateString();
 
             var titleElement = document.getElementById('plan_modal_id');
-            titleElement.innerHTML = `${info.event.id}`; // ID 추가
-            console.log(info.event)
+            titleElement.innerHTML = `${info.event.id}`;
 
             eventInfoDiv.innerHTML = `
-                                        <h3 id='plan_title'>${info.event.title}</h3>
-                                        <h5 id='plan_category'>카테고리:${info.event.extendedProps.place_category}</h5>
-                                        <h5 id='plan_date'>Date: ${formattedDate}</h5>
-                                        <h5 id='plan_location'>Location: ${info.event.extendedProps.location}</h5>
-                                        <h5 id='plan_time'>Time: ${info.event.extendedProps.time}</h5>
-                                        <h5 id='plan_memo'>Memo: ${info.event.extendedProps.memo}</h5>
-                                    `;
+                <h3 id='plan_title'>${info.event.title}</h3>
+                <h5 id='plan_category'>카테고리:${info.event.extendedProps.place_category}</h5>
+                <h5 id='plan_date'>Date: ${formattedDate}</h5>
+                <h5 id='plan_location'>Location: ${info.event.extendedProps.location}</h5>
+                <h5 id='plan_time'>Time: ${info.event.extendedProps.time}</h5>
+                <h5 id='plan_memo'>Memo: ${info.event.extendedProps.memo}</h5>
+            `;
             $('#plan_modal').modal('show');
 
             const btnElement = document.getElementById('patch_box');
@@ -102,12 +73,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         eventDrop: function (info) {
             var event = info.event;
             var plan_id = event.id
-
-            // 이벤트 시작 시간을 ISO 문자열 형태로 가져옴
             var newStart = event.start.toISOString();
-            let droppedDate = new Date(newStart); // 드랍된 이벤트의 시간 넣기!
-            let month = (droppedDate.getMonth() + 1); // 월, 11[1을 더해야함. 유일하게 조심해야할 부분. 1월은 0이다.]
-            let date = droppedDate.getDate(); // 일, 14
+            let droppedDate = new Date(newStart);
+            let month = (droppedDate.getMonth() + 1);
+            let date = droppedDate.getDate();
             let year = droppedDate.getFullYear();
             let newDate = `${year}-${month}-${date}`;
 
@@ -118,12 +87,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                     "Authorization": `Bearer ${access_token}`,
                 },
                 body: JSON.stringify({
-                    // start만 옮기기 때문!
                     start: newDate,
                 })
             }).then(response => {
                 if (!response.ok) {
-                    // 서버 오류시 원상복귀
                     info.revert();
                 }
             });
@@ -133,31 +100,16 @@ document.addEventListener('DOMContentLoaded', async function () {
     calendar.render();
 });
 
+
 async function savePlan() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
-    const title = document.getElementById("title").value
-    const location = document.getElementById("location").value
-    const start = document.getElementById("start").value
-    const memo = document.getElementById("memo").value
-    const time = document.getElementById("time").value
-    const category = document.getElementById("category").value
-    const location_x = document.getElementById("location_x").value
-    const location_y = document.getElementById("location_y").value
 
+    if (plan_set.length == 0) {
+        alert('일정을 추가해주세요!')
+        return false
+    }
 
-    let plan_set = [];
-    let plan = {
-        "title": title,
-        "location": location,
-        "start": start,
-        "memo": memo,
-        "time": time,
-        "category": category,
-        "location_x": location_x,
-        "location_y": location_y,
-    };
-    plan_set.push(plan)
 
     const response = await fetch(`${back_url}/note/plan/${note_id}`, {
         headers: {
@@ -232,6 +184,7 @@ function patchBox() {
     const btnElement = document.getElementById('patch_box');
     btnElement.innerText = '저장';
     btnElement.setAttribute("onClick", `patchPlan()`)
+
 }
 
 async function patchPlan() {
@@ -272,4 +225,104 @@ async function patchPlan() {
 }
 
 
+let title_li = [];
 
+function addPlanList() {
+    const title = document.getElementById("title").value
+    const location = document.getElementById("location").value
+    const start = document.getElementById("start").value
+    const memo = document.getElementById("memo").value
+    const time = document.getElementById("time").value
+    const category = document.getElementById("category").value
+    const location_x = document.getElementById("location_x").value
+    const location_y = document.getElementById("location_y").value
+
+    if (title == '' || start == '') {
+        alert('장소명과 날짜는 필수입니다!')
+        return false
+    }
+
+    let plan = {
+        "title": title,
+        "location": location,
+        "start": start,
+        "memo": memo,
+        "time": time,
+        "category": category,
+        "location_x": location_x,
+        "location_y": location_y,
+    };
+
+    // 해당 조건을 만족하는 요소가 있으면 true를 반환
+    let checkPlanList = plan_set.some(function (existingPlan) {
+        // 문자열로 비교
+        return JSON.stringify(existingPlan) === JSON.stringify(plan);
+    });
+
+    if (checkPlanList) {
+        alert('이미 추가한 일정입니다!')
+        return false;
+    }
+
+    plan_set.push(plan);
+
+    let temp_html = `
+                        <button onclick="deletePlanList('${plan}', event)" style="width:150px; border-radius:20px;">${title}<br>(${start})</button>
+                    `
+    $('#plan_list').append(temp_html)
+
+    document.getElementById("title").value = ''
+    document.getElementById("location").value = ''
+    document.getElementById("start").value = ''
+    document.getElementById("memo").value = ''
+    document.getElementById("time").value = ''
+    document.getElementById("category").value = ''
+    document.getElementById("location_x").value = ''
+    document.getElementById("location_y").value = ''
+}
+
+
+$(document).ready(function () {
+    $(".delete_search").click(function () {
+        if ($('#search_box').length) {
+            $('#search_box').empty();
+            var searchBox = document.getElementById('search_box');
+            searchBox.style.height = '0px';
+            searchBox.style.padding = '0px';
+            searchBox.style.margin = '0px';
+
+            document.getElementById("location").value = ''
+            document.getElementById("title").value = ''
+            document.getElementById("category").value = ''
+            document.getElementById("location_x").value = ''
+            document.getElementById("location_y").value = ''
+        }
+    });
+});
+
+
+function deletePlanList(plan, event) {
+    // 버튼 누를시 페이지 이동 멈춤
+    event.preventDefault();
+
+    var userConfirmation = confirm("정말 삭제하시겠습니까?");
+
+    // 만약 사용자가 'OK'를 클릭하면, plan을 삭제하고 버튼을 제거합니다.
+    if (userConfirmation) {
+        deletePlanFromSet(plan, plan_set);
+
+        // 클릭된 버튼 삭제
+        event.target.remove();
+    }
+
+}
+
+function deletePlanFromSet(plan, plan_set) {
+    //  판별 함수를 만족하는 첫 번째 요소의 인덱스를 반환
+    const index = plan_set.findIndex(p => p.id === plan.id);
+
+    // 만약 plan이 plan_set에 존재한다면, 해당 plan을 삭제합니다.
+    if (index !== -1) {
+        plan_set.splice(index, 1);
+    }
+}

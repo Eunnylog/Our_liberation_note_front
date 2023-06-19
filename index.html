@@ -15,9 +15,12 @@
         crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/loader.js"></script>
     <script src="/js/api.js"></script>
+    <!-- <script src="/js/index.js"></script> -->
 </head>
+
 <body>
     <!-- nav start -->
     <header class="site-header navbar">
@@ -33,6 +36,8 @@
                     <a href="/" class="btn btn-secondary" style="margin-bottom: 30px;" data-bs-toggle="modal"
                         data-bs-target="#carouselModal">Info</a>
                     <a href="/my_diary.html" class="btn btn-secondary" style="margin-bottom: 30px;">Start</a>
+                    <button onclick="navigateToDetailPage()" class="btn btn-secondary"
+                        style="margin-bottom: 30px;">tosspay test</button>
                 </div>
                 <a href="https://ourliberationnote.waveon.io/" target="_blank" class="btn btn-secondary"
                     style="margin-bottom: 30px;">mbti 검사하러 가기</a>
@@ -78,7 +83,7 @@
                                     <button class="kakao" onclick="kakaoLogin()">Kakao</button>
                                     <button class="google" onclick="googleLogin()">Google</button>
                                     <button class="naver" onclick="naverLogin()">Naver</button>
-                                    <!-- <button class="facebook" onclick="facebookLogin()">Facebook</button> -->
+                                    <button class="github" onclick="githubLogin()">GitHub</button>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +123,7 @@
                                 <button class="kakao" onclick="kakaoLogin()">Kakao</button>
                                 <button class="google" onclick="googleLogin()">Google</button>
                                 <button class="naver" onclick="naverLogin()">Naver</button>
-                                <!-- <button class="facebook" onclick="facebookLogin()">Facebook</button> -->
+                                <button class="github" onclick="githubLogin()">GitHub</button>
                             </div>
                         </div>
                     </div>
@@ -167,19 +172,27 @@
                                 <form class="sign-in-form active">
                                     <input name="groupname" id="groupname" type="name" class="form-control"
                                         placeholder="그룹이름">
-                                    <div style="display: flex;">
-                                        <input name="addemail" id="addemail" type="email" class="form-control"
-                                            placeholder="추가할 멤버 이메일" style="width: 300px;">
+                                    <div style="display: flex;" id="group_make_box">
+                                        <input name="addemail" id="usersearch" type="email" class="form-control"
+                                            autocomplete="off" placeholder="추가할 멤버 이메일" style="width: 300px;">
                                         <button type="button" class="signup" onclick="addMember()"
-                                            style="width: 100px; margin-left: 10px;">추가</button>
+                                            style="width: 100px; margin-left: 10px;" id="addmember-btn">검색</button>
                                     </div>
                                     <div style="display:flex;">
                                         <p style="justify-content: left;"> 이메일 </p>
-                                        <ul>
-                                            <li>이메일1</li><br>
-                                            <li>이메일2</li><br>
-                                            <li>이메일3</li><br>
-                                        </ul>
+                                        <div id="email-list">
+                                            <ul id="email-ul">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="addMembersToGroup()"
+                                        style="width: 100px; margin-left: 10px;">멤버 추가</button>
+                                    <div style="display:flex;">
+                                        <p style="justify-content: left;"> 추가한 이메일 </p>
+                                        <div id="selected-email-list">
+                                            <ul id="selected-email-ul">
+                                            </ul>
+                                        </div>
                                     </div>
                                     <div class="sign-up" style="display: flex;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
@@ -187,6 +200,31 @@
                                             style="margin-right: 10px; background-color: #60749d;">취소</button>
                                         <button type="button" class="signup" onclick="addGroup()">저장</button>
                                     </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 닉네임 생성 모달창 -->
+    <div class="modal fade" id="makenickname" tabindex="-1" aria-labelledby="su" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="su">
+                        Make Nickname</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="container">
+                    <div class="global-cont">
+                        <div class="inner-cont">
+                            <div class="sign-in-up">
+                                <form class="sign-in-form active">
+                                    <input name="makenickname" id="modal-makenickname" type="nickname"
+                                        class="form-control" placeholder="닉네임">
+                                    <button type="button" class="signup" onclick="addNickname()">저장</button>
                                 </form>
                             </div>
                         </div>

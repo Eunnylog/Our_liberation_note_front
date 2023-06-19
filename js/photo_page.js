@@ -25,7 +25,7 @@ async function addPhoto() {
     formData.append("location_y", location_y);
 
     console.log(formData)
-    // console.log(location_x, location_y)
+    console.log(location_x, location_y)
 
     try {
         const urlParams = new URLSearchParams(window.location.search);
@@ -57,6 +57,11 @@ async function addPhoto() {
 async function album() {
     const urlParams = new URLSearchParams(window.location.search);
     const note_id = urlParams.get('note_id');
+
+    let menu_html = `<a class="btn-close" href="/plan_page.html?note_id=${note_id}" ><button
+                    type="button" class="btn btn-primary">뒤로가기</button></a>`
+    $('#menu_box').append(menu_html)
+
     const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
         headers: {
             'content-type': 'application/json',
@@ -100,9 +105,6 @@ async function photo_detail(photo_id) {
     })
     //해당 url에 저장된 값을 수정
     const response_json = await response.json()
-
-
-    console.log(response_json)
 
     const image = backend_base_url + '/note' + response_json["image"];
     const name = response_json["name"]
@@ -175,8 +177,10 @@ function patchPhotoBox(photo_id) {
                                 <textarea name="memo" id="p_memo" type="textarea" class="form-control" placeholder="memo"
                                 style="height:50px; min-height:50px; max-height:200px; width:100%" >${memo}</textarea>
                             </div>
+                            <input name="p_location_x" id="p_location_x" type="text" class="form-control" hidden>
+                                <input name="p_location_y" id="p_location_y" type="text" class="form-control" hidden>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
+                                <button type="button" class="btn btn-secondary delete_serarch" data-bs-dismiss="modal">취소하기
                                 </button>
                                 <button id="patch_photo" value='${photo_id}' type="button" class="btn btn-primary"
                                     onclick="patchPhoto()">저장</button>
@@ -197,8 +201,8 @@ async function patchPhoto() {
     const start = document.getElementById('p_start').value;
     const location = document.getElementById('p_location').value;
     const memo = document.getElementById('p_memo').value;
-    const location_x = document.getElementById("location_x").value
-    const location_y = document.getElementById("location_y").value
+    const location_x = document.getElementById("p_location_x").value
+    const location_y = document.getElementById("p_location_y").value
 
 
 

@@ -46,7 +46,7 @@ body>.site-body {
 
 .site-header.navbar {
   background-color: var(--site-header-background);
-  border-bottom: solid 10px #8AEFFD;
+  border-bottom: solid 10px #60749d;
   position: sticky;
   top: 0;
   left: 0;
@@ -82,7 +82,7 @@ body>.site-body {
 .navbar-toggler:focus {
   box-shadow: none !important;
 }
- 
+
 /* ul.navbar {
   display: flex;
   margin: 0;
@@ -802,18 +802,57 @@ input[type="checkbox"]:checked+label {
 }
 
 /* 마이페이지 맵 */
-.map-box{
+.map-box {
   background-color: #D7F2FF;
   border-radius: 10px;
   float: right;
-  grid-column: 3/6; 
-  grid-row: 1/6; 
+  grid-column: 3/6;
+  grid-row: 1/6;
   margin-right: 40px;
 }
 
-.stamp-map{
-  width: 650px; 
-  height: 600px; 
-  margin: 15px auto auto auto; 
+.stamp-map {
+  width: 650px;
+  height: 600px;
+  margin: 15px auto auto auto;
   border-radius: 10px;
+}
+
+/* plan page dropdown */
+.styled-dropdown-item {
+  background-color: #60749d;
+  color: white;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 10px;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.styled-dropdown-item:hover {
+  background-color: #4a618a;
+}
+
+.link-text {
+  display: flex;
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.modal-body a {
+  width: 400px;
+  font-size: 20px;
 }
