@@ -111,6 +111,10 @@
             </div>
         </div>
     </div>
+    <!-- 현재 날짜로 기본지정 -->
+    <script>
+        document.getElementById('start').value = new Date().toISOString().substring(0, 10);;
+    </script>
     <script src="/js/api_key.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/photo_map.js"></script>
