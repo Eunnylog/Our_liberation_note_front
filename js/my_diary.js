@@ -1,10 +1,6 @@
 let access_token = localStorage.getItem('access')
-// let back_url = 'https://api.miyeong.net'
-let back_url = 'http://127.0.0.1:8000'
-
-const userPayload = localStorage.getItem('payload')
-const userPayloadJson = JSON.parse(userPayload)
-const userEmail = userPayloadJson['email']
+let back_url = 'https://api.miyeong.net'
+// let back_url = 'http://127.0.0.1:8000'
 
 async function getGroup() {
     const response = await fetch(`${back_url}/user/group/`, {
