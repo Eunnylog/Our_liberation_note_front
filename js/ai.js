@@ -1,7 +1,24 @@
 let back_url = 'https://api.miyeong.net'
+// let front_url = 'https://miyeong.net'
+let front_url = 'http://127.0.0.1:5500'
 // let back_url = 'http://127.0.0.1:8000'
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
+
+async function navigateToDetailPage() {
+  console.log("테스트")
+  // HTML에서 상세 페이지로 이동할 요소를 선택합니다.
+
+  const is_subscribe = localStorage.getItem("is_subscribe")
+
+  if (is_subscribe) {
+    alert("이미 구독 중입니다!")
+
+  }
+  else {
+    window.location.replace(`${frontend_base_url}/window.html`)
+  }
+}
 
 async function showStartSelect() {
   params = new URLSearchParams(window.location.search);
@@ -85,7 +102,7 @@ function showAiFeed() {
                           <div>
                             <h5 id='title' style="font-size:13px ">목적지 : ${a['title']}</h5>
                             <h5 id='category' style="font-size:13px ">카테고리 : ${a['category']}</h5>
-                            <h5 id='start' style="font-size:13px ">날짜 : ${a['start']}</h5>
+                            <h5 name='start' value='${a['start']}' style="font-size:13px ">날짜 : ${a['start']}</h5>
                             <h5 id='location' style="font-size:12px">주소 : ${a['location']}</h5>
                             <h5 id='location_x' hidden>${a['location_x']}</h5>
                             <h5 id='location_y' hidden>${a['location_y']}</h5>
@@ -151,7 +168,16 @@ function deleteAiFeed() {
   $('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').each(function () {
     let checkedDiv = $(this).parent().parent().parent();
     const start_select = document.getElementById("select_start").value
-    $('#ai_feed_box').append(checkedDiv);
+    let start = checkedDiv.find("[name='start']").text().split(':')[1].trim();
+
+    if (start_select == start) {
+      console.log('if')
+      $('#ai_feed_box').append(checkedDiv);
+    } else {
+      console.log('else')
+      checkedDiv.remove();
+    }
+    console.log(start, start_select)
 
     // 체크 표시 해제
     $(this).prop('checked', false);
@@ -286,4 +312,10 @@ async function aiStart() {
     console.log(response)
   }
 
+}
+
+function saveNoteID() {
+  params = new URLSearchParams(window.location.search);
+  note_id = params.get("note_id");
+  localStorage.setItem('note_id', note_id)
 }

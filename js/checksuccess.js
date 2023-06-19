@@ -5,11 +5,13 @@ const amount = urlParams.get('amount');
 const paymentKey = urlParams.get('paymentKey');
 // 쿠키에서 액세스 JWT 토큰 가져오기
 const access_token = localStorage.getItem("access");
+const note_id = localStorage.getItem("note_id");
 
-const url = `https://api.miyeong.net/payments/success`;
+const url = `${backend_base_url}/payments/success`;
 const secretKey = "test_ck_5mBZ1gQ4YVXkllX4eX23l2KPoqNb";
 const userpass = secretKey + ':';
 const encodedU = window.btoa(userpass);
+
 
 const headers = {
   "Authorization": "Basic " + encodedU,
@@ -17,17 +19,10 @@ const headers = {
   "Authorization-Token": `${access_token}`  // 액세스 토큰 값 설정
 };
 
-console.log(headers)
-console.log(access_token)
-const params = {
-  "orderId": orderId,
-  "amount": amount,
-  "paymentKey": paymentKey,
-};
 
-console.log(orderId, amount, paymentKey)
+console.log(orderId, amount, paymentKey, note_id)
 
-fetch(url + `?orderId=${orderId}&paymentKey=${paymentKey}&amount=${amount}`, {
+fetch(url + `?orderId=${orderId}&paymentKey=${paymentKey}&amount=${amount}&note_id=${note_id}`, {
   method: 'GET',
   headers: headers,
 })
