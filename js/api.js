@@ -1,6 +1,8 @@
 // 기본 URL
-const backend_base_url = "http://127.0.0.1:8000"
+const backend_base_url = "https://api.miyeong.net"
+// const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
+// const frontend_base_url = "https://miyeong.net"
 
 let jwtToken;
 
@@ -23,6 +25,7 @@ async function navigateToDetailPage() {
 
   }
   else {
+    alert('?')
     window.location.replace(`${frontend_base_url}/window.html`)
   }
 }
@@ -91,7 +94,8 @@ async function handleSignin() {
     // localstorage에 저장하기
     localStorage.setItem('refresh', response_json.refresh)
     localStorage.setItem('access', response_json.access)
-
+    console.log(response_json)
+    alert('stop')
     const base64Url = response_json.access.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
@@ -528,47 +532,193 @@ function handleAi() {
 
 }
 
-// async function Check_user_data() {
-//   // 클라이언트에서 API 요청 보내는 예시 (JavaScript)
-//   const access_token = localStorage.getItem("access");
+// 비밀번호 변경 페이지 가기 전 소셜 로그인 체크
+function checkSocialLogin() {
+  console.log("checkSocialLogin")
+  const code = localStorage.getItem('code');
 
-//   const url = `${backend_base_url}/payments/api/subscription/`;  // API 엔드포인트 URL
+  if (code) {
+    alert("소셜 로그인은 비밀번호를 변경할 수 없습니다");
+    location.reload();
+    return;
+  }
+}
 
-//   fetch(url, {
-//     method: 'GET',
-//     headers: {
-//       "Authorization-Token": `${access_token}`   // 액세스 토큰 값 설정
-//     },
-//   })
+function changePasswordAndOpenModal() {
+  checkSocialLogin(); // checkSocialLogin() 함수 실행
+  $('#updatePassword').modal('show'); // 모달 창 열기
+}
 
-//     .then(response => response.json())
-//     .then(data => {
-//       // 서버로부터 받은 데이터 처리
-//       const subscription = data;
-//       console.log(subscription)
-//     })
-//     .catch(error => {
-//       // 에러 처리
-//     });
-// }
+// 비밀번호 변경
+async function updatePassword() {
+  const access_token = localStorage.getItem("access")
+
+  const updateData = {
+    check_password: document.querySelector("#check_password").value,
+    new_password: document.querySelector("#update_password").value,
+  }
+
+  if (!updateData.check_password || !updateData.new_password) {
+    alert("빈칸을 입력해주세요.")
+    return
+  }
+
+  const response = await fetch(`${backend_base_url}/user/`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer " + access_token,
+    },
+    method: 'PATCH',
+    body: JSON.stringify(updateData)
+  }
+  )
+  const data = await response.json()
+  console.log(data["message"])
+  if (response.status == 200) {
+    alert("회원정보 수정 완료!! 다시 로그인을 진행해 주세요!")
+    localStorage.removeItem("access")
+    localStorage.removeItem("refresh")
+    localStorage.removeItem("payload")
+    location.replace(`${frontend_base_url}/index.html`)
 
 
-// Check_user_data();
+  } else {
+    alert(data["message"])
+  }
 
+}
 
-// 그룹 만들기 모달
 // 작성 취소
 function cancel() {
   window.location.href = `${frontend_base_url}/index.html`;
 }
-// 그룹 생성
-function addGroup() {
-  alert("그룹이 저장되었습니다.")
+
+// 선택된 이메일 리스트 생성
+let selectedEmails = [];
+
+function handleRadioClick() {
+  let selectedRadio = document.querySelector('input[name="email_radio"]:checked')
+  if (selectedRadio) {
+    let selectedIndex = selectedRadio.value;
+    let selected_email = document.getElementById(`email_${selectedIndex}`).value
+
+    document.getElementById("usersearch").value = selected_email
+
+  }
 }
+
 // 멤버 추가
-function addMember() {
-  alert("멤버가 추가되었습니다.")
+async function addMember() {
+  console.log("addmember")
+  const access_token = localStorage.getItem("access")
+  const membersEmail = document.getElementById("usersearch").value
+  console.log("emailinput", membersEmail)
+
+  const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
+
+  axios.get(url).then(response => {
+    console.log(response.data);
+
+    const emails = response.data.map(item => item.email);
+
+
+    var email = document.getElementById("email-ul");
+    email.innerHTML = "";
+
+    // 검색 결과 처리
+    emails.forEach((useremail, index) => {
+      let temp_html = `
+        <ul id="email-ul">
+          <li>
+            <input type="radio" id="email_${index}" name="email_radio" value="${index}" onclick="handleRadioClick()">
+            ${useremail}
+          </li>
+        </ul>
+        `;
+      email.innerHTML += temp_html;
+    });
+  })
+    .catch(error => {
+      // 에러 처리
+      alert('문제가 발생했습니다!')
+    });
+
+  // alert("멤버가 추가되었습니다.")
 }
+
+// 멤버 추가 버튼 클릭 시 선택된 이메일 리스트를 서버로 전송
+function addMembersToGroup() {
+  // 선택한 input 요소의 value 속성을 배열에 push
+  const checkedInput = document.querySelector('input[name="email_radio"]:checked');
+
+  if (checkedInput) {
+
+    const selectedEmail = checkedInput.nextSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
+
+    // 이미 추가된 이메일인지 확인
+    const alreadyAdded = selectedEmails.includes(selectedEmail);
+
+    if (!alreadyAdded) {
+      selectedEmails.push(selectedEmail); console.log(selectedEmails);
+
+      // 선택된 이메일을 ul에 추가
+      const selectedEmailUl = document.getElementById("selected-email-ul");
+      const newEmailLi = document.createElement("li");
+      newEmailLi.textContent = selectedEmail;
+      selectedEmailUl.appendChild(newEmailLi);
+    } else {
+      alert("이미 추가된 이메일입니다.");
+    }
+
+  } else {
+    alert("선택된 이메일이 없습니다.")
+  }
+}
+
+// 그룹 생성
+async function addGroup() {
+  const access_token = localStorage.getItem("access");
+  const groupName = document.getElementById("groupname").value;
+  const membersList = document.getElementById("selected-email-ul");
+
+  const membersEmails = Array.from(membersList.getElementsByTagName("li")).map(li => li.textContent);
+
+  // 멤버 id 저장용 빈 배열 준비 manytomany 필드는 id값이 리스트 일력해야 값이 들어감
+  const memberIdList = [];
+
+  // 멤버 이메일을 반복하면서 각각 서버로 전송하여 멤버 객체를 받아옴
+  for (const memberEmail of membersEmails) {
+    // 특수문자가 올바르게 전송되도록 보장하기 위해 인코딩한 후 쿼리 매개변수로 전달한다
+    const membersResponse = await fetch(`${backend_base_url}/user/userlist?usersearch=${encodeURIComponent(memberEmail)}`);
+    const membersData = await membersResponse.json();
+
+    // 해당 멤버의 id를 리스트에 추가
+    const memberId = membersData[0].id;
+    memberIdList.push(memberId);
+  }
+
+  const requestData = {
+    name: groupName,
+    members: memberIdList
+  };
+
+  const response = await fetch(`${backend_base_url}/user/group/`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer " + access_token,
+    },
+    method: 'POST',
+    body: JSON.stringify(requestData)
+  });
+
+  if (response.status == 201) {
+    alert("그룹이 저장되었습니다.");
+    window.location.reload()
+  } else {
+    alert(response.error);
+  }
+}
+
 // 닉네임 추가
 function addNickname() {
   alert("닉네임이 추가되었습니다!")
@@ -596,4 +746,3 @@ async function getUserprofile() {
   }
 
 }
-
