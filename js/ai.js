@@ -1,4 +1,5 @@
-let back_url = 'https://api.miyeong.net'
+// let back_url = 'https://api.miyeong.net'
+let back_url = 'http://127.0.0.1:8000'
 async function showAiFeed() {
   params = new URLSearchParams(window.location.search);
   note_id = params.get("note_id");
