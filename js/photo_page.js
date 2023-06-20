@@ -142,7 +142,7 @@ async function photo_detail(photo_id) {
                         <button id="patch_photo_box" type="button" class="btn btn-primary"
                             onclick="patchPhotoBox('${photo_id}')">수정</button>
                         <button id="photo-trash" type="button" class="btn btn-primary"
-                            onclick="handlePhototrash('${photo_id}','${photo_id}');">휴지통</button>
+                            onclick="handlePhototrash('${photo_id}','${location}');">휴지통</button>
                     </div>
                     `
     $('#photo-d').append(temp_html)

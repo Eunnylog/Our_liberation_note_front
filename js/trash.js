@@ -1,8 +1,8 @@
 // 일단 사진
-async function getTrash(note_id) {
+async function getTrash() {
     let token = localStorage.getItem("access")
 
-    const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/trash`, {
         headers: {
             'content-type': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -17,63 +17,103 @@ async function getTrash(note_id) {
     } else {
         alert("불러오는데 실패했습니다")
     }
-
 }
 
-async function loadTrashPhoto(note_id) {
-    const response = await getTrash(note_id)
+async function loadGrouptrash() {
+    const response = await getTrash()
+    console.log(response)
+
+    const groups = response.group
+    const notes = response.note
+    const photos = response.photo
 
     $('#trash-content').empty()
 
-    response.forEach((stamp) => {
-        const diary_id = stamp.photo.diary_id
-        const diary_name = stamp.photo.diary_name
-        const image = backend_base_url + '/note' + stamp.photo.image
+    groups.forEach((group) => {
+        const group_id = group.id
+        const group_name = group.name
+        const group_created_at = group.created_at
 
-        if (!addedDiaryNames.includes(diary_name)) {
-            let temp_html = ` <a href='/photo_page.html?note_id=${diary_id}' onclick="" style="text-decoration: none; color: black;">
-                                        <div class="diary-link-text" style="margin-top:10px;">${diary_name} ></div></a>
-                                    <img src="${image}" alt="Image description" style="width: 142px; height: 142px; margin-left:2px;">                                      
-                                  `
-            $('#trash-modal-body').append(temp_html)
-            addedDiaryNames.push(diary_name)
+        let temp_html = `                               
+                        `
+        $('#trash-content').append(temp_html)
+    });
 
-        } else {
-            let diary_temp_html = `<img src=${image} alt="Image description" class="stamp-photo">`
-            $('#stamp-modal-body').append(diary_temp_html)
-        }
+//     notes.forEach((note) => {
+//         const note_id = note.id
+//         const note_name = note.name
+//         const note_created_at = note.created_at
+//         const category = note.category
+//         // const note_cover = url('/css/note_img/note_${category}.png')
+
+//         let temp_html = `                               
+//                         `
+//         $('#trash-modal-body').append(temp_html)
+//     });
+
+//     photos.forEach((photo) => {
+//         const photo_id = photo.id
+//         const photo_name = photo.name
+//         const photo_created_at = photo.created_at
+//         const image = backend_base_url + '/note' + photo.image
+
+//         let temp_html = `                               
+//                         `
+//         $('#trash-modal-body').append(temp_html)
+//     });
+}
+
+async function loadNotetrash() {
+    const response = await getTrash()
+    console.log(response)
+
+    const notes = response.note
+
+    $('#trash-content').empty()
+
+    notes.forEach((note) => {
+        const note_id = note.id
+        const note_name = note.name
+        const note_created_at = note.created_at
+        const category = note.category
+
+        let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:20px">
+                            <img src="/css/note_img/note_${category}.png" alt="Image description" style="width: 130px; height: 160px; margin-top:15px">
+                            ${note_name}
+                            <input type="radio" name="photo-trash" value="1" style="width:10px">
+                        </div>`                              
+                        
+        $('#trash-content').append(temp_html)
+    });
+}
+
+async function loadPhototrash() {
+    const response = await getTrash()
+    console.log(response)
+
+    const photos = response.photo
+
+    $('#trash-content').empty()
+
+    photos.forEach((photo) => {
+        const photo_id = photo.id
+        const photo_name = photo.name
+        const photo_created_at = photo.created_at
+        const photo_location = photo.location
+        const image = backend_base_url + '/note' + photo.image
+
+        let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center;">
+                            <img src="${image}" alt="Image description" style="width: 142px; height: 142px;">
+                            ${photo_name}
+                            <input type="radio" name="photo-trash" value="1" style="width:10px">
+                         </div>`
+                         
+        $('#trash-content').append(temp_html)
     });
 }
 
 
-// async function loadTrashNote() {
-
-//     const response = await getTrash()
-
-//     $('#trash-content').empty()
-
-//     response.forEach((stamp) => {
-//         const diary_id = stamp.photo.diary_id
-//         const diary_name = stamp.photo.diary_name
-//         const image = backend_base_url + '/note' + stamp.photo.image
-
-//         if (!addedDiaryNames.includes(diary_name)) {
-//             let temp_html = ` <a href='/photo_page.html?note_id=${diary_id}' onclick="" style="text-decoration: none; color: black;">
-//                                         <div class="diary-link-text" style="margin-top:10px;">${diary_name} ></div></a>
-//                                     <img src="${image}" alt="Image description" style="width: 142px; height: 142px; margin-left:2px;">                                      
-//                                   `
-//             $('#trash-modal-body').append(temp_html)
-//             addedDiaryNames.push(diary_name)
-
-//         } else {
-//             let diary_temp_html = `<img src=${image} alt="Image description" class="stamp-photo">`
-//             $('#stamp-modal-body').append(diary_temp_html)
-//         }
-//     });
-// }
-
-
-async function handlePhototrash(photo_id,location) {
+async function handlePhototrash(photo_id, location) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash/${photo_id}`, {
@@ -125,13 +165,13 @@ async function handlePhototrash(photo_id,location) {
 //     }
 // }
 
-const noteToggle = document.getElementById("note-toggle");
-const photoToggle = document.getElementById("photo-toggle");
-const groupToggle = document.getElementById("group-toggle");
+// const noteToggle = document.getElementById("note-toggle");
+// const photoToggle = document.getElementById("photo-toggle");
+// const groupToggle = document.getElementById("group-toggle");
 
-const noteButton = document.getElementById("noteButton");
-const photoButton = document.getElementById("photoButton");
-const groupButton = document.getElementById("groupButton");
+// const noteButton = document.getElementById("noteButton");
+// const photoButton = document.getElementById("photoButton");
+// const groupButton = document.getElementById("groupButton");
 
 // noteToggle.addEventListener("change", function() {
 //   if (noteToggle.checked) {
@@ -149,3 +189,23 @@ const groupButton = document.getElementById("groupButton");
 //   } else {
 //     photoButton.classList.remove("active");}
 // })
+
+function handleTrashRadio(id) {
+    var selectedRadio = document.querySelector('input[name="photo-trash"]:checked');
+    if (selectedRadio) {
+        let selectedIndex = selectedRadio.value;
+        let selected_address = document.getElementById(`address_${selectedIndex}`).innerText;
+        let selected_name = document.getElementById(`name_${selectedIndex}`).innerText;
+        let location_x = document.getElementById(`x_${selectedIndex}`).value;
+        let location_y = document.getElementById(`y_${selectedIndex}`).value;
+        let name = selected_name.split('/')[0].trim();
+        let splitName = selected_name.split('/');
+        let category = splitName[splitName.length - 1].trim();
+        // 선택한 요소에 대한 처리
+        document.getElementById("location").value = selected_address;
+        document.getElementById("title").value = name;
+        document.getElementById("location_x").value = location_x;
+        document.getElementById("location_y").value = location_y;
+        document.getElementById("category").value = category;
+    }
+}
