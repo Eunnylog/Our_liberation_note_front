@@ -124,10 +124,15 @@ async function photo_detail(photo_id) {
                     <div id='photo_location'>${location}</div>
                     <div id='photo_memo'>${memo}</div>
 
-                    <form onsubmit="return false">
-                    <input class="comment_input_1" placeholder="댓글입력..." type="text">
-                    <button disabled class="comment_button_1" type="submit"><h1 class="posting_1">게시</h1></button>
-                    </form>
+                    <div>
+                    
+                    <ul class="comments">
+                        <li><b>username&nbsp;</b>
+                        <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
+                        <button type="button" id="commentBtn" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal">게시</button></li>
+                        
+                    </ul>
+                    </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
@@ -264,81 +269,71 @@ $("#image").on('change', function () {
     $(".upload-name").val(fileName);
 });
 
-//코멘트 추가 back과 연결
-// async function addComment(photo_id) {
-//     const commentText = document.getElementById("comment_text").value;
+// 코멘트 추가 back과 연결
+async function addComment() {
+    const photo_id = document.getElementById("commentBtn").value;
+    const commentText = document.getElementById("comment").value;
 
-//     const response = await fetch(`${backend_base_url}/note/comment/${photo_id}/${comment_id}`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
+    try {
+        const response = await fetch(`${backend_base_url}/note/comment/${photo_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
 
-//         },
-//         body: JSON.stringify({ comment: commentText })
-//     });
+            },
+            body: JSON.stringify({ comment: commentText })
+        });
 
-//     if (response.ok) {
-//         const addedComment = await response_json();
-//     } else {
+        if (response.ok) {
+            console.log('코멘트 추가 성공');
+            const addedComment = await response_json();
+            const commentsList = document.getElementById('comments-list');
+            const newComment = document.createElement('li');
+            newComment.innerHTML = `
+        <b>${addedComment.username}&nbsp;</b>
+        ${addComment.comment}
+        <span class="deleted" onclick="deleteComment('${addedComment.id}')"></span>
+        `;
+            commentsListappendChild(newCommnet);
+            document.getElementById('comment'.value) = '';
+        } else {
+            throw new Error('서버가 응답하지 않습니다.');
+        }
+    }
+    catch (error) {
+        alert('에러가 발생했습니다.');
+        console.error(error);
+    }
+}
+// function enterComment() {
+//     const [comments] = document.getElementsByClassName('comments');
+//     const newComment = document.createElement('li');
+//     const comment = `
+//             <b>dltjsgho</b>
+//             ${commentInput.value}
+//             <span class="deleted"></span>
+//             `;
 
-//     }
+//     newComment.innerHTML = comment
+//     comments.appendChild(newComment);
+//     commentInput.value = '';
+//     const deleteTxt = newComment.querySelector('.deleted');
+
+//     deleteTxt.addEventListener('click', () => {
+//         newComment.remove();
+//     })
 // }
 
-//권장되는 이벤트 등록방식
-postCommentBtn.addEventListener('click', () => {
-    clickCommentBtn()
-})
-
-postCommentInput.addEventListener('keyup', e => {
-    postCommentInput.value.length > 0
-        ? postCommentBtn.classList.add('blue')
-        : postCommentBtn.classList.remove('blue')
-    if (e.keyCode !== 13) {
-        return
-    } else {
-        clickCommentBtn()
-    }
-})
-const clickCommentBtn = () => {
-    if (postCommentInput.value.length == 0) {
-        return
-    }
-
-    const commentWrap = document.createElement('div')
-    const commenter = document.createElement('span')
-    const comment = document.createElement('span')
-    const commentDeleteBtn = document.createElement('button')
-    const commentLikesBtn = document.createElement('button')
-
-    commentWrap.classList.add('commentWrap')
-    commenter.classList.add('commenter')
-    comment.classList.add('comment')
-    commentDeleteBtn.classList.add('commentBtn')
-    commentDeleteBtn.classList.add('commentDeleteBtn')
-    commentLikesBtn.classList.add('commentBtn')
-    commentLikesBtn.classList.add('commentLikesBtn')
-
-    commentWrap.append(commenter)
-    commentWrap.append(comment)
-    commentWrap.append(commentDeleteBtn)
-    commentWrap.append(commentLikesBtn)
-    articleComment.append(commentWrap)
-
-    commentDeleteBtn.innerHTML = `<i class="far fa-trash-alt"></i>`
-    commentLikesBtn.innerHTML = `<i class="emptyHeart far fa-heart"></i>
-  <i class="redHeart fas fa-heart red hide"></i>`
-    commenter.textContent = 'Shaman_king'
-    comment.textContent = postCommentInput.value
-
-    postCommentInput.focus()
-    commentTime.textContent = '방금'
-    postCommentBtn.classList.remove('blue')
-    postCommentInput.value = ''
-
-    const commentDeleteBtns = document.querySelectorAll('.commentDeleteBtn')
-    commentDeleteBtns.forEach(commentDeleteBtn => {
-        commentDeleteBtn.addEventListener('click', () => {
-            commentDeleteBtn.parentNode.remove()
-        })
-    })
-} 
+// //권장되는 이벤트 등록방식
+// commentInput.addEventListener('keyup', function (e) {
+//     if (e.code === 'Enter' && commentInput.value.length > 0) {
+//         enterComment();
+//     }
+//     submitBtn();
+// })
+// submit.addEventListener('click', () => {
+//     if (commentInput.value.length > 0) {
+//         enterComment();
+//     }
+//     submitBtn()
+// })
