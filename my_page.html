@@ -242,7 +242,8 @@
                     </div>
                   </div>
                   <div class="sign-up" style="display: flex;">
-                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()"
+                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
+                      onclick="document.getElementById('makegroup').style.display = 'none'"
                       style="margin-right: 10px; background-color: #60749d;">취소</button>
                     <button type="button" class="signup" onclick="addGroup()">저장</button>
                   </div>
@@ -276,10 +277,15 @@
               <label for="recipient-name" class="col-form-label">새 비밀번호:</label>
               <input type="password" class="form-control" id="update_password">
             </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">새 비밀번호 확인:</label>
+              <input type="password" class="form-control" id="check_update_password">
+            </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            onclick="document.getElementById('updatePassword').style.display = 'none'">취소</button>
           <button style="border-color: #60749d; background-color: #60749d;" type="button" class="btn btn-primary"
             onclick="updatePassword()">저장</button>
         </div>

@@ -73,6 +73,11 @@
                                             style="background-color: #60749d; width: 200px; margin-left: 10px;">인증코드
                                             보내기</button>
                                     </div>
+                                    <p style="margin: 10px 0px;">
+                                        <label for="Timer">유효 시간</label>
+                                        <input id="signupTimer" type="text" value="" readonly
+                                            style="border: double 5px; border-color: #60749d; border-radius: 10px; text-align: center; margin-top:10px;" />
+                                    </p>
                                     <div class="sign-up">
                                         <button type="button" class="signup" onclick="handleSignup()">Sign up</button>
                                     </div>
@@ -204,7 +209,7 @@
                                     </div>
                                     <div class="sign-up" style="display: flex;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                                            onclick="cancle()"
+                                            onclick="document.getElementById('makegroup').style.display = 'none'"
                                             style="margin-right: 10px; background-color: #60749d;">취소</button>
                                         <button type="button" class="signup" onclick="addGroup()">저장</button>
                                     </div>
@@ -307,10 +312,14 @@
                             <input type="email" class="form-control" id="sendEmail" name="email"
                                 placeholder="이메일을 입력해주세요.">
                             <button type="button" class="signup btn btn-primary" onclick="sendVerificationEmail()"
-                                style="border-color: #60749d; background-color: #60749d; margin: 20px 0px;">전송</button>
-
+                                style="border-color: #60749d; background-color: #60749d; margin: 20px 0px; float: right;">전송</button>
                         </div>
-                        <div class="mb-3">
+                        <p style="display: inherit; margin: 10px 0px;">
+                            <label for="Timer">유효 시간</label>
+                            <input id="findPasswordTimer" type="text" value="" readonly
+                                style="margin: 10px 10px; border: double 5px; border-color: #60749d; border-radius: 10px; text-align: center; margin-top:10px;" />
+                        </p>
+                        <div class="mb-3" style="margin-top: 20px;">
                             <label for="recipient-name" class="col-form-label ">인증번호 확인:</label>
                             <input type="code" class="form-control" id="confirm-code" placeholder="인증번호를 입력해주세요.">
                         </div>
@@ -319,10 +328,16 @@
                             <input type="password" class="form-control" id="change_password"
                                 placeholder="새로운 비밀번호를 입력해주세요.">
                         </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">비밀번호 확인:</label>
+                            <input type="password" class="form-control" id="check_change_password"
+                                placeholder="새로운 비밀번호를 입력해주세요.">
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        onclick="document.getElementById('findPassword').style.display = 'none'">취소</button>
                     <button style="border-color: #60749d; background-color: #60749d;" type="button"
                         class="btn btn-primary" onclick="ChangePassword()">저장</button>
                 </div>
