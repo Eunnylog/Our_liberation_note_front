@@ -23,6 +23,8 @@
   --file-content-background: #fff;
 }
 
+
+
 /* site */
 
 
@@ -819,7 +821,7 @@ input[type="checkbox"]:checked+label {
 }
 
 .stamp-photo {
-  width: 142px; 
+  width: 142px;
   height: 142px;
   margin: 2px 2px 2px 2px;
   /* border-radius: 10px; */
@@ -970,7 +972,7 @@ input[type="checkbox"]:checked+label {
   display: none;
 } */
 
-.trash-toggle{
+.trash-toggle {
   background-color: #ECECEC;
   border-radius: 10px;
   padding: 3px 3px;
@@ -980,9 +982,11 @@ input[type="checkbox"]:checked+label {
   margin: 0 auto;
 }
 
-.trash-toggle > button {
-  background-color: #ECECEC; /* 기본 배경색 설정 */
-  color: #000000; /* 기본 텍스트 색상 설정 */
+.trash-toggle>button {
+  background-color: #ECECEC;
+  /* 기본 배경색 설정 */
+  color: #000000;
+  /* 기본 텍스트 색상 설정 */
   border: none;
   padding: 5px 15px;
   font-size: 16px;
@@ -990,8 +994,10 @@ input[type="checkbox"]:checked+label {
   border-radius: 10px;
 }
 
-.trash-toggle > button.active {
-  background-color: #FFFFFF; /* 선택된 항목의 배경색 설정 */
-  color: #000000; /* 선택된 항목의 텍스트 색상 설정 */
+.trash-toggle>button.active {
+  background-color: #FFFFFF;
+  /* 선택된 항목의 배경색 설정 */
+  color: #000000;
+  /* 선택된 항목의 텍스트 색상 설정 */
   border-radius: 10px;
 }

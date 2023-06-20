@@ -26,6 +26,7 @@ async function loadTrash(contentType) {
     const photos = response.photo
 
     $('#trash-content').empty()
+    $('#modal-footer').empty()
 
     if (contentType === 'group') {
         groups.forEach((group) => {
@@ -40,10 +41,18 @@ async function loadTrash(contentType) {
 
             $('#trash-content').append(temp_html)
         });
+        let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleGrouptrash('${group_id}','${group_name}')"
+                            style="background-color:  #60749d;">복원</button>
+                          <button type="button" class="btn btn-primary" onclick=""
+                            style="background-color: #1F489A;">삭제</button>`
+
+        $('#modal-footer').append(temp_html2)
+
     } else if (contentType === 'note') {
         notes.forEach((note) => {
             const note_id = note.id
             const note_name = note.name
+            const group = note.group
             const note_created_at = note.created_at
             const category = note.category
 
@@ -55,6 +64,13 @@ async function loadTrash(contentType) {
 
             $('#trash-content').append(temp_html)
         });
+        let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleNotetrash('${note_id}','${note_name}','${group}')"
+                            style="background-color:  #60749d;">복원</button>
+                          <button type="button" class="btn btn-primary" onclick=""
+                            style="background-color: #1F489A;">삭제</button>`
+
+        $('#modal-footer').append(temp_html2)
+
     } else if (contentType === 'photo') {
         photos.forEach((photo) => {
             const photo_id = photo.id
@@ -71,9 +87,14 @@ async function loadTrash(contentType) {
 
             $('#trash-content').append(temp_html)
         });
+        let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handlePhototrash('${photo_id}','${photo_location}')"
+                            style="background-color:  #60749d;">복원</button>
+                          <button type="button" class="btn btn-primary" onclick=""
+                            style="background-color: #1F489A;">삭제</button>`
+
+        $('#modal-footer').append(temp_html2)
     }
 }
-
 
 
 async function handlePhototrash(photo_id, location) {
@@ -101,6 +122,56 @@ async function handlePhototrash(photo_id, location) {
     }
 }
 
+async function handleNotetrash(note_id, name, group) {
+    let token = localStorage.getItem("access")
+
+    const response = await fetch(`${backend_base_url}/note/trash/${note_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            "name": name,
+            "group": group,
+        })
+    })
+
+    if (response.status == 200) {
+        const response_json = await response.json()
+        window.location.reload()
+        return response_json
+    }
+    else {
+        alert("※실패")
+        console.log(photo_id)
+    }
+}
+
+async function handleGrouptrash(group_id, name) {
+    let token = localStorage.getItem("access")
+
+    const response = await fetch(`${backend_base_url}/note/trash/${group_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            "name": name,
+        })
+    })
+
+    if (response.status == 200) {
+        const response_json = await response.json()
+        window.location.reload()
+        return response_json
+    }
+    else {
+        alert("※실패")
+        console.log(photo_id)
+    }
+}
 
 function handleTrashRadio(id) {
     var selectedRadio = document.querySelector('input[name="photo-trash"]:checked');

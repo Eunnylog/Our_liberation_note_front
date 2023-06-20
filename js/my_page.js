@@ -2,11 +2,9 @@ async function loadUserprofile() {
 
     const response = await getUserprofile();
 
-    console.log(response)
-  
     const email = document.getElementById("email")
     email.innerText = `${response.profile.email}님`
-  
+
     const groups = response.groups
     const profile = response.profile
 
@@ -31,8 +29,8 @@ async function loadUserprofile() {
             id.push(group_id)
         }
     })
-  }
-  
+}
+
 async function loadStampmap() {
     var container = document.getElementById('stamp-map');
     var options = {
@@ -131,7 +129,7 @@ async function loadStampPhotopage(location) {
         const diary_id = stamp.photo.diary_id
         const diary_name = stamp.photo.diary_name
         const image = backend_base_url + '/note' + stamp.photo.image
-        
+
         if (!addedDiaryNames.includes(diary_name)) {
             let diary_temp_html = ` <a href='/photo_page.html?note_id=${diary_id}' onclick="" style="text-decoration: none; color: black;">
                                         <div class="diary-link-text" style="margin-top:10px;">${diary_name} ></div></a>

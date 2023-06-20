@@ -6,29 +6,7 @@ const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
 
-async function navigateToDetailPage() {
-  console.log("테스트")
-  // HTML에서 상세 페이지로 이동할 요소를 선택합니다.
 
-  const payloadData = localStorage.getItem("payload")
-
-  if (!payloadData) {
-    alert("회원가입 또는 로그인을 해주세요!")
-  }
-
-  const payloadObj = JSON.parse(payloadData); // JSON 문자열을 JavaScript 객체로 변환
-  const Obj_is_subscribe = payloadObj.is_subscribe;
-
-  console.log(Obj_is_subscribe)
-  if (Obj_is_subscribe) {
-    alert("이미 구독 중입니다!")
-
-  }
-  else {
-    alert('?')
-    window.location.replace(`${frontend_base_url}/window.html`)
-  }
-}
 
 // 회원 가입
 async function handleSignup() {
@@ -108,14 +86,15 @@ async function handleSignin() {
   }
   else {
     alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
+    console.log(response)
   }
 }
 
-// 이메일 인증코드 보내기
+// 회원가입 이메일 인증코드 보내기
 async function sendCode() {
   const email = document.getElementById("email").value
 
-  const response = await fetch(`https://api.miyeong.net/user/sendemail/`, {
+  const response = await fetch(`${backend_base_url}/user/sendemail/`, {
     headers: {
       'content-type': 'application/json',
     },
@@ -160,13 +139,7 @@ function savePayloadToLocalStorage() {
   }
 }
 
-function savePayIsSubscribe() {
-  const payload = localStorage.getItem("payload");
-  const payload_parse = JSON.parse(payload)
-  const isSubscribe = payload_parse.is_subscribe
 
-  localStorage.setItem("is_subscribe", isSubscribe);
-}
 
 if (localStorage.getItem("social")) {
 } else if (location.href.split('=')[1]) {
@@ -403,7 +376,6 @@ function handleLogout() {
     localStorage.removeItem("code")
     localStorage.removeItem("state")
     localStorage.removeItem("is_subscribe")
-    localStorage.removeItem("is_subscribe")
     document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
     window.location.replace(`${frontend_base_url}/index.html`)
   }
@@ -414,6 +386,7 @@ function checkLogin() {
   const payload = localStorage.getItem("payload");
 
   if (!payload) {
+    alert('로그인 또는 회원가입이 필요합니다!')
     window.location.replace(`${frontend_base_url}/index.html`)
   }
 }
@@ -436,7 +409,6 @@ async function handlesUserDelete() {
     localStorage.removeItem("access")
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
-    localStorage.removeItem("is_subscribe")
     localStorage.removeItem("is_subscribe")
     document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
     location.reload()
@@ -487,7 +459,6 @@ function signUpsignInError() {
 
 signUpsignInError()
 savePayloadToLocalStorage()
-savePayIsSubscribe()
 
 
 const getCookieValue = (key) => {
@@ -603,7 +574,9 @@ function handleRadioClick() {
     let selected_email = document.getElementById(`email_${selectedIndex}`).value
 
     document.getElementById("usersearch").value = selected_email
-
+    // addMembersToGroup()
+  } else {
+    alert("선택된 이메일이 없습니다.");
   }
 }
 
@@ -628,12 +601,10 @@ async function addMember() {
     // 검색 결과 처리
     emails.forEach((useremail, index) => {
       let temp_html = `
-        <ul id="email-ul">
           <li>
             <input type="radio" id="email_${index}" name="email_radio" value="${index}" onclick="handleRadioClick()">
             ${useremail}
           </li>
-        </ul>
         `;
       email.innerHTML += temp_html;
     });
@@ -642,11 +613,22 @@ async function addMember() {
       // 에러 처리
       alert('문제가 발생했습니다!')
     });
-
-  // alert("멤버가 추가되었습니다.")
 }
 
-// 멤버 추가 버튼 클릭 시 선택된 이메일 리스트를 서버로 전송
+$(document).ready(function () {
+  $('#makegroup').on('hide.bs.modal', function () {
+    // 모달 창을 닫을 때 입력 필드 값 비우기
+    $('#usersearch').val("");
+    // 렌더링 된 이메일 결과를 비우기
+    $("#email-ul").empty();
+
+    // 라디오 버튼 체크 해제
+    $('input[type=radio]').prop('checked', false);
+  });
+});
+
+
+// 멤버 추가 버튼 클릭 시 이메일 리스트에 추
 function addMembersToGroup() {
   // 선택한 input 요소의 value 속성을 배열에 push
   const checkedInput = document.querySelector('input[name="email_radio"]:checked');
@@ -659,12 +641,21 @@ function addMembersToGroup() {
     const alreadyAdded = selectedEmails.includes(selectedEmail);
 
     if (!alreadyAdded) {
-      selectedEmails.push(selectedEmail); console.log(selectedEmails);
+      selectedEmails.push(selectedEmail);
+      console.log(selectedEmails);
 
       // 선택된 이메일을 ul에 추가
       const selectedEmailUl = document.getElementById("selected-email-ul");
       const newEmailLi = document.createElement("li");
-      newEmailLi.textContent = selectedEmail;
+
+      // input 태그 추가
+      const newInput = document.createElement("input");
+      newInput.type = "radio";
+      newInput.name = "checked_email_radio";
+
+      newEmailLi.appendChild(newInput);
+      newEmailLi.appendChild(document.createTextNode(selectedEmail));
+
       selectedEmailUl.appendChild(newEmailLi);
     } else {
       alert("이미 추가된 이메일입니다.");
@@ -673,6 +664,29 @@ function addMembersToGroup() {
   } else {
     alert("선택된 이메일이 없습니다.")
   }
+  $('input[type=radio]').prop('checked', false);
+}
+
+// 버튼 클릭 시 선택한 이메일 리스트에서 삭제
+function DeleteMembers() {
+  const checkedRadio = document.querySelector('input[name="checked_email_radio"]:checked');
+
+  if (checkedRadio) {
+    const selectedEmail = checkedRadio.nextSibling.textContent.trim();
+    const emailIndex = selectedEmails.indexOf(selectedEmail);
+
+    if (emailIndex > -1) {
+      selectedEmails.splice(emailIndex, 1);
+      console.log(selectedEmails);
+
+      checkedRadio.closest("li").remove();
+    } else {
+      alert("선택된 이메일이 추가된 이메일 목록에 없습니다.");
+    }
+  } else {
+    alert("선택된 이메일이 없습니다.");
+  }
+  $('input[type=radio]').prop('checked', false);
 }
 
 // 그룹 생성
@@ -711,13 +725,21 @@ async function addGroup() {
     body: JSON.stringify(requestData)
   });
 
+  if (!groupName) {
+    alert('그룹 이름을 적어주세요')
+    return;
+  }
+
   if (response.status == 201) {
     alert("그룹이 저장되었습니다.");
     window.location.reload()
   } else {
-    alert(response.error);
+    const responseData = await response.json();
+    alert(responseData.error);
   }
 }
+
+
 
 // 닉네임 추가
 function addNickname() {
@@ -743,6 +765,57 @@ async function getUserprofile() {
     return response_json
   } else {
     alert("불러오는데 실패했습니다")
+  }
+}
+
+// 비밀번호 재발급 인증코드 보내기
+async function sendVerificationEmail() {
+  console.log('확인')
+  const email = document.getElementById("sendEmail").value
+
+  const response = await fetch(`${backend_base_url}/user/sendemail/`, {
+    headers: {
+      'content-type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify({
+      "email": email,
+    })
+  })
+  alert("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
+}
+
+// 비밀번호 분실 새 비밀번호 발급
+async function ChangePassword() {
+
+  const changeData = {
+    email: document.querySelector("#sendEmail").value,
+    code: document.querySelector("#confirm-code").value,
+    new_password: document.querySelector("#change_password").value,
+  }
+
+  if (!changeData.code || !changeData.new_password) {
+    alert("빈칸을 입력해주세요.")
+    return
+  }
+
+  const response = await fetch(`${backend_base_url}/user/changepassword/`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify(changeData)
+  }
+  )
+  const data = await response.json()
+  console.log(data["message"])
+  if (response.status == 200) {
+    alert("비밀번호 변경 완료!")
+    location.replace(`${frontend_base_url}/index.html`)
+
+
+  } else {
+    alert(data["message"])
   }
 
 }

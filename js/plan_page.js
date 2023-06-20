@@ -4,6 +4,8 @@ let access_token = localStorage.getItem('access')
 // let back_url = 'https://api.miyeong.net'
 let back_url = 'http://127.0.0.1:8000'
 
+checkLogin()
+
 
 window.onload = function () {
     params = new URLSearchParams(window.location.search);
@@ -11,11 +13,23 @@ window.onload = function () {
 
     var aiLink = document.getElementById('goAI');
     var photoLink = document.getElementById('goPhoto');
+    var lifePhoto = document.getElementById('lifePhoto');
+    var back = document.getElementById('back');
 
-    // 새로운 (id값을 넣은)URL로 변경
-    aiLink.href = `/ai.html?note_id=${note_id}`;
-    photoLink.href = `/photo_page.html?note_id=${note_id}`;
+    aiLink.onclick = function () {
+        location.href = '/ai.html?note_id=' + note_id;
+    }
+    photoLink.onclick = function () {
+        location.href = '/photo_page.html?note_id=' + note_id;
+    }
+    lifePhoto.onclick = function () {
+        location.href = '/lifephoto_page.html?note_id=' + note_id;
+    }
+    back.onclick = function () {
+        location.href = '/my_diary.html';
+    }
 };
+
 
 
 async function showPlanPage() {
@@ -63,6 +77,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         editable: true,
         dayMaxEvents: 2,
         events: plan_data,
+        fixedWeekCount: false,
         eventClick: function (info) {
             info.jsEvent.preventDefault();
             var eventInfoDiv = document.getElementById('plan_info');
@@ -99,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${access_token}`,
+                    // "Authorization": `Bearer ${access_token}`,
                 },
                 body: JSON.stringify({
                     start: newDate,
@@ -108,27 +123,13 @@ document.addEventListener('DOMContentLoaded', async function () {
                 if (!response.ok) {
                     info.revert();
                 }
+                console.log(response)
             });
         }
     });
 
     calendar.render();
 
-    // var prevYearButton = document.querySelector('.fc-prevYear-button');
-    // var nextYearButton = document.querySelector('.fc-nextYear-button');
-
-    // prevYearButton.setAttribute('title', '이전 년도로 이동');
-    // nextYearButton.setAttribute('title', '다음 년도로 이동');
-
-    // prevYearButton.addEventListener('mouseover', function () {
-    //     // 설명 텍스트를 표시하거나 원하는 동작을 수행
-    //     alert('이전 년도로 이동');
-    // });
-
-    // nextYearButton.addEventListener('mouseover', function () {
-    //     // 설명 텍스트를 표시하거나 원하는 동작을 수행
-    //     console.log('다음 년도로 이동');
-    // });
 });
 
 
@@ -462,7 +463,57 @@ async function selectEmailMember() {
                             `;
             $('#member_list').append(temp_html);
         });
-        $('#select_member').modal('show');
+        $('#select_email_member').modal('show');
+    } else {
+        alert('문제가 발생했습니다!')
+    }
+}
+
+
+async function savePayIsSubscribe() {
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
+    const response = await fetch(`${back_url}/payments/subscription/${note_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            // "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'GET',
+    });
+    if (response.status == 200) {
+        localStorage.setItem("is_subscribe", true);
+    } else {
+        localStorage.setItem("is_subscribe", false);
+    }
+
+}
+
+savePayIsSubscribe()
+
+
+async function deleteNote() {
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
+
+    var userConfirmation = confirm("정말 삭제하시겠습니까?");
+
+    // 만약 사용자가 'OK'를 클릭하면, plan을 삭제하고 버튼을 제거합니다.
+    if (!userConfirmation) {
+        return false
+    }
+    console.log(access_token)
+
+    const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'DELETE',
+    });
+
+    if (response.status == 204) {
+        alert('삭제가 완료되었습니다!')
+        window.location.href = '/my_diary.html'
     } else {
         alert('문제가 발생했습니다!')
     }
