@@ -4,7 +4,7 @@ let access_token = localStorage.getItem('access')
 let back_url = 'https://api.miyeong.net'
 // let back_url = 'http://127.0.0.1:8000'
 
-
+checkLogin()
 
 
 window.onload = function () {
@@ -503,3 +503,32 @@ async function savePayIsSubscribe() {
 }
 
 savePayIsSubscribe()
+
+
+async function deleteNote() {
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
+
+    var userConfirmation = confirm("정말 삭제하시겠습니까?");
+
+    // 만약 사용자가 'OK'를 클릭하면, plan을 삭제하고 버튼을 제거합니다.
+    if (!userConfirmation) {
+        return false
+    }
+    console.log(access_token)
+
+    const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'DELETE',
+    });
+
+    if (response.status == 204) {
+        alert('삭제가 완료되었습니다!')
+        window.location.href = '/my_diary.html'
+    } else {
+        alert('문제가 발생했습니다!')
+    }
+}
