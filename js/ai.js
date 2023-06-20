@@ -27,7 +27,7 @@ async function showStartSelect() {
   const response = await fetch(`${back_url}/note/plan/${note_id}`, {
     headers: {
       'content-type': 'application/json',
-      "Authorization": `${access_token}`,
+      // "Authorization": `${access_token}`,
     },
     method: 'GET',
   })
@@ -247,7 +247,7 @@ async function aiStart() {
     const response = await fetch(`${back_url}/note/search`, {
       headers: {
         'content-type': 'application/json',
-        "Authorization": `Bearer ${access_token}`,
+        // "Authorization": `Bearer ${access_token}`,
       },
       method: 'POST',
       body: JSON.stringify({ destinations: destinations })
@@ -274,7 +274,7 @@ async function aiStart() {
       response_json['title_list'].forEach((a, idx) => {
         let temp_html2 = `
                       <div class="carousel-item" style="padding: 10px; width:100%; height:100%">
-                        <h3>${a}</h3>
+                        <h3 id='${idx}'>${a}</h3>
                         <h5>${response_json['answer'][idx]}</h5>
                       </div>
                       `;
