@@ -239,11 +239,10 @@ async function aiStart() {
     destinations.push(destination);
 
   });
-
-
   try {
     // 로딩창 표시
     loading.style.display = 'block';
+
     const response = await fetch(`${back_url}/note/search`, {
       headers: {
         'content-type': 'application/json',
@@ -295,9 +294,12 @@ async function aiStart() {
     } else {
       alert('문제가 발생했습니다!')
     }
+  } catch {
+    console.log('ㅜㅜ')
   } finally {
     // 로딩창 숨김
     loading.style.display = 'none';
+    console.log('끝!')
   }
 
 
