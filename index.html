@@ -20,7 +20,11 @@
     <script src="/js/api_key.js"></script>
     <script src="/js/api.js"></script>
     <script src="/js/trash.js"></script>
-
+    <style>
+        body {
+            background-color: #ebf2ff;
+        }
+    </style>
 </head>
 
 <body>
@@ -60,7 +64,7 @@
                         <div class="inner-cont">
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
-                                    <input name="email" id="email" type="email" class="form-control"
+                                    <input name="email" type="email" id="email" class="form-control"
                                         placeholder="email">
                                     <input name="password" id="password" type="password" class="form-control"
                                         placeholder="password">
@@ -126,6 +130,10 @@
                                 <button class="naver" onclick="naverLogin()">Naver</button>
                                 <button class="github" onclick="githubLogin()">GitHub</button>
                             </div>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#findPassword" id="find-password"
+                                class="findpassword"
+                                style="text-decoration: none; font-size: 18px; color: #60749d; margin: 10px 0px;">
+                                비밀번호를 잃어버리셨나요? </a>
                         </div>
                     </div>
                 </div>
@@ -188,6 +196,9 @@
                                     </div>
                                     <button type="button" onclick="addMembersToGroup()"
                                         style="width: 100px; margin-left: 10px;">멤버 추가</button>
+                                    <button type="button" onclick="DeleteMembers()"
+                                        style="width: 100px; margin-left: 10px;">멤버
+                                        삭제</button>
                                     <div style="display:flex;">
                                         <p style="justify-content: left;"> 추가한 이메일 </p>
                                         <div id="selected-email-list">
@@ -281,43 +292,43 @@
             </div>
         </div>
     </div>
-    <!-- 휴지통 모달 -->
-    <div class="modal fade" id="trash" tabindex="-1">
-        <div class="modal-dialog modal-dialog-scrollable">
+    <!-- 비밀번호 재발급 모달창 -->
+    <div class="modal fade" id="findPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <p>Change Password</p>
+                        <span style="font-size: 15px; color: #7a7f83;"> 이메일 인증 후 비밀번호를 새로 변경합니다. </span>
+                    </h5>
+
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="modal-body" class="modal-body">
+                <div class="modal-body">
                     <form>
-                        <div>
-                            <!-- 토글 -->
-                            <div class="trash-toggle">
-                                <input type="checkbox" id="note-toggle">
-                                <button id="noteButton">노트</button>
-                                <input type="checkbox" id="photo-toggle">
-                                <button id="photoButton">사진</button>
-                            </div>
-                            <!-- <select name="group_name" id="group_name" onchange="showNoteList()"
-                                style="width: 48%; height:46px; float:right; margin-bottom:10px">
-                                <option value="-1">그룹 선택</option>
-                            </select> -->
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">이메일:</label>
+                            <input type="email" class="form-control" id="sendEmail" name="email"
+                                placeholder="이메일을 입력해주세요.">
+                            <button type="button" class="signup btn btn-primary" onclick="sendVerificationEmail()"
+                                style="border-color: #60749d; background-color: #60749d; margin: 20px 0px;">전송</button>
+
                         </div>
-                        <div class="note_category" id="note_category">
-                            <div
-                                style="width: 100px; height: 170px; text-align:center; display:inline-block; margin: auto 20px 20px auto;">
-                                <img src="/css/note_img/note_1.png" style="width: 100px; height: 150px;"><br>
-                                <input type="radio" name="note_category" value="1" style="width:10px">
-                            </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label ">인증번호 확인:</label>
+                            <input type="code" class="form-control" id="confirm-code" placeholder="인증번호를 입력해주세요.">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">새 비밀번호:</label>
+                            <input type="password" class="form-control" id="change_password"
+                                placeholder="새로운 비밀번호를 입력해주세요.">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick=""
-                        style="background-color:  #60749d;">복원</button>
-                    <button type="button" class="btn btn-primary" onclick=""
-                        style="background-color: #1F489A;">삭제</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button style="border-color: #60749d; background-color: #60749d;" type="button"
+                        class="btn btn-primary" onclick="ChangePassword()">저장</button>
                 </div>
             </div>
         </div>

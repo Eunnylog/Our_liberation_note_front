@@ -435,3 +435,7 @@
 .inner-cont .social-login button:hover {
   opacity: .7
 }
+
+.findpassword:hover {
+  text-decoration: underline !important;
+}

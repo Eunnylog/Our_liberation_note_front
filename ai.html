@@ -16,9 +16,14 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="/js/loader.js"></script>
     <script src="/js/api.js"></script>
-    <!-- <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5976e08cd96f7fe00c3699cd1dfa0957"></script> -->
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed7abe4225faa4a80192a0afdef4a63b"></script>
     <script src="/js/ai.js"></script>
+    <style>
+        body {
+            background-color: #ebf2ff;
+        }
+    </style>
 </head>
 
 <body>
@@ -34,7 +39,7 @@
             <div class="overlay"></div>
             <div class="spinner"></div>
         </div>
-        <div class="main-header" style="margin-top: 30px; ">
+        <div class="main-header" style="margin-top: 30px; background-color: #ebf2ff;">
             <div style="margin-top: 30px;">
                 <button onclick="saveNoteID(); navigateToDetailPage();" class="btn btn-secondary"
                     style="margin-bottom: 30px;">AI결제하기</button>
@@ -42,7 +47,7 @@
                     AI 사용 설명서</button>
             </div>
             <div class="content2"
-                style="width:49%; height:600px; float:left; border: solid 3px #60749d; padding:20px; position: relative;">
+                style="width:49%; height:600px; float:left; border: solid 3px #60749d; padding:20px; position: relative; background-color: white;">
                 <div style="text-align:right; width:100%">
                     <select name="start" id="select_start" onchange="showAiFeed()" style="margin-bottom: 20px;">
                         <!-- <option value="-1">그룹 선택</option> -->
@@ -59,7 +64,7 @@
                 </div>
             </div>
             <div class="content2"
-                style="width:49%; height:600px; float:right; border: solid 3px #60749d; padding:20px; position: relative;">
+                style="width:49%; height:600px; float:right; border: solid 3px #60749d; padding:20px; position: relative; background-color: white;">
                 <div id="ai_work_box" style="width: 100%; height:500px; overflow-x: auto;; white-space: nowrap;">
                 </div>
                 <div style="display: flex; justify-content: center; position: absolute; bottom: -10px; width: 100%;">
@@ -75,60 +80,11 @@
                         hidden>결과보기</button>
                 </div>
             </div>
-        </div>
-    </main>
-    <!-- 그룹만들기 모달창 -->
-    <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="su">
-                        Make Group</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="container">
-                    <div class="global-cont">
-                        <div class="inner-cont">
-                            <div class="sign-in-up">
-                                <form class="sign-in-form active">
-                                    <input name="groupname" id="groupname" type="name" class="form-control"
-                                        placeholder="그룹이름">
-                                    <div style="display: flex;" id="group_make_box">
-                                        <input name="addemail" id="usersearch" type="email" class="form-control"
-                                            autocomplete="off" placeholder="추가할 멤버 이메일" style="width: 300px;">
-                                        <button type="button" class="signup" onclick="addMember()"
-                                            style="width: 100px; margin-left: 10px;" id="addmember-btn">검색</button>
-                                    </div>
-                                    <div style="display:flex;">
-                                        <p style="justify-content: left;"> 이메일 </p>
-                                        <div id="email-list">
-                                            <ul id="email-ul">
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <button type="button" onclick="addMembersToGroup()" 
-                                        style="width: 100px; margin-left: 10px;">멤버 추가</button>
-                                    <div style="display:flex;">
-                                        <p style="justify-content: left;"> 추가한 이메일 </p>
-                                        <div id="selected-email-list">
-                                            <ul id="selected-email-ul">
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="sign-up" style="display: flex;">
-                                        <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                                            onclick="cancle()"
-                                            style="margin-right: 10px; background-color: #60749d;">취소</button>
-                                        <button type="button" class="signup" onclick="addGroup()">저장</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="content2" id="map"
+                style="width:100%; height:600px; border: solid 3px #60749d; padding:20px; position: relative; background-color: white;">
             </div>
         </div>
-      </div>
+    </main>
     <!-- Carousel 형식의 모달 -->
     <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
         <div class="modal-dialog modal-xl" style="margin: auto; max-width: 1000px;">
@@ -166,6 +122,62 @@
             </div>
         </div>
     </div>
+    <!-- 그룹만들기 모달창 -->
+    <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="su">
+                        Make Group</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="container">
+                    <div class="global-cont">
+                        <div class="inner-cont">
+                            <div class="sign-in-up">
+                                <form class="sign-in-form active">
+                                    <input name="groupname" id="groupname" type="name" class="form-control"
+                                        placeholder="그룹이름">
+                                    <div style="display: flex;" id="group_make_box">
+                                        <input name="addemail" id="usersearch" type="email" class="form-control"
+                                            autocomplete="off" placeholder="추가할 멤버 이메일" style="width: 300px;">
+                                        <button type="button" class="signup" onclick="addMember()"
+                                            style="width: 100px; margin-left: 10px;" id="addmember-btn">검색</button>
+                                    </div>
+                                    <div style="display:flex;">
+                                        <p style="justify-content: left;"> 이메일 </p>
+                                        <div id="email-list">
+                                            <ul id="email-ul">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="addMembersToGroup()"
+                                        style="width: 100px; margin-left: 10px;">멤버 추가</button>
+                                    <button type="button" onclick="DeleteMembers()"
+                                        style="width: 100px; margin-left: 10px;">멤버
+                                        삭제</button>
+                                    <div style="display:flex;">
+                                        <p style="justify-content: left;"> 추가한 이메일 </p>
+                                        <div id="selected-email-list">
+                                            <ul id="selected-email-ul">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="sign-up" style="display: flex;">
+                                        <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
+                                            onclick="cancle()"
+                                            style="margin-right: 10px; background-color: #60749d;">취소</button>
+                                        <button type="button" class="signup" onclick="addGroup()">저장</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </body>
 
