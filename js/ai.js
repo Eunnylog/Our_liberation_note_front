@@ -262,7 +262,7 @@ async function aiStart() {
 
       let temp_html1 = `
                         <div class="carousel-item active" style="padding: 10px;">
-                            <h3>결과)</h3>
+                            <h3 id='${idx}'>결과)</h3>
                             <h5>${formatted_titles}</h5>
                         </div>
                       `
