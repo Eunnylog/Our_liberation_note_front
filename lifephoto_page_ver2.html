@@ -31,14 +31,14 @@
     <!-- nav end -->
     <!-- content start -->
     <div
-        style="display: grid; grid-template-columns: 50px 250px 50px 250px 50px 250px 250px 50px; grid-template-rows: 40px 10px 250px 250px 250px 50px 25px; margin: auto;">
+        style="display: grid; grid-template-columns: 50px 300px 50px 250px 50px 250px 250px 50px; grid-template-rows: 40px 10px 250px 250px 250px 25px 25px; margin: auto;">
         <div style="grid-column: 2; grid-row: 1; margin-top:10px">
             <button type="button" id="goLifephoto"
-                style="text-align: center; font-size: 18px; border: transparent; background-color: #1f489a; width: 100px; border-radius: 5px; color: white; display: inline-block;">
+                style="text-align: center; font-size: 18px; border: transparent; background-color: #60749d; width: 100px; border-radius: 5px; color: white; display: inline-block;">
                     세로버전
             </button>
             <button type="button" id="goLifephoto2"
-                style="text-align: center; font-size: 18px; border: transparent; background-color: #60749d; width: 100px; border-radius: 5px; color: white; display: inline-block;">
+                style="text-align: center; font-size: 18px; border: transparent; background-color: #1f489a; width: 100px; border-radius: 5px; color: white; display: inline-block;">
                     가로버전
             </button>
         </div>
@@ -57,61 +57,32 @@
             </button>
         </div>
         <div class="photo-container" id="photo-container"
-            style="margin-top: 30px; width: 250px; background-color: #60749d; height: 100%; margin: auto; grid-column: 2; grid-row: 3/7;">
-            <div class="photos" style="margin-top: 30px;">
+            style="margin-top: 30px; width: 250px; background-color: #60749d; height: 100%; width: 100%; margin: auto; grid-column: 2/5; grid-row: 3/7;">
+            <div class="photos" style="display: grid; grid-template-columns: 35px 250px 30px 250px 35px; grid-template-rows: 25px 300px 25px 300px 25px;">
                 <div
-                    style="background-color: white; margin: 15px 20px; height: 150px; box-shadow: 0px 0px 10px 0px gray;border-radius: 10px; background-size: cover;">
-                    <img class="photo-frame" src="/css/assets/null_image.png" id="image1"
-                        style="width: 210px; height: 150px;">
+                    style="background-color: white; height: 300px; width: 250px; box-shadow: 0px 0px 10px 0px gray;border-radius: 10px; grid-column: 2; grid-row: 2;">
+                    <img class="photo-frame" src="/css/assets/null_image.png" id="lifephoto1"
+                        style="width: 250px; height: 300px;">
                 </div>
                 <div
-                    style="background-color: white; margin: 15px 20px; height: 150px; box-shadow: 0px 0px 10px 0px gray;border-radius: 10px; background-size: cover;">
-                    <img class="photo-frame" src="/css/assets/null_image.png" id="image2"
-                        style="width: 210px; height: 150px;">
+                    style="background-color: white; height: 300px; width: 250px; box-shadow: 0px 0px 10px 0px gray;border-radius: 10px; grid-column: 4; grid-row: 2;">
+                    <img class="photo-frame" src="/css/assets/null_image.png" id="lifephoto2"
+                        style="width: 250px; height: 300px;">
                 </div>
                 <div
-                    style="background-color: white; margin: 15px 20px; height: 150px; box-shadow: 0px 0px 10px 0px gray;border-radius: 10px; background-size: cover;">
-                    <img class="photo-frame" src="/css/assets/null_image.png" id="image3"
-                        style="width: 210px; height: 150px;">
+                    style="background-color: white; height: 300px; width: 250px; box-shadow: 0px 0px 10px 0px gray;border-radius: 10px; grid-column: 2; grid-row: 4;">
+                    <img class="photo-frame" src="/css/assets/null_image.png" id="lifephoto3"
+                        style="width: 250px; height: 300px;">
                 </div>
                 <div
-                    style="background-color: white; margin: 15px 20px; height: 150px; box-shadow: 0px 0px 10px 0px gray;border-radius: 10px; background-size: cover;">
-                    <img class="photo-frame" src="/css/assets/null_image.png" id="image4"
-                        style="width: 210px; height: 150px;">
+                    style="background-color: white; height: 300px; width: 250px; box-shadow: 0px 0px 10px 0px gray;border-radius: 10px; grid-column: 4; grid-row: 4;">
+                    <img class="photo-frame" src="/css/assets/null_image.png" id="lifephoto4"
+                        style="width: 250px; height: 300px;">
                 </div>
             </div>
             <div class="footer" style="display: flex; flex-direction: column; align-items: center;">
                 <p id="f-title" style="font-size: 25px; font-weight: 700; color: white;"> Happy Time 🥳 </p>
                 <p id="f-date" style="font-size: 18px; font-weight: 500; color: white;">🏝️ Liberation-Film 🏝️</p>
-            </div>
-        </div>
-        <div class="photo-container"
-            style="margin-top: 30px; width: 250px; background-color: #60749d; height: 100%; margin: auto; grid-column: 4; grid-row: 3/7;">
-            <div class="photos" style="margin-top: 30px;">
-                <div
-                    style="background-color: white; margin: 15px 20px; height: 150px; box-shadow: 0px 0px 10px 0px gray;border-radius: 10px; text-align: right;">
-                    <img class="photo-frame" src="/css/assets/null_image.png" id="image5"
-                        style="width: 210px; height: 150px;">
-                </div>
-                <div
-                    style="background-color: white; margin: 15px 20px; height: 150px; box-shadow: 0px 0px 10px 0px gray;border-radius: 10px; text-align: right;">
-                    <img class="photo-frame" src="/css/assets/null_image.png" id="image6"
-                        style="width: 210px; height: 150px;">
-                </div>
-                <div
-                    style="background-color: white; margin: 15px 20px; height: 150px; box-shadow: 0px 0px 10px 0px gray;border-radius: 10px; text-align: right;">
-                    <img class="photo-frame" src="/css/assets/null_image.png" id="image7"
-                        style="width: 210px; height: 150px;">
-                </div>
-                <div
-                    style="background-color: white; margin: 15px 20px; height: 150px; box-shadow: 0px 0px 10px 0px gray;border-radius: 10px; text-align: right;">
-                    <img class="photo-frame" src="/css/assets/null_image.png" id="image8"
-                        style="width: 210px; height: 150px;">
-                </div>
-            </div>
-            <div class="footer" style="display: flex; flex-direction: column; align-items: center;">
-                <p class="f-title" style="font-size: 25px; font-weight: 700; color: white;">Happy Time 🥳 </p>
-                <p class="f-date" style="font-size: 18px; font-weight: 500; color: white;">🏝️ Liberation-Film 🏝️</p>
             </div>
         </div>
 
@@ -127,19 +98,19 @@
             <div style="padding: 15px;">
                 <div style="font-size: 18px; color: red; text-align: center;"> ※ 이 페이지는 사진이 저장되지 않습니다! <br>사진 다운로드를 꼭 눌러주세요! ※ </div>
                 <label for="formFile" class="form-label" style="margin-top: 10px;">첫번째 이미지</label>
-                <input class="form-control" type="file" id="formFile1">
+                <input class="form-control" type="file" id="inputFile1">
                 <label for="formFile" class="form-label" style="margin-top: 10px;">두번째 이미지</label>
-                <input class="form-control" type="file" id="formFile2">
+                <input class="form-control" type="file" id="inputFile2">
                 <label for="formFile" class="form-label" style="margin-top: 10px;">세번째 이미지</label>
-                <input class="form-control" type="file" id="formFile3">
+                <input class="form-control" type="file" id="inputFile3">
                 <label for="formFile" class="form-label" style="margin-top: 10px;">네번째 이미지</label>
-                <input class="form-control" type="file" id="formFile4">
+                <input class="form-control" type="file" id="inputFile4">
                 <div style="text-align: center;">
                     <button onclick="cancle()"
                         style="text-align: center; font-size: 18px; border: transparent; background-color: #60749d; margin-top: 20px; width: 100px; border-radius: 5px; color: white; display: inline-block;">
                         취소
                     </button>
-                    <button onclick="formFile()" id="input-button"
+                    <button onclick="inputFile()" id="lifephoto-button"
                         style="text-align: center; font-size: 18px; border: transparent; background-color: #1f489a; margin-top: 20px; width: 100px; border-radius: 5px; color: white; display: inline-block;">
                         사진 넣기
                     </button>
