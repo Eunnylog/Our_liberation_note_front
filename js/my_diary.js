@@ -8,6 +8,7 @@ const userPayloadJson = JSON.parse(userPayload)
 const userEmail = userPayloadJson.email
 console.log('유저', userEmail)
 
+checkLogin()
 
 
 function loadNoteCategory() {

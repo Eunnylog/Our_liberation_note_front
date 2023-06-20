@@ -1,6 +1,6 @@
 // 기본 URL
-// const backend_base_url = "https://api.miyeong.net"
-const backend_base_url = "http://127.0.0.1:8000"
+const backend_base_url = "https://api.miyeong.net"
+// const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 // const frontend_base_url = "https://miyeong.net"
 
@@ -386,6 +386,7 @@ function checkLogin() {
   const payload = localStorage.getItem("payload");
 
   if (!payload) {
+    alert('로그인 또는 회원가입이 필요합니다!')
     window.location.replace(`${frontend_base_url}/index.html`)
   }
 }
