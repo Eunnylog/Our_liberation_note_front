@@ -8,6 +8,25 @@ const userPayloadJson = JSON.parse(userPayload)
 const userEmail = userPayloadJson.email
 console.log('유저', userEmail)
 
+
+function loadNoteCategory() {
+
+}
+window.onload = function () {
+    $('#note_category').empty()
+    for (let i = 1; i < 13; i++) {
+        let temp_html = `
+                        <div
+                            style="width: 100px; height: 170px; text-align:center; display:inline-block; margin: auto 20px 20px auto;">
+                            <img src="/css/note_img/note_${i}.png" style="width: 100px; height: 150px;"><br>
+                            <input type="radio" name="note_category" value="${i}" style="width:10px">
+                        </div>
+                    `
+        $('#note_category').append(temp_html)
+        console.log(i)
+    }
+};
+
 async function getGroup() {
     const response = await fetch(`${back_url}/user/group/`, {
         headers: {
@@ -31,7 +50,7 @@ async function getGroup() {
 
         // 첫번째 그룹 노트 리스트 보여주기
         if (index === 0) {
-            $('#select_group').val(id);
+            document.getElementById("select_group").value = id
             showNoteList();
             // showMasterButton();
         }
@@ -110,7 +129,7 @@ async function showNoteList() {
     }
 }
 
-showNoteList()
+// showNoteList()
 
 async function saveNote() {
     let radios = Array.from(document.getElementsByName('note_category'));
@@ -211,6 +230,8 @@ async function groupUpdateModal() {
 
     const selectedIndex = document.getElementById('select_group').value
     console.log("selectedIndex", selectedIndex)
+
+    $('#update-selected-email-ul').empty()
 
     response_json.forEach((group, index) => {
         let id = group['id']
@@ -343,32 +364,6 @@ function updateAddMembersToGroup() {
     $('input[type=radio]').prop('checked', false);
 }
 
-// function updateDeleteMembers() {
-//     console.log("기존 멤버", existingEmails);
-//     const checkedRadio = document.querySelector('input[name="checked_email_radio"]:checked');
-
-//     if (checkedRadio) {
-//         const selectedEmail = checkedRadio.nextSibling.textContent.trim();
-//         const emailIndex = selectedEmails.indexOf(selectedEmail);
-//         const existingEmailIndex = existingEmails.indexOf(selectedEmail);
-
-//         if (emailIndex > -1) {
-//             selectedEmails.splice(emailIndex, 1);
-//             console.log(selectedEmails);
-
-//             checkedRadio.closest("li").remove();
-//         } else if (existingEmailIndex > -1) {
-//             existingEmails.splice(existingEmailIndex, 1);
-
-//             checkedRadio.closest("li").remove();
-//         } else {
-//             alert("선택된 이메일이 추가된 목록 또는 기존 멤버 목록에 없습니다.");
-//         }
-//     } else {
-//         alert("선택된 이메일이 없습니다.");
-//     }
-//     $('input[type=radio]').prop('checked', false);
-// }
 
 async function updateDeleteMembers() {
     const checkedInput = document.querySelector('input[name="checked_email_radio"]:checked');

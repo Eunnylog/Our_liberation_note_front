@@ -6,29 +6,7 @@ const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
 
-async function navigateToDetailPage() {
-  console.log("테스트")
-  // HTML에서 상세 페이지로 이동할 요소를 선택합니다.
 
-  const payloadData = localStorage.getItem("payload")
-
-  if (!payloadData) {
-    alert("회원가입 또는 로그인을 해주세요!")
-  }
-
-  const payloadObj = JSON.parse(payloadData); // JSON 문자열을 JavaScript 객체로 변환
-  const Obj_is_subscribe = payloadObj.is_subscribe;
-
-  console.log(Obj_is_subscribe)
-  if (Obj_is_subscribe) {
-    alert("이미 구독 중입니다!")
-
-  }
-  else {
-    alert('?')
-    window.location.replace(`${frontend_base_url}/window.html`)
-  }
-}
 
 // 회원 가입
 async function handleSignup() {
@@ -108,6 +86,7 @@ async function handleSignin() {
   }
   else {
     alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
+    console.log(response)
   }
 }
 
@@ -160,13 +139,7 @@ function savePayloadToLocalStorage() {
   }
 }
 
-function savePayIsSubscribe() {
-  const payload = localStorage.getItem("payload");
-  const payload_parse = JSON.parse(payload)
-  const isSubscribe = payload_parse.is_subscribe
 
-  localStorage.setItem("is_subscribe", isSubscribe);
-}
 
 if (localStorage.getItem("social")) {
 } else if (location.href.split('=')[1]) {
@@ -403,7 +376,6 @@ function handleLogout() {
     localStorage.removeItem("code")
     localStorage.removeItem("state")
     localStorage.removeItem("is_subscribe")
-    localStorage.removeItem("is_subscribe")
     document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
     window.location.replace(`${frontend_base_url}/index.html`)
   }
@@ -425,7 +397,7 @@ async function handlesUserDelete() {
   const payload = localStorage.getItem("payload");
   const payload_parse = JSON.parse(payload)
 
-  const response = await fetch(`${backend_base_url}/users/delete/${payload_parse.user_id}/`, {
+  const response = await fetch(`${backend_base_url}/user/delete/${payload_parse.user_id}/`, {
     headers: {
       "Authorization": `Bearer ${access_token}`
     },
@@ -436,7 +408,6 @@ async function handlesUserDelete() {
     localStorage.removeItem("access")
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
-    localStorage.removeItem("is_subscribe")
     localStorage.removeItem("is_subscribe")
     document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
     location.reload()
@@ -487,7 +458,6 @@ function signUpsignInError() {
 
 signUpsignInError()
 savePayloadToLocalStorage()
-savePayIsSubscribe()
 
 
 const getCookieValue = (key) => {
