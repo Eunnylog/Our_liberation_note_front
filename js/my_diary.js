@@ -1,12 +1,32 @@
 let access_token = localStorage.getItem('access')
-// let back_url = 'https://api.miyeong.net'
-let back_url = 'http://127.0.0.1:8000'
+let back_url = 'https://api.miyeong.net'
+//let back_url = 'http://127.0.0.1:8000'
 let group_data = []
 
 const userPayload = localStorage.getItem('payload')
 const userPayloadJson = JSON.parse(userPayload)
 const userEmail = userPayloadJson.email
 console.log('유저', userEmail)
+
+
+
+function loadNoteCategory() {
+
+}
+window.onload = function () {
+    $('#note_category').empty()
+    for (let i = 1; i < 13; i++) {
+        let temp_html = `
+                        <div
+                            style="width: 100px; height: 170px; text-align:center; display:inline-block; margin: auto 20px 20px auto;">
+                            <img src="/css/note_img/note_${i}.png" style="width: 100px; height: 150px;"><br>
+                            <input type="radio" name="note_category" value="${i}" style="width:10px">
+                        </div>
+                    `
+        $('#note_category').append(temp_html)
+        console.log(i)
+    }
+};
 
 async function getGroup() {
     const response = await fetch(`${back_url}/user/group/`, {
@@ -31,7 +51,7 @@ async function getGroup() {
 
         // 첫번째 그룹 노트 리스트 보여주기
         if (index === 0) {
-            $('#select_group').val(id);
+            document.getElementById("select_group").value = id
             showNoteList();
             // showMasterButton();
         }
@@ -110,7 +130,7 @@ async function showNoteList() {
     }
 }
 
-showNoteList()
+// showNoteList()
 
 async function saveNote() {
     let radios = Array.from(document.getElementsByName('note_category'));
@@ -211,6 +231,8 @@ async function groupUpdateModal() {
 
     const selectedIndex = document.getElementById('select_group').value
     console.log("selectedIndex", selectedIndex)
+
+    $('#update-selected-email-ul').empty()
 
     response_json.forEach((group, index) => {
         let id = group['id']

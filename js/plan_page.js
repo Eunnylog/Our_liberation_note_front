@@ -5,17 +5,31 @@ let access_token = localStorage.getItem('access')
 let back_url = 'http://127.0.0.1:8000'
 
 
+
+
 window.onload = function () {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
 
     var aiLink = document.getElementById('goAI');
     var photoLink = document.getElementById('goPhoto');
+    var lifePhoto = document.getElementById('lifePhoto');
+    var back = document.getElementById('back');
 
-    // 새로운 (id값을 넣은)URL로 변경
-    aiLink.href = `/ai.html?note_id=${note_id}`;
-    photoLink.href = `/photo_page.html?note_id=${note_id}`;
+    aiLink.onclick = function () {
+        location.href = '/ai.html?note_id=' + note_id;
+    }
+    photoLink.onclick = function () {
+        location.href = '/photo_page.html?note_id=' + note_id;
+    }
+    lifePhoto.onclick = function () {
+        location.href = '/lifephoto_page.html?note_id=' + note_id;
+    }
+    back.onclick = function () {
+        location.href = '/my_diary.html';
+    }
 };
+
 
 
 async function showPlanPage() {
@@ -63,6 +77,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         editable: true,
         dayMaxEvents: 2,
         events: plan_data,
+        fixedWeekCount: false,
         eventClick: function (info) {
             info.jsEvent.preventDefault();
             var eventInfoDiv = document.getElementById('plan_info');
@@ -462,8 +477,29 @@ async function selectEmailMember() {
                             `;
             $('#member_list').append(temp_html);
         });
-        $('#select_member').modal('show');
+        $('#select_email_member').modal('show');
     } else {
         alert('문제가 발생했습니다!')
     }
 }
+
+
+async function savePayIsSubscribe() {
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
+    const response = await fetch(`${back_url}/payments/subscription/${note_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            // "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'GET',
+    });
+    if (response.status == 200) {
+        localStorage.setItem("is_subscribe", true);
+    } else {
+        localStorage.setItem("is_subscribe", false);
+    }
+
+}
+
+savePayIsSubscribe()

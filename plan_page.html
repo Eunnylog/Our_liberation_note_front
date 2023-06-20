@@ -23,36 +23,66 @@
   <header class="site-header navbar">
     <!-- navbar -->
   </header>
-  <main class="site-body">
+  <main class="site-body" style="margin-top: -50px;">
     <!-- Dropdown Structure -->
     <article class="review-detail max-content-width">
-      <div style="text-align: left;">
+      <div style="text-align: left; margin-bottom:30px;">
         <h1 id="note_title"></h1>
+      </div>
+      <hr style="margin-bottom: 30px;">
+      <div style="margin-bottom: 30px; display:inline-block; text-align: center; width:100%; margin-bottom:50px;">
+        <button type="button" id="back" class="btn group-btn"
+          style="background-color: #60749d; color:white; margin: 0px 10px;" onclick=""> 뒤로 가기 </button>
+        <button type="button" class="btn group-btn" style="background-color: #92a2c5; color:white; margin: 0px 10px;"
+          onclick="$('#save_plan_modal').modal('show'); $('#search_box').empty();"> 일정 추가 </button>
+        <button type="button" id="goPhoto" class="btn group-btn"
+          style="background-color: #60749d; color:white; margin: 0px 10px;" onclick=""> 사진첩 가기</button>
+        <button type="button" id="goAI" class="btn group-btn"
+          style="background-color: #92a2c5; color:white; margin: 0px 10px;" onclick="">AI랑 놀기</button>
+        <button type="button" class="btn group-btn" style="background-color: #60749d; color:white; margin: 0px 10px;"
+          onclick="selectEmailMember();">계획표 전송</button>
+        <button type="button" id="lifePhoto" class="btn group-btn"
+          style="background-color: #92a2c5; color:white; margin: 0px 10px;">해방필름</button>
+        <button type="button" id="lifePhoto" class="btn group-btn"
+          style="background-color: #60749d; color:white; margin: 0px 10px;">해방필름 모음</button>
       </div>
       <!-- 로딩창 -->
       <div id="loading" style="display: none;">
         <div class="overlay"></div>
         <div class="spinner"></div>
       </div>
-      <div class="dropdown" style="margin-bottom: 30px;">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-          data-bs-toggle="dropdown" aria-expanded="false">
-          MENU
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <li><a class="dropdown-item" href="#"
-              onclick="$('#save_plan_modal').modal('show'); $('#search_box').empty();">일정추가</a></li>
-          <li><a class="dropdown-item" id="goAI" href="/">AI랑 놀기</a></li>
-          <li><a class="dropdown-item" id="goPhoto" href="/">사진첩</a></li>
-          <li><a class="dropdown-item" target="_blank" href="/lifephoto_page.html">해방 필름</a></li>
-          <li><a class="dropdown-item" href="#" onclick="selectEmailMember()">이메일
-              전송</a></li>
-          <li><a class="dropdown-item" href="/my_diary.html">뒤로 가기</a></li>
-        </ul>
-      </div>
       <div id='calendar'></div>
     </article>
   </main>
+  <!-- 이메일전송 모달창 -->
+  <div class=" modal fade" id="select_email_member" tabindex="-1" aria-labelledby="su" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="su">
+            Send Email</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="container">
+          <div class="global-cont">
+            <div class="inner-cont">
+              <div class="sign-in-up">
+                <form class="sign-in-form active">
+                  <div style="width:100%;" id="member_list">
+                  </div>
+                  <div class="sign-up" style="display: flex;">
+                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()"
+                      style="margin-right: 10px; background-color: #60749d;">취소</button>
+                    <button type="button" class="signup" onclick="sendEmail()">이메일 보내기</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- 회원가입 모달창 -->
   <div class="modal fade" id="signup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
     <div class="modal-dialog">
@@ -74,7 +104,8 @@
                     <input name="confirmcode" id="confirmcode" type="confirmcode" class="form-control"
                       placeholder="email 인증코드" style="width: 250px; height:60px">
                     <button type="button" class="signup" onclick="sendCode()"
-                      style="background-color: #60749d; width: 200px; margin-left: 10px; height:50px">인증코드 보내기</button>
+                      style="background-color: #60749d; width: 200px; margin-left: 10px; height:50px">인증코드
+                      보내기</button>
                   </div>
                   <div class="sign-up">
                     <button type="button" class="signup" onclick="handleSignup()">Sign up</button>
@@ -309,12 +340,33 @@
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <div style="width:100%;" id="member_list">
+                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="그룹이름">
+                  <div style="display: flex;" id="group_make_box">
+                    <input name="addemail" id="usersearch" type="email" class="form-control" autocomplete="off"
+                      placeholder="추가할 멤버 이메일" style="width: 300px;">
+                    <button type="button" class="signup" onclick="addMember()" style="width: 100px; margin-left: 10px;"
+                      id="addmember-btn">검색</button>
+                  </div>
+                  <div style="display:flex;">
+                    <p style="justify-content: left;"> 이메일 </p>
+                    <div id="email-list">
+                      <ul id="email-ul">
+                      </ul>
+                    </div>
+                  </div>
+                  <button type="button" onclick="addMembersToGroup()" style="width: 100px; margin-left: 10px;">멤버
+                    추가</button>
+                  <div style="display:flex;">
+                    <p style="justify-content: left;"> 추가한 이메일 </p>
+                    <div id="selected-email-list">
+                      <ul id="selected-email-ul">
+                      </ul>
+                    </div>
                   </div>
                   <div class="sign-up" style="display: flex;">
                     <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()"
                       style="margin-right: 10px; background-color: #60749d;">취소</button>
-                    <button type="button" class="signup" onclick="sendEmail()">이메일 보내기</button>
+                    <button type="button" class="signup" onclick="addGroup()">저장</button>
                   </div>
                 </form>
               </div>
