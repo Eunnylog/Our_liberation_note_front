@@ -1,7 +1,6 @@
-const backend_base_url = "https://api.miyeong.net"
-const frontend_base_url = "http://127.0.0.1:5500"
-
-
+// const backend_base_url = "https://api.miyeong.net"
+// const backend_base_url = "http://127.0.0.1:8000"
+// const frontend_base_url = "http://127.0.0.1:5500"
 
 // 사진 추가하기
 async function addPhoto() {
@@ -53,7 +52,6 @@ async function addPhoto() {
     }
 }
 
-
 async function album() {
     const urlParams = new URLSearchParams(window.location.search);
     const note_id = urlParams.get('note_id');
@@ -72,23 +70,43 @@ async function album() {
 
     const response_json = await response.json()
 
+    const stampsresponse = await getUserprofile()
+    const stamps = stampsresponse.stamps
+    const existPhoto = []
+
+    stamps.forEach((stamp) => {
+        const status = stamp.status
+        const photo = stamp.photo.id
+
+        if (status === "0") {
+            existPhoto.push(photo);
+        }
+    });
+
     response_json.forEach((a) => {
+        console.log(a)
         const image = backend_base_url + '/note' + a["image"];
-        const name = a["name"]
-        const title = a['title']
-        const location = a['location']
-        const memo = a['memo']
-        const photo_id = a['id']
-        console.log(image)
-        console.log(response_json)
-        let temp_html = `
-            <div class="gallery-item">
-            <a class="photo" href="" onclick="photo_detail('${photo_id}')" data-bs-toggle="modal" data-bs-target="#photo-detail"><img class="gallery-image" src="${image}" alt="${title}"></a>
-            </div>
-            `
-        $('#photo_info').append(temp_html)
+        const title = a['title'];
+        const photo_id = a['id'];
+
+        let temp_html = `<div class="gallery-item">
+                            <a class="photo" href="" onclick="photo_detail('${photo_id}')" data-bs-toggle="modal" data-bs-target="#photo-detail">
+                                <img class="gallery-image" src="${image}" alt="${title}">
+                            </a> `
+
+        if (existPhoto.includes(photo_id)) {
+            temp_html += `<img class="exist-stamp" id="exist-stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
+        } else {
+            temp_html += `<img class="stamp" id="stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
+        }
+
+        temp_html += `</div>`;
+
+        $('#photo_info').append(temp_html);
     });
 }
+
+
 // 페이지 로드 시 앨범 표시
 window.addEventListener('DOMContentLoaded', album);
 
@@ -127,10 +145,11 @@ async function photo_detail(photo_id) {
                         </button>
                         <button id="patch_photo_box" type="button" class="btn btn-primary"
                             onclick="patchPhotoBox('${photo_id}')">수정</button>
+                        <button id="photo-trash" type="button" class="btn btn-primary"
+                            onclick="trashPhoto('${photo_id}')">휴지통</button>
                     </div>
                     `
     $('#photo-d').append(temp_html)
-
 }
 
 
@@ -257,3 +276,39 @@ $("#image").on('change', function () {
     $(".upload-name").val(fileName);
 });
 
+
+async function handleStamp(photo_id) {
+    let token = localStorage.getItem("access")
+    const payload = localStorage.getItem("payload");
+    const payload_parse = JSON.parse(payload)
+    const user = payload_parse.user_id
+
+    const response = await fetch(`${backend_base_url}/note/stamp/${photo_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            "user": user,
+            "photo": photo_id,
+        })
+    })
+
+    if (response.status == 200) {
+        const response_json = await response.json()
+        window.location.reload()
+        return response_json
+    }
+    if (response.status == 201) {
+        const response_json = await response.json()
+        window.location.reload()
+        return response_json
+    }
+    else {
+        alert("※실패")
+        console.log(photo_id)
+    }
+}
+
+checkLogin()
