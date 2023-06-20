@@ -1,4 +1,3 @@
-// 일단 사진
 async function getTrash() {
     let token = localStorage.getItem("access")
 
@@ -12,14 +11,13 @@ async function getTrash() {
 
     if (response.status == 200) {
         const response_json = await response.json()
-
         return response_json
     } else {
         alert("불러오는데 실패했습니다")
     }
 }
 
-async function loadGrouptrash() {
+async function loadTrash(contentType) {
     const response = await getTrash()
     console.log(response)
 
@@ -29,88 +27,53 @@ async function loadGrouptrash() {
 
     $('#trash-content').empty()
 
-    groups.forEach((group) => {
-        const group_id = group.id
-        const group_name = group.name
-        const group_created_at = group.created_at
+    if (contentType === 'group') {
+        groups.forEach((group) => {
+            const group_id = group.id
+            const group_name = group.name
+            const group_created_at = group.created_at
 
-        let temp_html = `                               
-                        `
-        $('#trash-content').append(temp_html)
-    });
+            let temp_html = `<div style="margin-top:15px;">
+                                <input type="radio" name="photo-trash" value="1" style="width:10px">
+                                ${group_name} | ${group_created_at}
+                            </div>`
 
-//     notes.forEach((note) => {
-//         const note_id = note.id
-//         const note_name = note.name
-//         const note_created_at = note.created_at
-//         const category = note.category
-//         // const note_cover = url('/css/note_img/note_${category}.png')
+            $('#trash-content').append(temp_html)
+        });
+    } else if (contentType === 'note') {
+        notes.forEach((note) => {
+            const note_id = note.id
+            const note_name = note.name
+            const note_created_at = note.created_at
+            const category = note.category
 
-//         let temp_html = `                               
-//                         `
-//         $('#trash-modal-body').append(temp_html)
-//     });
+            let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:20px">
+                                <img src="/css/note_img/note_${category}.png" alt="Image description" style="width: 130px; height: 160px; margin-top:15px">
+                                ${note_name}
+                                <input type="radio" name="photo-trash" value="1" style="width:10px">
+                            </div>`
 
-//     photos.forEach((photo) => {
-//         const photo_id = photo.id
-//         const photo_name = photo.name
-//         const photo_created_at = photo.created_at
-//         const image = backend_base_url + '/note' + photo.image
+            $('#trash-content').append(temp_html)
+        });
+    } else if (contentType === 'photo') {
+        photos.forEach((photo) => {
+            const photo_id = photo.id
+            const photo_name = photo.name
+            const photo_created_at = photo.created_at
+            const photo_location = photo.location
+            const image = backend_base_url + '/note' + photo.image
 
-//         let temp_html = `                               
-//                         `
-//         $('#trash-modal-body').append(temp_html)
-//     });
+            let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:7px">
+                                <img src="${image}" alt="Image description" style="width: 142px; height: 142px; margin-top:15px">
+                                ${photo_name}
+                                <input type="radio" name="photo-trash" value="1" style="width:10px">
+                             </div>`
+
+            $('#trash-content').append(temp_html)
+        });
+    }
 }
 
-async function loadNotetrash() {
-    const response = await getTrash()
-    console.log(response)
-
-    const notes = response.note
-
-    $('#trash-content').empty()
-
-    notes.forEach((note) => {
-        const note_id = note.id
-        const note_name = note.name
-        const note_created_at = note.created_at
-        const category = note.category
-
-        let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:20px">
-                            <img src="/css/note_img/note_${category}.png" alt="Image description" style="width: 130px; height: 160px; margin-top:15px">
-                            ${note_name}
-                            <input type="radio" name="photo-trash" value="1" style="width:10px">
-                        </div>`                              
-                        
-        $('#trash-content').append(temp_html)
-    });
-}
-
-async function loadPhototrash() {
-    const response = await getTrash()
-    console.log(response)
-
-    const photos = response.photo
-
-    $('#trash-content').empty()
-
-    photos.forEach((photo) => {
-        const photo_id = photo.id
-        const photo_name = photo.name
-        const photo_created_at = photo.created_at
-        const photo_location = photo.location
-        const image = backend_base_url + '/note' + photo.image
-
-        let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center;">
-                            <img src="${image}" alt="Image description" style="width: 142px; height: 142px;">
-                            ${photo_name}
-                            <input type="radio" name="photo-trash" value="1" style="width:10px">
-                         </div>`
-                         
-        $('#trash-content').append(temp_html)
-    });
-}
 
 
 async function handlePhototrash(photo_id, location) {
@@ -138,57 +101,6 @@ async function handlePhototrash(photo_id, location) {
     }
 }
 
-// async function handleNotetrash(note_id,name,group_id) {
-//     let token = localStorage.getItem("access")
-
-//     const response = await fetch(`${backend_base_url}/note/trash/${note_id}`, {
-//         headers: {
-//             'content-type': 'application/json',
-//             "Authorization": `Bearer ${token}`
-//         },
-//         method: 'POST',
-//         body: JSON.stringify({
-//             "name": name,
-//             "group": group_id
-
-//         })
-//     })
-
-//     if (response.status == 200) {
-//         const response_json = await response.json()
-//         window.location.reload()
-//         return response_json
-//     }
-//     else {
-//         alert("※실패")
-//         console.log(photo_id)
-//     }
-// }
-
-// const noteToggle = document.getElementById("note-toggle");
-// const photoToggle = document.getElementById("photo-toggle");
-// const groupToggle = document.getElementById("group-toggle");
-
-// const noteButton = document.getElementById("noteButton");
-// const photoButton = document.getElementById("photoButton");
-// const groupButton = document.getElementById("groupButton");
-
-// noteToggle.addEventListener("change", function() {
-//   if (noteToggle.checked) {
-//     noteButton.classList.add("active");
-//     // 선택된 날짜에 대한 동작 수행
-//   } else {
-//     noteButton.classList.remove("active");
-//   }
-// });
-
-// photoToggle.addEventListener("change", function() {
-//   if (photoToggle.checked) {
-//     photoButton.classList.add("active");
-//     // 선택된 이름에 대한 동작 수행
-//   } else {
-//     photoButton.classList.remove("active");}
-// })
 
 function handleTrashRadio(id) {
     var selectedRadio = document.querySelector('input[name="photo-trash"]:checked');
