@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${access_token}`,
+                    // "Authorization": `Bearer ${access_token}`,
                 },
                 body: JSON.stringify({
                     start: newDate,
@@ -123,27 +123,13 @@ document.addEventListener('DOMContentLoaded', async function () {
                 if (!response.ok) {
                     info.revert();
                 }
+                console.log(response)
             });
         }
     });
 
     calendar.render();
 
-    // var prevYearButton = document.querySelector('.fc-prevYear-button');
-    // var nextYearButton = document.querySelector('.fc-nextYear-button');
-
-    // prevYearButton.setAttribute('title', '이전 년도로 이동');
-    // nextYearButton.setAttribute('title', '다음 년도로 이동');
-
-    // prevYearButton.addEventListener('mouseover', function () {
-    //     // 설명 텍스트를 표시하거나 원하는 동작을 수행
-    //     alert('이전 년도로 이동');
-    // });
-
-    // nextYearButton.addEventListener('mouseover', function () {
-    //     // 설명 텍스트를 표시하거나 원하는 동작을 수행
-    //     console.log('다음 년도로 이동');
-    // });
 });
 
 
