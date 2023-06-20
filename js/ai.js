@@ -273,39 +273,69 @@ async function aiStart() {
       let temp_html2 = `
                     <div class="carousel-item" style="padding: 10px; width:100%; height:100%">
                       <h3>${a}</h3>
-                      <div id="map_${idx}" style="width:49%;height:00px;"></div>
+                      <div id="${idx}" style="width:100%;height:200px;"></div>
                     </div>
                     `;
       $('#info_box').append(temp_html2);
       let temp_html3 = `<li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${idx + 1}" hidden>`;
       $('#control_info').append(temp_html3);
 
-      // setTimeout function to delay the map creation
-      setTimeout(function () {
-        var container = document.getElementById('map_' + idx);
-        var options = {
-          center: new kakao.maps.LatLng(x_y_list[idx][0], x_y_list[idx][1]),
-          level: 3
-        };
 
-        var map = new kakao.maps.Map(container, options);
+      function createMap(idx) {
+        return new Promise((resolve, reject) => {
+          var mapData = x_y_list[idx];
 
-        var markerPosition = new kakao.maps.LatLng(x_y_list[idx][0], x_y_list[idx][1]);
+          var mapContainer = document.getElementById(idx);
+          mapContainer.innerHTML = '';
 
-        var marker = new kakao.maps.Marker({
-          position: markerPosition
+          console.log(mapData)
+
+
+          // 새로운 지도 생성
+          var marker = {
+            position: new kakao.maps.LatLng(mapData[0], mapData[1]),
+            text: '텍스트를 표시할 수 있어요!'
+          };
+
+          var mapOption = {
+            center: new kakao.maps.LatLng(mapData[0], mapData[1]),
+            level: 3,
+            marker: marker
+          };
+
+          var staticMap = new kakao.maps.StaticMap(mapContainer, mapOption, () => {
+            resolve();
+          });
         });
+      }
 
-        marker.setMap(map);
-      }, 10000);  // the delay time is set to 0 ms
+      $('#info_box').on('slide.bs.carousel', async function (event) {
+        var currentIndex = $(event.relatedTarget).index();
+
+        function updateMap(idx) {
+          return new Promise(async (resolve, reject) => {
+            await createMap(idx); // 비동기적으로 지도 생성
+            console.log(318)
+            resolve();
+          });
+        }
+
+        await updateMap(currentIndex); // 비동기적으로 지도 업데이트
+        console.log(324)
+
+
+
+      });
+
     });
 
-
+    // let loadMapDiv = await loadMap(x_y_list)
 
     const btnElement = document.getElementById('ai_start_btn');
     btnElement.innerText = '다시하기';
     document.getElementById('ai_answer_btn').removeAttribute('hidden');
     $('#carouselModal').modal('show');
+
 
   } else {
     alert('문제가 발생했습니다!')
@@ -319,3 +349,27 @@ function saveNoteID() {
   note_id = params.get("note_id");
   localStorage.setItem('note_id', note_id)
 }
+
+// async function loadMap(xy_list) {
+//   console.log(xy_list)
+
+//   // 이미지 지도에 표시할 마커입니다
+//   var marker = {
+//     position: new kakao.maps.LatLng(33.450701, 126.570667),
+//     text: '텍스트를 표시할 수 있어요!' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다
+//   };
+
+//   var staticMapContainer = document.getElementById(`0`), // 이미지 지도를 표시할 div
+//     staticMapOption = {
+//       center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
+//       level: 3, // 이미지 지도의 확대 레벨
+//       marker: marker // 이미지 지도에 표시할 마커
+//     };
+
+//   // 이미지 지도를 생성합니다
+//   staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+
+// }
+
+
+
