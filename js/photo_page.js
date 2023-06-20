@@ -1,8 +1,7 @@
-const backend_base_url = "https://api.miyeong.net"
+// const backend_base_url = "https://api.miyeong.net"
 // const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "http://127.0.0.1:5500"
-
-
+// const frontend_base_url = "http://127.0.0.1:5500"
+let access_token = localStorage.getItem('access')
 
 // 사진 추가하기
 async function addPhoto() {
@@ -54,7 +53,6 @@ async function addPhoto() {
     }
 }
 
-
 async function album() {
     const urlParams = new URLSearchParams(window.location.search);
     const note_id = urlParams.get('note_id');
@@ -73,23 +71,43 @@ async function album() {
 
     const response_json = await response.json()
 
+    const stampsresponse = await getUserprofile()
+    const stamps = stampsresponse.stamps
+    const existPhoto = []
+
+    stamps.forEach((stamp) => {
+        const status = stamp.status
+        const photo = stamp.photo.id
+
+        if (status === "0") {
+            existPhoto.push(photo);
+        }
+    });
+
     response_json.forEach((a) => {
+        console.log(a)
         const image = backend_base_url + '/note' + a["image"];
-        const name = a["name"]
-        const title = a['title']
-        const location = a['location']
-        const memo = a['memo']
-        const photo_id = a['id']
-        console.log(image)
-        console.log(response_json)
-        let temp_html = `
-            <div class="gallery-item">
-            <a class="photo" href="" onclick="photo_detail('${photo_id}')" data-bs-toggle="modal" data-bs-target="#photo-detail"><img class="gallery-image" src="${image}" alt="${title}"></a>
-            </div>
-            `
-        $('#photo_info').append(temp_html)
+        const title = a['title'];
+        const photo_id = a['id'];
+
+        let temp_html = `<div class="gallery-item">
+                            <a class="photo" href="" onclick="photo_detail('${photo_id}')" data-bs-toggle="modal" data-bs-target="#photo-detail">
+                                <img class="gallery-image" src="${image}" alt="${title}">
+                            </a> `
+
+        if (existPhoto.includes(photo_id)) {
+            temp_html += `<img class="exist-stamp" id="exist-stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
+        } else {
+            temp_html += `<img class="stamp" id="stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
+        }
+
+        temp_html += `</div>`;
+
+        $('#photo_info').append(temp_html);
     });
 }
+
+
 // 페이지 로드 시 앨범 표시
 window.addEventListener('DOMContentLoaded', album);
 
@@ -129,20 +147,23 @@ async function photo_detail(photo_id) {
                     <ul class="comments">
                         <li><b>username&nbsp;</b>
                         <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
-                        <button type="button" id="commentBtn" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal">게시</button></li>
-                        
-                    </ul>
+                        <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal">게시</button></li>
+                        </div>
+                    <div text name="comments-list" id='comments-list' type="text" class="form-control" placeholder="comments">
                     </div>
+                    </ul>
+                    
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
                         </button>
                         <button id="patch_photo_box" type="button" class="btn btn-primary"
                             onclick="patchPhotoBox('${photo_id}')">수정</button>
+                        <button id="photo-trash" type="button" class="btn btn-primary"
+                            onclick="trashPhoto('${photo_id}')">휴지통</button>
                     </div>
                     `
     $('#photo-d').append(temp_html)
-
 }
 
 
@@ -269,33 +290,35 @@ $("#image").on('change', function () {
     $(".upload-name").val(fileName);
 });
 
+
 // 코멘트 추가 back과 연결
 async function addComment() {
     const photo_id = document.getElementById("commentBtn").value;
     const commentText = document.getElementById("comment").value;
 
     try {
-        const response = await fetch(`${backend_base_url}/note/comment/${photo_id}`, {
+        const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-
+                "Authorization": `Bearer ${access_token}`,
             },
             body: JSON.stringify({ comment: commentText })
         });
 
         if (response.ok) {
             console.log('코멘트 추가 성공');
-            const addedComment = await response_json();
-            const commentsList = document.getElementById('comments-list');
-            const newComment = document.createElement('li');
-            newComment.innerHTML = `
-        <b>${addedComment.username}&nbsp;</b>
-        ${addComment.comment}
-        <span class="deleted" onclick="deleteComment('${addedComment.id}')"></span>
-        `;
-            commentsListappendChild(newCommnet);
-            document.getElementById('comment'.value) = '';
+            // const addedComment = await response.json();
+            // const commentsList = document.getElementById('comments-list');
+            // const newComment = document.createElement('li');
+            // temp_html = `<li>
+            //                         <b>${addedComment.username}&nbsp;</b>
+            //                         ${addComment.comment}
+            //                         <span class="deleted" onclick="deleteComment('${addedComment.id}')"></span>
+            //                         </li>
+            //                         `;
+            // $('#comments-list').append(temp_html);
+            // document.getElementById('comment'.value) = '';
         } else {
             throw new Error('서버가 응답하지 않습니다.');
         }
@@ -305,26 +328,49 @@ async function addComment() {
         console.error(error);
     }
 }
-// function enterComment() {
-//     const [comments] = document.getElementsByClassName('comments');
-//     const newComment = document.createElement('li');
-//     const comment = `
-//             <b>dltjsgho</b>
-//             ${commentInput.value}
-//             <span class="deleted"></span>
-//             `;
 
-//     newComment.innerHTML = comment
-//     comments.appendChild(newComment);
-//     commentInput.value = '';
-//     const deleteTxt = newComment.querySelector('.deleted');
+// comment 출력 > photo_id와 commnet_id 불러와야함
+// async function showComment() {
+//     const commentText = document.getElementById("comment").value;
 
-//     deleteTxt.addEventListener('click', () => {
-//         newComment.remove();
-//     })
+
+//     try {
+//         const response = await fetch(`${backend_base_url}/note/comment/${photo_id}/${comment_id}`, {
+//             method: 'GET',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 "Authorization": `Bearer ${access_token}`,
+//             },
+//             body: JSON.stringify({ comment: commentText })
+//         });
+
+//         if (response.ok) {
+//             console.log('코멘트 불러오기 성공');
+//             const showedComment = await response.json();
+//             console.log(response.json())
+
+//             // const commentsList = document.getElementById('comments-list');
+//             // const newComment = document.createElement('li');
+//             temp_html = `<li>
+//                                     <b>${showedComment.username}&nbsp;</b>
+//                                     ${showComment.comment}
+//                                     <span class="deleted" onclick="deleteComment('${comment.id}')"></span>
+//                                     </li>
+//                                     `;
+//             $('#comments-list').append(temp_html);
+//             // document.getElementById('comment'.value) = '';
+//         } else {
+//             throw new Error('서버가 응답하지 않습니다.');
+//         }
+//     }
+//     catch (error) {
+//         alert('에러가 발생했습니다.');
+//         console.error(error);
+//     }
 // }
 
-// //권장되는 이벤트 등록방식
+
+//권장되는 이벤트 등록방식
 // commentInput.addEventListener('keyup', function (e) {
 //     if (e.code === 'Enter' && commentInput.value.length > 0) {
 //         enterComment();
@@ -337,3 +383,41 @@ async function addComment() {
 //     }
 //     submitBtn()
 // })
+
+
+async function handleStamp(photo_id) {
+    let token = localStorage.getItem("access")
+    const payload = localStorage.getItem("payload");
+    const payload_parse = JSON.parse(payload)
+    const user = payload_parse.user_id
+
+    const response = await fetch(`${backend_base_url}/note/stamp/${photo_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            "user": user,
+            "photo": photo_id,
+        })
+    })
+
+    if (response.status == 200) {
+        const response_json = await response.json()
+        window.location.reload()
+        return response_json
+    }
+    if (response.status == 201) {
+        const response_json = await response.json()
+        window.location.reload()
+        return response_json
+    }
+    else {
+        alert("※실패")
+        console.log(photo_id)
+    }
+}
+
+checkLogin()
+

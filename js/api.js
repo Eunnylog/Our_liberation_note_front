@@ -1,6 +1,6 @@
 // 기본 URL
-// const backend_base_url = "https://api.miyeong.net"
-const backend_base_url = "http://127.0.0.1:8000"
+const backend_base_url = "https://api.miyeong.net"
+// const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 // const frontend_base_url = "https://miyeong.net"
 
@@ -397,7 +397,7 @@ async function handlesUserDelete() {
   const payload = localStorage.getItem("payload");
   const payload_parse = JSON.parse(payload)
 
-  const response = await fetch(`${backend_base_url}/users/delete/${payload_parse.user_id}/`, {
+  const response = await fetch(`${backend_base_url}/user/delete/${payload_parse.user_id}/`, {
     headers: {
       "Authorization": `Bearer ${access_token}`
     },
@@ -721,6 +721,5 @@ async function getUserprofile() {
   } else {
     alert("불러오는데 실패했습니다")
   }
-
 
 }
