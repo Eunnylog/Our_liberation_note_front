@@ -207,8 +207,11 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <button type="button" onclick="addMembersToGroup()" 
+                                    <button type="button" onclick="addMembersToGroup()"
                                         style="width: 100px; margin-left: 10px;">멤버 추가</button>
+                                    <button type="button" onclick="DeleteMembers()"
+                                        style="width: 100px; margin-left: 10px;">멤버
+                                        삭제</button>
                                     <div style="display:flex;">
                                         <p style="justify-content: left;"> 추가한 이메일 </p>
                                         <div id="selected-email-list">
@@ -229,7 +232,7 @@
                 </div>
             </div>
         </div>
-      </div>
+    </div>
     <!-- Carousel 형식의 모달 -->
     <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
         <div class="modal-dialog modal-xl" style="margin: auto; max-width: 1000px;">

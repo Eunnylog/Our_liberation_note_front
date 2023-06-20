@@ -644,7 +644,20 @@ async function addMember() {
     });
 }
 
-// 멤버 추가 버튼 클릭 시 선택된 이메일 리스트를 서버로 전송
+$(document).ready(function () {
+  $('#makegroup').on('hide.bs.modal', function () {
+    // 모달 창을 닫을 때 입력 필드 값 비우기
+    $('#usersearch').val("");
+    // 렌더링 된 이메일 결과를 비우기
+    $("#email-ul").empty();
+
+    // 라디오 버튼 체크 해제
+    $('input[type=radio]').prop('checked', false);
+  });
+});
+
+
+// 멤버 추가 버튼 클릭 시 이메일 리스트에 추
 function addMembersToGroup() {
   // 선택한 input 요소의 value 속성을 배열에 push
   const checkedInput = document.querySelector('input[name="email_radio"]:checked');
@@ -680,6 +693,29 @@ function addMembersToGroup() {
   } else {
     alert("선택된 이메일이 없습니다.")
   }
+  $('input[type=radio]').prop('checked', false);
+}
+
+// 버튼 클릭 시 선택한 이메일 리스트에서 삭제
+function DeleteMembers() {
+  const checkedRadio = document.querySelector('input[name="checked_email_radio"]:checked');
+
+  if (checkedRadio) {
+    const selectedEmail = checkedRadio.nextSibling.textContent.trim();
+    const emailIndex = selectedEmails.indexOf(selectedEmail);
+
+    if (emailIndex > -1) {
+      selectedEmails.splice(emailIndex, 1);
+      console.log(selectedEmails);
+
+      checkedRadio.closest("li").remove();
+    } else {
+      alert("선택된 이메일이 추가된 이메일 목록에 없습니다.");
+    }
+  } else {
+    alert("선택된 이메일이 없습니다.");
+  }
+  $('input[type=radio]').prop('checked', false);
 }
 
 // 그룹 생성
