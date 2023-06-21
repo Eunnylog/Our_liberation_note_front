@@ -206,10 +206,6 @@ function updateHandleRadioClick() {
     if (selectedRadio) {
         const selectedEmail = selectedRadio.nextSibling.textContent.trim();
         document.getElementById("update-usersearch").value = selectedEmail;
-
-        // updateAddMembersToGroup();
-    } else {
-        alert("선택된 이메일이 없습니다.");
     }
 }
 
@@ -258,14 +254,15 @@ async function groupUpdateModal() {
             membersArray.forEach((member, index) => {
                 console.log("멤버", members)
                 let temp_html = `
-                        <li class="selected_email">
-                        <input type="radio" id="selected_update_email_${index}" name="email_radio" value="${index}" onclick="updateHandleRadioClick()">
+                        <li class="selected_email" style="list-style-type: none; margin-bottom: 10px;">
+                        <input type="radio" id="selected_update_email_${index}" name="checked_email_radio" value="${index}" onclick="updateHandleRadioClick()">
                         ${member}
                         </li>
                     `;
                 groupMembers.innerHTML += temp_html;
                 // 기존 이메일을 배열에 추가
                 existingEmails.push(member.trim());
+                console.log('existingEmails', existingEmails)
             })
 
         }
@@ -296,6 +293,10 @@ async function updateAddMember() {
     const membersEmail = document.getElementById("update-usersearch").value
     console.log("emailinput", membersEmail)
 
+    if (!membersEmail) {
+        alert('이메일을 입력해주세요!')
+        return
+    }
     const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
 
     axios.get(url).then(response => {
@@ -310,8 +311,8 @@ async function updateAddMember() {
         // 검색 결과 처리
         emails.forEach((useremail, index) => {
             let temp_html = `
-            <li>
-              <input type="radio" id="update_email_${index}" name="email_radio" value="${index}" onclick="updateHandleRadioClick()">
+            <li style="list-style-type: none; margin-bottom: 10px;">
+              <input type="radio" id="update_email_${index}" name="email_radio" value="${index}">
               ${useremail}
             </li>
           `;
@@ -328,6 +329,10 @@ async function updateAddMember() {
 function updateAddMembersToGroup() {
     const checkedInput = document.querySelector('input[name="email_radio"]:checked');
 
+    if (!checkedInput) {
+        alert('선택한 이메일이 없습니다!')
+        return
+    }
     if (checkedInput) {
 
         const selectedEmail = checkedInput.nextSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
@@ -339,82 +344,68 @@ function updateAddMembersToGroup() {
         const existingEmail = existingEmails.includes(selectedEmail);
 
         if (!alreadyAdded && !existingEmail) {
-            selectedEmails.push(selectedEmail); console.log(selectedEmails);
-            console.log('selectedEmails', selectedEmails)
+            // selectedEmails = selectedEmails.concat(existingEmails);
+            Array.prototype.push.apply(selectedEmails, existingEmails);
+            console.log('ex&selex', selectedEmails)
+            // selectedEmails.push(selectedEmail);
+            // console.log('selectedEmails', selectedEmails)
+
+            if (!selectedEmails.includes(selectedEmail)) {
+                selectedEmails.push(selectedEmail);
+                console.log('selectedEmails', selectedEmails);
+            } else {
+                console.log('이미 추가된 이메일입니다.');
+            }
+
 
             // 선택된 이메일을 ul에 추가
             const selectedEmailUl = document.getElementById("update-selected-email-ul");
-            const newEmailLi = document.createElement("li");
+            const newEmailLi = document.createElement("li")
             newEmailLi.className = "selected_email"
+            newEmailLi.style = "list-style-type: none; margin-bottom: 10px;"
 
             // input 태그 추가
             const newInput = document.createElement("input");
-            newInput.type = "radio";
-            newInput.name = "checked_email_radio";
-            newEmailLi.appendChild(newInput);
+            newInput.type = "radio"
+            newInput.name = "checked_email_radio"
+            newEmailLi.appendChild(newInput)
 
             // 이메일 추가
-            const textNode = document.createTextNode(" ");
-            const emailText = document.createTextNode(selectedEmail);
-            newEmailLi.appendChild(textNode);
-            newEmailLi.appendChild(emailText);
+            const textNode = document.createTextNode(" ")
+            const emailText = document.createTextNode(selectedEmail)
+            newEmailLi.appendChild(textNode)
+            newEmailLi.appendChild(emailText)
 
-            selectedEmailUl.appendChild(newEmailLi);
+            selectedEmailUl.appendChild(newEmailLi)
         } else {
             alert("이미 추가된 이메일입니다.");
         }
 
-    } else {
-        alert("선택된 이메일이 없습니다.")
     }
+    // else {
+    //     alert("선택된 이메일이 없습니다.")
+    // }
     $('input[type=radio]').prop('checked', false);
 }
 
-// function updateDeleteMembers() {
-//     console.log("기존 멤버", existingEmails);
-//     const checkedRadio = document.querySelector('input[name="checked_email_radio"]:checked');
-
-//     if (checkedRadio) {
-//         const selectedEmail = checkedRadio.nextSibling.textContent.trim();
-//         const emailIndex = selectedEmails.indexOf(selectedEmail);
-//         const existingEmailIndex = existingEmails.indexOf(selectedEmail);
-
-//         if (emailIndex > -1) {
-//             selectedEmails.splice(emailIndex, 1);
-//             console.log(selectedEmails);
-
-//             checkedRadio.closest("li").remove();
-//         } else if (existingEmailIndex > -1) {
-//             existingEmails.splice(existingEmailIndex, 1);
-
-//             checkedRadio.closest("li").remove();
-//         } else {
-//             alert("선택된 이메일이 추가된 목록 또는 기존 멤버 목록에 없습니다.");
-//         }
-//     } else {
-//         alert("선택된 이메일이 없습니다.");
-//     }
-//     $('input[type=radio]').prop('checked', false);
-// }
-
+// 저장 전 선택한 이메일 리스트에서 제거하는 함수
 async function updateDeleteMembers() {
     const checkedInput = document.querySelector('input[name="checked_email_radio"]:checked');
     if (checkedInput) {
         const selectedEmail = checkedInput.nextSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
 
         const selectedEmailIndex = selectedEmails.indexOf(selectedEmail);
-        if (selectedEmailIndex > -1) {
-            selectedEmails.splice(selectedEmailIndex, 1); // 선택된 이메일 삭제
-        }
+
+        selectedEmails.splice(selectedEmailIndex, 1); // 선택된 이메일 삭제
+        console.log('selectedEmails', selectedEmails)
 
         checkedInput.parentElement.remove(); // 선택된 이메일 리스트에서 삭제
-    } else {
+    }
+    else {
         alert("선택된 이메일이 없습니다.");
     }
     $('input[type=radio]').prop('checked', false);
 }
-
-
 
 // 그룹 수정 등록
 async function updateGroup() {
