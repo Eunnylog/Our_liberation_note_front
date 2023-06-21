@@ -202,10 +202,6 @@ function updateHandleRadioClick() {
     if (selectedRadio) {
         const selectedEmail = selectedRadio.nextSibling.textContent.trim();
         document.getElementById("update-usersearch").value = selectedEmail;
-
-        // updateAddMembersToGroup();
-    } else {
-        alert("선택된 이메일이 없습니다.");
     }
 }
 
@@ -254,7 +250,7 @@ async function groupUpdateModal() {
             membersArray.forEach((member, index) => {
                 console.log("멤버", members)
                 let temp_html = `
-                        <li class="selected_email">
+                        <li class="selected_email" style="list-style-type: none; margin-bottom: 10px;">
                         <input type="radio" id="selected_update_email_${index}" name="checked_email_radio" value="${index}" onclick="updateHandleRadioClick()">
                         ${member}
                         </li>
@@ -293,6 +289,10 @@ async function updateAddMember() {
     const membersEmail = document.getElementById("update-usersearch").value
     console.log("emailinput", membersEmail)
 
+    if (!membersEmail) {
+        alert('이메일을 입력해주세요!')
+        return
+    }
     const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
 
     axios.get(url).then(response => {
@@ -307,8 +307,8 @@ async function updateAddMember() {
         // 검색 결과 처리
         emails.forEach((useremail, index) => {
             let temp_html = `
-            <li>
-              <input type="radio" id="update_email_${index}" name="email_radio" value="${index}" onclick="updateHandleRadioClick()">
+            <li style="list-style-type: none; margin-bottom: 10px;">
+              <input type="radio" id="update_email_${index}" name="email_radio" value="${index}">
               ${useremail}
             </li>
           `;
@@ -325,6 +325,10 @@ async function updateAddMember() {
 function updateAddMembersToGroup() {
     const checkedInput = document.querySelector('input[name="email_radio"]:checked');
 
+    if (!checkedInput) {
+        alert('선택한 이메일이 없습니다!')
+        return
+    }
     if (checkedInput) {
 
         const selectedEmail = checkedInput.nextSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
@@ -352,29 +356,31 @@ function updateAddMembersToGroup() {
 
             // 선택된 이메일을 ul에 추가
             const selectedEmailUl = document.getElementById("update-selected-email-ul");
-            const newEmailLi = document.createElement("li");
+            const newEmailLi = document.createElement("li")
             newEmailLi.className = "selected_email"
+            newEmailLi.style = "list-style-type: none; margin-bottom: 10px;"
 
             // input 태그 추가
             const newInput = document.createElement("input");
-            newInput.type = "radio";
-            newInput.name = "checked_email_radio";
-            newEmailLi.appendChild(newInput);
+            newInput.type = "radio"
+            newInput.name = "checked_email_radio"
+            newEmailLi.appendChild(newInput)
 
             // 이메일 추가
-            const textNode = document.createTextNode(" ");
-            const emailText = document.createTextNode(selectedEmail);
-            newEmailLi.appendChild(textNode);
-            newEmailLi.appendChild(emailText);
+            const textNode = document.createTextNode(" ")
+            const emailText = document.createTextNode(selectedEmail)
+            newEmailLi.appendChild(textNode)
+            newEmailLi.appendChild(emailText)
 
-            selectedEmailUl.appendChild(newEmailLi);
+            selectedEmailUl.appendChild(newEmailLi)
         } else {
             alert("이미 추가된 이메일입니다.");
         }
 
-    } else {
-        alert("선택된 이메일이 없습니다.")
     }
+    // else {
+    //     alert("선택된 이메일이 없습니다.")
+    // }
     $('input[type=radio]').prop('checked', false);
 }
 
@@ -390,7 +396,8 @@ async function updateDeleteMembers() {
         console.log('selectedEmails', selectedEmails)
 
         checkedInput.parentElement.remove(); // 선택된 이메일 리스트에서 삭제
-    } else {
+    }
+    else {
         alert("선택된 이메일이 없습니다.");
     }
     $('input[type=radio]').prop('checked', false);

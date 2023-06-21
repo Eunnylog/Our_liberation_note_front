@@ -66,7 +66,7 @@ async function signupTimer() {
       sec = Math.floor((time % (60 * 1000)) / 1000); // 분을 제외한 나머지 초 계산
 
       if (sec === 0 && min === 0) {
-        clearInterval(currentSignupTimer); // 타이머를 중지한다.
+        clearInterval(currentSignupTimer); // 00:00이 되면 타이머를 중지한다.
       }
 
       Timer.value = min.toString().padStart(2, '0') + ':' + sec.toString().padStart(2, '0'); // 2자리 숫자로 표시
@@ -641,7 +641,7 @@ async function addMember() {
     // 검색 결과 처리
     emails.forEach((useremail, index) => {
       let temp_html = `
-          <li>
+          <li style="list-style-type: none; margin-bottom: 10px;">
             <input type="radio" id="email_${index}" name="email_radio" value="${index}" onclick="handleRadioClick()">
             ${useremail}
           </li>
@@ -685,6 +685,7 @@ function addMembersToGroup() {
       // 선택된 이메일을 ul에 추가
       const selectedEmailUl = document.getElementById("selected-email-ul");
       const newEmailLi = document.createElement("li");
+      newEmailLi.style = "list-style-type: none; margin-bottom: 10px;"
 
       // input 태그 추가
       const newInput = document.createElement("input");
@@ -833,7 +834,7 @@ async function findPasswordTimer() {
       sec = Math.floor((time % (60 * 1000)) / 1000); // 분을 제외한 나머지 초 계산
 
       if (sec === 0 && min === 0) {
-        clearInterval(currentFindPasswordTimer); // 타이머를 중지한다.
+        clearInterval(currentFindPasswordTimer); // 00:00이 되면 타이머를 중지한다.
       }
 
       Timer.value = min.toString().padStart(2, '0') + ':' + sec.toString().padStart(2, '0'); // 2자리 숫자로 표시
