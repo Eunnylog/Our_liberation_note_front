@@ -246,7 +246,7 @@ async function aiStart() {
     const response = await fetch(`${back_url}/note/search`, {
       headers: {
         'content-type': 'application/json',
-        // "Authorization": `Bearer ${access_token}`,
+        "Authorization": `Bearer ${access_token}`,
       },
       method: 'POST',
       body: JSON.stringify({ destinations: destinations })
