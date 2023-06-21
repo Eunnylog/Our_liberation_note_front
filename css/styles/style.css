@@ -984,9 +984,7 @@ input[type="checkbox"]:checked+label {
 
 .trash-toggle>button {
   background-color: #ECECEC;
-  /* 기본 배경색 설정 */
   color: #000000;
-  /* 기본 텍스트 색상 설정 */
   border: none;
   padding: 5px 15px;
   font-size: 16px;
@@ -996,8 +994,7 @@ input[type="checkbox"]:checked+label {
 
 .trash-toggle>button.active {
   background-color: #FFFFFF;
-  /* 선택된 항목의 배경색 설정 */
   color: #000000;
-  /* 선택된 항목의 텍스트 색상 설정 */
   border-radius: 10px;
 }
+

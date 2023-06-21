@@ -144,6 +144,16 @@ async function loadTrash(contentType) {
             $('#modal-footer').append(temp_html2)
         }
     }
+
+    const toggleSwitch = document.querySelector('.toggle-switch');
+    const activeButton = document.querySelector('.trash-toggle button.active');
+    const targetButton = document.querySelector(`#${contentType}Button`);
+    const targetButtonOffset = targetButton.offsetLeft;
+  
+    toggleSwitch.style.width = '60px';
+    toggleSwitch.style.transform = `translateX(${targetButtonOffset}px)`;
+    activeButton.classList.remove('active');
+    targetButton.classList.add('active');
 }
 
 

@@ -1,22 +1,25 @@
 let back_url = 'https://api.miyeong.net'
 // let front_url = 'https://miyeong.net'
-let front_url = 'http://127.0.0.1:5500'
+// let front_url = 'http://127.0.0.1:5500'
 // let back_url = 'http://127.0.0.1:8000'
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
 
 checkLogin()
 
-async function navigateToDetailPage() {
-  // HTML에서 상세 페이지로 이동할 요소를 선택합니다.
+function aiSubscribeCheck() {
 
   const is_subscribe = localStorage.getItem("is_subscribe")
 
-  if (is_subscribe) {
-    alert("이미 구독 중입니다!")
-
+  if (is_subscribe == 'true') {
+    return true
   }
   else {
+    var userConfirmation = confirm("구독권 결제가 필요합니다! 결제창으로 이동할까요?");
+
+    if (!userConfirmation) {
+      return false
+    }
     window.location.replace(`${frontend_base_url}/window.html`)
   }
 }
@@ -27,7 +30,7 @@ async function showStartSelect() {
   const response = await fetch(`${back_url}/note/plan/${note_id}`, {
     headers: {
       'content-type': 'application/json',
-      "Authorization": `${access_token}`,
+      // "Authorization": `${access_token}`,
     },
     method: 'GET',
   })
@@ -220,6 +223,12 @@ function updateCheckAllStatus() {
 
 
 async function aiStart() {
+  let is_subscribe = aiSubscribeCheck()
+
+  if (!is_subscribe) {
+    return false
+  }
+
   let destinations = [];
   $('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').each(function () {
     let checkedDiv = $(this).closest('div[name]');
@@ -240,10 +249,18 @@ async function aiStart() {
 
   });
 
-
+  if (destinations.length == 0) {
+    alert('먹이를 추가해주세요!')
+    return false
+  }
   try {
     // 로딩창 표시
     loading.style.display = 'block';
+
+
+    // const timeoutId = setTimeout(() => controller.abort(), 60000)
+
+
     const response = await fetch(`${back_url}/note/search`, {
       headers: {
         'content-type': 'application/json',
@@ -262,8 +279,9 @@ async function aiStart() {
 
       let temp_html1 = `
                         <div class="carousel-item active" style="padding: 10px;">
-                            <h3 id='${idx}'>결과)</h3>
+                            <h3>결과)</h3>
                             <h5>${formatted_titles}</h5>
+                          </div>
                         </div>
                       `
 
@@ -272,10 +290,14 @@ async function aiStart() {
       let x_y_list = response_json['x_y_list'];
 
       response_json['title_list'].forEach((a, idx) => {
+        if (response_json['answer'][idx][0] == '.') {
+          response_json['answer'][idx] = response_json['answer'][idx].substring(1);
+        }
         let temp_html2 = `
                       <div class="carousel-item" style="padding: 10px; width:100%; height:100%">
-                        <h3>${a}</h3>
+                        <h3 id='${idx}'>${a}</h3>
                         <h5>${response_json['answer'][idx]}</h5>
+                        <a href="${response_json['crawling'][idx]}" target="_blank">${response_json['crawling'][idx]}</a>
                       </div>
                       `;
         $('#info_box').append(temp_html2);
@@ -284,20 +306,23 @@ async function aiStart() {
 
       });
 
-      // let loadMapDiv = await loadMap(x_y_list)
-
-      const btnElement = document.getElementById('ai_start_btn');
-      btnElement.innerText = '다시하기';
-      document.getElementById('ai_answer_btn').removeAttribute('hidden');
       $('#carouselModal').modal('show');
 
-      loadMap(x_y_list);
+      document.getElementById('map').style.display = 'block';
+      document.getElementById('reload_btn').style.display = 'inline-block';
+      document.getElementById('ai_answer_btn').style.display = 'inline-block';
+      document.getElementById('work_div').style.display = 'none';
+      document.getElementById('feed_div').style.display = 'none';
+      await loadMap(x_y_list);
     } else {
       alert('문제가 발생했습니다!')
     }
+  } catch (error) {
+    console.log(error)
   } finally {
     // 로딩창 숨김
     loading.style.display = 'none';
+    console.log('끝!')
   }
 
 
@@ -370,5 +395,14 @@ async function loadMap(x_y_list) {
 }
 
 
-
-
+function reload() {
+  let confirm_answer = confirm('다시하시면 이전 결과물은 볼 수 없습니다! 그래도 괜찮으신가요?')
+  if (!confirm_answer) {
+    return false
+  }
+  document.getElementById('map').style.display = 'none';
+  document.getElementById('reload_btn').style.display = 'none';
+  document.getElementById('ai_answer_btn').style.display = 'none';
+  document.getElementById('work_div').style.display = 'block';
+  document.getElementById('feed_div').style.display = 'block';
+}

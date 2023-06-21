@@ -1,6 +1,6 @@
 // 기본 URL
-// const backend_base_url = "https://api.miyeong.net"
-const backend_base_url = "http://127.0.0.1:8000"
+const backend_base_url = "https://api.miyeong.net"
+// const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 // const frontend_base_url = "https://miyeong.net"
 
@@ -27,7 +27,6 @@ async function handleSignup() {
       "code": confirmcode
     })
   })
-  console.log()
 
   if (response.status == 201) {
     document.getElementById("signup").querySelector('[data-bs-dismiss="modal"]').click();
@@ -73,7 +72,6 @@ async function handleSignin() {
     localStorage.setItem('refresh', response_json.refresh)
     localStorage.setItem('access', response_json.access)
     console.log(response_json)
-    alert('stop')
     const base64Url = response_json.access.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
@@ -485,11 +483,6 @@ function checkSubscribe() {
 }
 
 function handleAi() {
-  const payload = localStorage.getItem("payload");
-
-  if (!payload) {
-    alert("※ 🤖AI기능을 사용하시려면 로그인을 해주세요!")
-  }
 
   const isSubscribe = JSON.parse(localStorage.getItem("payload"))['is_subscribe'];
 
