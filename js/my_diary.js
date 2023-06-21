@@ -1,6 +1,6 @@
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.miyeong.net'
-// let back_url = 'http://127.0.0.1:8000'
+// let back_url = 'https://api.miyeong.net'
+let back_url = 'http://127.0.0.1:8000'
 let group_data = []
 
 checkLogin()
@@ -523,3 +523,18 @@ async function deleteGroupConfirm() {
         alert(`오류가 발생했습니다: ${response_json}`)
     }
 }
+
+function toggleArrow() {
+    const arrow = document.querySelector('.icoArrow img option');
+
+    if (arrow.style.transform === 'rotate(180deg)') {
+        arrow.style.transform = 'rotate(0deg)';
+    } else {
+        arrow.style.transform = 'rotate(180deg)';
+    }
+}
+
+// function toggleArrow() {
+//     const arrow = document.querySelector('.icoArrow img');
+//     arrow.classList.toggle('rotate');
+// }
