@@ -16,9 +16,14 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="/js/loader.js"></script>
     <script src="/js/api.js"></script>
-    <!-- <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5976e08cd96f7fe00c3699cd1dfa0957"></script> -->
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed7abe4225faa4a80192a0afdef4a63b"></script>
     <script src="/js/ai.js"></script>
+    <style>
+        body {
+            background-color: #ebf2ff;
+        }
+    </style>
 </head>
 
 <body>
@@ -34,7 +39,7 @@
             <div class="overlay"></div>
             <div class="spinner"></div>
         </div>
-        <div class="main-header" style="margin-top: 30px; ">
+        <div class="main-header" style="margin-top: 30px; background-color: #ebf2ff;">
             <div style="margin-top: 30px;">
                 <button onclick="saveNoteID(); navigateToDetailPage();" class="btn btn-secondary"
                     style="margin-bottom: 30px;">AI결제하기</button>
@@ -42,7 +47,7 @@
                     AI 사용 설명서</button>
             </div>
             <div class="content2"
-                style="width:49%; height:600px; float:left; border: solid 3px #60749d; padding:20px; position: relative;">
+                style="width:49%; height:600px; float:left; border: solid 3px #60749d; padding:20px; position: relative; background-color: white;">
                 <div style="text-align:right; width:100%">
                     <select name="start" id="select_start" onchange="showAiFeed()" style="margin-bottom: 20px;">
                         <!-- <option value="-1">그룹 선택</option> -->
@@ -59,7 +64,7 @@
                 </div>
             </div>
             <div class="content2"
-                style="width:49%; height:600px; float:right; border: solid 3px #60749d; padding:20px; position: relative;">
+                style="width:49%; height:600px; float:right; border: solid 3px #60749d; padding:20px; position: relative; background-color: white;">
                 <div id="ai_work_box" style="width: 100%; height:500px; overflow-x: auto;; white-space: nowrap;">
                 </div>
                 <div style="display: flex; justify-content: center; position: absolute; bottom: -10px; width: 100%;">
@@ -75,8 +80,48 @@
                         hidden>결과보기</button>
                 </div>
             </div>
+            <div class="content2" id="map"
+                style="width:100%; height:600px; border: solid 3px #60749d; padding:20px; position: relative; background-color: white;">
+            </div>
         </div>
     </main>
+    <!-- Carousel 형식의 모달 -->
+    <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
+        <div class="modal-dialog modal-xl" style="margin: auto; max-width: 1000px;">
+            <div class="modal-content" style="height: 500px;">
+                <div class="modal-header">
+                    <h5 class="modal-title">Info</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="position: relative;">
+                    <!-- Carousel -->
+                    <div id="carouselExampleIndicators" class="carousel slide">
+                        <ol class="carousel-indicators" id="control_info">
+                            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" hidden class="active">
+                            </li>
+                        </ol>
+                        <div class="carousel-inner" id="info_box" style="width:800px; height:100%;">
+                        </div>
+                    </div>
+                    <div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- 그룹만들기 모달창 -->
     <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
         <div class="modal-dialog">
@@ -132,43 +177,7 @@
             </div>
         </div>
     </div>
-    <!-- Carousel 형식의 모달 -->
-    <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
-        <div class="modal-dialog modal-xl" style="margin: auto; max-width: 1000px;">
-            <div class="modal-content" style="height: 500px;">
-                <div class="modal-header">
-                    <h5 class="modal-title">Info</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" style="position: relative;">
-                    <!-- Carousel -->
-                    <div id="carouselExampleIndicators" class="carousel slide">
-                        <ol class="carousel-indicators" id="control_info">
-                            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" hidden class="active">
-                            </li>
-                        </ol>
-                        <div class="carousel-inner" id="info_box" style="width:800px; height:100%;">
-                        </div>
-                    </div>
-                    <div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 </body>
 

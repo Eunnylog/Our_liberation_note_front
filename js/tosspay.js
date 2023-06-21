@@ -9,7 +9,7 @@ let paymentData = ["공통", "카드", "가상계좌", "계좌이체", "휴대�
 let path = "/";
 let successUrl = `${frontend_base_url}/success.html`;
 let failUrl = `${frontend_base_url}/fail.html`;
-
+checkLogin()
 
 paymentData["공통"] = {
   "amount": "",
