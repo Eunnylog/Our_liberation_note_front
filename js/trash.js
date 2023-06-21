@@ -268,11 +268,6 @@ function handleTrashRestore() {
 
 }
 
-async function groupDeleteModal() {
-    $('#deleteGroup').modal('show')
-    console.log("Deleting group ID:", updatingGroupId);
-}
-
 async function deleteGroup(group_id) {
     const token = localStorage.getItem('access')
 

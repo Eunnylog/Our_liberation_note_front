@@ -22,6 +22,7 @@
   <script src="/js/loader.js"></script>
   <script src="/js/api.js"></script>
   <script src="/js/my_diary.js"></script>
+  <script src="/js/trash.js"></script>
   <style>
     body {
       background-color: #ebf2ff;
@@ -49,8 +50,7 @@
             style="background-color: #60749d; color:white; margin: 0px 10px;" onclick="groupUpdateModal()"> 그룹 수정
           </button>
           <button type="button" id="group-delete-btn" class="btn group-btn"
-            style="background-color: #92a2c5; color:white;" onclick="groupDeleteModal()">그룹
-            삭제</button>
+            style="background-color: #92a2c5; color:white;" data-bs-toggle="modal" data-bs-target="#deleteGroup" onclick="deleteGroupModal()">그룹 삭제</button>
         </div>
       </div>
       <div class="contents" id="note_list">
@@ -312,15 +312,9 @@
           <h5 class="modal-title">Delete Group</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <p> 정말 그룹을 삭제 하시겠습니까?</p>
+        <div class="modal-body" id="modal-body">
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn" data-bs-dismiss="modal"
-            style="background-color: #92a2c5; border-color: #92a2c5; color:white;">Close</button>
-          <button type="button" class="btn"
-            style="background-color: #60749d; border-color: #60749d; color:white; margin: 0px 10px;"
-            onclick="deleteGroupConfirm()">Delete</button>
+        <div class="modal-footer" id="modal-footer">
         </div>
       </div>
     </div>
