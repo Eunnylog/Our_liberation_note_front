@@ -29,19 +29,20 @@ async function loadTrash(contentType) {
     $('#modal-footer').empty()
 
     if (contentType === 'group') {
-        groups.forEach((group) => {
+        groups.forEach((group, index) => {
             const group_id = group.id
             const group_name = group.name
             const group_created_at = group.created_at
 
             let temp_html = `<div style="margin-top:15px;">
-                                <input type="radio" name="photo-trash" value="1" style="width:10px">
-                                ${group_name} | ${group_created_at}
+                                <input type="radio" name="trash-radio" value="${index}" style="width:10px" onclick="handleTrashRadio('group')">
+                                <a id='name_${index}'>${group_name} | ${group_created_at}</a>
+                                <input id='id_${index}' value="${group_id}" hidden>
                             </div>`
 
             $('#trash-content').append(temp_html)
         });
-        let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleGrouptrash('${group_id}','${group_name}')"
+        let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
                             style="background-color:  #60749d;">복원</button>
                           <button type="button" class="btn btn-primary" onclick=""
                             style="background-color: #1F489A;">삭제</button>`
@@ -49,7 +50,7 @@ async function loadTrash(contentType) {
         $('#modal-footer').append(temp_html2)
 
     } else if (contentType === 'note') {
-        notes.forEach((note) => {
+        notes.forEach((note, index) => {
             const note_id = note.id
             const note_name = note.name
             const group = note.group
@@ -57,14 +58,16 @@ async function loadTrash(contentType) {
             const category = note.category
 
             let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:20px">
-                                <img src="/css/note_img/note_${category}.png" alt="Image description" style="width: 130px; height: 160px; margin-top:15px">
-                                ${note_name}
-                                <input type="radio" name="photo-trash" value="1" style="width:10px">
+                                <img src="/css/note_img/note_${category}.png" alt="Image description" style="width: 130px; height: 170px; margin-top:15px">
+                                <a id='name_${index}'>${note_name}</a>
+                                <input id='id_${index}' value="${note_id}" hidden>
+                                <input id='group_${index}' value="${group}" hidden>
+                                <input type="radio" name="trash-radio" value="${index}" style="width:10px" onclick="handleTrashRadio('note')">
                             </div>`
 
             $('#trash-content').append(temp_html)
         });
-        let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleNotetrash('${note_id}','${note_name}','${group}')"
+        let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
                             style="background-color:  #60749d;">복원</button>
                           <button type="button" class="btn btn-primary" onclick=""
                             style="background-color: #1F489A;">삭제</button>`
@@ -72,7 +75,7 @@ async function loadTrash(contentType) {
         $('#modal-footer').append(temp_html2)
 
     } else if (contentType === 'photo') {
-        photos.forEach((photo) => {
+        photos.forEach((photo, index) => {
             const photo_id = photo.id
             const photo_name = photo.name
             const photo_created_at = photo.created_at
@@ -81,13 +84,15 @@ async function loadTrash(contentType) {
 
             let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:7px">
                                 <img src="${image}" alt="Image description" style="width: 142px; height: 142px; margin-top:15px">
-                                ${photo_name}
-                                <input type="radio" name="photo-trash" value="1" style="width:10px">
+                                <a id='name_${index}'>${photo_name}</a>
+                                <input type="radio" name="trash-radio" value="${index}" style="width:10px" onclick="handleTrashRadio('photo')">
+                                <input id='id_${index}' value="${photo_id}" hidden>
+                                <input id='location_${index}' value="${photo_location}" hidden>
                              </div>`
 
             $('#trash-content').append(temp_html)
         });
-        let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handlePhototrash('${photo_id}','${photo_location}')"
+        let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
                             style="background-color:  #60749d;">복원</button>
                           <button type="button" class="btn btn-primary" onclick=""
                             style="background-color: #1F489A;">삭제</button>`
@@ -97,7 +102,7 @@ async function loadTrash(contentType) {
 }
 
 
-async function handlePhototrash(photo_id, location) {
+async function handlePhototrash(photo_id,name, location) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash/${photo_id}`, {
@@ -108,6 +113,7 @@ async function handlePhototrash(photo_id, location) {
         method: 'POST',
         body: JSON.stringify({
             "location": location,
+            "name": name,
         })
     })
 
@@ -173,22 +179,45 @@ async function handleGrouptrash(group_id, name) {
     }
 }
 
-function handleTrashRadio(id) {
-    var selectedRadio = document.querySelector('input[name="photo-trash"]:checked');
-    if (selectedRadio) {
-        let selectedIndex = selectedRadio.value;
-        let selected_address = document.getElementById(`address_${selectedIndex}`).innerText;
-        let selected_name = document.getElementById(`name_${selectedIndex}`).innerText;
-        let location_x = document.getElementById(`x_${selectedIndex}`).value;
-        let location_y = document.getElementById(`y_${selectedIndex}`).value;
-        let name = selected_name.split('/')[0].trim();
-        let splitName = selected_name.split('/');
-        let category = splitName[splitName.length - 1].trim();
-        // 선택한 요소에 대한 처리
-        document.getElementById("location").value = selected_address;
-        document.getElementById("title").value = name;
-        document.getElementById("location_x").value = location_x;
-        document.getElementById("location_y").value = location_y;
-        document.getElementById("category").value = category;
+let selectedGroupIndex = null;
+let selectedNoteIndex = null;
+let selectedPhotoIndex = null;
+
+function handleTrashRadio(contentType) {
+    var selectedRadio = document.querySelector('input[name="trash-radio"]:checked');
+    let selectedIndex = selectedRadio.value;
+
+    if (contentType === 'group') {
+        selectedGroupIndex = selectedIndex;
     }
+
+    if (contentType === 'note') {
+        selectedNoteIndex = selectedIndex;
+    }
+
+    if (contentType === 'photo') {
+        selectedPhotoIndex = selectedIndex;
+    }
+}
+
+function handleTrashRestore() {
+    var selectedRadio = document.querySelector('input[name="trash-radio"]:checked');
+    let selectedIndex = selectedRadio.value;
+    let selected_id = document.getElementById(`id_${selectedIndex}`).value;
+    let selected_name = document.getElementById(`name_${selectedIndex}`).innerText;
+    let name = selected_name.split('|')[0].trim();
+
+    if (selectedGroupIndex !== null) {
+        handleGrouptrash(selected_id, name);}
+
+    if (selectedNoteIndex !== null) {
+        const selected_group = document.getElementById(`group_${selectedIndex}`).value;
+        handleNotetrash(selected_id, selected_name, selected_group)
+    }
+
+    if (selectedPhotoIndex !== null) {
+        const selected_location = document.getElementById(`location_${selectedIndex}`).value;
+        handlePhototrash(selected_id,selected_name, selected_location)
+    }
+
 }
