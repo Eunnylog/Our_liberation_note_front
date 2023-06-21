@@ -48,7 +48,7 @@
           onclick="selectEmailMember();">계획표 전송</button>
         <button type="button" id="lifePhoto" class="btn group-btn"
           style="background-color: #92a2c5; color:white; margin: 0px 10px;">해방필름</button>
-        <button type="button" onclick="deleteNote()" class="btn group-btn"
+        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteNote" onclick="deleteNoteModal()" class="btn group-btn"
           style="background-color: #60749d; color:white; margin: 0px 10px;">노트삭제</button>
       </div>
       <!-- 로딩창 -->
@@ -366,6 +366,21 @@
       </div>
     </div>
   </div>
+   <!-- 노트 삭제 모달 -->
+   <div class="modal" tabindex="-1" id="deleteNote">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Note</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modal-body">
+        </div>
+        <div class="modal-footer" id="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
@@ -374,6 +389,7 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
   <script src="/js/map.js"></script>
+  <script src="/js/trash.js"></script>
 </body>
 
 </html>

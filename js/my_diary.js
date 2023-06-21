@@ -120,7 +120,7 @@ async function showNoteList() {
             const note_id = a['id']
 
             let temp_html = `
-                                <a href="/plan_page.html?note_id=${note_id}" onclick="saveLocalNoteName('${name}')" style='text-decoration:none; color:black;'>
+                                <a href="/plan_page.html?note_id=${note_id}" onclick="saveLocalNoteName('${name}','${group_id}')" style='text-decoration:none; color:black;'>
                                     <section class="cp-card content" style="background-image: url('/css/note_img/note_${category}.png');">
                                     <div class="thumb">
                                     </div>
@@ -193,8 +193,9 @@ async function saveNote() {
 
 }
 
-function saveLocalNoteName(note_name) {
+function saveLocalNoteName(note_name, group_id) {
     localStorage.setItem('noteName', note_name);
+    localStorage.setItem('groupId', group_id);
 }
 
 let updatingGroupId;
@@ -474,9 +475,27 @@ async function updateGroup() {
     }
 }
 
-async function groupDeleteModal() {
-    $('#deleteGroup').modal('show')
-    console.log("Deleting group ID:", updatingGroupId);
+async function deleteGroupModal() {
+    const selected_id = document.getElementById('select_group').value
+    const selectedOption = document.getElementById('select_group').options[document.getElementById('select_group').selectedIndex];
+    const selected_name = selectedOption.text;
+    console.log("selected_id", selected_id)
+    console.log("selected_name", selected_name)
+
+    $('#modal-body').empty()
+    $('#modal-footer').empty()
+
+    let temp_html = `<p>[${selected_name}] 그룹을 삭제하시겠습니까?</p>`
+
+    $('#modal-body').append(temp_html)
+
+    let temp_html2 = `<button type="button" class="btn" data-bs-dismiss="modal"
+                        style="background-color: #92a2c5; border-color: #92a2c5; color:white;">Close</button>
+                      <button type="button" class="btn"
+                        style="background-color: #60749d; border-color: #60749d; color:white; margin: 0px 10px;"
+                        onclick="handleGrouptrash('${selected_id}','${selected_name}')">Delete</button>`
+
+    $('#modal-footer').append(temp_html2)
 }
 
 async function deleteGroupConfirm() {
