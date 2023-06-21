@@ -21,6 +21,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        body {
+            background-color: #ebf2ff;
+        }
+    </style>
 </head>
 
 <body>
@@ -101,7 +106,8 @@
                 <div class="spinner"></div>
             </div>
             <div style="padding: 15px;">
-                <div style="font-size: 18px; color: red; text-align: center;"> ※ 이 페이지는 사진이 저장되지 않습니다! <br>사진 다운로드를 꼭 눌러주세요! ※ </div>
+                <div style="font-size: 18px; color: red; text-align: center;"> ※ 이 페이지는 사진이 저장되지 않습니다! <br>사진 다운로드를 꼭
+                    눌러주세요! ※ </div>
                 <label for="formFile" class="form-label" style="margin-top: 10px;">첫번째 이미지</label>
                 <input class="form-control" type="file" id="formFile1">
                 <label for="formFile" class="form-label" style="margin-top: 10px;">두번째 이미지</label>
@@ -273,6 +279,9 @@
                                     </div>
                                     <button type="button" onclick="addMembersToGroup()"
                                         style="width: 100px; margin-left: 10px;">멤버 추가</button>
+                                    <button type="button" onclick="DeleteMembers()"
+                                        style="width: 100px; margin-left: 10px;">멤버
+                                        삭제</button>
                                     <div style="display:flex;">
                                         <p style="justify-content: left;"> 추가한 이메일 </p>
                                         <div id="selected-email-list">

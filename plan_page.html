@@ -17,6 +17,11 @@
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <script src="/js/loader.js"></script>
   <script src="/js/api.js"></script>
+  <!-- <style>
+    .site-body {
+      background-color: #ebf2ff;
+    }
+  </style> -->
 </head>
 
 <body>
@@ -43,8 +48,8 @@
           onclick="selectEmailMember();">계획표 전송</button>
         <button type="button" id="lifePhoto" class="btn group-btn"
           style="background-color: #92a2c5; color:white; margin: 0px 10px;">해방필름</button>
-        <button type="button" id="lifePhoto" class="btn group-btn"
-          style="background-color: #60749d; color:white; margin: 0px 10px;">해방필름 모음</button>
+        <button type="button" onclick="deleteNote()" class="btn group-btn"
+          style="background-color: #60749d; color:white; margin: 0px 10px;">노트삭제</button>
       </div>
       <!-- 로딩창 -->
       <div id="loading" style="display: none;">
@@ -303,6 +308,8 @@
                   </div>
                   <button type="button" onclick="addMembersToGroup()" style="width: 100px; margin-left: 10px;">멤버
                     추가</button>
+                  <button type="button" onclick="DeleteMembers()" style="width: 100px; margin-left: 10px;">멤버
+                    삭제</button>
                   <div style="display:flex;">
                     <p style="justify-content: left;"> 추가한 이메일 </p>
                     <div id="selected-email-list">
