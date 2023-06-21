@@ -1,7 +1,3 @@
-// const backend_base_url = "https://api.miyeong.net"
-// const backend_base_url = "http://127.0.0.1:8000"
-// const frontend_base_url = "http://127.0.0.1:5500"
-
 // 사진 추가하기
 async function addPhoto() {
     const image = document.getElementById("image");
@@ -171,6 +167,7 @@ async function photo_detail(photo_id) {
     })
     //해당 url에 저장된 값을 수정
     const response_json = await response.json()
+    console.log(response_json)
 
     const image = backend_base_url + '/note' + response_json["image"];
     const name = response_json["name"]
@@ -194,7 +191,7 @@ async function photo_detail(photo_id) {
                         <button id="patch_photo_box" type="button" class="btn btn-primary"
                             onclick="patchPhotoBox('${photo_id}')">수정</button>
                         <button id="photo-trash" type="button" class="btn btn-primary"
-                            onclick="trashPhoto('${photo_id}')">휴지통</button>
+                            onclick="handlePhototrash('${photo_id}','${location}','${name}');">휴지통</button>
                     </div>
                     `
     $('#photo-d').append(temp_html)
