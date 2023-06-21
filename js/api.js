@@ -72,10 +72,6 @@ async function handleSignin() {
     localStorage.setItem('refresh', response_json.refresh)
     localStorage.setItem('access', response_json.access)
     console.log(response_json)
-<<<<<<< HEAD
-=======
-
->>>>>>> plan_page
     const base64Url = response_json.access.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
