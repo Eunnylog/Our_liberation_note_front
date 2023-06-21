@@ -480,52 +480,52 @@ async function updateGroup() {
     }
 }
 
-async function groupDeleteModal() {
-    $('#deleteGroup').modal('show')
-    console.log("Deleting group ID:", updatingGroupId);
-}
+// async function groupDeleteModal() {
+//     $('#deleteGroup').modal('show')
+//     console.log("Deleting group ID:", updatingGroupId);
+// }
 
-async function deleteGroupConfirm() {
-    const access_token = localStorage.getItem('access')
-    const response = await fetch(`${back_url}/user/group/`, {
-        headers: {
-            'content-type': 'application/json',
-            'Authorization': `Bearer ${access_token}`,
-        },
-        method: 'GET',
-    })
-    const response_json = await response.json()
+// async function deleteGroupConfirm() {
+//     const access_token = localStorage.getItem('access')
+//     const response = await fetch(`${back_url}/user/group/`, {
+//         headers: {
+//             'content-type': 'application/json',
+//             'Authorization': `Bearer ${access_token}`,
+//         },
+//         method: 'GET',
+//     })
+//     const response_json = await response.json()
 
-    const selectedIndex = document.getElementById('select_group').value
-    console.log("selectedIndex", selectedIndex)
+//     const selectedIndex = document.getElementById('select_group').value
+//     console.log("selectedIndex", selectedIndex)
 
-    response_json.forEach((group, index) => {
-        let id = group['id']
-        let name = group['name']
-        let members = group['members']
-        let master = group['master']
-        console.log("마스터", master)
+//     response_json.forEach((group, index) => {
+//         let id = group['id']
+//         let name = group['name']
+//         let members = group['members']
+//         let master = group['master']
+//         console.log("마스터", master)
 
-        if (parseInt(selectedIndex) === parseInt(id)) {
-            console.log(id, name, members)
-            updatingGroupId = id;
-            console.log(updatingGroupId)
-        }
-    })
+//         if (parseInt(selectedIndex) === parseInt(id)) {
+//             console.log(id, name, members)
+//             updatingGroupId = id;
+//             console.log(updatingGroupId)
+//         }
+//     })
 
-    const deleteResponse = await fetch(`${backend_base_url}/user/group/${updatingGroupId}/`, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': "Bearer " + access_token,
-        },
-        method: 'DELETE',
-    })
+//     const deleteResponse = await fetch(`${backend_base_url}/user/group/${updatingGroupId}/`, {
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': "Bearer " + access_token,
+//         },
+//         method: 'DELETE',
+//     })
 
-    if (deleteResponse.ok) {
-        alert("삭제되었습니다!");
-        window.location.replace(`${frontend_base_url}/index.html`)
-    } else {
-        const response_json = await deleteResponse.json()
-        alert(`오류가 발생했습니다: ${response_json}`)
-    }
-}
+//     if (deleteResponse.ok) {
+//         alert("삭제되었습니다!");
+//         window.location.replace(`${frontend_base_url}/index.html`)
+//     } else {
+//         const response_json = await deleteResponse.json()
+//         alert(`오류가 발생했습니다: ${response_json}`)
+//     }
+// }
