@@ -1,5 +1,5 @@
 // const backend_base_url = "https://api.miyeong.net"
-const backend_base_url = "http://127.0.0.1:8000"
+// const backend_base_url = "http://127.0.0.1:8000"
 // const frontend_base_url = "http://127.0.0.1:5500"
 
 // 사진 추가하기
@@ -53,62 +53,110 @@ async function addPhoto() {
 }
 
 async function album() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const note_id = urlParams.get('note_id');
+    try {
+        params = new URLSearchParams(window.location.search);
+        page = params.get("page");
 
-    let menu_html = `<a class="btn-close" href="/plan_page.html?note_id=${note_id}" ><button
-                    type="button" class="btn btn-primary">뒤로가기</button></a>`
-    $('#menu_box').append(menu_html)
-
-    const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
-        headers: {
-            'content-type': 'application/json',
-            // 'Authorization': `Bearer ${accessToken}`
-        },
-        method: 'GET',
-    })
-
-    const response_json = await response.json()
-
-    const stampsresponse = await getUserprofile()
-    const stamps = stampsresponse.stamps
-    const existPhoto = []
-
-    stamps.forEach((stamp) => {
-        const status = stamp.status
-        const photo = stamp.photo.id
-
-        if (status === "0") {
-            existPhoto.push(photo);
+        if (!page) {
+            page = 0
         }
-    });
 
-    response_json.forEach((a) => {
-        console.log(a)
-        const image = backend_base_url + '/note' + a["image"];
-        const title = a['title'];
-        const photo_id = a['id'];
+        const urlParams = new URLSearchParams(window.location.search);
+        const note_id = urlParams.get('note_id');
 
-        let temp_html = `<div class="gallery-item">
+        let menu_html = `<a class="btn-close" href="/plan_page.html?note_id=${note_id}" ><button
+                    type="button" class="btn btn-primary">뒤로가기</button></a>`
+        $('#menu_box').append(menu_html)
+
+        const response = await fetch(`${backend_base_url}/note/photo/${note_id}/${page}`, {
+            headers: {
+                'content-type': 'application/json',
+                // 'Authorization': `Bearer ${accessToken}`
+            },
+            method: 'GET',
+        })
+
+        const response_json = await response.json()
+
+        console.log(response_json)
+        if (response_json.length == 0) {
+            alert('마지막페이지 입니다!')
+            page = page * 1 - 2
+            window.location.href = window.location.href.split('&')[0] + '&page=' + page
+        }
+
+        const stampsresponse = await getUserprofile()
+        const stamps = stampsresponse.stamps
+        const existPhoto = []
+
+        stamps.forEach((stamp) => {
+            const status = stamp.status
+            const photo = stamp.photo.id
+
+            if (status === "0") {
+                existPhoto.push(photo);
+            }
+        });
+
+        $('#photo_info').empty()
+
+        response_json.forEach((a) => {
+            console.log(a)
+            const image = backend_base_url + '/note' + a["image"];
+            const title = a['title'];
+            const photo_id = a['id'];
+
+            let temp_html = `<div class="gallery-item">
                             <a class="photo" href="" onclick="photo_detail('${photo_id}')" data-bs-toggle="modal" data-bs-target="#photo-detail">
                                 <img class="gallery-image" src="${image}" alt="${title}">
                             </a> `
 
-        if (existPhoto.includes(photo_id)) {
-            temp_html += `<img class="exist-stamp" id="exist-stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
-        } else {
-            temp_html += `<img class="stamp" id="stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
-        }
+            if (existPhoto.includes(photo_id)) {
+                temp_html += `<img class="exist-stamp" id="exist-stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
+            } else {
+                temp_html += `<img class="stamp" id="stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
+            }
 
-        temp_html += `</div>`;
+            temp_html += `</div>`;
 
-        $('#photo_info').append(temp_html);
-    });
+            $('#photo_info').append(temp_html);
+        });
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 
 // 페이지 로드 시 앨범 표시
 window.addEventListener('DOMContentLoaded', album);
+
+function p_page() {
+    params = new URLSearchParams(window.location.search);
+    page = params.get("page");
+
+    if (!page) {
+        page = 1
+    }
+    page = page * 1 + 2
+    window.location.href = window.location.href.split('&')[0] + '&page=' + page
+}
+
+function m_page() {
+    params = new URLSearchParams(window.location.search);
+    page = params.get("page");
+
+    if (!page) {
+        page = 1
+    }
+    page = page * 1 - 2
+
+    if (page < 0) {
+        alert('첫페이지 입니다!')
+        return fals
+    }
+    window.location.href = window.location.href.split('&')[0] + '&page=' + page
+}
+
 
 // 상세페이지 모달
 async function photo_detail(photo_id) {
