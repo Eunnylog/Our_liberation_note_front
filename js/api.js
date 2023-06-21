@@ -43,6 +43,8 @@ async function handleSignup() {
   }
 }
 
+let currentSignupTimer // 현재 실행 중인 타이머 추적
+
 // 회원 가입 타이머
 async function signupTimer() {
   const Timer = document.getElementById('signupTimer'); // 스코어 기록창-분
@@ -52,14 +54,19 @@ async function signupTimer() {
 
   Timer.value = min + ":" + '00';
 
+  // 실행중인 타이머가 있는 경우에는 중지
+  if (currentSignupTimer) {
+    clearInterval(currentSignupTimer);
+  }
+
   function TIMER() {
-    PlAYTIME = setInterval(function () {
+    currentSignupTimer = setInterval(function () {
       time = time - 1000; // 1초씩 줄어듦
       min = Math.floor(time / (60 * 1000)); // 초를 분으로 나눠준다.
       sec = Math.floor((time % (60 * 1000)) / 1000); // 분을 제외한 나머지 초 계산
 
       if (sec === 0 && min === 0) {
-        clearInterval(PlAYTIME); // 타이머를 중지한다.
+        clearInterval(currentSignupTimer); // 타이머를 중지한다.
       }
 
       Timer.value = min.toString().padStart(2, '0') + ':' + sec.toString().padStart(2, '0'); // 2자리 숫자로 표시
@@ -803,23 +810,30 @@ async function getUserprofile() {
   }
 }
 
+let currentFindPasswordTimer  // 비밀번호 발급 타이머 추적
+
 // 비밀번호 발급 타이머
 async function findPasswordTimer() {
-  const Timer = document.getElementById('findPasswordTimer'); // 스코어 기록창-분
+  const Timer = document.getElementById('findPasswordTimer');
   let time = 300000;
   let min = 5;
   let sec = 0;
 
   Timer.value = min + ":" + '00';
 
+  // 실행되고 있는 타이머 정지
+  if (currentFindPasswordTimer) {
+    clearInterval(currentFindPasswordTimer)
+  }
+
   function TIMER() {
-    PlAYTIME = setInterval(function () {
+    currentFindPasswordTimer = setInterval(function () {
       time = time - 1000; // 1초씩 줄어듦
       min = Math.floor(time / (60 * 1000)); // 초를 분으로 나눠준다.
       sec = Math.floor((time % (60 * 1000)) / 1000); // 분을 제외한 나머지 초 계산
 
       if (sec === 0 && min === 0) {
-        clearInterval(PlAYTIME); // 타이머를 중지한다.
+        clearInterval(currentFindPasswordTimer); // 타이머를 중지한다.
       }
 
       Timer.value = min.toString().padStart(2, '0') + ':' + sec.toString().padStart(2, '0'); // 2자리 숫자로 표시
