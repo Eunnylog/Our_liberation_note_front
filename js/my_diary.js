@@ -3,12 +3,14 @@ let back_url = 'https://api.miyeong.net'
 // let back_url = 'http://127.0.0.1:8000'
 let group_data = []
 
+checkLogin()
+
+
 const userPayload = localStorage.getItem('payload')
 const userPayloadJson = JSON.parse(userPayload)
 const userEmail = userPayloadJson.email
 console.log('유저', userEmail)
 
-checkLogin()
 
 
 function loadNoteCategory() {
@@ -92,6 +94,7 @@ async function showMasterButton() {
 }
 
 async function showNoteList() {
+    localStorage.removeItem("is_subscribe")
     const group_id = document.getElementById("select_group").value
     if (group_id) {
         const response = await fetch(`${back_url}/note/${group_id}`, {
