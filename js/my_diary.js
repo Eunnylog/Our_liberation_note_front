@@ -1,6 +1,6 @@
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.miyeong.net'
-//let back_url = 'http://127.0.0.1:8000'
+// let back_url = 'https://api.miyeong.net'
+let back_url = 'http://127.0.0.1:8000'
 let group_data = []
 
 const userPayload = localStorage.getItem('payload')
