@@ -999,3 +999,12 @@ input[type="checkbox"]:checked+label {
   border-radius: 10px;
 }
 
+select {
+  background: url('https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png') calc(100% - 5px) center no-repeat;
+  background-size: auto;
+  padding: 5px 10px 5px 10px;
+  border: 1px solid #485d86;
+  border-radius: 4px;
+  outline: 0 none;
+  position: relative;
+}

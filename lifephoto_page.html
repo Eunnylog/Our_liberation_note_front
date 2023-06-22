@@ -40,25 +40,25 @@
         <div style="grid-column: 2; grid-row: 1; margin-top:10px">
             <button type="button" id="goLifephoto"
                 style="text-align: center; font-size: 18px; border: transparent; background-color: #1f489a; width: 100px; border-radius: 5px; color: white; display: inline-block;">
-                    세로버전
+                세로버전
             </button>
             <button type="button" id="goLifephoto2"
                 style="text-align: center; font-size: 18px; border: transparent; background-color: #60749d; width: 100px; border-radius: 5px; color: white; display: inline-block;">
-                    가로버전
+                가로버전
             </button>
         </div>
         <div style="grid-column: 6/8; grid-row: 1; margin-top:10px">
             <button type="button" id="goAIpage"
                 style="text-align: center; font-size: 18px; border: transparent; background-color: #92a2c5; width: 100px; border-radius: 5px; color: white; display: inline-block;">
-                    AI랑 놀기
+                AI랑 놀기
             </button>
             <button type="button" id="goPhotopage"
                 style="text-align: center; font-size: 18px; border: transparent; background-color: #60749d; width: 100px; border-radius: 5px; color: white; display: inline-block;">
-                    사진첩 가기
+                사진첩 가기
             </button>
             <button type="button" id="goPlanpage"
                 style="text-align: center; font-size: 18px; border: transparent; background-color: #92a2c5; width: 140px; border-radius: 5px; color: white; display: inline-block;">
-                    일정 페이지 가기
+                일정 페이지 가기
             </button>
         </div>
         <div class="photo-container" id="photo-container"
@@ -296,23 +296,26 @@
                                             id="addmember-btn">Search</button>
                                     </div>
                                     <div style="color: #7c838c;">
-                                        <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
+                                        <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
                                             Emails </p>
                                         <div id="email-list"
-                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
                                             <ul id="email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
                                     </div>
                                     <button type="button" onclick="addMembersToGroup()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
+                                        <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
+                                    </button>
                                     <button type="button" onclick="DeleteMembers()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
+                                            src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
                                     <div style="color: #4d6087;">
                                         <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
                                             Emails </p>
-                                        <div id="selected-email-list"
-                                            style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                        <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
+                                            overflow-y: auto; height: 250px;">
                                             <ul id="selected-email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>

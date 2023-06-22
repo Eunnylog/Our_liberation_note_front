@@ -35,30 +35,31 @@
         <div style="grid-column: 2; grid-row: 1; margin-top:10px">
             <button type="button" id="goLifephoto"
                 style="text-align: center; font-size: 18px; border: transparent; background-color: #60749d; width: 100px; border-radius: 5px; color: white; display: inline-block;">
-                    세로버전
+                세로버전
             </button>
             <button type="button" id="goLifephoto2"
                 style="text-align: center; font-size: 18px; border: transparent; background-color: #1f489a; width: 100px; border-radius: 5px; color: white; display: inline-block;">
-                    가로버전
+                가로버전
             </button>
         </div>
         <div style="grid-column: 6/8; grid-row: 1; margin-top:10px">
             <button type="button" id="goAIpage"
                 style="text-align: center; font-size: 18px; border: transparent; background-color: #92a2c5; width: 100px; border-radius: 5px; color: white; display: inline-block;">
-                    AI랑 놀기
+                AI랑 놀기
             </button>
             <button type="button" id="goPhotopage"
                 style="text-align: center; font-size: 18px; border: transparent; background-color: #60749d; width: 100px; border-radius: 5px; color: white; display: inline-block;">
-                    사진첩 가기
+                사진첩 가기
             </button>
             <button type="button" id="goPlanpage"
                 style="text-align: center; font-size: 18px; border: transparent; background-color: #92a2c5; width: 140px; border-radius: 5px; color: white; display: inline-block;">
-                    일정 페이지 가기
+                일정 페이지 가기
             </button>
         </div>
         <div class="photo-container" id="photo-container"
             style="margin-top: 30px; width: 250px; background-color: #60749d; height: 100%; width: 100%; margin: auto; grid-column: 2/5; grid-row: 3/7;">
-            <div class="photos" style="display: grid; grid-template-columns: 35px 250px 30px 250px 35px; grid-template-rows: 25px 300px 25px 300px 25px;">
+            <div class="photos"
+                style="display: grid; grid-template-columns: 35px 250px 30px 250px 35px; grid-template-rows: 25px 300px 25px 300px 25px;">
                 <div
                     style="background-color: white; height: 300px; width: 250px; box-shadow: 0px 0px 10px 0px gray;border-radius: 10px; grid-column: 2; grid-row: 2;">
                     <img class="photo-frame" src="/css/assets/null_image.png" id="lifephoto1"
@@ -96,7 +97,8 @@
                 <div class="spinner"></div>
             </div>
             <div style="padding: 15px;">
-                <div style="font-size: 18px; color: red; text-align: center;"> ※ 이 페이지는 사진이 저장되지 않습니다! <br>사진 다운로드를 꼭 눌러주세요! ※ </div>
+                <div style="font-size: 18px; color: red; text-align: center;"> ※ 이 페이지는 사진이 저장되지 않습니다! <br>사진 다운로드를 꼭
+                    눌러주세요! ※ </div>
                 <label for="formFile" class="form-label" style="margin-top: 10px;">첫번째 이미지</label>
                 <input class="form-control" type="file" id="inputFile1">
                 <label for="formFile" class="form-label" style="margin-top: 10px;">두번째 이미지</label>
@@ -242,7 +244,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="su">
+                    <h5 class="modal-title" id="su" style="color: #485d86;">
                         Make Group</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -252,34 +254,45 @@
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
                                     <input name="groupname" id="groupname" type="name" class="form-control"
-                                        placeholder="그룹이름">
+                                        placeholder="Group Name">
                                     <div style="display: flex;" id="group_make_box">
                                         <input name="addemail" id="usersearch" type="email" class="form-control"
-                                            autocomplete="off" placeholder="추가할 멤버 이메일" style="width: 300px;">
+                                            autocomplete="off" placeholder="Email to add" style="width: 300px;">
                                         <button type="button" class="signup" onclick="addMember()"
-                                            style="width: 100px; margin-left: 10px;" id="addmember-btn">검색</button>
+                                            style="width: 100px; background-color: #485d86; margin-left: 25px;"
+                                            id="addmember-btn">Search</button>
                                     </div>
-                                    <div style="display:flex;">
-                                        <p style="justify-content: left;"> 이메일 </p>
-                                        <div id="email-list">
-                                            <ul id="email-ul">
+                                    <div style="color: #7c838c;">
+                                        <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
+                                            Emails </p>
+                                        <div id="email-list"
+                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
+                                            <ul id="email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
                                     </div>
                                     <button type="button" onclick="addMembersToGroup()"
-                                        style="width: 100px; margin-left: 10px;">멤버 추가</button>
-                                    <div style="display:flex;">
-                                        <p style="justify-content: left;"> 추가한 이메일 </p>
-                                        <div id="selected-email-list">
-                                            <ul id="selected-email-ul">
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
+                                        <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
+                                    </button>
+                                    <button type="button" onclick="DeleteMembers()"
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
+                                            src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
+                                    <div style="color: #4d6087;">
+                                        <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
+                                            Emails </p>
+                                        <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
+                                            overflow-y: auto; height: 250px;">
+                                            <ul id="selected-email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="sign-up" style="display: flex;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                                            onclick="cancle()"
-                                            style="margin-right: 10px; background-color: #60749d;">취소</button>
-                                        <button type="button" class="signup" onclick="addGroup()">저장</button>
+                                            onclick="document.getElementById('makegroup').style.display = 'none'"
+                                            style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                                        <button type="button" class="signup" onclick="addGroup()"
+                                            style="background-color: #485d86;">Save</button>
                                     </div>
                                 </form>
                             </div>

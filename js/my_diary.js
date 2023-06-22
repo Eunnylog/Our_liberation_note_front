@@ -204,7 +204,7 @@ function updateHandleRadioClick() {
     const selectedRadio = document.querySelector('input[name="email_radio"]:checked');
 
     if (selectedRadio) {
-        const selectedEmail = selectedRadio.nextSibling.textContent.trim();
+        const selectedEmail = selectedRadio.previousSibling.textContent.trim();
         document.getElementById("update-usersearch").value = selectedEmail;
     }
 }
@@ -255,8 +255,8 @@ async function groupUpdateModal() {
                 console.log("멤버", members)
                 let temp_html = `
                         <li class="selected_email" style="list-style-type: none; margin-bottom: 10px;">
-                        <input type="radio" id="selected_update_email_${index}" name="checked_email_radio" value="${index}" onclick="updateHandleRadioClick()">
                         ${member}
+                        <input type="radio" id="selected_update_email_${index}" name="checked_email_radio" value="${index}" onclick="updateHandleRadioClick()">
                         </li>
                     `;
                 groupMembers.innerHTML += temp_html;
@@ -312,8 +312,9 @@ async function updateAddMember() {
         emails.forEach((useremail, index) => {
             let temp_html = `
             <li style="list-style-type: none; margin-bottom: 10px;">
-              <input type="radio" id="update_email_${index}" name="email_radio" value="${index}">
-              ${useremail}
+                ${useremail}
+                <input type="radio" id="update_email_${index}" name="email_radio" value="${index}">
+              
             </li>
           `;
             email.innerHTML += temp_html;
@@ -335,7 +336,7 @@ function updateAddMembersToGroup() {
     }
     if (checkedInput) {
 
-        const selectedEmail = checkedInput.nextSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
+        const selectedEmail = checkedInput.previousSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
 
         // 이미 추가된 이메일인지 확인
         const alreadyAdded = selectedEmails.includes(selectedEmail);
@@ -368,15 +369,16 @@ function updateAddMembersToGroup() {
             const newInput = document.createElement("input");
             newInput.type = "radio"
             newInput.name = "checked_email_radio"
-            newEmailLi.appendChild(newInput)
+
 
             // 이메일 추가
             const textNode = document.createTextNode(" ")
             const emailText = document.createTextNode(selectedEmail)
             newEmailLi.appendChild(textNode)
             newEmailLi.appendChild(emailText)
-
+            newEmailLi.appendChild(newInput)
             selectedEmailUl.appendChild(newEmailLi)
+
         } else {
             alert("이미 추가된 이메일입니다.");
         }
@@ -392,7 +394,7 @@ function updateAddMembersToGroup() {
 async function updateDeleteMembers() {
     const checkedInput = document.querySelector('input[name="checked_email_radio"]:checked');
     if (checkedInput) {
-        const selectedEmail = checkedInput.nextSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
+        const selectedEmail = checkedInput.previousSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
 
         const selectedEmailIndex = selectedEmails.indexOf(selectedEmail);
 
