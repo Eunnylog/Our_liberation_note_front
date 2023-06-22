@@ -33,61 +33,62 @@
     </header>
     <!-- nav end -->
     <!-- content start -->
-    <main class="site-body">
+    <main class="site-body" style="margin-bottom: 30px;">
         <!-- 로딩창 -->
         <div id="loading" style="display: none;">
             <div class="overlay"></div>
             <div class="spinner"></div>
         </div>
         <div class="main-header" style="margin-top: 30px; background-color: #ebf2ff;">
-            <div style="margin-top: 30px;">
-                <button onclick="saveNoteID(); navigateToDetailPage();" class="btn btn-secondary"
-                    style="margin-bottom: 30px;">AI결제하기</button>
-                <button onclick="" class="btn btn-secondary" style="margin-bottom: 30px;">tosspay
-                    AI 사용 설명서</button>
+            <div style="margin-top: 30px; text-align:center">
+                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#carouselModal"
+                    id="ai_answer_btn"
+                    style="margin-bottom: 30px; background-color: #7689b1; display:none;">결과보기</button>
+                <button class="btn btn-secondary" id="reload_btn" onclick="reload()"
+                    style="margin-bottom: 30px; background-color: #7689b1; display:none;">다시하기</button>
+                <button onclick="" class="btn btn-secondary" style="margin-bottom: 30px;">AI 사용 설명서</button>
             </div>
-            <div class="content2"
-                style="width:49%; height:600px; float:left; border: solid 3px #60749d; padding:20px; position: relative; background-color: white;">
-                <div style="text-align:right; width:100%">
+            <div class="shadow mb-5 bg-body rounded" id="feed_div"
+                style="width:47%; height:600px; float:left; padding:20px; position: relative; background-color: white; margin-left: 30px;">
+                <div style="text-align:right; width:100%;">
                     <select name="start" id="select_start" onchange="showAiFeed()" style="margin-bottom: 20px;">
                         <!-- <option value="-1">그룹 선택</option> -->
                     </select>
                 </div>
-                <div id="ai_feed_box" style="width: 100%; height:500px; overflow-x: auto;; white-space: nowrap;">
+                <div id="ai_feed_box" style="width: 100%; height:400px; overflow-x: auto;; white-space: nowrap;">
                     <h1>계획한 목적지가 없습니다!</h1>
                 </div>
-                <div style="display: flex; justify-content: center; position: absolute; bottom: -10px; width: 100%;">
+                <div style="display: flex; justify-content: center; position: absolute; bottom: -10px; width: 100%; margin-top: 20px;">
                     <input type="checkbox" id="checkAll" style="width: auto;">전체 선택
                     <label for="checkAll"></label>
                     <button type="button" class="btn btn-secondary" onclick="saveAiFeed()"
                         style="margin-bottom: 30px; background-color: #7689b1;">AI 밥 주기</button>
                 </div>
             </div>
-            <div class="content2"
-                style="width:49%; height:600px; float:right; border: solid 3px #60749d; padding:20px; position: relative; background-color: white;">
-                <div id="ai_work_box" style="width: 100%; height:500px; overflow-x: auto;; white-space: nowrap;">
+            <div class="shadow mb-5 bg-body rounded" id="work_div"
+                style="width:47%; height:600px; float:right; padding:20px; position: relative; background-color: white; margin-right: 30px;">
+                <div id="ai_work_box" style="width: 100%; height:400px; overflow-x: auto;; white-space: nowrap;">
                 </div>
                 <div style="display: flex; justify-content: center; position: absolute; bottom: -10px; width: 100%;">
                     <input type="checkbox" id="checkAll2">전체 선택
                     <label for="checkAll2"></label>
                     <button class="btn btn-secondary" onclick="deleteAiFeed()"
                         style="margin-bottom: 30px; background-color: #7689b1; margin-right:20px">버리기</button>
-                    <button class="btn btn-secondary" onclick="aiStart()" id="ai_start_btn"
+                    <button class="btn btn-secondary" onclick="aiStart();" id="ai_start_btn"
                         style="margin-bottom: 30px; background-color: #7689b1;">AI 일
                         하기</button>
-                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#carouselModal"
-                        id="ai_answer_btn" id="ai_start_btn" style="margin-bottom: 30px; background-color: #7689b1;"
-                        hidden>결과보기</button>
                 </div>
             </div>
-            <div class="content2" id="map"
-                style="width:100%; height:600px; border: solid 3px #60749d; padding:20px; position: relative; background-color: white;">
+            <div class="shadow mb-5 bg-body rounded" id="map"
+                style="width:90%; height:600px; margin-bottom:30xp; padding:20px; position: relative; background-color: white; display:none">
             </div>
-        </div>
+            <div>
+                <img src="" style="position: right; "/>
+            </div>
     </main>
     <!-- Carousel 형식의 모달 -->
     <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
-        <div class="modal-dialog modal-xl" style="margin: auto; max-width: 1000px;">
+        <div class="modal-dialog modal-xl" style="margin: auto; max-width: 500px;">
             <div class="modal-content" style="height: 500px;">
                 <div class="modal-header">
                     <h5 class="modal-title">Info</h5>
@@ -100,7 +101,7 @@
                             <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" hidden class="active">
                             </li>
                         </ol>
-                        <div class="carousel-inner" id="info_box" style="width:800px; height:100%;">
+                        <div class="carousel-inner" id="info_box" style="width:100%; height:100%;padding: 10px;">
                         </div>
                     </div>
                     <div>
@@ -127,7 +128,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="su">
+                    <h5 class="modal-title" id="su" style="color: #485d86;">
                         Make Group</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -137,37 +138,42 @@
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
                                     <input name="groupname" id="groupname" type="name" class="form-control"
-                                        placeholder="그룹이름">
+                                        placeholder="Group Name">
                                     <div style="display: flex;" id="group_make_box">
                                         <input name="addemail" id="usersearch" type="email" class="form-control"
-                                            autocomplete="off" placeholder="추가할 멤버 이메일" style="width: 300px;">
+                                            autocomplete="off" placeholder="Email to add" style="width: 300px;">
                                         <button type="button" class="signup" onclick="addMember()"
-                                            style="width: 100px; margin-left: 10px;" id="addmember-btn">검색</button>
+                                            style="width: 100px; background-color: #485d86; margin-left: 25px;"
+                                            id="addmember-btn">Search</button>
                                     </div>
-                                    <div style="display:flex;">
-                                        <p style="justify-content: left;"> 이메일 </p>
-                                        <div id="email-list">
-                                            <ul id="email-ul">
+                                    <div style="color: #7c838c;">
+                                        <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
+                                            Emails </p>
+                                        <div id="email-list"
+                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                            <ul id="email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
                                     </div>
                                     <button type="button" onclick="addMembersToGroup()"
-                                        style="width: 100px; margin-left: 10px;">멤버 추가</button>
+                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
                                     <button type="button" onclick="DeleteMembers()"
-                                        style="width: 100px; margin-left: 10px;">멤버
-                                        삭제</button>
-                                    <div style="display:flex;">
-                                        <p style="justify-content: left;"> 추가한 이메일 </p>
-                                        <div id="selected-email-list">
-                                            <ul id="selected-email-ul">
+                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
+                                    <div style="color: #4d6087;">
+                                        <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
+                                            Emails </p>
+                                        <div id="selected-email-list"
+                                            style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                            <ul id="selected-email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="sign-up" style="display: flex;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                                            onclick="cancle()"
-                                            style="margin-right: 10px; background-color: #60749d;">취소</button>
-                                        <button type="button" class="signup" onclick="addGroup()">저장</button>
+                                            onclick="document.getElementById('makegroup').style.display = 'none'"
+                                            style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                                        <button type="button" class="signup" onclick="addGroup()"
+                                            style="background-color: #485d86;">Save</button>
                                     </div>
                                 </form>
                             </div>

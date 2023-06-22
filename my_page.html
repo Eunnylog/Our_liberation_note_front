@@ -150,7 +150,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="su">
+          <h5 class="modal-title" id="su" style="color: #485d86;">
             Make Group</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -159,35 +159,42 @@
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="그룹이름">
+                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="Group Name">
                   <div style="display: flex;" id="group_make_box">
                     <input name="addemail" id="usersearch" type="email" class="form-control" autocomplete="off"
-                      placeholder="추가할 멤버 이메일" style="width: 300px;">
-                    <button type="button" class="signup" onclick="addMember()" style="width: 100px; margin-left: 10px;"
-                      id="addmember-btn">검색</button>
+                      placeholder="Email to add" style="width: 300px;">
+                    <button type="button" class="signup" onclick="addMember()"
+                      style="width: 100px; background-color: #485d86; margin-left: 25px;"
+                      id="addmember-btn">Search</button>
                   </div>
-                  <div style="display:flex;">
-                    <p style="justify-content: left;"> 이메일 </p>
-                    <div id="email-list">
-                      <ul id="email-ul">
+                  <div style="color: #7c838c;">
+                    <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
+                      Emails </p>
+                    <div id="email-list"
+                      style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                      <ul id="email-ul" style="position: relative; right: 10px;">
                       </ul>
                     </div>
                   </div>
-                  <button type="button" onclick="addMembersToGroup()" style="width: 100px; margin-left: 10px;">멤버
-                    추가</button>
-                  <button type="button" onclick="DeleteMembers()" style="width: 100px; margin-left: 10px;">멤버
-                    삭제</button>
-                  <div style="display:flex;">
-                    <p style="justify-content: left;"> 추가한 이메일 </p>
-                    <div id="selected-email-list">
-                      <ul id="selected-email-ul">
+                  <button type="button" onclick="addMembersToGroup()"
+                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
+                  <button type="button" onclick="DeleteMembers()"
+                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
+                  <div style="color: #4d6087;">
+                    <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
+                      Emails </p>
+                    <div id="selected-email-list"
+                      style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                      <ul id="selected-email-ul" style="position: relative; right: 10px;">
                       </ul>
                     </div>
                   </div>
                   <div class="sign-up" style="display: flex;">
-                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()"
-                      style="margin-right: 10px; background-color: #60749d;">취소</button>
-                    <button type="button" class="signup" onclick="addGroup()">저장</button>
+                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
+                      onclick="document.getElementById('makegroup').style.display = 'none'"
+                      style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                    <button type="button" class="signup" onclick="addGroup()"
+                      style="background-color: #485d86;">Save</button>
                   </div>
                 </form>
               </div>
@@ -203,28 +210,32 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
-            <p>Update Password</p>
+            <p style="color: #485d86;">Update Password</p>
             <span style="font-size: 15px; color: #7a7f83;"> 기존 비밀번호와 새로운 비밀번호를 입력해주세요. </span>
           </h5>
-
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">비밀번호 확인:</label>
-              <input type="password" class="form-control" id="check_password">
+              <label for="recipient-name" class="col-form-label" style="color: #5a5e61;">비밀번호 확인:</label>
+              <input type="password" class="form-control" id="check_password" placeholder="Current Password">
             </div>
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">새 비밀번호:</label>
-              <input type="password" class="form-control" id="update_password">
+              <label for="recipient-name" class="col-form-label" style="color: #5a5e61;">새 비밀번호:</label>
+              <input type="password" class="form-control" id="update_password" placeholder="New Password">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label" style="color: #5a5e61;">새 비밀번호 확인:</label>
+              <input type="password" class="form-control" id="check_update_password" placeholder="Confirm New Password">
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-          <button style="border-color: #60749d; background-color: #60749d;" type="button" class="btn btn-primary"
-            onclick="updatePassword()">저장</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #6e81a8;"
+            onclick="document.getElementById('updatePassword').style.display = 'none'">Cancel</button>
+          <button style="border-color: #60749d; background-color: #485d86;" type="button" class="btn btn-primary"
+            onclick="updatePassword()">Save</button>
         </div>
       </div>
     </div>
