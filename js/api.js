@@ -81,7 +81,7 @@ async function signupTimer() {
 async function handleSignin() {
   const email = document.getElementById("login-email").value
   const password = document.getElementById("login-password").value
-
+try{
   const response = await fetch(`${backend_base_url}/user/login/`, {
     headers: {
       'content-type': 'application/json',
@@ -113,6 +113,9 @@ async function handleSignin() {
   else {
     alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
     console.log(response)
+  }}
+  catch(error){
+    console.log(error)
   }
 }
 
@@ -137,41 +140,6 @@ async function sendCode() {
   alert("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
   signupTimer()
 }
-
-// 쿠키에 있는 값을 로컬스토리지에 저장
-function savePayloadToLocalStorage() {
-  const cookies = document.cookie.split(';');
-
-  console.log()
-
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    const [name, value] = cookie.split('=');
-
-    if (name === "jwt_token") {
-      jwtToken = value;
-      break;
-    }
-  }
-
-
-  if (jwtToken) {
-    const token = jwtToken.replace(/"/g, '').replace(/'/g, '"').replace(/\\054/g, ',')
-    const response_json = JSON.parse(token);
-    const access_token = response_json.access
-
-    const base64Url = response_json.access.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    localStorage.setItem("access", access_token);
-    localStorage.setItem("payload", jsonPayload);
-  }
-}
-
-
 
 if (localStorage.getItem("social")) {
 } else if (location.href.split('=')[1]) {
@@ -490,8 +458,6 @@ function signUpsignInError() {
 }
 
 signUpsignInError()
-savePayloadToLocalStorage()
-
 
 const getCookieValue = (key) => {
   const cookies = document.cookie.split(';');
