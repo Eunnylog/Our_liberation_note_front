@@ -223,10 +223,10 @@ function updateCheckAllStatus() {
 
 
 async function aiStart() {
-  let is_subscribe = aiSubscribeCheck()
+  let is_subscribe = aiSubscribeCheck();
 
   if (!is_subscribe) {
-    return false
+    return false;
   }
 
   let destinations = [];
@@ -246,20 +246,17 @@ async function aiStart() {
     };
 
     destinations.push(destination);
-
   });
 
   if (destinations.length == 0) {
-    alert('먹이를 추가해주세요!')
-    return false
+    alert('먹이를 추가해주세요!');
+    return false;
   }
+
   try {
     // 로딩창 표시
+    var loading = document.getElementById('loading');
     loading.style.display = 'block';
-
-
-    // const timeoutId = setTimeout(() => controller.abort(), 60000)
-
 
     const response = await fetch(`${back_url}/note/search`, {
       headers: {
@@ -268,42 +265,43 @@ async function aiStart() {
       },
       method: 'POST',
       body: JSON.stringify({ destinations: destinations })
-    })
+    });
+
     if (response.status == 200) {
-      const response_json = await response.json()
-      console.log(response_json)
+      const response_json = await response.json();
+      console.log(response_json);
 
       let formatted_titles = response_json['title_list'].join(" -> ");
 
-      $('#info_box').empty()
+      $('#info_box').empty();
 
       let temp_html1 = `
-                        <div class="carousel-item active" style="padding: 10px;">
-                            <h3>결과)</h3>
-                            <h5>${formatted_titles}</h5>
-                          </div>
-                        </div>
-                      `
+        <div class="carousel-item active" style="padding: 10px;">
+          <h3>결과)</h3>
+          <h5>${formatted_titles}</h5>
+        </div>
+      `;
 
-      $('#info_box').append(temp_html1)
+      $('#info_box').append(temp_html1);
 
       let x_y_list = response_json['x_y_list'];
 
       response_json['title_list'].forEach((a, idx) => {
-        if (response_json['answer'][idx][0] == '.') {
+        const answer = response_json['answer'][idx];
+        const crawling = response_json['crawling'][idx];
+        if (answer[0] && answer[0] == '.') {
           response_json['answer'][idx] = response_json['answer'][idx].substring(1);
         }
         let temp_html2 = `
-                      <div class="carousel-item" style="padding: 10px; width:100%; height:100%">
-                        <h3 id='${idx}'>${a}</h3>
-                        <h5>${response_json['answer'][idx]}</h5>
-                        <a href="${response_json['crawling'][idx]}" target="_blank">${response_json['crawling'][idx]}</a>
-                      </div>
-                      `;
+          <div class="carousel-item" style="padding: 10px; width:100%; height:100%">
+            <h3 id='${idx}'>${a}</h3>
+            <h5>${answer}</h5>
+            <a href="${crawling}" target="_blank">${crawling}</a>
+          </div>
+        `;
         $('#info_box').append(temp_html2);
-        let temp_html3 = `<li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${idx + 1}" hidden>`;
+        let temp_html3 = `<li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${idx + 1}" hidden></li>`;
         $('#control_info').append(temp_html3);
-
       });
 
       $('#carouselModal').modal('show');
@@ -313,21 +311,20 @@ async function aiStart() {
       document.getElementById('ai_answer_btn').style.display = 'inline-block';
       document.getElementById('work_div').style.display = 'none';
       document.getElementById('feed_div').style.display = 'none';
+
       await loadMap(x_y_list);
     } else {
-      alert('문제가 발생했습니다!')
+      alert('문제가 발생했습니다!');
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
   } finally {
     // 로딩창 숨김
     loading.style.display = 'none';
-    console.log('끝!')
+    console.log('끝!');
   }
-
-
-
 }
+
 
 async function loadMap(x_y_list) {
   // 평균 위도와 경도를 구합니다.
@@ -405,4 +402,10 @@ function reload() {
   document.getElementById('ai_answer_btn').style.display = 'none';
   document.getElementById('work_div').style.display = 'block';
   document.getElementById('feed_div').style.display = 'block';
+}
+
+function showLoading(text) {
+
+
+  document.getElementById('loading').style.display = 'block';
 }

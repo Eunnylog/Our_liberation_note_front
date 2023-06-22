@@ -15,6 +15,7 @@ async function handleSignup() {
   const password2 = document.getElementById("password2").value
   const confirmcode = document.getElementById("confirmcode").value
 
+
   const response = await fetch(`${backend_base_url}/user/signup/`, {
     headers: {
       'content-type': 'application/json',
