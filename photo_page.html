@@ -21,21 +21,28 @@
     <header class="site-header navbar">
         <!-- navbar -->
     </header>
-    <div class="container" style="height: 150px;">
+    <!-- <div class="container" style="height: 150px;">
         <h2 class="heading">우리들의 해방일기<span>Photo gallery</span></h2>
-    </div>
-    <main class="site-body" style="margin-top: 30px;">
+    </div> -->
+    <main class="site-body" style="margin-top: -50px;">
         <article class="review-detail max-content-width">
-            <div id="menu_box" style="margin-bottom: 30px;">
-                <a class="btn-close" href="" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"><button
-                        type="button" class="btn btn-primary">사진추가하기</button></a>
+            <div style="margin-bottom:30px;">
+                <h1 id="photo_title" style="width:300px; display: inline-block;">Photo gallery</h1>
+            </div>
+            <hr style="margin-bottom: 30px; clear: both;">
+            <div  class="clearfix" style="width:100%; margin-bottom:50px;">
+                <div id="menu_box" style="float: right;">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"
+                        class="btn group-btn"
+                        style="background-color: #60749d; color:white; margin: 0px 10px;">사진추가하기</button>
+                </div>
             </div>
             <div class="gallery" id="photo_info">
                 <!-- 이미지 갤러리 아이템들이 동적으로 추가될 공간 -->
             </div>
         </article>
     </main>
-
+    <!-- 사진추가 모달창 -->
     <div class="modal fade" id="photo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 700px;">
             <div class="modal-content" style="width:700px;">
@@ -96,6 +103,7 @@
             </div>
         </div>
     </div>
+    <!-- 사진상세 모달창 -->
     <div class="modal fade" id="photo-detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content modal-xl">
@@ -203,7 +211,6 @@
         </div>
     </div>
     <script src="/js/api_key.js"></script>
-    <script src="/js/api.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/photo_map.js"></script>
     <script src="/js/photo_page.js"></script>

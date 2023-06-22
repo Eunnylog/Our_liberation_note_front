@@ -52,8 +52,10 @@ async function album() {
     const urlParams = new URLSearchParams(window.location.search);
     const note_id = urlParams.get('note_id');
 
-    let menu_html = `<a class="btn-close" href="/plan_page.html?note_id=${note_id}" ><button
-                    type="button" class="btn btn-primary">뒤로가기</button></a>`
+    let menu_html = `<a class="btn group-btn" href="/plan_page.html?note_id=${note_id}"
+                        style="background-color: #92a2c5; color: white; margin: 0px 10px; 
+                        text-decoration: none;">뒤로가기
+                    </a>`
     $('#menu_box').append(menu_html)
 
     const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
