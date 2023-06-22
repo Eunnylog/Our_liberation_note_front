@@ -46,22 +46,17 @@ body {
 	display: block;
 }
 
-.gallery {
-	display: flex;
-	flex-wrap: wrap;
-	/* Compensate for excess margin on outer gallery flex items */
-	margin: -1rem -1rem;
-}
-
 .gallery-item {
 	/* Minimum width of 24rem and grow to fit available space */
 	flex: 1 0 24rem;
 	/* Margin value should be half of grid-gap value as margins on flex items don't collapse */
-	margin: 1rem;
 	box-shadow: 0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.4);
 	overflow: hidden;
 	position: relative;
 	display: inline-block;
+	width: 300px;
+	height:300px;
+	justify-self: center;
 }
 
 .gallery-image {
@@ -134,12 +129,20 @@ Remove or comment-out the code block below to see how the browser will fall-back
 @supports (display: grid) {
 	.gallery {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+		grid-template-columns: repeat(3, 1fr);
 		grid-gap: 2rem;
-	}
+	} 
 
 	.gallery,
 	.gallery-item {
 		margin: 0;
 	}
-}
+} 
+
+/* @media (min-width: 768px) {
+	.gallery {
+	  display: grid;
+	  grid-template-columns: repeat(3, 1fr);
+	  grid-gap: 2rem;
+	}
+  } */
