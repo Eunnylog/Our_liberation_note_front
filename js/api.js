@@ -1,6 +1,6 @@
 // 기본 URL
-const backend_base_url = "https://api.miyeong.net"
-// const backend_base_url = "http://127.0.0.1:8000"
+// const backend_base_url = "https://api.miyeong.net"
+const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 // const frontend_base_url = "https://miyeong.net"
 
@@ -54,40 +54,46 @@ async function handleSignup() {
 async function handleSignin() {
   const email = document.getElementById("login-email").value
   const password = document.getElementById("login-password").value
-
-  const response = await fetch(`${backend_base_url}/user/login/`, {
-    headers: {
-      'content-type': 'application/json',
-    },
-    method: 'POST',
-    body: JSON.stringify({
-      "email": email,
-      "password": password,
+  
+  try{
+    const response = await fetch(`${backend_base_url}/user/login/`, {
+      headers: {
+        'content-type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        "email": email,
+        "password": password,
+      })
     })
-  })
-
-  if (response.status == 200) {
-    const response_json = await response.json()
-
-    // localstorage에 저장하기
-    localStorage.setItem('refresh', response_json.refresh)
-    localStorage.setItem('access', response_json.access)
-    console.log(response_json)
-    alert('stop')
-    const base64Url = response_json.access.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''))
-
-    localStorage.setItem('payload', jsonPayload)
-    document.getElementById("login").querySelector('[data-bs-dismiss="modal"]').click();
-    location.reload()
+  
+    if (response.status == 200) {
+      const response_json = await response.json()
+  
+      // localstorage에 저장하기
+      localStorage.setItem('refresh', response_json.refresh)
+      localStorage.setItem('access', response_json.access)
+      console.log(response_json)
+      alert('stop')
+      const base64Url = response_json.access.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''))
+  
+      localStorage.setItem('payload', jsonPayload)
+      document.getElementById("login").querySelector('[data-bs-dismiss="modal"]').click();
+      location.reload()
+    }
+    else {
+      alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
+      console.log(response)
+    }
   }
-  else {
-    alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
-    console.log(response)
+  catch{
+    console.log(error)
   }
+  
 }
 
 // 회원가입 이메일 인증코드 보내기
