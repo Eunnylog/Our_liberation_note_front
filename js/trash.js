@@ -40,7 +40,7 @@ async function loadTrash(contentType) {
     const photos = response.photo
 
     $('#trash-content').empty()
-    $('#modal-footer').empty()
+    $('#trash-modal-footer').empty()
 
 
     if (contentType === 'group') {
@@ -55,7 +55,7 @@ async function loadTrash(contentType) {
                           <button type="button" class="btn btn-primary" 
                             style="background-color: #1F489A;">삭제</button>`
 
-            $('#modal-footer').append(temp_html2)
+            $('#trash-modal-footer').append(temp_html2)
 
         } else {
             groups.forEach((group, index) => {
@@ -76,7 +76,7 @@ async function loadTrash(contentType) {
                           <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
                             style="background-color: #1F489A;">삭제</button>`
 
-            $('#modal-footer').append(temp_html2)
+            $('#trash-modal-footer').append(temp_html2)
         }
     }
     else if (contentType === 'note') {
@@ -91,7 +91,7 @@ async function loadTrash(contentType) {
                           <button type="button" class="btn btn-primary" 
                             style="background-color: #1F489A;">삭제</button>`
 
-            $('#modal-footer').append(temp_html2)
+            $('#trash-modal-footer').append(temp_html2)
 
         } else {
             notes.forEach((note, index) => {
@@ -116,7 +116,7 @@ async function loadTrash(contentType) {
                           <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
                             style="background-color: #1F489A;">삭제</button>`
 
-            $('#modal-footer').append(temp_html2)
+            $('#trash-modal-footer').append(temp_html2)
         }
     }
     else if (contentType === 'photo') {
@@ -131,7 +131,7 @@ async function loadTrash(contentType) {
                           <button type="button" class="btn btn-primary" 
                             style="background-color: #1F489A;">삭제</button>`
 
-            $('#modal-footer').append(temp_html2)
+            $('#trash-modal-footer').append(temp_html2)
 
         } else {
             photos.forEach((photo, index) => {
@@ -156,7 +156,7 @@ async function loadTrash(contentType) {
                           <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
                             style="background-color: #1F489A;">삭제</button>`
 
-            $('#modal-footer').append(temp_html2)
+            $('#trash-modal-footer').append(temp_html2)
         }
     }
 

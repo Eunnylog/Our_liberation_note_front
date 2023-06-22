@@ -376,7 +376,8 @@ function handleLogout() {
     localStorage.removeItem("code")
     localStorage.removeItem("state")
     localStorage.removeItem("is_subscribe")
-    document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
+    localStorage.removeItem("noteName")
+    localStorage.removeItem("trashCount")
     window.location.replace(`${frontend_base_url}/index.html`)
   }
 
@@ -410,6 +411,8 @@ async function handlesUserDelete() {
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
     localStorage.removeItem("is_subscribe")
+    localStorage.removeItem("noteName")
+    localStorage.removeItem("trashCount")
     document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
     location.reload()
   }
