@@ -1,8 +1,8 @@
 let plan_data = []
 let plan_set = [];
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.miyeong.net'
-// let back_url = 'http://127.0.0.1:8000'
+// let back_url = 'https://api.miyeong.net'
+let back_url = 'http://127.0.0.1:8000'
 
 checkLogin()
 
@@ -490,31 +490,26 @@ async function savePayIsSubscribe() {
 
 savePayIsSubscribe()
 
-
-async function deleteNote() {
+async function deleteNoteModal() {
     params = new URLSearchParams(window.location.search);
-    note_id = params.get("note_id");
+    const selected_id = params.get("note_id");
+    const selected_name = localStorage.getItem('noteName')
+    const selected_group = localStorage.getItem('groupId');
+    console.log("selected_group", selected_group)
 
-    var userConfirmation = confirm("정말 삭제하시겠습니까?");
 
-    // 만약 사용자가 'OK'를 클릭하면, plan을 삭제하고 버튼을 제거합니다.
-    if (!userConfirmation) {
-        return false
-    }
-    console.log(access_token)
+    $('#modal-body').empty()
+    $('#modal-footer').empty()
 
-    const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
-        headers: {
-            'content-type': 'application/json',
-            "Authorization": `Bearer ${access_token}`,
-        },
-        method: 'DELETE',
-    });
+    let temp_html = `<p>[${selected_name}] 노트를 삭제하시겠습니까?</p>`
 
-    if (response.status == 204) {
-        alert('삭제가 완료되었습니다!')
-        window.location.href = '/my_diary.html'
-    } else {
-        alert('문제가 발생했습니다!')
-    }
+    $('#modal-body').append(temp_html)
+
+    let temp_html2 = `<button type="button" class="btn" data-bs-dismiss="modal"
+                        style="background-color: #92a2c5; border-color: #92a2c5; color:white;">Close</button>
+                      <button type="button" class="btn"
+                        style="background-color: #60749d; border-color: #60749d; color:white; margin: 0px 10px;"
+                        onclick="handleNotetrash('${selected_id}','${selected_group}','${selected_name}')">Delete</button>`
+
+    $('#modal-footer').append(temp_html2)
 }

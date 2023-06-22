@@ -1,0 +1,63 @@
+select::-ms-expand {
+    display: block
+}
+
+.select {
+    -o-appearance: auto;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: auto;
+    width: 150px;
+    height: 35px;
+    background: url('https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png') calc(100% - 5px) center no-repeat;
+    background-size: 20px;
+    padding: 5px 0 5px 10px;
+    border: 1px solid #485d86;
+    border-radius: 4px;
+    outline: 0 none;
+    position: relative;
+}
+
+.select option {
+    background: #485d86;
+    color: #fff;
+    padding: 3px 0;
+}
+
+.selectBox .select option {
+    background: lightcoral;
+    color: #fff;
+    padding: 3px 0;
+    font-size: 16px;
+}
+
+.selectBox {
+    position: relative;
+    display: inline-block;
+    /* 영역 조절을 위해 추가 */
+}
+
+
+.selectBox .icoArrow {
+    /* position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 35px;
+    height: inherit;
+    border-left: 2px solid lightcoral;
+    display: flex;
+    justify-content: center;
+    align-items: center; */
+    position: absolute;
+    top: 50%;
+    right: 3px;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.selectBox .icoArrow img {
+    width: 14px;
+    transition: .3s;
+    /* 부드럽게 회전 */
+}
