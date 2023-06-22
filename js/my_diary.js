@@ -193,7 +193,7 @@ async function saveNote() {
 
 }
 
-function saveLocalNoteName(note_name,group_id) {
+function saveLocalNoteName(note_name, group_id) {
     localStorage.setItem('noteName', note_name);
     localStorage.setItem('groupId', group_id);
 }
@@ -498,3 +498,17 @@ async function deleteGroupModal() {
     $('#modal-footer').append(temp_html2)
 }
 
+function toggleArrow() {
+    const arrow = document.querySelector('.icoArrow img option');
+
+    if (arrow.style.transform === 'rotate(180deg)') {
+        arrow.style.transform = 'rotate(0deg)';
+    } else {
+        arrow.style.transform = 'rotate(180deg)';
+    }
+}
+
+// function toggleArrow() {
+//     const arrow = document.querySelector('.icoArrow img');
+//     arrow.classList.toggle('rotate');
+// }
