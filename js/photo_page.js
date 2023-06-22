@@ -149,7 +149,7 @@ function m_page() {
     if (!page) {
         page = 1
     }
-    page = page * 1 - 1
+    page = page * 1 - 2
 
     if (page < 0) {
         alert('첫페이지 입니다!')
