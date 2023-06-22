@@ -85,7 +85,7 @@
                         <button class="btn btn-secondary" onclick="deleteAiFeed()"
                             style="margin-bottom: 30px; background-color: #7689b1; margin-right:20px">버리기</button>
                         <button class="btn btn-secondary" onclick="aiStart();" id="ai_start_btn"
-                            style="margin-bottom: 30px; background-color: #7689b1;">AI 일
+                            style="margin-bottom: 30px; background-color: #7689b1; z-index: 1">AI 일
                             하기</button>
                     </div>
                     <div>
@@ -105,8 +105,8 @@
     </main>
     <!-- Carousel 형식의 모달 -->
     <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
-        <div class="modal-dialog modal-xl" style="margin: auto; max-width: 700px;">
-            <div class="modal-content" style="height: 700px;">
+        <div class="modal-dialog modal-xl" style="margin: 50px auto; max-width: 700px;">
+            <div class="modal-content" style="height: 500px;">
                 <div class="modal-header">
                     <h5 class="modal-title">Info</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -118,7 +118,7 @@
                             <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" hidden class="active">
                             </li>
                         </ol>
-                        <div class="carousel-inner" id="info_box" style="width:100%; height:100%;padding: 10px;">
+                        <div class="carousel-inner" id="info_box" style="width:100%; height:100%; padding: 0px auto ;">
                         </div>
                     </div>
                     <div>
