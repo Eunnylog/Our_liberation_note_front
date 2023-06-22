@@ -178,81 +178,65 @@
             </div>
         </div>
     </div>
-    <!-- 회원탈퇴확인 모달창 -->
-    <div class="modal fade" id="deleteuser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        회원탈퇴</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form>
-                    <div class="modal-body">
-                        <h6>※ 탈퇴하기를 누르면 계정이 영구삭제됩니다. 계속 진행하시겠습니까?</h6>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
-                        </button>
-                        <button type="button" class="btn btn-primary" style="float: right"
-                            onclick="handlesUserDelete()">
-                            탈퇴하기
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <!-- 그룹만들기 모달창 -->
-    <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="su" style="color: #485d86;">
-                        Make Group</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="container">
-                    <div class="global-cont">
-                        <div class="inner-cont">
-                            <div class="sign-in-up">
-                                <form class="sign-in-form active">
-                                    <input name="groupname" id="groupname" type="name" class="form-control"
-                                        placeholder="Group Name">
-                                    <div style="display: flex;" id="group_make_box">
-                                        <input name="addemail" id="usersearch" type="email" class="form-control"
-                                            autocomplete="off" placeholder="Email to add" style="width: 300px;">
-                                        <button type="button" class="signup" onclick="addMember()"
-                                            style="width: 100px; margin-left: 10px;">추가</button>
-                                    </div>
-                                    <button type="button" onclick="addMembersToGroup()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
-                                    <button type="button" onclick="DeleteMembers()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
-                                    <div style="color: #4d6087;">
-                                        <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
-                                            Emails </p>
-                                        <div id="selected-email-list"
-                                            style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
-                                            <ul id="selected-email-ul" style="position: relative; right: 10px;">
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="sign-up" style="display: flex;">
-                                        <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                                            onclick="document.getElementById('makegroup').style.display = 'none'"
-                                            style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
-                                        <button type="button" class="signup" onclick="addGroup()"
-                                            style="background-color: #485d86;">Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="su" style="color: #485d86;">
+            Make Group</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="container">
+          <div class="global-cont">
+            <div class="inner-cont">
+              <div class="sign-in-up">
+                <form class="sign-in-form active">
+                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="Group Name">
+                  <div style="display: flex;" id="group_make_box">
+                    <input name="addemail" id="usersearch" type="email" class="form-control" autocomplete="off"
+                      placeholder="Email to add" style="width: 300px;">
+                    <button type="button" class="signup" onclick="addMember()"
+                      style="width: 100px; background-color: #485d86; margin-left: 25px;"
+                      id="addmember-btn">Search</button>
+                  </div>
+                  <div style="color: #7c838c;">
+                    <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
+                      Emails </p>
+                    <div id="email-list"
+                      style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                      <ul id="email-ul" style="position: relative; right: 10px;">
+                      </ul>
+                    </div>
+                  </div>
+                  <button type="button" onclick="addMembersToGroup()"
+                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
+                  <button type="button" onclick="DeleteMembers()"
+                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
+                  <div style="color: #4d6087;">
+                    <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
+                      Emails </p>
+                    <div id="selected-email-list"
+                      style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                      <ul id="selected-email-ul" style="position: relative; right: 10px;">
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="sign-up" style="display: flex;">
+                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
+                      onclick="document.getElementById('makegroup').style.display = 'none'"
+                      style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
+                    <button type="button" class="signup" onclick="addGroup()"
+                      style="background-color: #485d86;">Save</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </body>
 <script src="/js/loader.js"></script>
 <script src="/js/api.js"></script>
