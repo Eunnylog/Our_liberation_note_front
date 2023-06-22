@@ -1,6 +1,6 @@
 // 기본 URL
-const backend_base_url = "https://api.miyeong.net"
-// const backend_base_url = "http://127.0.0.1:8000"
+// const backend_base_url = "https://api.miyeong.net"
+const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 // const frontend_base_url = "https://miyeong.net"
 
@@ -27,7 +27,6 @@ async function handleSignup() {
       "code": confirmcode
     })
   })
-  console.log()
 
   if (response.status == 201) {
     document.getElementById("signup").querySelector('[data-bs-dismiss="modal"]').click();
@@ -35,64 +34,101 @@ async function handleSignup() {
     window.location.replace(`${frontend_base_url}/index.html`)
   }
   else {
-
-    const response_json = await response.json()
-
-    const regex = /string='([^']+)'/;
-    const match = JSON.stringify(response_json).match(regex)
-
-    if (match && match.length > 1) {
-      const cleanedString = match[1].replace("string=", "");
-      alert("※ " + cleanedString);
-
+    const errorResponse = await response.json();
+    console.log('error', errorResponse)
+    if (errorResponse.message) {
+      alert("※ " + errorResponse.message);
     }
   }
-
 }
+
+let currentSignupTimer // 현재 실행 중인 타이머 추적
+
+// 회원 가입 타이머
+async function signupTimer() {
+  const Timer = document.getElementById('signupTimer'); // 스코어 기록창-분
+  let time = 300000;
+  let min = 5;
+  let sec = 0;
+
+  Timer.value = min + ":" + '00';
+
+  // 실행중인 타이머가 있는 경우에는 중지
+  if (currentSignupTimer) {
+    clearInterval(currentSignupTimer);
+  }
+
+  function TIMER() {
+    currentSignupTimer = setInterval(function () {
+      time = time - 1000; // 1초씩 줄어듦
+      min = Math.floor(time / (60 * 1000)); // 초를 분으로 나눠준다.
+      sec = Math.floor((time % (60 * 1000)) / 1000); // 분을 제외한 나머지 초 계산
+
+      if (sec === 0 && min === 0) {
+        clearInterval(currentSignupTimer); // 00:00이 되면 타이머를 중지한다.
+      }
+
+      Timer.value = min.toString().padStart(2, '0') + ':' + sec.toString().padStart(2, '0'); // 2자리 숫자로 표시
+
+    }, 1000); // 1초마다
+  }
+
+  TIMER();
+}
+
 
 // 로그인
 async function handleSignin() {
   const email = document.getElementById("login-email").value
   const password = document.getElementById("login-password").value
 
-  const response = await fetch(`${backend_base_url}/user/login/`, {
-    headers: {
-      'content-type': 'application/json',
-    },
-    method: 'POST',
-    body: JSON.stringify({
-      "email": email,
-      "password": password,
+  try {
+    const response = await fetch(`${backend_base_url}/user/login/`, {
+      headers: {
+        'content-type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        "email": email,
+        "password": password,
+      })
     })
-  })
 
-  if (response.status == 200) {
-    const response_json = await response.json()
+    if (response.status == 200) {
+      const response_json = await response.json()
 
-    // localstorage에 저장하기
-    localStorage.setItem('refresh', response_json.refresh)
-    localStorage.setItem('access', response_json.access)
-    console.log(response_json)
-    alert('stop')
-    const base64Url = response_json.access.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''))
+      // localstorage에 저장하기
+      localStorage.setItem('refresh', response_json.refresh)
+      localStorage.setItem('access', response_json.access)
+      console.log(response_json)
+      const base64Url = response_json.access.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''))
 
-    localStorage.setItem('payload', jsonPayload)
-    document.getElementById("login").querySelector('[data-bs-dismiss="modal"]').click();
-    location.reload()
+      localStorage.setItem('payload', jsonPayload)
+      document.getElementById("login").querySelector('[data-bs-dismiss="modal"]').click();
+      location.reload()
+    }
+    else {
+      alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
+      console.log(response)
+    }
   }
-  else {
-    alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
-    console.log(response)
+  catch (error) {
+    console.log(error)
   }
 }
 
 // 회원가입 이메일 인증코드 보내기
 async function sendCode() {
   const email = document.getElementById("email").value
+
+  if (!email) {
+    alert('이메일을 입력하세요!')
+    return
+  }
 
   const response = await fetch(`${backend_base_url}/user/sendemail/`, {
     headers: {
@@ -104,6 +140,7 @@ async function sendCode() {
     })
   })
   alert("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
+  signupTimer()
 }
 
 // 쿠키에 있는 값을 로컬스토리지에 저장
@@ -485,11 +522,6 @@ function checkSubscribe() {
 }
 
 function handleAi() {
-  const payload = localStorage.getItem("payload");
-
-  if (!payload) {
-    alert("※ 🤖AI기능을 사용하시려면 로그인을 해주세요!")
-  }
 
   const isSubscribe = JSON.parse(localStorage.getItem("payload"))['is_subscribe'];
 
@@ -527,6 +559,7 @@ async function updatePassword() {
   const updateData = {
     check_password: document.querySelector("#check_password").value,
     new_password: document.querySelector("#update_password").value,
+    check_new_password: document.querySelector("#check_update_password").value,
   }
 
   if (!updateData.check_password || !updateData.new_password) {
@@ -564,7 +597,7 @@ function cancel() {
   window.location.href = `${frontend_base_url}/index.html`;
 }
 
-// 선택된 이메일 리스트 생성
+// 저장 전 선택한 이메일을 저장할 배열
 let selectedEmails = [];
 
 function handleRadioClick() {
@@ -587,6 +620,11 @@ async function addMember() {
   const membersEmail = document.getElementById("usersearch").value
   console.log("emailinput", membersEmail)
 
+  if (!membersEmail) {
+    alert("이메일을 입력해주세요!")
+    return
+  }
+
   const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
 
   axios.get(url).then(response => {
@@ -601,7 +639,7 @@ async function addMember() {
     // 검색 결과 처리
     emails.forEach((useremail, index) => {
       let temp_html = `
-          <li>
+          <li style="list-style-type: none; margin-bottom: 10px;">
             <input type="radio" id="email_${index}" name="email_radio" value="${index}" onclick="handleRadioClick()">
             ${useremail}
           </li>
@@ -617,12 +655,10 @@ async function addMember() {
 
 $(document).ready(function () {
   $('#makegroup').on('hide.bs.modal', function () {
-    // 모달 창을 닫을 때 입력 필드 값 비우기
+    // 모달 창을 닫을 때 입력 값 다 지우기
     $('#usersearch').val("");
-    // 렌더링 된 이메일 결과를 비우기
-    $("#email-ul").empty();
-
-    // 라디오 버튼 체크 해제
+    $('#groupname').val("");
+    $("#selected-email-list").empty();
     $('input[type=radio]').prop('checked', false);
   });
 });
@@ -647,6 +683,7 @@ function addMembersToGroup() {
       // 선택된 이메일을 ul에 추가
       const selectedEmailUl = document.getElementById("selected-email-ul");
       const newEmailLi = document.createElement("li");
+      newEmailLi.style = "list-style-type: none; margin-bottom: 10px;"
 
       // input 태그 추가
       const newInput = document.createElement("input");
@@ -764,14 +801,57 @@ async function getUserprofile() {
 
     return response_json
   } else {
-    alert("불러오는데 실패했습니다")
+    const data = await response.json();
+    console.log('data', data);
+    if (data.message) {
+      alert("※ " + data.message);
+    }
   }
+}
+
+let currentFindPasswordTimer  // 비밀번호 발급 타이머 추적
+
+// 비밀번호 발급 타이머
+async function findPasswordTimer() {
+  const Timer = document.getElementById('findPasswordTimer');
+  let time = 300000;
+  let min = 5;
+  let sec = 0;
+
+  Timer.value = min + ":" + '00';
+
+  // 실행되고 있는 타이머 정지
+  if (currentFindPasswordTimer) {
+    clearInterval(currentFindPasswordTimer)
+  }
+
+  function TIMER() {
+    currentFindPasswordTimer = setInterval(function () {
+      time = time - 1000; // 1초씩 줄어듦
+      min = Math.floor(time / (60 * 1000)); // 초를 분으로 나눠준다.
+      sec = Math.floor((time % (60 * 1000)) / 1000); // 분을 제외한 나머지 초 계산
+
+      if (sec === 0 && min === 0) {
+        clearInterval(currentFindPasswordTimer); // 00:00이 되면 타이머를 중지한다.
+      }
+
+      Timer.value = min.toString().padStart(2, '0') + ':' + sec.toString().padStart(2, '0'); // 2자리 숫자로 표시
+
+    }, 1000); // 1초마다
+  }
+
+  TIMER();
 }
 
 // 비밀번호 재발급 인증코드 보내기
 async function sendVerificationEmail() {
   console.log('확인')
   const email = document.getElementById("sendEmail").value
+
+  if (!email) {
+    alert('이메일을 입력해주세요!')
+    return
+  }
 
   const response = await fetch(`${backend_base_url}/user/sendemail/`, {
     headers: {
@@ -783,6 +863,7 @@ async function sendVerificationEmail() {
     })
   })
   alert("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
+  findPasswordTimer()
 }
 
 // 비밀번호 분실 새 비밀번호 발급
@@ -792,6 +873,7 @@ async function ChangePassword() {
     email: document.querySelector("#sendEmail").value,
     code: document.querySelector("#confirm-code").value,
     new_password: document.querySelector("#change_password").value,
+    check_password: document.querySelector("#check_change_password").value,
   }
 
   if (!changeData.code || !changeData.new_password) {
@@ -807,15 +889,15 @@ async function ChangePassword() {
     body: JSON.stringify(changeData)
   }
   )
-  const data = await response.json()
-  console.log(data["message"])
+
   if (response.status == 200) {
     alert("비밀번호 변경 완료!")
     location.replace(`${frontend_base_url}/index.html`)
-
-
   } else {
-    alert(data["message"])
+    const data = await response.json();
+    console.log('data', data);
+    if (data.message) {
+      alert("※ " + data.message);
+    }
   }
-
 }

@@ -370,15 +370,20 @@ async function deleteComment(event) {
         },
         method: 'DELETE',
     })
-    if (response.status == 204) {
-        alert("댓글이 삭제되었습니다")
-        window.location.reload()
-    } else {
-        alert('댓글이 삭제되지 않았습니다.')
-    }
+        .then(response => {
+            if (response.status == 204) {
+                alert("댓글이 삭제되었습니다");
+                window.location.reload();
+            } else {
+                alert('');
+            }
+        })
+        .catch(error => {
+            console.error("댓글 삭제 중 오류 발생", error);
+            alert("댓글 삭제 중 오류 발생")
+        });
+
 }
-
-
 
 
 async function handleStamp(photo_id) {
@@ -416,4 +421,3 @@ async function handleStamp(photo_id) {
 }
 
 checkLogin()
-

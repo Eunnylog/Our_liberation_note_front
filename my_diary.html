@@ -13,6 +13,7 @@
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
   <link href="/css/styles/theme.css" rel="stylesheet" type="text/css" />
   <link href="/css/styles/login.css" rel="stylesheet" type="text/css" />
+  <link href="/css/styles/my_diary.css" rel="stylesheet" type="text/css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -22,6 +23,7 @@
   <script src="/js/loader.js"></script>
   <script src="/js/api.js"></script>
   <script src="/js/my_diary.js"></script>
+  <script src="/js/trash.js"></script>
   <style>
     body {
       background-color: #ebf2ff;
@@ -41,7 +43,7 @@
       style="background-color: #c6dbfa; padding: 10px 30px 30px 30px; border-radius:20px;">
       <div style="display: flex; align-items: center; margin-bottom:30px">
         <h2 style="margin-right: 10px;">my diary</h2>
-        <select name="group" id="select_group" onchange="showNoteList()">
+        <select name="group" id="select_group" class="select" onchange="showNoteList()">
           <!-- <option value="-1">그룹 선택</option> -->
         </select>
         <div style="display: flex;">
@@ -49,8 +51,8 @@
             style="background-color: #60749d; color:white; margin: 0px 10px;" onclick="groupUpdateModal()"> 그룹 수정
           </button>
           <button type="button" id="group-delete-btn" class="btn group-btn"
-            style="background-color: #92a2c5; color:white;" onclick="groupDeleteModal()">그룹
-            삭제</button>
+            style="background-color: #92a2c5; color:white;" data-bs-toggle="modal" data-bs-target="#deleteGroup"
+            onclick="deleteGroupModal()">그룹 삭제</button>
         </div>
       </div>
       <div class="contents" id="note_list">
@@ -182,10 +184,16 @@
                 <form class="sign-in-form active">
                   <input name="note_name" id="note_name" type="text" class="form-control" placeholder="노트 이름"
                     style="width: 48%; float:left;">
-                  <select name="group_name" id="group_name" onchange="showNoteList()"
-                    style="width: 48%; height:46px; float:right; margin-bottom:10px">
-                    <option value="-1">그룹 선택</option>
-                  </select>
+                  <div class="selectBox">
+                    <select name="group_name" id="group_name" onchange="showNoteList(); toggleArrow();"
+                      style="width: 48%; height:46px; float:right; margin-bottom:10px">
+                      <option value="-1">그룹 선택</option>
+                    </select>
+                    <span class="icoArrow"><img
+                        src="https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png"
+                        alt=""></span>
+                  </div>
+
                   <div class="note_category" id="note_category">
                   </div>
                   <button type="button" onclick="saveNote()" class="btn btn-primary" style="float: center">
@@ -204,7 +212,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="su">
+          <h5 class="modal-title" id="su" style="color: #485d86;">
             Make Group</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -213,36 +221,42 @@
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="그룹이름">
+                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="Group Name">
                   <div style="display: flex;" id="group_make_box">
                     <input name="addemail" id="usersearch" type="email" class="form-control" autocomplete="off"
-                      placeholder="추가할 멤버 이메일" style="width: 300px;">
-                    <button type="button" class="signup" onclick="addMember()" style="width: 100px; margin-left: 10px;"
-                      id="addmember-btn">검색</button>
-
+                      placeholder="Email to add" style="width: 300px;">
+                    <button type="button" class="signup" onclick="addMember()"
+                      style="width: 100px; background-color: #485d86; margin-left: 25px;"
+                      id="addmember-btn">Search</button>
                   </div>
-                  <div style="display:flex;">
-                    <p style="justify-content: left;"> 이메일 </p>
-                    <div id="email-list">
-                      <ul id="email-ul">
+                  <div style="color: #7c838c;">
+                    <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
+                      Emails </p>
+                    <div id="email-list"
+                      style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                      <ul id="email-ul" style="position: relative; right: 10px;">
                       </ul>
                     </div>
                   </div>
-                  <button type="button" onclick="addMembersToGroup()" style="width: 100px; margin-left: 10px;">멤버
-                    추가</button>
-                  <button type="button" onclick="DeleteMembers()" style="width: 100px; margin-left: 10px;">멤버
-                    삭제</button>
-                  <div style="display:flex;">
-                    <p style="justify-content: left;"> 추가한 이메일 </p>
-                    <div id="selected-email-list">
-                      <ul id="selected-email-ul">
+                  <button type="button" onclick="addMembersToGroup()"
+                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
+                  <button type="button" onclick="DeleteMembers()"
+                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
+                  <div style="color: #4d6087;">
+                    <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
+                      Emails </p>
+                    <div id="selected-email-list"
+                      style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                      <ul id="selected-email-ul" style="position: relative; right: 10px;">
                       </ul>
                     </div>
                   </div>
                   <div class="sign-up" style="display: flex;">
-                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()"
-                      style="margin-right: 10px; background-color: #60749d;">취소</button>
-                    <button type="button" class="signup" onclick="addGroup()">저장</button>
+                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
+                      onclick="document.getElementById('makegroup').style.display = 'none'"
+                      style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                    <button type="button" class="signup" onclick="addGroup()"
+                      style="background-color: #485d86;">Save</button>
                   </div>
                 </form>
               </div>
@@ -257,7 +271,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="su">
+          <h5 class="modal-title" id="su" style="color: #485d86;">
             Update Group</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -266,35 +280,42 @@
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <input name="groupname" id="update-groupname" type="name" class="form-control" placeholder="그룹이름">
+                  <input name="groupname" id="update-groupname" type="name" class="form-control"
+                    placeholder="Group Name" style="color: #51565b;">
                   <div style="display: flex;" id="group_make_box">
                     <input name="addemail" id="update-usersearch" type="email" class="form-control" autocomplete="off"
-                      placeholder="추가할 멤버 이메일" style="width: 300px;">
+                      placeholder="Email to add" style="width: 300px; color: #51565b;">
                     <button type="button" class="signup" onclick="updateAddMember()"
-                      style="width: 100px; margin-left: 10px;" id="addmember-btn">검색</button>
+                      style="width: 100px; margin-left: 10px; background-color: #485d86; margin-left: 25px;"
+                      id="addmember-btn">Search</button>
                   </div>
-                  <div style="display:flex;">
-                    <p style="justify-content: left;"> 이메일 </p>
-                    <div id="email-list">
-                      <ul id="update-email-ul">
+                  <div style="color: #7c838c;">
+                    <p style="justify-content: left; color:#696d73; margin-top: 20px;"> Searched Emails </p>
+                    <div id="email-list"
+                      style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                      <ul id="update-email-ul" style="position: relative; right: 10px;">
                       </ul>
                     </div>
                   </div>
-                  <button type="button" onclick="updateAddMembersToGroup()" style="width: 100px; margin-left: 10px;">멤버
-                    추가</button>
-                  <button type="button" onclick="updateDeleteMembers()" style="width: 100px; margin-left: 10px;">멤버
-                    삭제</button>
-                  <div style="display:flex;">
-                    <p style="justify-content: left;"> 추가한 이메일 </p>
-                    <div id="selected-email-list">
-                      <ul id="update-selected-email-ul">
+                  <button type="button" onclick="updateAddMembersToGroup()"
+                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;"> ⬇️ </button>
+                  <button type="button" onclick="updateDeleteMembers()"
+                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;"> ⬆️ </button>
+                  <div style="color: #4d6087;">
+                    <p style="justify-content: left; color:#4f6185; margin-top: 10px;"> Selected
+                      Emails </p>
+                    <div id="selected-email-list"
+                      style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                      <ul id="update-selected-email-ul" style="position: relative; right: 10px;">
                       </ul>
                     </div>
                   </div>
                   <div class="sign-up" style="display: flex;">
-                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()"
-                      style="margin-right: 10px; background-color: #60749d;">취소</button>
-                    <button type="button" class="signup" onclick="updateGroup()">저장</button>
+                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
+                      onclick="document.getElementById('updateGroup').style.display = 'none'"
+                      style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                    <button type="button" class="signup" onclick="updateGroup()"
+                      style="background-color: #485d86;">Save</button>
                   </div>
                 </form>
               </div>
@@ -309,18 +330,13 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Delete Group</h5>
+          <h5 class="modal-title" style="color: #485d86;">Delete Group</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p> 정말 그룹을 삭제 하시겠습니까?</p>
+          <p style="color: #51565b;"> Delete 버튼을 누르면 그룹이 삭제됩니다.</p>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn" data-bs-dismiss="modal"
-            style="background-color: #92a2c5; border-color: #92a2c5; color:white;">Close</button>
-          <button type="button" class="btn"
-            style="background-color: #60749d; border-color: #60749d; color:white; margin: 0px 10px;"
-            onclick="deleteGroupConfirm()">Delete</button>
+        <div class="modal-footer" id="modal-footer">
         </div>
       </div>
     </div>
