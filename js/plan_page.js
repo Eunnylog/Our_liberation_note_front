@@ -1,8 +1,8 @@
 let plan_data = []
 let plan_set = [];
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.liberation-note.com'
-// let back_url = 'http://127.0.0.1:8000'
+// let back_url = 'https://api.liberation-note.com'
+let back_url = 'http://127.0.0.1:8000'
 
 checkLogin()
 
@@ -156,7 +156,6 @@ async function savePlan() {
         window.location.reload()
     } else {
         alert('문제가 발생했습니다!')
-        console.log(response.error)
     }
 }
 
@@ -476,7 +475,7 @@ async function savePayIsSubscribe() {
     const response = await fetch(`${back_url}/payments/subscription/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            // "Authorization": `Bearer ${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'GET',
     });

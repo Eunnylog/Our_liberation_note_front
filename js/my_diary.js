@@ -9,8 +9,6 @@ checkLogin()
 const userPayload = localStorage.getItem('payload')
 const userPayloadJson = JSON.parse(userPayload)
 const userEmail = userPayloadJson.email
-console.log('유저', userEmail)
-
 
 
 function loadNoteCategory() {
@@ -134,7 +132,6 @@ async function showNoteList() {
     }
 }
 
-// showNoteList()
 
 async function saveNote() {
     let radios = Array.from(document.getElementsByName('note_category'));
@@ -175,16 +172,8 @@ async function saveNote() {
 
         }
         else {
-            alert(response_json)
-
-            const regex = /string='([^']+)'/;
-            const match = JSON.stringify(response_json).match(regex)
-
-            if (match && match.length > 1) {
-                const cleanedString = match[1].replace("string=", "");
-                alert("※ " + cleanedString);
-
-            }
+            console.log(response_json)
+            alert(response_json['non_field_errors'])
         }
 
     } else {
