@@ -39,13 +39,19 @@
             <div class="content">
                 <h1>Our liberation Note <br><br> 우리들의 해방일지</h1>
                 <div>
-                    <a href="/" class="btn btn-secondary" style="margin-bottom: 30px;" data-bs-toggle="modal"
-                        data-bs-target="#carouselModal">Info</a>
-                    <a href="/my_diary.html" class="btn btn-secondary" style="margin-bottom: 30px;">Start</a>
-
+                    <!-- info 모달창 -->
+                    <a href="/" class="btn btn-secondary" style="margin-bottom: 30px;" data-bs-toggle="modal" data-bs-target="#carouselModal">
+                        Info
+                    </a>
+                    <!-- 다이어리 페이지로 이동 -->
+                    <a href="/my_diary.html" class="btn btn-secondary" style="margin-bottom: 30px;">
+                        Start
+                    </a>
                 </div>
-                <a href="https://ourliberationnote.waveon.io/" target="_blank" class="btn btn-secondary"
-                    style="margin-bottom: 30px;">mbti 검사하러 가기</a>
+                <!-- 여행 mbti 검사 페이지로 이동 -->
+                <a href="https://ourliberationnote.waveon.io/" target="_blank" class="btn btn-secondary" style="margin-bottom: 30px;">
+                    mbti 검사하러 가기
+                </a>
             </div>
         </div>
     </main>
@@ -229,35 +235,11 @@
             </div>
         </div>
     </div>
-    <!-- 닉네임 생성 모달창 -->
-    <div class="modal fade" id="makenickname" tabindex="-1" aria-labelledby="su" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="su">
-                        Make Nickname</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="container">
-                    <div class="global-cont">
-                        <div class="inner-cont">
-                            <div class="sign-in-up">
-                                <form class="sign-in-form active">
-                                    <input name="makenickname" id="modal-makenickname" type="nickname"
-                                        class="form-control" placeholder="닉네임">
-                                    <button type="button" class="signup" onclick="addNickname()">저장</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- info 페이지 모달 -->
     <!-- Carousel 형식의 모달 -->
     <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
         <div class="modal-dialog modal-xl">
-            <div class="modal-content" style="height: 500px;">
+            <div class="modal-content" style="height: 850px;">
                 <div class="modal-header">
                     <h5 class="modal-title">Info</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -265,20 +247,90 @@
                 <div class="modal-body" style="position: relative;">
                     <!-- Carousel -->
                     <div id="carouselExampleIndicators" class="carousel slide">
-                        <ol class="carousel-indicators">
-                            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
-                            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-                            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
-                        </ol>
                         <div class="carousel-inner">
-                            <div class="carousel-item active" style="padding: 10px;">
-                                <h3>설명1</h3>
+                            <!-- 메인 페이지 인포 -->
+                            <div class="carousel-item active" style="padding: 5px;">
+                                <h3>메인페이지</h3>
+                                <img src="/css/assets/info_main.png" style="width: 100%; height:90%; margin: auto;">
+                                <div style="font-size: 18px; margin-top: 10px;">
+                                    ① start를 누르시면 다이어리 생성 페이지로 이동합니다!<br>
+                                    ② mbti 검사하기를 누르시면 자신의 여행 mbti와 잘 맞는 mbti, 안맞는 mbti를 확인하실 수 있습니다!<br>
+                                    ③ ≡ 표시를 누르시면 메뉴를 확인하실 수 있습니다!<br>
+                                    ④ info 버튼을 클릭하시면 언제든 튜토리얼을 다시 보실 수 있습니다~
+                                </div>
                             </div>
-                            <div class="carousel-item" style="padding: 10px;">
-                                <h3>설명2</h3>
+                            <!-- 마이 다이어리 페이지 인포 -->
+                            <div class="carousel-item" style="padding: 5px;">
+                                <h3> 마이 다이어리 페이지</h3>
+                                <img src="/css/assets/info_mydiary.png" style="width: 100%; height:90%; margin: auto;">
+                                <div style="font-size: 18px; margin-top: 10px;">
+                                    ① 빈 노트를 누르시면 모달창이 나타나며 새로운 노트를 생성할 수 있습니다!<br>
+                                    ② 그룹을 선택해서 그룹마다 해당하는 노트를 볼 수 있습니다! <br>
+                                    ③ 원하는 노트를 누르면 그 노트의 플랜 페이지로 이동합니다!
+                                </div>
                             </div>
-                            <div class="carousel-item" style="padding: 10px;">
-                                <h3>설명3</h3>
+                            <!-- 플랜 페이지 인포 -->
+                            <div class="carousel-item" style="padding: 5px;">
+                                <h3> 플랜 페이지</h3>
+                                <img src="/css/assets/info_plan.png" style="width: 100%; height:90%; margin: auto;">
+                                <div style="font-size: 18px; margin-top: 10px;">
+                                    ① 선택한 노트의 이름이 나타납니다~ <br>
+                                    ② 일정추가를 누르면 모달창이 나타나고 일정을 입력하면 캘린더에 추가됩니다! <br>
+                                    ③ 사진첩 가기를 누르면 사진첩페이지로 이동합니다! <br>
+                                    ④ AI랑 놀기를 누르면 등록한 일정을 토대로 최적의 경로를 알 수 있습니다~ <br>
+                                    ⑤ 계획표 전송을 누르면 그룹 멤버중 보내고 싶은 멤버들을 선택할 수 있는 모달창이 뜨고 계획을 메일로 전송할 수 있습니다!<br>
+                                    ⑥ 해방필름을 누르면 해방필름 페이지로 이동합니다!
+                                </div>
+                            </div>
+                            <!-- 사진첩 페이지 인포 -->
+                            <div class="carousel-item" style="padding: 5px;">
+                                <h3> 사진첩 페이지</h3>
+                                <img src="" style="width: 100%; height:90%; margin: auto;">
+                                <div style="font-size: 18px; margin-top: 10px;">
+                                    ① <br>
+                                    ② <br>
+                                    ③ <br>
+                                    ④ <br>
+                                    ⑤ <br>
+                                    ⑥
+                                </div>
+                            </div>
+                            <!-- AI 페이지 인포 -->
+                            <div class="carousel-item" style="padding: 5px;">
+                                <h3> AI 페이지(유료기능)</h3>
+                                <img src="/css/assets/info_AI.png" style="width: 100%; height:90%; margin: auto;">
+                                <div style="font-size: 18px; margin-top: 10px;">
+                                    ① 먼저 AI로 경로를 짤 날짜를 선택해주세요~ <br>
+                                    ② 원하는 항목을 선택하거나 전체 선택으로 항목을 선택해주세요! <br>
+                                    ③ 선택 후 AI 밥주기 버튼을 눌러주세요~ 밥주기 버튼을 누르면 선택한 항목들이 work 창으로 이동합니다. <br>
+                                    ④ 사용 중 모르는게 있으면 AI 사용설명서를 다시 클릭해주세요! <br>
+                                    ⑤ 버리기 버튼을 클릭하면 선택한 항목들이 다시 feed 창으로 이동합니다.<br>
+                                    ⑥ work 창에서 원하는 항목을 선택 후 AI 일하기 버튼을 클릭하면 AI가 최적의 경로를 짜줍니다!
+                                </div>
+                            </div>
+                            <!-- 해방네컷 페이지 인포 -->
+                            <div class="carousel-item" style="padding: 5px;">
+                                <h3> 해방네컷 페이지</h3>
+                                <img src="/css/assets/info_lifephoto.png"
+                                    style="width: 100%; height: 100%; margin: auto;">
+                                <div style="font-size: 18px; margin-top: 10px;">
+                                    ① 해방네컷은 세로버전과 가로버전으로 이루어져 있습니다! 원하는 버전을 눌러 이용해주세요!<br>
+                                    ② 파일 선택으로 이미지를 넣고 파일 넣기를 누르면 프레임에 사진이 들어갑니다!<br>
+                                    ③ 파일을 <span style="color: red;">네 개 모두</span> 넣고 사진 넣기를 눌러주세요!! <br>
+                                    ④ 사진 다운로드를 누르시면 사진이 컴퓨터에 저장됩니다~ 페이지에는 저장되지 않으니 참고해주세요!
+                                </div>
+                            </div>
+                            <!-- 마이페이지 인포 -->
+                            <div class="carousel-item" style="padding: 5px;">
+                                <h3> 마이페이지 </h3>
+                                <img src="/css/assets/info_mypage.png" style="width: 100%; height:90%; margin: auto;">
+                                <div style="font-size: 18px; margin-top: 10px;">
+                                    ① 유저의 이메일이 적혀있어 본인의 이메일을 확인할 수 있습니다!<br>
+                                    ② 소속한 그룹을 볼 수 있습니다! 본인이 그룹장 이리면 옆에 함께 표시됩니다<br>
+                                    ③ 그룹 만들기를 누르면 그룹을 만들고 멤버들을 추가 할 수 있는 모달창이 나타납니다!<br> 네비게이션 바의 Make group으로 어디서나 그룹을
+                                    생성할 수 있습니다! <br>
+                                    ④ 사진첩에서 스탬프를 찍은 장소가 지도에 나타납니다! 스탬프를 클릭하면 모달창으로 그 장소의 사진을 볼 수 있습니다!
+                                </div>
                             </div>
                         </div>
                     </div>
