@@ -1,4 +1,4 @@
-const backend_base_url = "https://api.miyeong.net"
+// const backend_base_url = "https://api.miyeong.net"
 // const backend_base_url = "http://127.0.0.1:8000"
 // const frontend_base_url = "http://127.0.0.1:5500"
 let access_token = localStorage.getItem('access')
@@ -143,15 +143,18 @@ async function photo_detail(photo_id) {
                     <div id='photo_location'>${location}</div>
                     <div id='photo_memo'>${memo}</div>
                     
-
                     <div>
                     <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
                         <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal">게시</button>
                     <ul class="comment_set">
-                        ${comments.map(comment => `<li id="comment-$comment-${comment.id}">${comment.comment}</li>`).join('')}
+                        ${comments.map(comment => `<li id="comment-$comment-${comment.id}">${comment.comment}
+                        <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" placeholder="comment">
+                        <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="editComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">수정</button>
+                        <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">삭제</button>
+                        </li>`).join('')}
                     </ul>
+                    </div>
                     
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
                         </button>
@@ -301,17 +304,6 @@ async function addComment() {
 
         if (response.ok) {
             console.log('코멘트 추가 성공');
-            // const addedComment = await response.json();
-            // const commentsList = document.getElementById('comments-list');
-            // const newComment = document.createElement('li');
-            // temp_html = `<li>
-            //                         <b>${addedComment.username}&nbsp;</b>
-            //                         ${addComment.comment}
-            //                         <span class="deleted" onclick="deleteComment('${addedComment.id}')"></span>
-            //                         </li>
-            //                         `;
-            // $('#comments-list').append(temp_html);
-            // document.getElementById('comment'.value) = '';
         } else {
             throw new Error('서버가 응답하지 않습니다.');
         }
@@ -321,56 +313,72 @@ async function addComment() {
         console.error(error);
     }
 }
+//comment_id를 받아와라ㅏㅏㅏㅏㅏㅏㅏ 어딘지는 아는데 어떻게 바다오냐ㅏㅏㅏㅏㅏㅏ
 
-// comment 출력 > photo_id와 commnet_id 불러와야함
-// async function showComment() {
-//     const urlParams = new URLSearchParams(window.location.search);
-//     const photo_id = urlParams.get('comment_id');
-//     // const comment_id = urlParams.get('comment_id');
-//     // const commentText = document.getElementById("comment_set").value; 
+async function editComment(event) {
 
-
-//     const response = await fetch(`${backend_base_url}/note/comment/${photo_id}/${comment_id}`, {
-//         headers: {
-//             'content-type': 'application/json',
-//             "Authorization": `Bearer ${access_token}`,
-//         },
-//         method: 'GET',
-//         // body: JSON.stringify({ comment: commentText })
-//     });
-
-//     const comment_response_json = await response.json()
+    var button = event.target;
+    var buttonValue = button.value;
+    console.log("Button Value:", buttonValue);
 
 
-//     const comment = comment_response_json['comment']
-//     // const comment_id = comment_response_json['comment_id']
-
-//     console.log(comment_response_json)
-//     let temp_html = `<li>
-//         <b>${comment.username}&nbsp;</b>
-//         ${comment.comment}
-//         <span class="deleted" onclick="deleteComment('${comment.id}')"></span>
-//         </li>
-//         `;
-//     $('#comments-list').append(temp_html);
-
-//     if (response.ok) {
-//         console.log('코멘트 불러오기 성공');
-
-//         const comment = comment_response_json["comment"]
-
-//         $('#comments-list').append(temp_html);
-//         // document.getElementById('comment'.value) = '';
-//     } else {
-//         throw new Error('서버가 응답하지 않습니다.');
+    const photo_comment_id = button.value;
+    const photo_id = photo_comment_id.split("/")[0];
+    const comment_id = photo_comment_id.split("/")[1];
 
 
-//     catch (error) {
-//             alert('에러가 발생했습니다.');
-//             console.error(error);
-//         }
-//     }
-// }
+
+    // const comment_id = document.getElementById("commentEditBtn").value
+    const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
+    console.log(updatedComment)
+
+
+    fetch(`${backend_base_url}/note/comment/${photo_id}/${comment_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'PUT',
+        body: JSON.stringify({ comment: updatedComment })
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+        })
+        .catch(error => {
+            console.error('Error', error)
+        })
+}
+
+async function deleteComment(event) {
+
+    var button = event.target;
+    var buttonValue = button.value;
+    console.log("Button Value:", buttonValue);
+
+    const photo_comment_id = button.value;
+    const photo_id = photo_comment_id.split("/")[0];
+    const comment_id = photo_comment_id.split("/")[1];
+
+    // const comment_id = document.getElementById("commentEditBtn").value
+
+
+    fetch(`${backend_base_url}/note/comment/${photo_id}/${comment_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'DELETE',
+    })
+    if (response.status == 204) {
+        alert("댓글이 삭제되었습니다")
+        window.location.reload()
+    } else {
+        alert('댓글이 삭제되지 않았습니다.')
+    }
+}
+
+
 
 
 async function handleStamp(photo_id) {

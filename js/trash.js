@@ -1,7 +1,7 @@
 async function getTrash() {
     let token = localStorage.getItem("access")
     const payload = localStorage.getItem("payload");
-  
+
     const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
         headers: {
             'content-type': 'application/json',
@@ -11,14 +11,14 @@ async function getTrash() {
     })
 
     if (response.status == 200) {
-      const response_json = await response.json()
-  
-      return response_json
+        const response_json = await response.json()
+
+        return response_json
     } else {
-      alert("불러오는데 실패했습니다")
+        alert("불러오는데 실패했습니다")
     }
-  
-  }
+
+}
 
 async function trashPhoto(photo_id) {
     let token = localStorage.getItem("access")
