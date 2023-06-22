@@ -193,7 +193,7 @@ async function saveNote() {
 
 }
 
-function saveLocalNoteName(note_name,group_id) {
+function saveLocalNoteName(note_name, group_id) {
     localStorage.setItem('noteName', note_name);
     localStorage.setItem('groupId', group_id);
 }
@@ -498,3 +498,62 @@ async function deleteGroupModal() {
     $('#modal-footer').append(temp_html2)
 }
 
+async function deleteGroupConfirm() {
+    const access_token = localStorage.getItem('access')
+    const response = await fetch(`${back_url}/user/group/`, {
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${access_token}`,
+        },
+        method: 'GET',
+    })
+    const response_json = await response.json()
+
+    const selectedIndex = document.getElementById('select_group').value
+    console.log("selectedIndex", selectedIndex)
+
+    response_json.forEach((group, index) => {
+        let id = group['id']
+        let name = group['name']
+        let members = group['members']
+        let master = group['master']
+        console.log("마스터", master)
+
+        if (parseInt(selectedIndex) === parseInt(id)) {
+            console.log(id, name, members)
+            updatingGroupId = id;
+            console.log(updatingGroupId)
+        }
+    })
+
+    const deleteResponse = await fetch(`${backend_base_url}/user/group/${updatingGroupId}/`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer " + access_token,
+        },
+        method: 'DELETE',
+    })
+
+    if (deleteResponse.ok) {
+        alert("삭제되었습니다!");
+        window.location.replace(`${frontend_base_url}/index.html`)
+    } else {
+        const response_json = await deleteResponse.json()
+        alert(`오류가 발생했습니다: ${response_json}`)
+    }
+}
+
+function toggleArrow() {
+    const arrow = document.querySelector('.icoArrow img option');
+
+    if (arrow.style.transform === 'rotate(180deg)') {
+        arrow.style.transform = 'rotate(0deg)';
+    } else {
+        arrow.style.transform = 'rotate(180deg)';
+    }
+}
+
+// function toggleArrow() {
+//     const arrow = document.querySelector('.icoArrow img');
+//     arrow.classList.toggle('rotate');
+// }
