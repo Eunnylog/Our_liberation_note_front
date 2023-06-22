@@ -46,7 +46,7 @@
                     style="margin-bottom: 30px; background-color: #7689b1; display:none;">결과보기</button>
                 <button class="btn btn-secondary" id="reload_btn" onclick="reload()"
                     style="margin-bottom: 30px; background-color: #7689b1; display:none;">다시하기</button>
-                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#infocarouselModal" id="ai-info" style="margin-bottom: 30px;">AI 사용 설명서</button>
+                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#carouselModal1" id="ai-info" style="margin-bottom: 30px;">AI 사용 설명서</button>
             </div>
             <!-- feed 창 -->
             <div class="shadow mb-5 bg-body rounded" id="feed_div"
@@ -202,7 +202,7 @@
     </div>
     <!-- ai 사용설명서 모달 -->
     <!-- Carousel 형식의 모달 -->
-    <div class="modal fade" id="infocarouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
+    <div class="modal fade" id="carouselModal1" tabindex="-1" aria-hidden="true" data-bs-interval="false">
         <div class="modal-dialog modal-xl">
             <div class="modal-content" style="height: 800px;">
                 <div class="modal-header">
@@ -255,12 +255,12 @@
                         </div>
                     </div>
                     <div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                        <button class="carousel-control-prev" type="button" data-bs-target="#info-carouselExampleIndicators"
                             data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                        <button class="carousel-control-next" type="button" data-bs-target="#info-carouselExampleIndicators"
                             data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
