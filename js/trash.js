@@ -194,13 +194,13 @@ async function handleGrouptrash(group_id, name) {
         const response_json = await response.json()
         alert(`※ [${name}] 그룹이 정상적으로 삭제되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
         alert(`※ [${name}] 그룹이 정상적으로 복원되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else {
         alert("※실패하였습니다.")
@@ -228,13 +228,13 @@ async function handleNotetrash(note_id, group, name) {
         const response_json = await response.json()
         alert(`※ [${name}] 노트가 정상적으로 삭제되었습니다.`)
         window.location.replace(`${frontend_base_url}/my_diary.html`)
-        return response_json 
+        return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
         alert(`※ [${name}] 노트가 정상적으로 복원되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else {
         alert("※실패하였습니다.")
@@ -260,13 +260,13 @@ async function handlePhototrash(photo_id, location, title, name) {
         const response_json = await response.json()
         alert(`※ [${name}] 사진이 정상적으로 삭제되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
         alert(`※ [${name}] 사진이 정상적으로 복원되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else {
         alert("※실패하였습니다.")

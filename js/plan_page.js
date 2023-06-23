@@ -477,7 +477,7 @@ async function savePayIsSubscribe() {
     const response = await fetch(`${back_url}/payments/subscription/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            // "Authorization": `Bearer ${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'GET',
     });
@@ -514,3 +514,12 @@ async function deleteNoteModal() {
 
     $('#modal-footer').append(temp_html2)
 }
+
+
+
+function saveNoteID() {
+    params = new URLSearchParams(window.location.search);
+    const note_id = params.get("note_id");
+    localStorage.setItem('note_id', note_id)
+}
+saveNoteID()

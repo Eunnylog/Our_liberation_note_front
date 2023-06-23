@@ -2,11 +2,13 @@ let access_token = localStorage.getItem('access')
 checkGroup()
 checkLogin()
 
-window.addEventListener('load', function() {
+
+window.addEventListener('load', function () {
     const noteName = localStorage.getItem('noteName');
     const photopageTitle = document.getElementById("photopage_title");
     photopageTitle.innerHTML = noteName + " | Photo gallery";
-  });
+});
+
 
 // 사진 추가하기
 async function addPhoto() {
@@ -57,7 +59,7 @@ async function addPhoto() {
         console.error(error);
     }
 }
-// 어떤 부분때문에 사진이 밀리게 되는걸까
+
 async function album() {
     try {
         params = new URLSearchParams(window.location.search);
@@ -76,8 +78,8 @@ async function album() {
                     </a>`
         $('#menu_box').append(menu_html)
 
-        // const response = await fetch(`${backend_base_url}/note/photo/${note_id}/${page}`, {
-        const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
+        const response = await fetch(`${backend_base_url}/note/photo/${note_id}/${page}`, {
+            // const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
             headers: {
                 'content-type': 'application/json',
                 // 'Authorization': `Bearer ${accessToken}`
@@ -89,10 +91,14 @@ async function album() {
 
         console.log(response_json)
         if (response_json.length == 0) {
-            alert('마지막페이지 입니다!')
-            page = page * 1 - page
-            window.location.href = window.location.href.split('&')[0] + '&page=' + page
+            console.log(page)
+            if (page != 0) {
+                alert('마지막페이지 입니다!')
+                page = page - page
+                window.location.href = window.location.href.split('&')[0] + '&page=' + page
+            }
         }
+
 
         const stampsresponse = await getUserprofile()
         const stamps = stampsresponse.stamps
@@ -144,7 +150,7 @@ function p_page() {
     page = params.get("page");
 
     if (!page) {
-        page = 1
+        page = 0
     }
     page = page * 1 + 6
     window.location.href = window.location.href.split('&')[0] + '&page=' + page
@@ -155,7 +161,7 @@ function m_page() {
     page = params.get("page");
 
     if (!page) {
-        page = 1
+        page = 0
     }
     page = page * 1 - 6
 
@@ -211,15 +217,16 @@ async function photo_detail(photo_id) {
                             <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">게시</button>
                     </div>
                     <hr/>
+                    <div>
                     <style>
                         .comment_set div:hover {
-                            background-color: #f5f5f5; 
+                            background-color: #f5f5f5;
                         }
                     </style>
                     <div class="comment_set">
                     ${comments.map(comment => `<b>${comment.user}</b>
                                                 <p style="float: right; color: gray;">${comment.created_at.split("T")[0]}</p>
-                                                <div id="comment-$comment-${comment.id}" style="width: 100%; margin-bottom: 10px;" onclick="toggleCommentEdit(event)">
+                                                <div id="comment-$comment-${comment.id}" value="${comment.user}" style="width: 100%; margin-bottom: 10px;" onclick="toggleCommentEdit(event)" >
                                                     ${comment.comment}
                                                     <div style="display: none;">
                                                         <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" 
@@ -230,8 +237,7 @@ async function photo_detail(photo_id) {
                                                         onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #485d86; border-color: #485d86;">삭제</button>
                                                     </div>
                                                 </div>`).join('')}
-                    </div>`
-
+                    </div>`;
     $('#photo-d').append(temp_html)
 
     $('#photo-detail-modal-footer').empty()
@@ -245,20 +251,32 @@ async function photo_detail(photo_id) {
 }
 
 
-// 코멘트란을 토글로 하여 클릭했을때의 이벤트 지정
-
 function toggleCommentEdit(event) {
-    const li = event.target.closest('div');
-    const div = li.querySelector('div');
-    div.style.display = div.style.display === 'none' ? 'flex' : 'none';
+    const comments_set = event.target.closest('div');
+    const div = comments_set.querySelector('div');
+    const user_email = comments_set.getAttribute("value")
+    console.log(user_email)
+    // payload를 모두 문자열로 가져오기
+    let storage = localStorage.getItem('payload');
+    // 가져온 paylad(JSON 문자열)를 객체, 배열로 변환
+    const personObj = JSON.parse(storage);
+    console.log(personObj);
+    let email;
+    // user_id 키의 값만 가져오기
+    if (personObj) {
+        email = personObj['email'];
+    }
+    if (user_email == email) {
+        div.style.display = div.style.display === 'none' ? 'flex' : 'none';
+    } else if (user_email != null) {
+        alert("작성자만이 댓글을 수정할 수 있습니다.")
+    }
 }
 
 let commentItems = document.querySelectorAll('.comment_set div'); // 변수 선언을 밖으로 이동
-
-// li 요소들에 클릭시 이벤트 발생
+// 클릭시 이벤트 발생
 commentItems.forEach(item => {
     item.addEventListener('click', toggleCommentEdit);
-    alert("ㅇㄹㄹ")
 });
 
 
