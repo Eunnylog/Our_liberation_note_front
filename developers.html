@@ -97,7 +97,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="su">
+                    <h5 class="modal-title" id="su" style="color: #485d86;">
                         Sign up</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -106,7 +106,7 @@
                         <div class="inner-cont">
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
-                                    <input name="email" id="email" type="email" class="form-control"
+                                    <input name="email" type="email" id="email" class="form-control"
                                         placeholder="email">
                                     <input name="password" id="password" type="password" class="form-control"
                                         placeholder="password">
@@ -116,18 +116,24 @@
                                         <input name="confirmcode" id="confirmcode" type="confirmcode"
                                             class="form-control" placeholder="email 인증코드" style="width: 250px;">
                                         <button type="button" class="signup" onclick="sendCode()"
-                                            style="background-color: #60749d; width: 200px; margin-left: 10px;">인증코드
+                                            style="background-color: #7689b1; width: 200px; margin-left: 10px;">인증코드
                                             보내기</button>
                                     </div>
+                                    <p style="margin: 10px 0px;">
+                                        <label for="Timer" style="color:#7a7f83">Expires At</label>
+                                        <input id="signupTimer" type="text" value="" readonly
+                                            style="border: double 5px; border-color: #60749d; border-radius: 10px; text-align: center; margin-top:10px;" />
+                                    </p>
                                     <div class="sign-up">
-                                        <button type="button" class="signup" onclick="handleSignup()">Sign up</button>
+                                        <button type="button" class="signup" onclick="handleSignup()"
+                                            style="background-color: #485d86;">Sign up</button>
                                     </div>
                                 </form>
                                 <div class="divider">
-                                    <span>or</span>
+                                    <span style="color: #7a7f83">or</span>
                                 </div>
                                 <div class="social-login">
-                                    <button class="kakao" onclick="KakaoLogin()">Kakao</button>
+                                    <button class="kakao" onclick="kakaoLogin()">Kakao</button>
                                     <button class="google" onclick="googleLogin()">Google</button>
                                     <button class="naver" onclick="naverLogin()">Naver</button>
                                 </div>
@@ -143,8 +149,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        Sign in</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
+                        Log in</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="container">
@@ -157,20 +163,23 @@
                                     <input name="password" id="login-password" type="password" class="form-control"
                                         placeholder="Password">
                                     <button type="button" onclick="handleSignin()" class="btn btn-primary"
-                                        style="float: center">
-                                        Signin
+                                        style="float: center; background-color: #485d86;">
+                                        Log in
                                     </button>
                             </div>
                             </form>
                             <div class="divider">
-                                <span>or</span>
+                                <span style="color: #7a7f83">or</span>
                             </div>
                             <div class="social-login">
-                                <button class="kakao" onclick="KakaoLogin()">Kakao</button>
+                                <button class="kakao" onclick="kakaoLogin()">Kakao</button>
                                 <button class="google" onclick="googleLogin()">Google</button>
                                 <button class="naver" onclick="naverLogin()">Naver</button>
-                                <!-- <button class="facebook" onclick="facebookLogin()">Facebook</button> -->
                             </div>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#findPassword" id="find-password"
+                                class="findpassword"
+                                style="text-decoration: none; font-size: 18px; color: #60749d; margin: 10px 0px;">
+                                비밀번호를 잃어버리셨나요? </a>
                         </div>
                     </div>
                 </div>
@@ -245,7 +254,7 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content" style="height: 500px">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="trash-modal-body" class="modal-body">
@@ -266,6 +275,57 @@
                     </form>
                 </div>
                 <div class="modal-footer" id="trash-modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 비밀번호 재발급 모달창 -->
+    <div class="modal fade" id="findPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <p>Change Password</p>
+                        <span style="font-size: 15px; color: #7a7f83;"> 이메일 인증 후 비밀번호를 새로 변경합니다. </span>
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">이메일:</label>
+                            <input type="email" class="form-control" id="sendEmail" name="email"
+                                placeholder="이메일을 입력해주세요.">
+                            <button type="button" class="signup btn btn-primary" onclick="sendVerificationEmail()"
+                                style="border-color: #60749d; background-color: #60749d; margin: 20px 0px; float: right;">전송</button>
+                        </div>
+                        <p style="display: inherit; margin: 10px 0px;">
+                            <label for="Timer">유효 시간</label>
+                            <input id="findPasswordTimer" type="text" value="" readonly
+                                style="margin: 10px 10px; border: double 5px; border-color: #60749d; border-radius: 10px; text-align: center; margin-top:10px;" />
+                        </p>
+                        <div class="mb-3" style="margin-top: 20px;">
+                            <label for="recipient-name" class="col-form-label ">인증번호 확인:</label>
+                            <input type="code" class="form-control" id="confirm-code" placeholder="인증번호를 입력해주세요.">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">새 비밀번호:</label>
+                            <input type="password" class="form-control" id="change_password"
+                                placeholder="새로운 비밀번호를 입력해주세요.">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">비밀번호 확인:</label>
+                            <input type="password" class="form-control" id="check_change_password"
+                                placeholder="새로운 비밀번호를 입력해주세요.">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        onclick="document.getElementById('findPassword').style.display = 'none'">취소</button>
+                    <button style="border-color: #60749d; background-color: #60749d;" type="button"
+                        class="btn btn-primary" onclick="ChangePassword()">저장</button>
                 </div>
             </div>
         </div>
