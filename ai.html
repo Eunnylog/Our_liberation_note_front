@@ -66,7 +66,7 @@
                     <div
                         style="display: flex; justify-content: center; position: absolute; bottom: -10px; width: 100%; margin-top: 20px;">
                         <input type="checkbox" id="checkAll" style="width: auto;">전체 선택
-                        <label for="checkAll"></label>
+                        <label for="checkAll" style="z-index: 1;"></label>
                         <button type="button" class="btn btn-secondary" onclick="saveAiFeed()"
                             style="margin-bottom: 30px; background-color: #7689b1; border: #7689b1;">AI 밥 주기</button>
                     </div>
@@ -116,7 +116,7 @@
     <!-- Carousel 형식의 모달 -->
     <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
         <div class="modal-dialog modal-xl" style="margin: 50px auto; max-width: 700px;">
-            <div class="modal-content" style="height: 500px;">
+            <div class="modal-content" style="height: 600px;">
                 <div class="modal-header">
                     <h5 class="modal-title">Info</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -145,7 +145,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #7689b1; border-color: #7689b1;">Close</button>
                 </div>
             </div>
         </div>
@@ -216,7 +216,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content" style="height: 800px;">
                 <div class="modal-header">
-                    <h5 class="modal-title">AI 사용 설명서</h5>
+                    <h5 class="modal-title" style="color: #485d86;">AI 사용 설명서</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="position: relative;">
@@ -225,9 +225,9 @@
                         <div class="carousel-inner">
                             <!-- 페이지1 -->
                             <div class="carousel-item active" style="padding: 5px;">
-                                <h3>AI 페이지 1</h3>
-                                <img src="/css/assets/ai_info1.png" style="width: 100%; height:90%; margin: auto;">
-                                <div style="font-size: 18px; margin-top: 10px;">
+                                <h3 style="color: #485d86;">AI 페이지 1</h3>
+                                <img src="/css/assets/ai_info1.png" style="width: 100%; height:400px; margin: auto;">
+                                <div style="font-size: 20px; margin-top: 10px;">
                                     ① AI 사용 설명서를 누르면 이 화면을 다시 보실 수 있습니다!<br>
                                     ② 원하는 날짜를 선택하면 그 날짜에 해당하는 장소가 나타납니다.<br>
                                     ③ 원하는 장소를 선택하거나 전체 선택을 누르고 AI 밥주기 버튼을 누르면 WORK 창으로 이동합니다!<br>
@@ -235,9 +235,9 @@
                             </div>
                             <!-- 페이지2 -->
                             <div class="carousel-item" style="padding: 5px;">
-                                <h3> AI 페이지 2</h3>
-                                <img src="/css/assets/ai_info2.png" style="width: 100%; height:90%; margin: auto;">
-                                <div style="font-size: 18px; margin-top: 10px;">
+                                <h3 style="color: #485d86;"> AI 페이지 2</h3>
+                                <img src="/css/assets/ai_info2.png" style="width: 100%; height: 400px; margin: auto;">
+                                <div style="font-size: 20px; margin-top: 10px;">
                                     ① WORK 창으로 이동한 항목들을 선택하거나 전체선택을 눌러주세요!<br>
                                     ② 항목들을 선택 후 버리기를 누르면 항목들이 FEED 창으로 이동합니다! <br>
                                     ③ 원하는 항목들을 선택 후 AI 일하기 버튼을 클릭하면 로딩 후 결과가 나타납니다!
@@ -245,18 +245,18 @@
                             </div>
                             <!-- 페이지 3 -->
                             <div class="carousel-item" style="padding: 5px;">
-                                <h3> AI 페이지 3</h3>
-                                <img src="/css/assets/ai_info3.png" style="width: 100%; height:90%; margin: auto;">
-                                <div style="font-size: 18px; margin-top: 10px;">
+                                <h3 style="color: #485d86;"> AI 페이지 3</h3>
+                                <img src="/css/assets/ai_info3.png" style="width: 100%; height: 400px; margin: auto;">
+                                <div style="font-size: 20px; margin-top: 10px;">
                                     ① 로딩 후 결과가 먼저 모달창으로 나타납니다! <br>
                                     ② 양쪽의 사각형을 누르면 장소에 대한 상세 내용을 확인할 수 있습니다!
                                 </div>
                             </div>
                             <!-- 페이지 4 -->
                             <div class="carousel-item" style="padding: 5px;">
-                                <h3> AI 페이지 4</h3>
-                                <img src="/css/assets/ai_info4.png" style="width: 100%; height:90%; margin: auto;">
-                                <div style="font-size: 18px; margin-top: 10px;">
+                                <h3 style="color: #485d86;"> AI 페이지 4</h3>
+                                <img src="/css/assets/ai_info4.png" style="width: 100%; height: 400px; margin: auto;">
+                                <div style="font-size: 20px; margin-top: 10px;">
                                     ① 모달창을 닫으면 선택한 장소에 대한 경로가 지도로 나타납니다! <br>
                                     ② 결과보기를 누르면 모달창을 다시 볼 수 있습니다!<br>
                                     ③ 다시하기 버튼을 누르면 장소를 선택하는 창으로 다시 이동합니다.
@@ -283,8 +283,36 @@
             </div>
         </div>
     </div>
-
-
+<!-- 휴지통 모달 -->
+<div class="modal" id="trash" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content" style="height: 500px">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;" >🗑 휴지통</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="trash-modal-body" class="modal-body">
+                <div id="trash-container">
+                    <!-- 토글 -->
+                    <div class="trash-toggle">
+                        <input type="checkbox" id="photo-toggle">
+                        <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+                        <input type="checkbox" id="note-toggle">
+                        <button id="noteButton" onclick="loadTrash('note')">노트</button>
+                        <input type="checkbox" id="group-toggle">
+                        <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+                    </div>
+                </div>
+                <form>
+                    <div id="trash-content" class="trash-content">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" id="trash-modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <script src="/js/loader.js"></script>
 <script src="/js/api.js"></script>
