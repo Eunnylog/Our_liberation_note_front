@@ -7,7 +7,7 @@
 
  * {
   font-family: omyu_pretty !important;
-  font-size: 20px;
+  font-size: 25px;
  }
 
 :root {
@@ -155,6 +155,43 @@ ul.navba2 li {
 .max-content-width {
   max-width: var(--max-content-width);
   width: 100%;
+}
+.mbti-link{
+  margin-bottom: 30px; 
+  font-size: 30px; 
+  color: white; 
+  text-decoration: none; 
+  transition: all .3s ease;
+}
+.mbti-link:hover{
+  color:#39d9c8; transition:all .3s ease;
+  text-decoration: none; 
+}
+.mbti-link > span { 
+  position:relative; 
+  font-size: 30px; 
+}
+.mbti-link > span::after {
+  content: '';
+  width: 0%;
+  left: 50%;
+  height: 1px;
+  display: block;
+  position: absolute;
+  margin-top: 3px;
+  border-bottom: 2px solid #39d9c8;
+  transition:all .3s ease;
+}
+.mbti-link:hover > span::after {
+  content: '';
+  width: 100%;
+  left: 0px;
+  height: 1px;
+  display: block;
+  position: absolute;
+  margin-top: 3px;
+  border-bottom: 2px solid #39d9c8;
+  transition:all .3s ease;
 }
 
 /* content-list */
