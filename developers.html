@@ -178,67 +178,101 @@
         </div>
     </div>
     <!-- 그룹만들기 모달창 -->
-  <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="su" style="color: #485d86;">
-            Make Group</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="container">
-          <div class="global-cont">
-            <div class="inner-cont">
-              <div class="sign-in-up">
-                <form class="sign-in-form active">
-                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="Group Name">
-                  <div style="display: flex;" id="group_make_box">
-                    <input name="addemail" id="usersearch" type="email" class="form-control" autocomplete="off"
-                      placeholder="Email to add" style="width: 300px;">
-                    <button type="button" class="signup" onclick="addMember()"
-                      style="width: 100px; background-color: #485d86; margin-left: 25px;"
-                      id="addmember-btn">Search</button>
-                  </div>
-                  <div style="color: #7c838c;">
-                    <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
-                      Emails </p>
-                    <div id="email-list"
-                      style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
-                      <ul id="email-ul" style="position: relative; right: 10px;">
-                      </ul>
+    <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="su" style="color: #485d86;">
+                        Make Group</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="container">
+                    <div class="global-cont">
+                        <div class="inner-cont">
+                            <div class="sign-in-up">
+                                <form class="sign-in-form active">
+                                    <input name="groupname" id="groupname" type="name" class="form-control"
+                                        placeholder="Group Name">
+                                    <div style="display: flex;" id="group_make_box">
+                                        <input name="addemail" id="usersearch" type="email" class="form-control"
+                                            autocomplete="off" placeholder="Email to add" style="width: 300px;">
+                                        <button type="button" class="signup" onclick="addMember()"
+                                            style="width: 100px; background-color: #485d86; margin-left: 25px;"
+                                            id="addmember-btn">Search</button>
+                                    </div>
+                                    <div style="color: #7c838c;">
+                                        <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
+                                            Emails </p>
+                                        <div id="email-list"
+                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
+                                            <ul id="email-ul" style="position: relative; right: 10px;">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="addMembersToGroup()"
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
+                                        <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
+                                    </button>
+                                    <button type="button" onclick="DeleteMembers()"
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
+                                            src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
+                                    <div style="color: #4d6087;">
+                                        <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
+                                            Emails </p>
+                                        <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
+                                            overflow-y: auto; height: 250px;">
+                                            <ul id="selected-email-ul" style="position: relative; right: 10px;">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="sign-up" style="display: flex;">
+                                        <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
+                                            onclick="document.getElementById('makegroup').style.display = 'none'"
+                                            style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
+                                        <button type="button" class="signup" onclick="addGroup()"
+                                            style="background-color: #485d86;">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <button type="button" onclick="addMembersToGroup()"
-                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
-                  <button type="button" onclick="DeleteMembers()"
-                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
-                  <div style="color: #4d6087;">
-                    <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
-                      Emails </p>
-                    <div id="selected-email-list"
-                      style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
-                      <ul id="selected-email-ul" style="position: relative; right: 10px;">
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="sign-up" style="display: flex;">
-                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                      onclick="document.getElementById('makegroup').style.display = 'none'"
-                      style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
-                    <button type="button" class="signup" onclick="addGroup()"
-                      style="background-color: #485d86;">Save</button>
-                  </div>
-                </form>
-              </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
+    <!-- 휴지통 모달 -->
+    <div class="modal" id="trash" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content" style="height: 500px">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="trash-modal-body" class="modal-body">
+                    <div id="trash-container">
+                        <!-- 토글 -->
+                        <div class="trash-toggle">
+                            <input type="checkbox" id="photo-toggle">
+                            <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+                            <input type="checkbox" id="note-toggle">
+                            <button id="noteButton" onclick="loadTrash('note')">노트</button>
+                            <input type="checkbox" id="group-toggle">
+                            <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+                        </div>
+                    </div>
+                    <form>
+                        <div id="trash-content" class="trash-content">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" id="trash-modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="/js/loader.js"></script>
 <script src="/js/api.js"></script>
-
+<script src="/js/trash.js"></script>
 
 </html>

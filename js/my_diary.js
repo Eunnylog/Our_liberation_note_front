@@ -1,6 +1,6 @@
 let access_token = localStorage.getItem('access')
 let back_url = 'https://api.liberation-note.com'
-// let back_url = 'http://127.0.0.1:8000'
+
 let group_data = []
 
 checkLogin()
@@ -176,16 +176,7 @@ async function saveNote() {
 
         }
         else {
-            alert(response_json)
-
-            const regex = /string='([^']+)'/;
-            const match = JSON.stringify(response_json).match(regex)
-
-            if (match && match.length > 1) {
-                const cleanedString = match[1].replace("string=", "");
-                alert("※ " + cleanedString);
-
-            }
+            alert(response_json['non_field_errors'])
         }
 
     } else {
@@ -205,7 +196,7 @@ function updateHandleRadioClick() {
     const selectedRadio = document.querySelector('input[name="email_radio"]:checked');
 
     if (selectedRadio) {
-        const selectedEmail = selectedRadio.nextSibling.textContent.trim();
+        const selectedEmail = selectedRadio.previousSibling.textContent.trim();
         document.getElementById("update-usersearch").value = selectedEmail;
     }
 }
@@ -256,8 +247,8 @@ async function groupUpdateModal() {
                 console.log("멤버", members)
                 let temp_html = `
                         <li class="selected_email" style="list-style-type: none; margin-bottom: 10px;">
-                        <input type="radio" id="selected_update_email_${index}" name="checked_email_radio" value="${index}" onclick="updateHandleRadioClick()">
                         ${member}
+                        <input type="radio" id="selected_update_email_${index}" name="checked_email_radio" value="${index}" onclick="updateHandleRadioClick()">
                         </li>
                     `;
                 groupMembers.innerHTML += temp_html;
@@ -313,8 +304,9 @@ async function updateAddMember() {
         emails.forEach((useremail, index) => {
             let temp_html = `
             <li style="list-style-type: none; margin-bottom: 10px;">
-              <input type="radio" id="update_email_${index}" name="email_radio" value="${index}">
-              ${useremail}
+                ${useremail}
+                <input type="radio" id="update_email_${index}" name="email_radio" value="${index}">
+              
             </li>
           `;
             email.innerHTML += temp_html;
@@ -336,7 +328,7 @@ function updateAddMembersToGroup() {
     }
     if (checkedInput) {
 
-        const selectedEmail = checkedInput.nextSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
+        const selectedEmail = checkedInput.previousSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
 
         // 이미 추가된 이메일인지 확인
         const alreadyAdded = selectedEmails.includes(selectedEmail);
@@ -369,23 +361,21 @@ function updateAddMembersToGroup() {
             const newInput = document.createElement("input");
             newInput.type = "radio"
             newInput.name = "checked_email_radio"
-            newEmailLi.appendChild(newInput)
+
 
             // 이메일 추가
             const textNode = document.createTextNode(" ")
             const emailText = document.createTextNode(selectedEmail)
             newEmailLi.appendChild(textNode)
             newEmailLi.appendChild(emailText)
-
+            newEmailLi.appendChild(newInput)
             selectedEmailUl.appendChild(newEmailLi)
+
         } else {
             alert("이미 추가된 이메일입니다.");
         }
 
     }
-    // else {
-    //     alert("선택된 이메일이 없습니다.")
-    // }
     $('input[type=radio]').prop('checked', false);
 }
 
@@ -393,7 +383,7 @@ function updateAddMembersToGroup() {
 async function updateDeleteMembers() {
     const checkedInput = document.querySelector('input[name="checked_email_radio"]:checked');
     if (checkedInput) {
-        const selectedEmail = checkedInput.nextSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
+        const selectedEmail = checkedInput.previousSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
 
         const selectedEmailIndex = selectedEmails.indexOf(selectedEmail);
 
@@ -472,10 +462,15 @@ async function updateGroup() {
         alert("그룹이 수정되었습니다.")
         window.location.reload()
     } else {
-        alert(response.error)
+        const data = await response.json();
+        console.log('data', data);
+        if (data.message) {
+            alert("※ " + data.message);
+        } else if (data["non_field_errors"]) {
+            alert("※ " + data["non_field_errors"])
+        }
     }
 }
-
 async function deleteGroupModal() {
     const selected_id = document.getElementById('select_group').value
     const selectedOption = document.getElementById('select_group').options[document.getElementById('select_group').selectedIndex];
@@ -544,17 +539,3 @@ async function deleteGroupConfirm() {
     }
 }
 
-function toggleArrow() {
-    const arrow = document.querySelector('.icoArrow img option');
-
-    if (arrow.style.transform === 'rotate(180deg)') {
-        arrow.style.transform = 'rotate(0deg)';
-    } else {
-        arrow.style.transform = 'rotate(180deg)';
-    }
-}
-
-// function toggleArrow() {
-//     const arrow = document.querySelector('.icoArrow img');
-//     arrow.classList.toggle('rotate');
-// }

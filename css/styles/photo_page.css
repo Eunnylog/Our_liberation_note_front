@@ -26,11 +26,11 @@ body {
 	background-color: #fafafa;
 }
 
-.container {
+/* .container {
 	max-width: 100rem;
 	margin: 0 auto;
 	padding: 0 2rem 2rem;
-}
+} */
 
 .heading {
 	font-family: "Montserrat", Arial, sans-serif;
@@ -46,22 +46,17 @@ body {
 	display: block;
 }
 
-.gallery {
-	display: flex;
-	flex-wrap: wrap;
-	/* Compensate for excess margin on outer gallery flex items */
-	margin: -1rem -1rem;
-}
-
 .gallery-item {
 	/* Minimum width of 24rem and grow to fit available space */
 	flex: 1 0 24rem;
 	/* Margin value should be half of grid-gap value as margins on flex items don't collapse */
-	margin: 1rem;
 	box-shadow: 0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.4);
 	overflow: hidden;
 	position: relative;
 	display: inline-block;
+	width: 300px;
+	height: 300px;
+	justify-self: center;
 }
 
 .gallery-image {
@@ -71,6 +66,12 @@ body {
 	margin-bottom: 40px;
 	object-fit: cover;
 	transition: transform 400ms ease-out;
+}
+
+.detail-image {
+	width: 100%;
+	height: 100%;
+	margin-bottom: 5px;
 }
 
 .stamp {
@@ -94,52 +95,40 @@ body {
 	transform: scale(1.15);
 }
 
-.filebox .upload-name {
+.input-group .upload-name {
 	display: inline-block;
 	height: 40px;
 	padding: 0 10px;
 	vertical-align: left;
 	border: 1px solid #dddddd;
-	width: 78%;
-	color: #999999;
+	width: 80%;
+	color: #737B83;
 }
 
 /* 사진 추가 모달 속 사진추가 버튼 css */
-.filebox label {
+.input-group label {
 	display: inline-block;
 	padding: 8.5px 20px;
 	color: #fff;
-	vertical-align: right;
+	vertical-align: middle;
 	background-color: #1f489a;
 	cursor: pointer;
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: bold;
-	height: 40px;
-	margin-left: 0px;
-	border-radius: 4px;
 	color: white;
-	cursor: pointer;
+	box-sizing: border-box; 
 }
-
-
-
-/*
-
-The following rule will only run if your browser supports CSS grid.
-
-Remove or comment-out the code block below to see how the browser will fall-back to flexbox styling. 
-
-*/
 
 @supports (display: grid) {
 	.gallery {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+		grid-template-columns: repeat(3, 1fr);
 		grid-gap: 2rem;
 	}
 
 	.gallery,
 	.gallery-item {
 		margin: 0;
+	}
 	}
 }

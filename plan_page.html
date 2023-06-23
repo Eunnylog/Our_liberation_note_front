@@ -48,8 +48,8 @@
           onclick="selectEmailMember();">계획표 전송</button>
         <button type="button" id="lifePhoto" class="btn group-btn"
           style="background-color: #7689b1; color:white; margin: 0px 10px;">해방필름</button>
-        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteNote" onclick="deleteNoteModal()" class="btn group-btn"
-          style="background-color: #485d86; color:white; margin: 0px 10px;">노트삭제</button>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteNote" onclick="deleteNoteModal()"
+          class="btn group-btn" style="background-color: #485d86; color:white; margin: 0px 10px;">노트삭제</button>
       </div>
       <!-- 로딩창 -->
       <div id="loading" style="display: none;">
@@ -79,7 +79,8 @@
                     <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
                       onclick="document.getElementById('select_email_member').style.display = 'none'"
                       style="margin-right: 10px; background-color: #7689b1;">취소</button>
-                    <button type="button" class="signup" onclick="sendEmail()" style="background-color: #485d86;">이메일 보내기</button>
+                    <button type="button" class="signup" onclick="sendEmail()" style="background-color: #485d86;">이메일
+                      보내기</button>
                   </div>
                 </form>
               </div>
@@ -106,7 +107,8 @@
                 <form class="sign-in-form active">
                   <div id="plan_info" style="padding: 10px;; text-align:left">
                   </div>
-                  <button type="button" onclick="deletePlan()" class="btn btn-primary" style="float: center; width:49%; background-color: #7689b1;">
+                  <button type="button" onclick="deletePlan()" class="btn btn-primary"
+                    style="float: center; width:49%; background-color: #7689b1;">
                     삭제
                   </button>
                   <button id="patch_box" type="button" onclick="patchBox()" class="btn btn-primary"
@@ -150,7 +152,8 @@
                     <input name="location" id="location" type="text" class="form-control"
                       style="width: 48%; height:48px;" placeholder="주소(미작성시 AI사용이 불가합니다!)">
                     <button type="button" class="btn btn-primary" onclick="addPlanList()"
-                      style="width: 20%; margin-top:0px; background-color: #485d86;" class="btn btn-primary">일정추가</button>
+                      style="width: 20%; margin-top:0px; background-color: #485d86;"
+                      class="btn btn-primary">일정추가</button>
                   </div>
                   <div class="input-group" style="flex-wrap: nowrap;">
                     <input name="start" id="start" type="date" class="form-control" style="width: 48%;">
@@ -160,13 +163,14 @@
                   </div>
                   <textarea name="memo" id="memo" type="textarea" class="form-control" placeholder="memo"
                     style="height:200px; min-height:200px; max-height:200px"></textarea>
-                    <div id="plan_list" style="width:100%; height:200px; overflow-x: auto; margin-top: 10px;" class="form-control" ></div>
-                    <div class="button-group">
+                  <div id="plan_list" style="width:100%; height:200px; overflow-x: auto; margin-top: 10px;"
+                    class="form-control"></div>
+                  <div class="button-group">
                     <button type="button" data-bs-dismiss="modal" aria-label="Close"
                       class="btn btn-primary delete_search" style="width: 49%; background-color: #7689b1;">취소</button>
-                    <button type="button" onclick="savePlan()" class="btn btn-primary" style="width: 49%; background-color: #485d86;">저장</button>
+                    <button type="button" onclick="savePlan()" class="btn btn-primary"
+                      style="width: 49%; background-color: #485d86;">저장</button>
                   </div>
-                  
                 </form>
               </div>
             </div>
@@ -198,23 +202,26 @@
                       id="addmember-btn">Search</button>
                   </div>
                   <div style="color: #7c838c;">
-                    <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
+                    <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
                       Emails </p>
                     <div id="email-list"
-                      style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                      style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
                       <ul id="email-ul" style="position: relative; right: 10px;">
                       </ul>
                     </div>
                   </div>
                   <button type="button" onclick="addMembersToGroup()"
-                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
+                    style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
+                    <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
+                  </button>
                   <button type="button" onclick="DeleteMembers()"
-                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
+                    style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
+                      src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
                   <div style="color: #4d6087;">
                     <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
                       Emails </p>
-                    <div id="selected-email-list"
-                      style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                    <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
+                                        overflow-y: auto; height: 250px;">
                       <ul id="selected-email-ul" style="position: relative; right: 10px;">
                       </ul>
                     </div>
@@ -249,7 +256,37 @@
       </div>
     </div>
   </div>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
+  <!-- 휴지통 모달 -->
+  <div class="modal" id="trash" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content" style="height: 500px" >
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="trash-modal-body" class="modal-body">
+                <div id="trash-container">
+                    <!-- 토글 -->
+                    <div class="trash-toggle">
+                        <input type="checkbox" id="photo-toggle">
+                        <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+                        <input type="checkbox" id="note-toggle">
+                        <button id="noteButton" onclick="loadTrash('note')">노트</button>
+                        <input type="checkbox" id="group-toggle">
+                        <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+                    </div>
+                </div>
+                <form>
+                    <div id="trash-content" class="trash-content">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" id="trash-modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script> -->
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
   <script src="/js/plan_page.js"></script>
