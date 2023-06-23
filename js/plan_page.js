@@ -1,8 +1,8 @@
 let plan_data = []
 let plan_set = [];
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.liberation-note.com'
-// let back_url = 'http://127.0.0.1:8000'
+// let back_url = 'https://api.liberation-note.com'
+let back_url = 'http://127.0.0.1:8000'
 
 checkGroup()
 checkLogin()
@@ -444,7 +444,7 @@ async function selectEmailMember() {
     const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            // "Authorization": `Bearer ${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'GET',
     });

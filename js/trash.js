@@ -11,6 +11,7 @@ async function getTrash() {
 
     if (response.status == 200) {
         const response_json = await response.json()
+        console.log(response_json)
         return response_json
     } else {
         alert("불러오는데 실패했습니다")
