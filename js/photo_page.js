@@ -209,15 +209,22 @@ async function photo_detail(photo_id) {
                         <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal">게시</button>
                     </div>
                     <hr/>
-                    <div class="comment_set">
-                        ${comments.map(comment => `<div onclick="toggleCommentEdit(event)" id="comment-$comment-${comment.id}">${comment.comment}
-                        <div style="display: flex; align-items: center;">
-                        <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" placeholder="comment">
-                        <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="editComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">수정</button>
-                        <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">삭제</button>
-                        </div>
-                        </div>`).join('')}
-                    </div>`
+                    <div>
+                    <style>
+                        .comment_set li:hover {
+                            background-color: #f5f5f5; /* 호버 시에 변경할 배경색 */
+                        }
+                    </style>
+                        <ul class="comment_set">
+                            ${comments.map(comment => `<li style="width: 100%" onclick="toggleCommentEdit(event)" id="comment-$comment-${comment.id}">${comment.comment} 
+                            <div style="display: none;">
+                            <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
+                            <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="editComment(event)" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
+                            <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">삭제</button>
+                            <div>
+                    </li>`).join('')}
+                    </ul>
+                    `
     $('#photo-d').append(temp_html)
 
     $('#photo-detail-modal-footer').empty()
@@ -231,12 +238,19 @@ async function photo_detail(photo_id) {
 }
 
 
-// 코멘트란을 토글로 하여 클릭했을때의 이벤트 지정
-
 function toggleCommentEdit(event) {
     const li = event.target.closest('li');
     const div = li.querySelector('div');
     div.style.display = div.style.display === 'none' ? 'flex' : 'none';
+
+    const comment_id = document.getElementById("comment").value;
+
+    fetch(`${backend_base_url}/note/comment/${comment_id}`, {
+        headers: {
+            "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'GET',
+    })
 }
 
 let commentItems = document.querySelectorAll('.comment_set li'); // 변수 선언을 밖으로 이동
@@ -244,9 +258,7 @@ let commentItems = document.querySelectorAll('.comment_set li'); // 변수 선�
 // li 요소들에 클릭시 이벤트 발생
 commentItems.forEach(item => {
     item.addEventListener('click', toggleCommentEdit);
-    alert("")
 });
-
 
 
 function patchPhotoBox(photo_id) {
