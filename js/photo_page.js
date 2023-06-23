@@ -39,9 +39,9 @@ async function addPhoto() {
         const note_id = urlParams.get('note_id');
 
         const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
-            // headers: {
-            //     // "Authorization": `Bearer ${access_token}`,
-            // },
+            headers: {
+                "Authorization": `Bearer ${access_token}`,
+            },
             method: 'POST',
 
             body: formData

@@ -72,7 +72,8 @@
                                         <label for="image"
                                             style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 4px 4px 0; background-color:  #485D86;">사진
                                             추가</label>
-                                        <input type="file" id="image" style="display: none" />
+                                        <input type="file" id="image" style="display: none"
+                                            onchange="updateFileName(this)" />
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
                                         <input name="name" id="name" type="text" class="form-control"
@@ -238,6 +239,11 @@
                 console.log("Button ID:", buttonId);
             });
         });
+
+        function updateFileName(inputElement) {
+            var fileName = inputElement.files[0].name;
+            document.querySelector('.upload-name').value = fileName;
+        }
     </script>
 </body>
 
