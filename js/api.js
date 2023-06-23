@@ -1,6 +1,6 @@
 // 기본 URL
-const backend_base_url = "https://api.liberation-note.com"
-// const backend_base_url = "http://127.0.0.1:8000"
+// const backend_base_url = "https://api.liberation-note.com"
+const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 // const frontend_base_url = "https://liberation-note.com"
 
@@ -380,7 +380,7 @@ async function handlesUserDelete() {
   const payload = localStorage.getItem("payload");
   const payload_parse = JSON.parse(payload)
 
-  const response = await fetch(`${backend_base_url}/user/delete/${payload_parse.user_id}/`, {
+  const response = await fetch(`${backend_base_url}/user/`, {
     headers: {
       "Authorization": `Bearer ${access_token}`
     },
@@ -395,6 +395,8 @@ async function handlesUserDelete() {
     localStorage.removeItem("noteName")
     localStorage.removeItem("trashCount")
     document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
+    localStorage.removeItem("code")
+    localStorage.removeItem("state")
     location.reload()
   }
   if (response.status == 403) {
