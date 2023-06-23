@@ -1,6 +1,5 @@
 // 기본 URL
 const backend_base_url = "https://api.liberation-note.com"
-// const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 // const frontend_base_url = "https://liberation-note.com"
 
@@ -82,6 +81,7 @@ async function signupTimer() {
 async function handleSignin() {
   const email = document.getElementById("login-email").value
   const password = document.getElementById("login-password").value
+
   try {
     const response = await fetch(`${backend_base_url}/user/login/`, {
       headers: {
@@ -141,41 +141,6 @@ async function sendCode() {
   alert("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
   signupTimer()
 }
-
-// 쿠키에 있는 값을 로컬스토리지에 저장
-function savePayloadToLocalStorage() {
-  const cookies = document.cookie.split(';');
-
-  console.log()
-
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    const [name, value] = cookie.split('=');
-
-    if (name === "jwt_token") {
-      jwtToken = value;
-      break;
-    }
-  }
-
-
-  if (jwtToken) {
-    const token = jwtToken.replace(/"/g, '').replace(/'/g, '"').replace(/\\054/g, ',')
-    const response_json = JSON.parse(token);
-    const access_token = response_json.access
-
-    const base64Url = response_json.access.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    localStorage.setItem("access", access_token);
-    localStorage.setItem("payload", jsonPayload);
-  }
-}
-
-
 
 if (localStorage.getItem("social")) {
 } else if (location.href.split('=')[1]) {
@@ -391,7 +356,8 @@ function handleLogout() {
     localStorage.removeItem("code")
     localStorage.removeItem("state")
     localStorage.removeItem("is_subscribe")
-    document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
+    localStorage.removeItem("noteName")
+    localStorage.removeItem("trashCount")
     window.location.replace(`${frontend_base_url}/index.html`)
   }
 
@@ -425,6 +391,8 @@ async function handlesUserDelete() {
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
     localStorage.removeItem("is_subscribe")
+    localStorage.removeItem("noteName")
+    localStorage.removeItem("trashCount")
     document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
     location.reload()
   }
@@ -473,8 +441,6 @@ function signUpsignInError() {
 }
 
 signUpsignInError()
-savePayloadToLocalStorage()
-
 
 const getCookieValue = (key) => {
   const cookies = document.cookie.split(';');

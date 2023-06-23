@@ -1,6 +1,6 @@
 let access_token = localStorage.getItem('access')
 let back_url = 'https://api.liberation-note.com'
-// let back_url = 'http://127.0.0.1:8000'
+
 let group_data = []
 
 checkLogin()
@@ -538,3 +538,4 @@ async function deleteGroupConfirm() {
         alert(`오류가 발생했습니다: ${response_json}`)
     }
 }
+

@@ -17,16 +17,31 @@ async function getTrash() {
     }
 }
 
+if (localStorage.getItem("payload")) {
+    getTrash().then(response => {
+        const groups = response.group;
+        const notes = response.note;
+        const photos = response.photo;
+
+        const trashCount = groups.length + notes.length + photos.length;
+
+        localStorage.setItem('trashCount', trashCount.toString());
+
+        const trashCountElement = document.getElementById('trash-count');
+        trashCountElement.innerText = trashCount.toString();
+    });
+}
+
 async function loadTrash(contentType) {
     const response = await getTrash()
-    console.log(response)
 
     const groups = response.group
     const notes = response.note
     const photos = response.photo
 
     $('#trash-content').empty()
-    $('#modal-footer').empty()
+    $('#trash-modal-footer').empty()
+
 
     if (contentType === 'group') {
         if (groups.length === 0) {
@@ -40,7 +55,7 @@ async function loadTrash(contentType) {
                           <button type="button" class="btn btn-primary" 
                             style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
-            $('#modal-footer').append(temp_html2)
+            $('#trash-modal-footer').append(temp_html2)
 
         } else {
             groups.forEach((group, index) => {
@@ -61,7 +76,7 @@ async function loadTrash(contentType) {
                           <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
                             style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
-            $('#modal-footer').append(temp_html2)
+            $('#trash-modal-footer').append(temp_html2)
         }
     }
     else if (contentType === 'note') {
@@ -76,7 +91,7 @@ async function loadTrash(contentType) {
                           <button type="button" class="btn btn-primary" 
                             style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
-            $('#modal-footer').append(temp_html2)
+            $('#trash-modal-footer').append(temp_html2)
 
         } else {
             notes.forEach((note, index) => {
@@ -101,7 +116,7 @@ async function loadTrash(contentType) {
                           <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
                             style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
-            $('#modal-footer').append(temp_html2)
+            $('#trash-modal-footer').append(temp_html2)
         }
     }
     else if (contentType === 'photo') {
@@ -116,7 +131,7 @@ async function loadTrash(contentType) {
                           <button type="button" class="btn btn-primary" 
                             style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
-            $('#modal-footer').append(temp_html2)
+            $('#trash-modal-footer').append(temp_html2)
 
         } else {
             photos.forEach((photo, index) => {
@@ -141,44 +156,51 @@ async function loadTrash(contentType) {
                           <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
                             style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
-            $('#modal-footer').append(temp_html2)
+            $('#trash-modal-footer').append(temp_html2)
         }
     }
 
-    const toggleSwitch = document.querySelector('.toggle-switch');
-    const activeButton = document.querySelector('.trash-toggle button.active');
-    const targetButton = document.querySelector(`#${contentType}Button`);
-    const targetButtonOffset = targetButton.offsetLeft;
-  
-    toggleSwitch.style.width = '60px';
-    toggleSwitch.style.transform = `translateX(${targetButtonOffset}px)`;
-    activeButton.classList.remove('active');
-    targetButton.classList.add('active');
+    // 모든 버튼 요소 가져오기
+    const buttons = document.querySelectorAll(".trash-toggle button");
+
+    // 모든 버튼의 색상 초기화
+    buttons.forEach(button => {
+        button.classList.remove("active");
+    });
+
+    // 선택한 버튼의 색상 변경
+    const selectedButton = document.getElementById(contentType + "Button");
+    selectedButton.classList.add("active");
 }
 
-
-async function handlePhototrash(photo_id, location, name) {
+async function handleGrouptrash(group_id, name) {
     let token = localStorage.getItem("access")
 
-    const response = await fetch(`${backend_base_url}/note/trash/${photo_id}`, {
+    const response = await fetch(`${backend_base_url}/note/trash/${group_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${token}`
         },
         method: 'POST',
         body: JSON.stringify({
-            "location": location,
             "name": name,
         })
     })
 
-    if (response.status == 200) {
+    if (response.status == 202) {
         const response_json = await response.json()
+        alert(`※ [${name}] 그룹이 정상적으로 삭제되었습니다.`)
         window.location.reload()
-        return response_json
-    }
-    else {
-        alert("※실패")
+        return response_json 
+
+    } else if (response.status == 200) {
+        const response_json = await response.json()
+        alert(`※ [${name}] 그룹이 정상적으로 복원되었습니다.`)
+        window.location.reload()
+        return response_json 
+
+    } else {
+        alert("※실패하였습니다.")
         console.log(photo_id)
     }
 }
@@ -198,38 +220,57 @@ async function handleNotetrash(note_id, group, name) {
         })
     })
 
-    if (response.status == 200) {
+    if (response.status == 202) {
         const response_json = await response.json()
+        alert(`※ [${name}] 노트가 정상적으로 삭제되었습니다.`)
+        window.location.replace(`${frontend_base_url}/my_diary.html`)
+        return response_json 
+
+    } else if (response.status == 200) {
+        const response_json = await response.json()
+        alert(`※ [${name}] 노트가 정상적으로 복원되었습니다.`)
         window.location.reload()
-        return response_json
-    }
-    else {
-        alert("※실패")
+        return response_json 
+
+    } else {
+        alert("※실패하였습니다.")
         console.log(photo_id)
     }
 }
 
-async function handleGrouptrash(group_id, name) {
+async function handlePhototrash(photo_id, location, name) {
     let token = localStorage.getItem("access")
+    var userConfirmation = confirm("※ 확인을 누르시면 해당 사진이 휴지통으로 이동합니다. 삭제하시겠습니까?");
 
-    const response = await fetch(`${backend_base_url}/note/trash/${group_id}`, {
+    if (!userConfirmation) {
+        return false
+    }
+
+    const response = await fetch(`${backend_base_url}/note/trash/${photo_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${token}`
         },
         method: 'POST',
         body: JSON.stringify({
+            "location": location,
             "name": name,
         })
     })
-
-    if (response.status == 200) {
+    if (response.status == 202) {
         const response_json = await response.json()
+        alert(`※ [${name}] 사진이 정상적으로 삭제되었습니다.`)
         window.location.reload()
-        return response_json
-    }
-    else {
-        alert("※실패")
+        return response_json 
+
+    } else if (response.status == 200) {
+        const response_json = await response.json()
+        alert(`※ [${name}] 사진이 정상적으로 복원되었습니다.`)
+        window.location.reload()
+        return response_json 
+
+    } else {
+        alert("※실패하였습니다.")
         console.log(photo_id)
     }
 }
@@ -280,8 +321,13 @@ function handleTrashRestore() {
 
 async function deleteGroup(group_id) {
     const token = localStorage.getItem('access')
+    var userConfirmation = confirm("※ 확인을 누르시면 해당 그룹이 영구삭제됩니다. 삭제하시겠습니까?");
 
-    const deleteResponse = await fetch(`${backend_base_url}/user/group/${group_id}/`, {
+    if (!userConfirmation) {
+        return false
+    }
+
+    const response = await fetch(`${backend_base_url}/user/group/${group_id}/`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': "Bearer " + token,
@@ -289,20 +335,18 @@ async function deleteGroup(group_id) {
         method: 'DELETE',
     })
 
-    if (deleteResponse.ok) {
-        alert("삭제되었습니다!");
-        window.location.replace(`${frontend_base_url}/index.html`)
+    if (response.status == 204) {
+        alert('※ 삭제되었습니다.')
+        window.location.reload()
     } else {
-        const response_json = await deleteResponse.json()
-        alert(`오류가 발생했습니다: ${response_json}`)
+        alert('※ 문제가 발생했습니다!')
     }
 }
 
 async function deleteNote(note_id) {
     let token = localStorage.getItem("access")
-    var userConfirmation = confirm("정말 삭제하시겠습니까?");
+    var userConfirmation = confirm("※ 확인을 누르시면 해당 노트가 영구삭제됩니다. 삭제하시겠습니까?");
 
-    // 만약 사용자가 'OK'를 클릭하면, plan을 삭제하고 버튼을 제거합니다.
     if (!userConfirmation) {
         return false
     }
@@ -316,17 +360,17 @@ async function deleteNote(note_id) {
     });
 
     if (response.status == 204) {
-        alert('삭제되었습니다!')
+        alert('※ 삭제되었습니다.')
+        window.location.reload()
     } else {
-        alert('문제가 발생했습니다!')
+        alert('※ 문제가 발생했습니다!')
     }
 }
 
 async function deletePhoto(photo_id) {
     let token = localStorage.getItem("access")
-    var userConfirmation = confirm("정말 삭제하시겠습니까?");
+    var userConfirmation = confirm("※ 확인을 누르시면 해당 사진이 영구삭제됩니다. 삭제하시겠습니까?");
 
-    // 만약 사용자가 'OK'를 클릭하면, plan을 삭제하고 버튼을 제거합니다.
     if (!userConfirmation) {
         return false
     }
@@ -340,9 +384,10 @@ async function deletePhoto(photo_id) {
     });
 
     if (response.status == 204) {
-        alert('삭제되었습니다!')
+        alert('※ 삭제되었습니다.')
+        window.location.reload()
     } else {
-        alert('문제가 발생했습니다!')
+        alert('※ 문제가 발생했습니다!')
     }
 }
 
