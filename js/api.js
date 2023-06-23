@@ -394,7 +394,6 @@ async function handlesUserDelete() {
     localStorage.removeItem("is_subscribe")
     localStorage.removeItem("noteName")
     localStorage.removeItem("trashCount")
-    document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
     location.reload()
   }
   if (response.status == 403) {
