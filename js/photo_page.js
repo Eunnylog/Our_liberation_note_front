@@ -2,11 +2,11 @@ let access_token = localStorage.getItem('access')
 checkGroup()
 checkLogin()
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     const noteName = localStorage.getItem('noteName');
     const photopageTitle = document.getElementById("photopage_title");
     photopageTitle.innerHTML = noteName + " | Photo gallery";
-  });
+});
 
 // 사진 추가하기
 async function addPhoto() {
