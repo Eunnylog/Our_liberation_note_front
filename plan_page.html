@@ -266,34 +266,6 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="select_member" tabindex="-1" aria-labelledby="su" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="su">
-            Send Email</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="container">
-          <div class="global-cont">
-            <div class="inner-cont">
-              <div class="sign-in-up">
-                <form class="sign-in-form active">
-                  <div style="width:100%;" id="member_list">
-                  </div>
-                  <div class="sign-up" style="display: flex;">
-                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()"
-                      style="margin-right: 10px; background-color: #60749d;">취소</button>
-                    <button type="button" class="signup" onclick="sendEmail()">이메일 보내기</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- 노트 삭제 모달 -->
   <div class="modal" tabindex="-1" id="deleteNote">
     <div class="modal-dialog">
@@ -309,7 +281,37 @@
       </div>
     </div>
   </div>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
+  <!-- 휴지통 모달 -->
+  <div class="modal" id="trash" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content" style="height: 500px">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div id="trash-modal-body" class="modal-body">
+          <div id="trash-container">
+            <!-- 토글 -->
+            <div class="trash-toggle">
+              <input type="checkbox" id="photo-toggle">
+              <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+              <input type="checkbox" id="note-toggle">
+              <button id="noteButton" onclick="loadTrash('note')">노트</button>
+              <input type="checkbox" id="group-toggle">
+              <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+            </div>
+          </div>
+          <form>
+            <div id="trash-content" class="trash-content">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" id="trash-modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script> -->
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
   <script src="/js/plan_page.js"></script>
