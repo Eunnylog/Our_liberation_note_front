@@ -1,5 +1,6 @@
 // 기본 URL
-const backend_base_url = "https://api.liberation-note.com"
+// const backend_base_url = "https://api.liberation-note.com"
+const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 // const frontend_base_url = "https://liberation-note.com"
 
@@ -393,7 +394,6 @@ async function handlesUserDelete() {
     localStorage.removeItem("is_subscribe")
     localStorage.removeItem("noteName")
     localStorage.removeItem("trashCount")
-    document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
     location.reload()
   }
   if (response.status == 403) {

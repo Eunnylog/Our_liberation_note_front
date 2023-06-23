@@ -11,6 +11,7 @@ async function getTrash() {
 
     if (response.status == 200) {
         const response_json = await response.json()
+        console.log(response_json)
         return response_json
     } else {
         alert("불러오는데 실패했습니다")
@@ -239,13 +240,8 @@ async function handleNotetrash(note_id, group, name) {
     }
 }
 
-async function handlePhototrash(photo_id, location, name) {
+async function handlePhototrash(photo_id, location, title, name) {
     let token = localStorage.getItem("access")
-    var userConfirmation = confirm("※ 확인을 누르시면 해당 사진이 휴지통으로 이동합니다. 삭제하시겠습니까?");
-
-    if (!userConfirmation) {
-        return false
-    }
 
     const response = await fetch(`${backend_base_url}/note/trash/${photo_id}`, {
         headers: {
@@ -255,7 +251,7 @@ async function handlePhototrash(photo_id, location, name) {
         method: 'POST',
         body: JSON.stringify({
             "location": location,
-            "name": name,
+            "title": title,
         })
     })
     if (response.status == 202) {
