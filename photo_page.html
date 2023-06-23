@@ -15,6 +15,11 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="/js/loader.js"></script>
     <script src="/js/api.js"></script>
+    <script src="/js/api_key.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/photo_map.js"></script>
+    <script src="/js/photo_page.js"></script>
+    <script src="/js/trash.js"></script>
 </head>
 
 <body>
@@ -24,22 +29,27 @@
     <main class="site-body" style="margin-top: -50px;">
         <article class="review-detail max-content-width">
             <div style="margin-bottom:30px;">
-                <h1 id="photopage_title" style="width:300px; display: inline-block;">Photo gallery</h1>
+                <h1 id="photopage_title" style="font-size:50px">Photo gallery</h1>
             </div>
             <hr style="margin-bottom: 30px; clear: both;">
             <div class="clearfix" style="width:100%; margin-bottom:50px;">
-                <div id="menu_box" style="float: right;">
+                <div id="menu_box" style="float:left;">
                     <button type="button" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"
-                        class="btn group-btn" style="background-color: #60749d; color:white; margin: 0px 10px;">사진
+                        class="btn group-btn" style="background-color: #485D86; color:white; margin: 0px 10px;">사진
                         추가</button>
                 </div>
+                <div style="float: right;">
+                    <button onclick="m_page()" type="button" class="btn group-btn"
+                        style="background-color: #7689b1; color:white; margin-left: 6px;">
+                        << </button>
+                    <button onclick="p_page()" type="button" class="btn group-btn"
+                        style="background-color: #485D86; color:white; "> >> </button>
+                </div>
             </div>
-            <button onclick="m_page()" type="button" class="btn group-btn"
-                style="background-color: #60749d; color:white; margin: 4px 2px; margin-left: 6px;">뒤로</button>
-            <button onclick="p_page()" type="button" class="btn group-btn"
-                style="background-color: #60749d; color:white; margin: 4px 2px;">다음</button>
             <div class="gallery" id="photo_info">
-                <!-- 이미지 갤러리 아이템들이 동적으로 추가될 공간 -->
+            </div>
+
+            <!-- 이미지 갤러리 아이템들이 동적으로 추가될 공간 -->
             </div>
         </article>
     </main>
@@ -48,7 +58,7 @@
         <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 700px;">
             <div class="modal-content" style="width:700px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
                         사진 추가</h5>
                     <button type="button" class="btn-close delete_search" data-bs-dismiss="modal"
                         aria-label="Close"></button>
@@ -62,7 +72,7 @@
                                         <input class="upload-name" value="첨부파일" placeholder="첨부파일" multiple
                                             accept=".jpg, .png, .jpeg" style="width: 80%; height:40px;">
                                         <label for="image"
-                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 4px 4px 0;">사진
+                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 4px 4px 0; background-color:  #485D86;">사진
                                             추가</label>
                                         <input type="file" id="image" style="display: none" />
                                     </div>
@@ -74,7 +84,7 @@
                                         <input name="title" id="title" type="text" class="form-control"
                                             placeholder="목적지(지역명+상호명, 지역명+카테고리)" style="width: 80%; height:40px;">
                                         <button type="button" onclick="searchLocation('1')" class="btn btn-primary"
-                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%">검색</button>
+                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; background-color:  #485D86;">검색</button>
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
                                         <input name="location" id="location" type="text" class="form-control"
@@ -90,9 +100,10 @@
                                         style="height:200px; min-height:200px; max-height:200px"></textarea>
                                     <div class="button-group">
                                         <button type="button" data-bs-dismiss="modal" aria-label="Close"
-                                             class="btn btn-primary delete_search" style="width: 49%;">취소</button>
+                                            class="btn btn-primary delete_search"
+                                            style="width: 49%; background-color:  #7689b1; border-color: #7689b1;">취소</button>
                                         <button type="button" onclick="addPhoto()" class="btn btn-primary"
-                                            style="width: 49%;">저장</button>
+                                            style="width: 49%; background-color:  #485D86; border-color: #485D86;">저장</button>
                                     </div>
                                 </form>
                             </div>
@@ -107,8 +118,7 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content modal">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title">
-                        사진 상세</h5>
+                    <h5 class="modal-title" id="modal-title" style="color: #485d86;"></h5>
                     <button type="button" class="btn-close delete_search" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -171,7 +181,7 @@
                                         <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
                                             Emails </p>
                                         <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
-                                            overflow-y: auto; height: 250px;">
+                                        overflow-y: auto; height: 250px;">
                                             <ul id="selected-email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
@@ -179,7 +189,7 @@
                                     <div class="sign-up" style="display: flex;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
                                             onclick="document.getElementById('makegroup').style.display = 'none'"
-                                            style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                                            style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
                                         <button type="button" class="signup" onclick="addGroup()"
                                             style="background-color: #485d86;">Save</button>
                                     </div>
@@ -231,11 +241,6 @@
             });
         });
     </script>
-    <script src="/js/api_key.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/js/photo_map.js"></script>
-    <script src="/js/photo_page.js"></script>
-    <script src="/js/trash.js"></script>
 </body>
 
 </html>
