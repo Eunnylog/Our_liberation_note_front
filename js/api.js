@@ -100,7 +100,6 @@ async function handleSignin() {
       // localstorage에 저장하기
       localStorage.setItem('refresh', response_json.refresh)
       localStorage.setItem('access', response_json.access)
-      console.log(response_json)
       const base64Url = response_json.access.split('.')[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
@@ -195,22 +194,18 @@ if (localStorage.getItem("social")) {
   if (code) {
     if (state) {
       if (currentUrl.includes("google")) {
-        console.log("구글", code)
         // 구글은 인코딩된 url 디코딩 후 localStorage에 저장
         const encodeCode = code
         const decodeCode = decodeURIComponent(encodeCode.replace(/\+/g, " "))
         localStorage.setItem('code', decodeCode)
-        console.log("디코딩", decodeCode)
         googleLoginApi(decodeCode) // googleLoginApi 함수 호출
       } else {
-        console.log("네이버")
         localStorage.setItem('code', code);
         localStorage.setItem('state', state);
         naverLoginApi(code) // naverLoginApi 함수 호출
       }
 
     } else {
-      console.log('카카오:', code);
       localStorage.setItem('code', code);
       kakaoLoginApi(code); // kakaoLoginApi 함수 호출
     }
@@ -374,23 +369,6 @@ async function naverLoginApi(Code) {
   }
 }
 
-async function facebookLogin() {
-  const cookies = document.cookie.split(';');
-
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    const [name, value] = cookie.split('=');
-
-    if (name === "jwt_token") {
-      jwtToken = value;
-      break;
-    }
-  }
-
-  if (!jwtToken) {
-    window.location.replace(`${backend_base_url}/users/facebook/login/`);
-  }
-}
 
 function handleLogout() {
   const payload = localStorage.getItem("payload");
@@ -607,7 +585,6 @@ function handleRadioClick() {
     let selected_email = document.getElementById(`email_${selectedIndex}`).value
 
     document.getElementById("usersearch").value = selected_email
-    // addMembersToGroup()
   } else {
     alert("선택된 이메일이 없습니다.");
   }
@@ -771,25 +748,22 @@ async function addGroup() {
     alert("그룹이 저장되었습니다.");
     window.location.reload()
   } else {
-    const responseData = await response.json();
-    alert(responseData.error);
+    const data = await response.json();
+    console.log('data', data);
+    if (data.message) {
+      alert("※ " + data.message);
+    } else if (data["non_field_errors"]) {
+      alert("※ " + data["non_field_errors"])
+    }
   }
 }
-
-
-
-// 닉네임 추가
-function addNickname() {
-  alert("닉네임이 추가되었습니다!")
-}
-
 // 마이페이지 유저프로필
 async function getUserprofile() {
   let token = localStorage.getItem("access")
   const payload = localStorage.getItem("payload");
   const payload_parse = JSON.parse(payload)
 
-  const response = await fetch(`${backend_base_url}/user/my-page/${payload_parse.user_id}/`, {
+  const response = await fetch(`${backend_base_url}/user/my-page/`, {
     headers: {
       "Authorization": `Bearer ${token}`
     },

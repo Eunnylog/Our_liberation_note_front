@@ -384,9 +384,6 @@ function updateAddMembersToGroup() {
         }
 
     }
-    // else {
-    //     alert("선택된 이메일이 없습니다.")
-    // }
     $('input[type=radio]').prop('checked', false);
 }
 
@@ -473,10 +470,15 @@ async function updateGroup() {
         alert("그룹이 수정되었습니다.")
         window.location.reload()
     } else {
-        alert(response.error)
+        const data = await response.json();
+        console.log('data', data);
+        if (data.message) {
+            alert("※ " + data.message);
+        } else if (data["non_field_errors"]) {
+            alert("※ " + data["non_field_errors"])
+        }
     }
 }
-
 async function deleteGroupModal() {
     const selected_id = document.getElementById('select_group').value
     const selectedOption = document.getElementById('select_group').options[document.getElementById('select_group').selectedIndex];
@@ -544,18 +546,3 @@ async function deleteGroupConfirm() {
         alert(`오류가 발생했습니다: ${response_json}`)
     }
 }
-
-function toggleArrow() {
-    const arrow = document.querySelector('.icoArrow img option');
-
-    if (arrow.style.transform === 'rotate(180deg)') {
-        arrow.style.transform = 'rotate(0deg)';
-    } else {
-        arrow.style.transform = 'rotate(180deg)';
-    }
-}
-
-// function toggleArrow() {
-//     const arrow = document.querySelector('.icoArrow img');
-//     arrow.classList.toggle('rotate');
-// }
