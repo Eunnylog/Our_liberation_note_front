@@ -137,17 +137,19 @@ async function loadTrash(contentType) {
         } else {
             photos.forEach((photo, index) => {
                 const photo_id = photo.id
+                const photo_title = photo.title
                 const photo_name = photo.name
                 const photo_created_at = photo.created_at
                 const photo_location = photo.location
                 const image = backend_base_url + '/note' + photo.image
 
                 let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:10px;">
-                                    <img src="${image}" alt="Image description" style="width: 140px; height: 140px; margin-top:15px">
+                                    <img src="${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px">
                                     <a id='name_${index}'>${photo_name}</a>
                                     <input type="radio" name="trash-radio" value="${index}" style="width:10px" onclick="handleTrashRadio('photo')">
                                     <input id='id_${index}' value="${photo_id}" hidden>
                                     <input id='location_${index}' value="${photo_location}" hidden>
+                                    <input id='title_${index}' value="${photo_title}" hidden>
                                 </div>`
 
                 $('#trash-content').append(temp_html)
@@ -317,7 +319,8 @@ function handleTrashRestore() {
 
     if (selectedPhotoIndex !== null) {
         const selected_location = document.getElementById(`location_${selectedIndex}`).value;
-        handlePhototrash(selected_id, selected_location, selected_name)
+        const selected_title = document.getElementById(`title_${selectedIndex}`).value;
+        handlePhototrash(selected_id, selected_location, selected_title, selected_name)
     }
 
 }
