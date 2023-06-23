@@ -84,7 +84,6 @@
                     style="width: 48%; height: 52px; float:right; margin-bottom:10px; padding: 10px; border: 1px solid #C2C7D0; border-radius: 5px; box-sizing: border-box;">
                     <option value="-1">그룹 선택</option>
                   </select>
-                  <img src="https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png" alt="">
                   <div class="note_category" id="note_category">
                   </div>
                   <button type="button" onclick="saveNote()" class="btn btn-primary"
@@ -263,7 +262,9 @@
           </div>
           <form>
             <div id="trash-content" class="trash-content">
-            </div>
+              <div id="trash-content" class="trash-content"
+                style="display: flex; flex-wrap: wrap; justify-content: center;">
+              </div>
           </form>
         </div>
         <div class="modal-footer" id="trash-modal-footer">
@@ -271,7 +272,6 @@
       </div>
     </div>
   </div>
-
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 

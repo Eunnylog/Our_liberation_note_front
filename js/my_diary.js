@@ -38,7 +38,13 @@ async function getGroup() {
         method: 'GET',
     })
     const response_json = await response.json()
+
+    console.log(response_json)
     // $('#select_group').empty()
+    if (response_json.length == 0) {
+        alert('그룹을 먼저 생성해 주세요!')
+        window.location.href = '/index.html'
+    }
     response_json.forEach((a, index) => {
         let id = a['id']
         let name = a['name']
@@ -111,7 +117,6 @@ async function showNoteList() {
                         `
         $('#note_list').append(temp_html2);
         response_json.forEach((a) => {
-            console.log(a)
             const category = a['category']
             const name = a['name']
             const note_id = a['id']
@@ -221,7 +226,6 @@ async function groupUpdateModal() {
     $('#update-usersearch').val("")
 
     const selectedIndex = document.getElementById('select_group').value
-    console.log("selectedIndex", selectedIndex)
 
     $('#update-selected-email-ul').empty()
 
@@ -240,7 +244,6 @@ async function groupUpdateModal() {
             const membersArray = members.split(',')
 
             membersArray.forEach((member, index) => {
-                console.log("멤버", members)
                 let temp_html = `
                         <li class="selected_email" style="list-style-type: none; margin-bottom: 10px;">
                         ${member}
@@ -275,7 +278,6 @@ $(document).ready(function () {
 
 // 멤버 검색
 async function updateAddMember() {
-    console.log("addmember")
     const access_token = localStorage.getItem("access")
     const membersEmail = document.getElementById("update-usersearch").value
 
@@ -383,7 +385,6 @@ async function updateDeleteMembers() {
 
 // 그룹 수정 등록
 async function updateGroup() {
-    console.log("updatingGroupId:", updatingGroupId)
     const access_token = localStorage.getItem("access")
     const groupName = document.getElementById("update-groupname").value
 
@@ -410,7 +411,6 @@ async function updateGroup() {
         // 특수문자가 올바르게 전송되도록 보장하기 위해 인코딩한 후 쿼리 매개변수로 전달한다
         const membersResponse = await fetch(`${backend_base_url}/user/userlist?usersearch=${encodeURIComponent(memberEmail)}`);
         const membersData = await membersResponse.json();
-
         // 해당 멤버의 id를 리스트에 추가
         const memberId = membersData[0].id;
         memberIdList.push(memberId);

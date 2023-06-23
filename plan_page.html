@@ -57,7 +57,7 @@
         <div class="overlay"></div>
         <div class="spinner"></div>
       </div>
-      <div id='calendar'></div>
+      <div id='calendar' style="padding-bottom: 40px; padding-top: 20px;"></div>
     </article>
   </main>
   <!-- 이메일전송 모달창 -->
@@ -227,26 +227,23 @@
                       id="addmember-btn">Search</button>
                   </div>
                   <div style="color: #7c838c;">
-                    <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
+                    <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
                       Emails </p>
                     <div id="email-list"
-                      style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
+                      style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
                       <ul id="email-ul" style="position: relative; right: 10px;">
                       </ul>
                     </div>
                   </div>
                   <button type="button" onclick="addMembersToGroup()"
-                    style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
-                    <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
-                  </button>
+                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
                   <button type="button" onclick="DeleteMembers()"
-                    style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
-                      src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
+                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
                   <div style="color: #4d6087;">
                     <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
                       Emails </p>
-                    <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
-                                        overflow-y: auto; height: 250px;">
+                    <div id="selected-email-list"
+                      style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
                       <ul id="selected-email-ul" style="position: relative; right: 10px;">
                       </ul>
                     </div>
@@ -330,8 +327,7 @@
       </div>
     </div>
   </div>
-  </div>
-  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script> -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
   <script src="/js/plan_page.js"></script>

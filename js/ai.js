@@ -1,11 +1,23 @@
-// let back_url = 'https://api.liberation-note.com'
+let back_url = 'https://api.liberation-note.com'
+// const front_url = "https://liberation-note.com"
 let front_url = 'http://127.0.0.1:5500'
-let back_url = 'http://127.0.0.1:8000'
+// let back_url = 'http://127.0.0.1:8000'
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
 
 checkGroup()
 checkLogin()
+
+window.onload = function () {
+  params = new URLSearchParams(window.location.search);
+  note_id = params.get("note_id");
+
+  var back = document.getElementById('back');
+
+  back.onclick = function () {
+    location.href = `/plan_page.html?note_id=${note_id}`;
+  }
+};
 
 function aiSubscribeCheck() {
 
