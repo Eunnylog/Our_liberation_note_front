@@ -789,7 +789,7 @@ async function getUserprofile() {
   const payload = localStorage.getItem("payload");
   const payload_parse = JSON.parse(payload)
 
-  const response = await fetch(`${backend_base_url}/user/my-page/${payload_parse.user_id}/`, {
+  const response = await fetch(`${backend_base_url}/user/my-page/`, {
     headers: {
       "Authorization": `Bearer ${token}`
     },
