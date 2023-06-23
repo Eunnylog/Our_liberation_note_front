@@ -1,3 +1,6 @@
+checkGroup()
+checkLogin()
+
 // 사진 추가하기
 async function addPhoto() {
     const image = document.getElementById("image");
