@@ -1,10 +1,10 @@
 let back_url = 'https://api.liberation-note.com'
-// let front_url = 'https://miyeong.net'
 let front_url = 'http://127.0.0.1:5500'
 // let back_url = 'http://127.0.0.1:8000'
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
 
+checkGroup()
 checkLogin()
 
 function aiSubscribeCheck() {
@@ -261,7 +261,7 @@ async function aiStart() {
     const response = await fetch(`${back_url}/note/search`, {
       headers: {
         'content-type': 'application/json',
-        "Authorization": `Bearer ${access_token}`,
+        // "Authorization": `Bearer ${access_token}`,
       },
       method: 'POST',
       body: JSON.stringify({ destinations: destinations })

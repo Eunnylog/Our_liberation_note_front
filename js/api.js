@@ -1,8 +1,8 @@
 // 기본 URL
 const backend_base_url = "https://api.liberation-note.com"
 // const backend_base_url = "http://127.0.0.1:8000"
-// const frontend_base_url = "http://127.0.0.1:5500"
-const frontend_base_url = "https://liberation-note.com"
+const frontend_base_url = "http://127.0.0.1:5500"
+// const frontend_base_url = "https://liberation-note.com"
 
 let jwtToken;
 
@@ -789,7 +789,7 @@ async function getUserprofile() {
   const payload = localStorage.getItem("payload");
   const payload_parse = JSON.parse(payload)
 
-  const response = await fetch(`${backend_base_url}/user/my-page/${payload_parse.user_id}/`, {
+  const response = await fetch(`${backend_base_url}/user/my-page/`, {
     headers: {
       "Authorization": `Bearer ${token}`
     },
@@ -899,5 +899,21 @@ async function ChangePassword() {
     if (data.message) {
       alert("※ " + data.message);
     }
+  }
+}
+
+async function checkGroup() {
+  params = new URLSearchParams(window.location.search);
+  note_id = params.get("note_id");
+  const response = await fetch(`${backend_base_url}/note/note-detail/${note_id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization": `Bearer ${access_token}`
+    },
+    method: 'GET',
+  });
+  if (response.status == 403) {
+    alert('접근 권한이 없습니다!')
+    window.location.href = '/index.html'
   }
 }

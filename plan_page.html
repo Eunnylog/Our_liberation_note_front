@@ -48,8 +48,8 @@
           onclick="selectEmailMember();">계획표 전송</button>
         <button type="button" id="lifePhoto" class="btn group-btn"
           style="background-color: #92a2c5; color:white; margin: 0px 10px;">해방필름</button>
-        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteNote" onclick="deleteNoteModal()" class="btn group-btn"
-          style="background-color: #60749d; color:white; margin: 0px 10px;">노트삭제</button>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteNote" onclick="deleteNoteModal()"
+          class="btn group-btn" style="background-color: #60749d; color:white; margin: 0px 10px;">노트삭제</button>
       </div>
       <!-- 로딩창 -->
       <div id="loading" style="display: none;">
@@ -265,12 +265,12 @@
                   </div>
                   <textarea name="memo" id="memo" type="textarea" class="form-control" placeholder="memo"
                     style="height:200px; min-height:200px; max-height:200px"></textarea>
+                  <div id="plan_list"></div>
                   <div class="button-group">
                     <button type="button" data-bs-dismiss="modal" aria-label="Close"
                       class="btn btn-primary delete_search" style="width: 49%;">취소</button>
                     <button type="button" onclick="savePlan()" class="btn btn-primary" style="width: 49%;">저장</button>
                   </div>
-                  <div id="plan_list"></div>
                 </form>
               </div>
             </div>
@@ -366,8 +366,8 @@
       </div>
     </div>
   </div>
-   <!-- 노트 삭제 모달 -->
-   <div class="modal" tabindex="-1" id="deleteNote">
+  <!-- 노트 삭제 모달 -->
+  <div class="modal" tabindex="-1" id="deleteNote">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

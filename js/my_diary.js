@@ -175,16 +175,7 @@ async function saveNote() {
 
         }
         else {
-            alert(response_json)
-
-            const regex = /string='([^']+)'/;
-            const match = JSON.stringify(response_json).match(regex)
-
-            if (match && match.length > 1) {
-                const cleanedString = match[1].replace("string=", "");
-                alert("※ " + cleanedString);
-
-            }
+            alert(response_json['non_field_errors'])
         }
 
     } else {
