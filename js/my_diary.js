@@ -109,6 +109,7 @@ async function showNoteList() {
         let temp_html2 = `
                             <a href="/" data-bs-toggle="modal" data-bs-target="#create_note">
                                 <section class="cp-card content" style="background-color: #d9e2f6;">
+                                +
                                 </section>
                             </a>
                         `
