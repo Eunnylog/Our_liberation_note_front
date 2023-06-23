@@ -444,7 +444,7 @@ async function selectEmailMember() {
     const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            // "Authorization": `Bearer ${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'GET',
     });
