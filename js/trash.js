@@ -46,7 +46,7 @@ async function loadTrash(contentType) {
     if (contentType === 'group') {
         if (groups.length === 0) {
             let trashImage = `<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-            <img src="/css/assets/trash.png" alt="Empty Group Image" style="width:150px; height:150px; margin-top:30px">
+            <img src="/css/assets/trash.png" alt="Empty Group Image" style="width:150px; height:150px; margin-top:80px">
             </div>`;
             $('#trash-content').append(trashImage);
 
@@ -82,7 +82,7 @@ async function loadTrash(contentType) {
     else if (contentType === 'note') {
         if (notes.length === 0) {
             let trashImage = `<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-            <img src="/css/assets/trash.png" alt="Empty Group Image" style="width:150px; height:150px; margin-top:30px">
+            <img src="/css/assets/trash.png" alt="Empty Group Image" style="width:150px; height:150px; margin-top:80px">
             </div>`;
             $('#trash-content').append(trashImage);
 
@@ -122,7 +122,7 @@ async function loadTrash(contentType) {
     else if (contentType === 'photo') {
         if (photos.length === 0) {
             let trashImage = `<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-            <img src="/css/assets/trash.png" alt="Empty Group Image" style="width:150px; height:150px; margin-top:30px">
+            <img src="/css/assets/trash.png" alt="Empty Group Image" style="width:150px; height:150px; margin-top:80px">
             </div>`;
             $('#trash-content').append(trashImage);
 
@@ -141,13 +141,13 @@ async function loadTrash(contentType) {
                 const photo_location = photo.location
                 const image = backend_base_url + '/note' + photo.image
 
-                let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:7px">
-                                <img src="${image}" alt="Image description" style="width: 142px; height: 142px; margin-top:15px">
-                                <a id='name_${index}'>${photo_name}</a>
-                                <input type="radio" name="trash-radio" value="${index}" style="width:10px" onclick="handleTrashRadio('photo')">
-                                <input id='id_${index}' value="${photo_id}" hidden>
-                                <input id='location_${index}' value="${photo_location}" hidden>
-                             </div>`
+                let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:10px;">
+                                    <img src="${image}" alt="Image description" style="width: 140px; height: 140px; margin-top:15px">
+                                    <a id='name_${index}'>${photo_name}</a>
+                                    <input type="radio" name="trash-radio" value="${index}" style="width:10px" onclick="handleTrashRadio('photo')">
+                                    <input id='id_${index}' value="${photo_id}" hidden>
+                                    <input id='location_${index}' value="${photo_location}" hidden>
+                                </div>`
 
                 $('#trash-content').append(temp_html)
             });
@@ -299,6 +299,12 @@ function handleTrashRadio(contentType) {
 
 function handleTrashRestore() {
     var selectedRadio = document.querySelector('input[name="trash-radio"]:checked');
+
+    if (!selectedRadio) {
+        alert("※ 항목을 선택해주세요!");
+        return;
+    }
+
     let selectedIndex = selectedRadio.value;
     let selected_id = document.getElementById(`id_${selectedIndex}`).value;
     let selected_name = document.getElementById(`name_${selectedIndex}`).innerText;
@@ -394,6 +400,12 @@ async function deletePhoto(photo_id) {
 
 function handleTrashDelete() {
     var selectedRadio = document.querySelector('input[name="trash-radio"]:checked');
+
+    if (!selectedRadio) {
+        alert("※ 항목을 선택해주세요!");
+        return;
+    }
+
     let selectedIndex = selectedRadio.value;
     let selected_id = document.getElementById(`id_${selectedIndex}`).value;
 
