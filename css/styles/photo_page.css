@@ -26,11 +26,11 @@ body {
 	background-color: #fafafa;
 }
 
-.container {
+/* .container {
 	max-width: 100rem;
 	margin: 0 auto;
 	padding: 0 2rem 2rem;
-}
+} */
 
 .heading {
 	font-family: "Montserrat", Arial, sans-serif;
@@ -68,6 +68,12 @@ body {
 	transition: transform 400ms ease-out;
 }
 
+.detail-image {
+	width: 100%;
+	height: 100%;
+	margin-bottom: 5px;
+}
+
 .stamp {
 	width: 30%;
 	height: 30%;
@@ -89,31 +95,28 @@ body {
 	transform: scale(1.15);
 }
 
-.filebox .upload-name {
+.input-group .upload-name {
 	display: inline-block;
 	height: 40px;
 	padding: 0 10px;
 	vertical-align: left;
 	border: 1px solid #dddddd;
-	width: 78%;
-	color: #999999;
+	width: 80%;
+	color: #737B83;
 }
 
 /* 사진 추가 모달 속 사진추가 버튼 css */
-.filebox label {
+.input-group label {
 	display: inline-block;
 	padding: 8.5px 20px;
 	color: #fff;
-	vertical-align: right;
+	vertical-align: middle;
 	background-color: #1f489a;
 	cursor: pointer;
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: bold;
-	height: 40px;
-	margin-left: 0px;
-	border-radius: 4px;
 	color: white;
-	cursor: pointer;
+	box-sizing: border-box; 
 }
 
 @supports (display: grid) {
@@ -126,5 +129,6 @@ body {
 	.gallery,
 	.gallery-item {
 		margin: 0;
+	}
 	}
 }
