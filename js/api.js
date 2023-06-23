@@ -1,6 +1,6 @@
 // 기본 URL
-const backend_base_url = "https://api.liberation-note.com"
-// const backend_base_url = "http://127.0.0.1:8000"
+// const backend_base_url = "https://api.liberation-note.com"
+const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 
 
@@ -62,11 +62,11 @@ async function signupTimer() {
   function TIMER() {
     currentSignupTimer = setInterval(function () {
       time = time - 1000; // 1초씩 줄어듦
-      min = Math.floor(time / (60 * 1000)); // 초를 분으로 나눠준다.
+      min = Math.floor(time / (60 * 1000)); // 초를 분으로 나눠준다
       sec = Math.floor((time % (60 * 1000)) / 1000); // 분을 제외한 나머지 초 계산
 
       if (sec === 0 && min === 0) {
-        clearInterval(currentSignupTimer); // 00:00이 되면 타이머를 중지한다.
+        clearInterval(currentSignupTimer); // 00:00이 되면 타이머를 중지
       }
 
       Timer.value = min.toString().padStart(2, '0') + ':' + sec.toString().padStart(2, '0'); // 2자리 숫자로 표시
@@ -143,20 +143,19 @@ async function sendCode() {
   signupTimer()
 }
 
+
 if (localStorage.getItem("social")) {
-} else if (location.href.split('=')[1]) {
+} else if (location.href.split('=')[1]) {  // 로그인 정보가 url에 있는 경우
   // 각 서비스 구분하기 위해 현재 url 변수 할당
   const currentUrl = location.href
-  console.log("url", currentUrl)
 
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const state = location.href.split('=')[2] // 카카오 네이버&구글 구분
 
   const code = urlParams.get('code'); // 로그인하기 위한 인가 코드
-  console.log(code)
 
-  // 값이 있으면 localStorage에 저장
+  // 인가코드가 있으면 localStorage에 저장
   if (code) {
     if (state) {
       if (currentUrl.includes("google")) {
@@ -190,7 +189,6 @@ if (localStorage.getItem("payload")) {
 
 // 카카오 로그인 페이지로 이동
 async function kakaoLogin() {
-  console.log("소셜")
   const response = await fetch(`${backend_base_url}/user/social/`, {
     method: 'POST',
     headers: {
@@ -198,7 +196,7 @@ async function kakaoLogin() {
     },
     body: JSON.stringify({ "social": "kakao" }),
   })
-  const data_url = await response.json(); // 서버로부터 받은 응답을 JSON 데이터로 파싱합니다.
+  const data_url = await response.json();
   const response_url = data_url.url
   window.location.href = response_url
 }
@@ -213,7 +211,6 @@ async function kakaoLoginApi(code) {
     body: JSON.stringify({ "code": code }),
   })
   response_json = await response.json()
-  console.log("response_json", response_json)
 
   if (response.status === 200) {
     localStorage.setItem("access", response_json.access);
@@ -229,7 +226,6 @@ async function kakaoLoginApi(code) {
       }).join('')
     );
     localStorage.setItem("payload", jsonPayload);
-    // window.location.reload();
     window.location.href = frontend_base_url
   } else {
     alert(response_json['error'])
@@ -248,7 +244,6 @@ async function googleLogin() {
   })
   const data_url = await response.json(); // 서버로부터 받은 JSON으로 할당
   const response_url = data_url.url
-  console.log(response_url)
   window.location.href = response_url
 }
 
@@ -297,7 +292,6 @@ async function naverLogin() {
   })
   const data_url = await response.json(); // 서버로부터 받은 응답을 JSON으로 할당
   const response_url = data_url.url
-  console.log(response_url)
   window.location.href = response_url
 }
 
@@ -311,9 +305,7 @@ async function naverLoginApi(Code) {
     body: JSON.stringify({ "code": Code }),
   })
   response_json = await response.json()
-  console.log(response_json)
 
-  console.log("response_json", response_json)
   if (response.status === 200) {
     localStorage.setItem("access", response_json.access);
     localStorage.setItem("refresh", response_json.refresh);
@@ -380,7 +372,7 @@ async function handlesUserDelete() {
   const payload = localStorage.getItem("payload");
   const payload_parse = JSON.parse(payload)
 
-  const response = await fetch(`${backend_base_url}/user/delete/${payload_parse.user_id}/`, {
+  const response = await fetch(`${backend_base_url}/user/`, {
     headers: {
       "Authorization": `Bearer ${access_token}`
     },
@@ -394,6 +386,9 @@ async function handlesUserDelete() {
     localStorage.removeItem("is_subscribe")
     localStorage.removeItem("noteName")
     localStorage.removeItem("trashCount")
+    document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
+    localStorage.removeItem("code")
+    localStorage.removeItem("state")
     location.reload()
   }
   if (response.status == 403) {
@@ -481,7 +476,6 @@ function handleAi() {
 
 // 비밀번호 변경 페이지 가기 전 소셜 로그인 체크
 function checkSocialLogin() {
-  console.log("checkSocialLogin")
   const code = localStorage.getItem('code');
 
   if (code) {
@@ -521,7 +515,6 @@ async function updatePassword() {
   }
   )
   const data = await response.json()
-  console.log(data["message"])
   if (response.status == 200) {
     alert("회원정보 수정 완료!! 다시 로그인을 진행해 주세요!")
     localStorage.removeItem("access")
@@ -558,10 +551,8 @@ function handleRadioClick() {
 
 // 멤버 추가
 async function addMember() {
-  console.log("addmember")
   const access_token = localStorage.getItem("access")
   const membersEmail = document.getElementById("usersearch").value
-  console.log("emailinput", membersEmail)
 
   if (!membersEmail) {
     alert("이메일을 입력해주세요!")
@@ -571,10 +562,7 @@ async function addMember() {
   const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
 
   axios.get(url).then(response => {
-    console.log(response.data);
-
     const emails = response.data.map(item => item.email);
-
 
     var email = document.getElementById("email-ul");
     email.innerHTML = "";
@@ -621,7 +609,6 @@ function addMembersToGroup() {
 
     if (!alreadyAdded) {
       selectedEmails.push(selectedEmail);
-      console.log(selectedEmails);
 
       // 선택된 이메일을 ul에 추가
       const selectedEmailUl = document.getElementById("selected-email-ul");
@@ -657,8 +644,6 @@ function DeleteMembers() {
 
     if (emailIndex > -1) {
       selectedEmails.splice(emailIndex, 1);
-      console.log(selectedEmails);
-
       checkedRadio.closest("li").remove();
     } else {
       alert("선택된 이메일이 추가된 이메일 목록에 없습니다.");
@@ -677,12 +662,12 @@ async function addGroup() {
 
   const membersEmails = Array.from(membersList.getElementsByTagName("li")).map(li => li.textContent);
 
-  // 멤버 id 저장용 빈 배열 준비 manytomany 필드는 id값이 리스트 일력해야 값이 들어감
+  // 멤버 id 저장용 빈 배열 준비
   const memberIdList = [];
 
   // 멤버 이메일을 반복하면서 각각 서버로 전송하여 멤버 객체를 받아옴
   for (const memberEmail of membersEmails) {
-    // 특수문자가 올바르게 전송되도록 보장하기 위해 인코딩한 후 쿼리 매개변수로 전달한다
+    // 특수문자가 올바르게 전송되도록 보장하기 위해 인코딩한 후 쿼리 매개변수로 전달
     const membersResponse = await fetch(`${backend_base_url}/user/userlist?usersearch=${encodeURIComponent(memberEmail)}`);
     const membersData = await membersResponse.json();
 
@@ -715,7 +700,6 @@ async function addGroup() {
     window.location.reload()
   } else {
     const data = await response.json();
-    console.log('data', data);
     if (data.message) {
       alert("※ " + data.message);
     } else if (data["non_field_errors"]) {
@@ -742,7 +726,6 @@ async function getUserprofile() {
     return response_json
   } else {
     const data = await response.json();
-    console.log('data', data);
     if (data.message) {
       alert("※ " + data.message);
     }
@@ -785,7 +768,6 @@ async function findPasswordTimer() {
 
 // 비밀번호 재발급 인증코드 보내기
 async function sendVerificationEmail() {
-  console.log('확인')
   const email = document.getElementById("sendEmail").value
 
   if (!email) {
@@ -835,7 +817,6 @@ async function ChangePassword() {
     location.replace(`${frontend_base_url}/index.html`)
   } else {
     const data = await response.json();
-    console.log('data', data);
     if (data.message) {
       alert("※ " + data.message);
     }

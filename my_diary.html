@@ -56,7 +56,8 @@
       </div>
       <div class="contents" id="note_list">
         <a href="/" data-bs-toggle="modal" data-bs-target="#create_note">
-          <section class="cp-card content" style="background-color: #d9e2f6;">
+          <section class="cp-card content" style="background-color: #d9e2f6; text-align:center;">
+            <img src="/css/assets/plus.png" style="justify-content: center; width:60%; height:100%; margin-top:5%;">
           </section>
         </a>
       </div>
@@ -79,7 +80,7 @@
                 <form class="sign-in-form active">
                   <input name="note_name" id="note_name" type="text" class="form-control" placeholder="노트 이름"
                     style="width: 48%; float:left;">
-                  <select name="group_name" id="group_name" onchange="showNoteList(); toggleArrow();"
+                  <select name="group_name" id="group_name" onchange="showNoteList();"
                     style="width: 48%; height: 52px; float:right; margin-bottom:10px; padding: 10px; border: 1px solid #C2C7D0; border-radius: 5px; box-sizing: border-box;">
                     <option value="-1">그룹 선택</option>
                   </select>
@@ -260,9 +261,10 @@
             </div>
           </div>
           <form>
-            <div id="trash-content" class="trash-content"
-              style="display: flex; flex-wrap: wrap; justify-content: center;">
-            </div>
+            <div id="trash-content" class="trash-content">
+              <div id="trash-content" class="trash-content"
+                style="display: flex; flex-wrap: wrap; justify-content: center;">
+              </div>
           </form>
         </div>
         <div class="modal-footer" id="trash-modal-footer">
