@@ -700,10 +700,13 @@ async function addGroup() {
     window.location.reload()
   } else {
     const data = await response.json();
+    console.log("data", data)
     if (data.message) {
       alert("※ " + data.message);
     } else if (data["non_field_errors"]) {
       alert("※ " + data["non_field_errors"])
+    } else if (data.error) {
+      alert("※ " + data.error)
     }
   }
 }
