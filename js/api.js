@@ -1,8 +1,7 @@
 // 기본 URL
-// const backend_base_url = "https://api.miyeong.net"
-const backend_base_url = "http://127.0.0.1:8000"
+const backend_base_url = "https://api.liberation-note.com"
 const frontend_base_url = "http://127.0.0.1:5500"
-// const frontend_base_url = "https://miyeong.net"
+
 
 let jwtToken;
 
@@ -108,15 +107,16 @@ async function handleSignin() {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''))
 
-    localStorage.setItem('payload', jsonPayload)
-    document.getElementById("login").querySelector('[data-bs-dismiss="modal"]').click();
-    location.reload()
+      localStorage.setItem('payload', jsonPayload)
+      document.getElementById("login").querySelector('[data-bs-dismiss="modal"]').click();
+      location.reload()
+    }
+    else {
+      alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
+      console.log(response)
+    }
   }
-  else {
-    alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
-    console.log(response)
-  }}
-  catch(error){
+  catch (error) {
     console.log(error)
   }
 }

@@ -1,5 +1,4 @@
-// const backend_base_url = "https://api.miyeong.net"
-// const backend_base_url = "http://127.0.0.1:8000"
+// const backend_base_url = "https://api.liberation-note.com"
 // const frontend_base_url = "http://127.0.0.1:5500"
 let access_token = localStorage.getItem('access')
 
@@ -65,11 +64,11 @@ async function album() {
         const urlParams = new URLSearchParams(window.location.search);
         const note_id = urlParams.get('note_id');
 
-    let menu_html = `<a class="btn group-btn" href="/plan_page.html?note_id=${note_id}"
-                        style="background-color: #92a2c5; color: white; margin: 0px 10px; 
+        let menu_html = `<a class="btn group-btn" href="/plan_page.html?note_id=${note_id}"
+                        style="background-color: #60749d; color:white; margin: 0px 1px; 
                         text-decoration: none;">뒤로가기
                     </a>`
-    $('#menu_box').append(menu_html)
+        $('#menu_box').append(menu_html)
 
         const response = await fetch(`${backend_base_url}/note/photo/${note_id}/${page}`, {
             headers: {
@@ -84,7 +83,7 @@ async function album() {
         console.log(response_json)
         if (response_json.length == 0) {
             alert('마지막페이지 입니다!')
-            page = page * 1 - 6
+            page = page * 1 - page
             window.location.href = window.location.href.split('&')[0] + '&page=' + page
         }
 
@@ -140,7 +139,7 @@ function p_page() {
     if (!page) {
         page = 1
     }
-    page = page * 1 + 1
+    page = page * 1 + 6
     window.location.href = window.location.href.split('&')[0] + '&page=' + page
 }
 
@@ -151,7 +150,7 @@ function m_page() {
     if (!page) {
         page = 1
     }
-    page = page * 1 - 2
+    page = page * 1 - 6
 
     if (page < 0) {
         alert('첫페이지 입니다!')
@@ -193,17 +192,27 @@ async function photo_detail(photo_id) {
                     <div id='photo_location'>${location}</div>
                     <div id='photo_memo'>${memo}</div>
                     
+                    <div style="display: flex;">
+                        <input name="comment" id="comment" type="textarea" class="form-control" placeholder="댓글 입력">
+                        <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-primary" data-bs-dismiss="modal">게시</button>
+                    </div>
                     <div>
-                    <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
-                        <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal">게시</button>
-                    <ul class="comment_set">
-                        ${comments.map(comment => `<li id="comment-$comment-${comment.id}">${comment.comment}
-                        <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" placeholder="comment">
-                        <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="editComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">수정</button>
-                        <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">삭제</button>
+                    <style>
+                        .comment_set li:hover {
+                            background-color: #f5f5f5; /* 호버 시에 변경할 배경색 */
+                        }
+                    </style>
+                        <ul class="comment_set"">
+                            ${comments.map(comment => `<li style="width: 100%" onclick="toggleCommentEdit(event)" id="comment-$comment-${comment.id}">${comment.comment} 
+                            <div style="display: none;">
+                            <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
+                            <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="editComment(event)" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
+                            <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">삭제</button>
+                            <div>
                         </li>`).join('')}
                     </ul>
                     </div>
+                    
                     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
@@ -213,9 +222,28 @@ async function photo_detail(photo_id) {
                         <button id="photo-trash" type="button" class="btn btn-primary"
                             onclick="trashPhoto('${photo_id}')">휴지통</button>
                     </div>
-                    `
+                    `;
     $('#photo-d').append(temp_html)
+
 }
+
+
+// 코멘트란을 토글로 하여 클릭했을때의 이벤트 지정
+
+function toggleCommentEdit(event) {
+    const li = event.target.closest('li');
+    const div = li.querySelector('div');
+    div.style.display = div.style.display === 'none' ? 'flex' : 'none';
+}
+
+let commentItems = document.querySelectorAll('.comment_set li'); // 변수 선언을 밖으로 이동
+
+// li 요소들에 클릭시 이벤트 발생
+commentItems.forEach(item => {
+    item.addEventListener('click', toggleCommentEdit);
+    alert("ㅇㄹㄹ")
+});
+
 
 
 function patchPhotoBox(photo_id) {
@@ -231,7 +259,7 @@ function patchPhotoBox(photo_id) {
 
     $('#photo-d').empty();
     temp_html = `           
-                            <div class="filebox">
+                            <div class="filebox" style="display: flex;">
                                 <input class="upload-name" value="첨부파일" src="${image}" placeholder="첨부파일" multiple
                                     accept=".jpg, .png, .jpeg" style="width: 85.3%">
                                 <label for="image">사진추가</label>
@@ -242,16 +270,16 @@ function patchPhotoBox(photo_id) {
                                     placeholder="사진 타이틀" style="width: 100%; height:40px;">
                                 <input name="start" id="p_start" type="date" value='${start}' class="form-control">
                             </div>
-                            <div class="input-group-append" style="width: 100%;">
+                            <div style="display: flex;" class="input-group-append" style="width: 100%;">
                                 <input name="title" id="p_title" value='${title}' type="text" class="form-control"
                                     placeholder="주소 검색" style="width: 100%; height:40px;">
                             </div>
-                            <div class="input-group"  style="flex-wrap: nowrap;">
-                                <div class="input-group-append" style="width: 90%;">
+                            <div class="input-group"  style="display: flex;">
+                                <div class="input-group-append" >
                                     <input name="location" id="p_location" value='${location}' type="text" class="form-control"
                                     placeholder="장소" style="width: 90%; height:40px;" placeholder="주소(미작성시 AI사용이 불가합니다!)">
                                 </div>
-                                <div class="input-group-append" style="width: 10%;">
+                                <div class="input-group-append" >
                                     <button type="button" onclick="searchLocation(2)" class="btn btn-primary"
                                     style="margin-top:0px;height:40px; font-size:15px">검색</button>
                                 </div>
@@ -355,7 +383,8 @@ async function addComment() {
         if (response.ok) {
             console.log('코멘트 추가 성공');
         } else {
-            throw new Error('서버가 응답하지 않습니다.');
+            let response_json = await response.json()
+            alert(response_json['non_field_errors']);
         }
     }
     catch (error) {
@@ -363,7 +392,6 @@ async function addComment() {
         console.error(error);
     }
 }
-//comment_id를 받아와라ㅏㅏㅏㅏㅏㅏㅏ 어딘지는 아는데 어떻게 바다오냐ㅏㅏㅏㅏㅏㅏ
 
 async function editComment(event) {
 
@@ -373,7 +401,7 @@ async function editComment(event) {
 
 
     const photo_comment_id = button.value;
-    const photo_id = photo_comment_id.split("/")[0];
+    // const photo_id = photo_comment_id.split("/")[0];
     const comment_id = photo_comment_id.split("/")[1];
 
 
@@ -382,13 +410,12 @@ async function editComment(event) {
     const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
     console.log(updatedComment)
 
-
-    fetch(`${backend_base_url}/note/comment/${photo_id}/${comment_id}`, {
+    fetch(`${backend_base_url}/note/comment/${comment_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
         },
-        method: 'PUT',
+        method: 'PATCH',
         body: JSON.stringify({ comment: updatedComment })
     })
         .then(response => response.json())
@@ -407,13 +434,16 @@ async function deleteComment(event) {
     console.log("Button Value:", buttonValue);
 
     const photo_comment_id = button.value;
-    const photo_id = photo_comment_id.split("/")[0];
     const comment_id = photo_comment_id.split("/")[1];
 
     // const comment_id = document.getElementById("commentEditBtn").value
 
+    test = confirm("삭제 하시겠습니까?")
+    if (!test) {
+        return false
+    }
 
-    fetch(`${backend_base_url}/note/comment/${photo_id}/${comment_id}`, {
+    fetch(`${backend_base_url}/note/comment/${comment_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -425,7 +455,7 @@ async function deleteComment(event) {
                 alert("댓글이 삭제되었습니다");
                 window.location.reload();
             } else {
-                alert('');
+                alert('댓글이 삭제에 실패했습니다.');
             }
         })
         .catch(error => {
@@ -434,6 +464,7 @@ async function deleteComment(event) {
         });
 
 }
+
 
 
 async function handleStamp(photo_id) {

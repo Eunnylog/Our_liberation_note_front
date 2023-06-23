@@ -23,20 +23,22 @@
     </header>
     <main class="site-body" style="margin-top: -50px;">
         <article class="review-detail max-content-width">
-            <div style="margin-bottom:30px;">
-                <h1 id="photo_title" style="width:300px; display: inline-block;">Photo gallery</h1>
-            </div>
-            <hr style="margin-bottom: 30px; clear: both;">
-            <div  class="clearfix" style="width:100%; margin-bottom:50px;">
-                <div id="menu_box" style="float: right;">
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"
-                        class="btn group-btn"
-                        style="background-color: #60749d; color:white; margin: 0px 10px;">사진추가하기</button>
+            <div>
+                <h1 id="photopage_title" style="width:300px; display: inline-block;">Photo Gallery</h1>
+                <div class="clearfix" style="width:100%; ">
+                    <div id="menu_box" style="float: right;">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"
+                            class="btn group-btn"
+                            style="background-color: #60749d; color:white; margin: 0px 10px;">사진추가하기</button>
+                    </div>
                 </div>
             </div>
-            <button onclick="m_page()" type="button">뒤로</button>
-            <button onclick="p_page()" type="button">다음</button>
-            <div class="gallery" id="photo_info">
+            <hr style="margin-bottom: 30px; clear: both;">
+            <button onclick="m_page()" type="button" class="btn group-btn"
+                style="background-color: #60749d; color:white; margin: 4px 2px; margin-left: 6px;">뒤로</button>
+            <button onclick="p_page()" type="button" class="btn group-btn"
+                style="background-color: #60749d; color:white; margin: 4px 2px;">다음</button>
+            <div class="gallery" id="photo_info" style="padding-bottom: 40px; padding-top: 20px;">
                 <!-- 이미지 갤러리 아이템들이 동적으로 추가될 공간 -->
             </div>
         </article>
