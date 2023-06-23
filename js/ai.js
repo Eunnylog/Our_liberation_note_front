@@ -7,6 +7,17 @@ let ai_feed_li = [];
 checkGroup()
 checkLogin()
 
+window.onload = function () {
+  params = new URLSearchParams(window.location.search);
+  note_id = params.get("note_id");
+
+  var back = document.getElementById('back');
+
+  back.onclick = function () {
+    location.href = `/plan_page.html?note_id=${note_id}`;
+  }
+};
+
 function aiSubscribeCheck() {
 
   const is_subscribe = localStorage.getItem("is_subscribe")
