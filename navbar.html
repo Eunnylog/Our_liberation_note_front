@@ -7,15 +7,18 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 bg-white" style="border-radius: 5px;" id="nav-left">
+            <!-- 로그인 시 보이는 제일 상단 회원 아이디 -->
+            <li class="nav-item">
+              <a class="nav-link active" id="intro"></a>
+            </li>
+            <!-- 로그인 전 보이는 네비바 -->
+            <li class="nav-item" id="nav-signup">
+              <a class="nav-link active" href="" data-bs-toggle="modal" data-bs-target="#signup" id="signup-button">Sign Up</a>
+            </li>
             <li class="nav-item" id="nav-login">
                 <a class="nav-link active" href="" data-bs-toggle="modal" data-bs-target="#login" id="login-button">Log In</a>
             </li>
-            <li class="nav-item" id="nav-signup">
-                <a class="nav-link active" href="" data-bs-toggle="modal" data-bs-target="#signup" id="signup-button">Sign Up</a>
-            </li>
-            <li class="nav-item" id="nav-developers">
-                <a class="nav-link active" href="/developers.html">Developers</a>
-            </li>
+            <!-- 로그인 후 보이는 네비바 -->
             <li class="nav-item" id="nav-mypage" >
               <a class="nav-link active" href="/my_page.html">My Page</a>
             </li>
@@ -33,14 +36,16 @@
                 </span>
               </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link active" id="intro"></a>
+            <!-- 로그인 전,후 둘다 보이는 네비바 -->
+            <li class="nav-item" id="nav-developers">
+                <a class="nav-link active" href="/developers.html">Developers</a>
             </li>
         </ul>
       </div>
     </div>
 </nav>
+<!-- 로고 이미지 클릭시 메인 페이지로 -->
 <a href="/index.html">
-  <img class="logo" src="/css/assets/pre_logo.png" alt="Logo">
+  <img class="logo" src="/css/assets/logo1.png" alt="Logo">
 </a>
 </div>

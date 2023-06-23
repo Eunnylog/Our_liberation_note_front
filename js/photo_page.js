@@ -1,4 +1,7 @@
 let access_token = localStorage.getItem('access')
+checkGroup()
+checkLogin()
+
 
 // 사진 추가하기
 async function addPhoto() {
@@ -63,7 +66,7 @@ async function album() {
         const note_id = urlParams.get('note_id');
 
         let menu_html = `<a class="btn group-btn" href="/plan_page.html?note_id=${note_id}"
-                        style="background-color: #92a2c5; color: white; margin: 0px 10px; 
+                        style="background-color: #60749d; color:white; margin: 0px 1px; 
                         text-decoration: none;">뒤로가기
                     </a>`
         $('#menu_box').append(menu_html)
@@ -82,7 +85,7 @@ async function album() {
         console.log(response_json)
         if (response_json.length == 0) {
             alert('마지막페이지 입니다!')
-            page = page * 1 - 6
+            page = page * 1 - page
             window.location.href = window.location.href.split('&')[0] + '&page=' + page
         }
 
@@ -138,7 +141,7 @@ function p_page() {
     if (!page) {
         page = 1
     }
-    page = page * 1 + 1
+    page = page * 1 + 6
     window.location.href = window.location.href.split('&')[0] + '&page=' + page
 }
 
@@ -149,7 +152,7 @@ function m_page() {
     if (!page) {
         page = 1
     }
-    page = page * 1 - 1
+    page = page * 1 - 6
 
     if (page < 0) {
         alert('첫페이지 입니다!')
@@ -223,6 +226,25 @@ async function photo_detail(photo_id) {
 
     $('#photo-detail-modal-footer').append(temp_html2)
 }
+
+
+// 코멘트란을 토글로 하여 클릭했을때의 이벤트 지정
+
+function toggleCommentEdit(event) {
+    const li = event.target.closest('li');
+    const div = li.querySelector('div');
+    div.style.display = div.style.display === 'none' ? 'flex' : 'none';
+}
+
+let commentItems = document.querySelectorAll('.comment_set li'); // 변수 선언을 밖으로 이동
+
+// li 요소들에 클릭시 이벤트 발생
+commentItems.forEach(item => {
+    item.addEventListener('click', toggleCommentEdit);
+    alert("ㅇㄹㄹ")
+});
+
+
 
 function patchPhotoBox(photo_id) {
     console.log(photo_id)
@@ -358,7 +380,8 @@ async function addComment() {
         if (response.ok) {
             console.log('코멘트 추가 성공');
         } else {
-            throw new Error('서버가 응답하지 않습니다.');
+            let response_json = await response.json()
+            alert(response_json['non_field_errors']);
         }
     }
     catch (error) {
@@ -366,7 +389,6 @@ async function addComment() {
         console.error(error);
     }
 }
-//comment_id를 받아와라ㅏㅏㅏㅏㅏㅏㅏ 어딘지는 아는데 어떻게 바다오냐ㅏㅏㅏㅏㅏㅏ
 
 async function editComment(event) {
 
@@ -374,24 +396,19 @@ async function editComment(event) {
     var buttonValue = button.value;
     console.log("Button Value:", buttonValue);
 
-
     const photo_comment_id = button.value;
-    const photo_id = photo_comment_id.split("/")[0];
+    // const photo_id = photo_comment_id.split("/")[0];
     const comment_id = photo_comment_id.split("/")[1];
 
-
-
-    // const comment_id = document.getElementById("commentEditBtn").value
     const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
     console.log(updatedComment)
 
-
-    fetch(`${backend_base_url}/note/comment/${photo_id}/${comment_id}`, {
+    fetch(`${backend_base_url}/note/comment/${comment_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
         },
-        method: 'PUT',
+        method: 'PATCH',
         body: JSON.stringify({ comment: updatedComment })
     })
         .then(response => response.json())
@@ -410,13 +427,14 @@ async function deleteComment(event) {
     console.log("Button Value:", buttonValue);
 
     const photo_comment_id = button.value;
-    const photo_id = photo_comment_id.split("/")[0];
     const comment_id = photo_comment_id.split("/")[1];
 
-    // const comment_id = document.getElementById("commentEditBtn").value
+    test = confirm("삭제 하시겠습니까?")
+    if (!test) {
+        return false
+    }
 
-
-    fetch(`${backend_base_url}/note/comment/${photo_id}/${comment_id}`, {
+    fetch(`${backend_base_url}/note/comment/${comment_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -428,7 +446,7 @@ async function deleteComment(event) {
                 alert("댓글이 삭제되었습니다");
                 window.location.reload();
             } else {
-                alert('');
+                alert('댓글이 삭제에 실패했습니다.');
             }
         })
         .catch(error => {
@@ -437,6 +455,7 @@ async function deleteComment(event) {
         });
 
 }
+
 
 
 async function handleStamp(photo_id) {

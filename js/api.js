@@ -1,8 +1,7 @@
 // 기본 URL
-// const backend_base_url = "https://api.miyeong.net"
-const backend_base_url = "http://127.0.0.1:8000"
+const backend_base_url = "https://api.liberation-note.com"
 const frontend_base_url = "http://127.0.0.1:5500"
-// const frontend_base_url = "https://miyeong.net"
+// const frontend_base_url = "https://liberation-note.com"
 
 let jwtToken;
 
@@ -101,22 +100,22 @@ async function handleSignin() {
       // localstorage에 저장하기
       localStorage.setItem('refresh', response_json.refresh)
       localStorage.setItem('access', response_json.access)
-      console.log(response_json)
       const base64Url = response_json.access.split('.')[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''))
 
-    localStorage.setItem('payload', jsonPayload)
-    document.getElementById("login").querySelector('[data-bs-dismiss="modal"]').click();
-    location.reload()
+      localStorage.setItem('payload', jsonPayload)
+      document.getElementById("login").querySelector('[data-bs-dismiss="modal"]').click();
+      location.reload()
+    }
+    else {
+      alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
+      console.log(response)
+    }
   }
-  else {
-    alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
-    console.log(response)
-  }}
-  catch(error){
+  catch (error) {
     console.log(error)
   }
 }
@@ -160,22 +159,18 @@ if (localStorage.getItem("social")) {
   if (code) {
     if (state) {
       if (currentUrl.includes("google")) {
-        console.log("구글", code)
         // 구글은 인코딩된 url 디코딩 후 localStorage에 저장
         const encodeCode = code
         const decodeCode = decodeURIComponent(encodeCode.replace(/\+/g, " "))
         localStorage.setItem('code', decodeCode)
-        console.log("디코딩", decodeCode)
         googleLoginApi(decodeCode) // googleLoginApi 함수 호출
       } else {
-        console.log("네이버")
         localStorage.setItem('code', code);
         localStorage.setItem('state', state);
         naverLoginApi(code) // naverLoginApi 함수 호출
       }
 
     } else {
-      console.log('카카오:', code);
       localStorage.setItem('code', code);
       kakaoLoginApi(code); // kakaoLoginApi 함수 호출
     }
@@ -339,23 +334,6 @@ async function naverLoginApi(Code) {
   }
 }
 
-async function facebookLogin() {
-  const cookies = document.cookie.split(';');
-
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    const [name, value] = cookie.split('=');
-
-    if (name === "jwt_token") {
-      jwtToken = value;
-      break;
-    }
-  }
-
-  if (!jwtToken) {
-    window.location.replace(`${backend_base_url}/users/facebook/login/`);
-  }
-}
 
 function handleLogout() {
   const payload = localStorage.getItem("payload");
@@ -573,7 +551,6 @@ function handleRadioClick() {
     let selected_email = document.getElementById(`email_${selectedIndex}`).value
 
     document.getElementById("usersearch").value = selected_email
-    // addMembersToGroup()
   } else {
     alert("선택된 이메일이 없습니다.");
   }
@@ -606,8 +583,8 @@ async function addMember() {
     emails.forEach((useremail, index) => {
       let temp_html = `
           <li style="list-style-type: none; margin-bottom: 10px;">
-            <input type="radio" id="email_${index}" name="email_radio" value="${index}" onclick="handleRadioClick()">
             ${useremail}
+            <input type="radio" id="email_${index}" name="email_radio" value="${index}" onclick="handleRadioClick()">
           </li>
         `;
       email.innerHTML += temp_html;
@@ -630,14 +607,14 @@ $(document).ready(function () {
 });
 
 
-// 멤버 추가 버튼 클릭 시 이메일 리스트에 추
+// 멤버 추가 버튼 클릭 시 이메일 리스트에 추가
 function addMembersToGroup() {
   // 선택한 input 요소의 value 속성을 배열에 push
   const checkedInput = document.querySelector('input[name="email_radio"]:checked');
 
   if (checkedInput) {
 
-    const selectedEmail = checkedInput.nextSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
+    const selectedEmail = checkedInput.previousSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
 
     // 이미 추가된 이메일인지 확인
     const alreadyAdded = selectedEmails.includes(selectedEmail);
@@ -656,11 +633,11 @@ function addMembersToGroup() {
       newInput.type = "radio";
       newInput.name = "checked_email_radio";
 
-      newEmailLi.appendChild(newInput);
       newEmailLi.appendChild(document.createTextNode(selectedEmail));
-
       selectedEmailUl.appendChild(newEmailLi);
-    } else {
+      newEmailLi.appendChild(newInput);
+    }
+    else {
       alert("이미 추가된 이메일입니다.");
     }
 
@@ -675,7 +652,7 @@ function DeleteMembers() {
   const checkedRadio = document.querySelector('input[name="checked_email_radio"]:checked');
 
   if (checkedRadio) {
-    const selectedEmail = checkedRadio.nextSibling.textContent.trim();
+    const selectedEmail = checkedRadio.previousSibling.textContent.trim();
     const emailIndex = selectedEmails.indexOf(selectedEmail);
 
     if (emailIndex > -1) {
@@ -737,25 +714,22 @@ async function addGroup() {
     alert("그룹이 저장되었습니다.");
     window.location.reload()
   } else {
-    const responseData = await response.json();
-    alert(responseData.error);
+    const data = await response.json();
+    console.log('data', data);
+    if (data.message) {
+      alert("※ " + data.message);
+    } else if (data["non_field_errors"]) {
+      alert("※ " + data["non_field_errors"])
+    }
   }
 }
-
-
-
-// 닉네임 추가
-function addNickname() {
-  alert("닉네임이 추가되었습니다!")
-}
-
 // 마이페이지 유저프로필
 async function getUserprofile() {
   let token = localStorage.getItem("access")
   const payload = localStorage.getItem("payload");
   const payload_parse = JSON.parse(payload)
 
-  const response = await fetch(`${backend_base_url}/user/my-page/${payload_parse.user_id}/`, {
+  const response = await fetch(`${backend_base_url}/user/my-page/`, {
     headers: {
       "Authorization": `Bearer ${token}`
     },
@@ -865,5 +839,21 @@ async function ChangePassword() {
     if (data.message) {
       alert("※ " + data.message);
     }
+  }
+}
+
+async function checkGroup() {
+  params = new URLSearchParams(window.location.search);
+  note_id = params.get("note_id");
+  const response = await fetch(`${backend_base_url}/note/note-detail/${note_id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization": `Bearer ${access_token}`
+    },
+    method: 'GET',
+  });
+  if (response.status == 403) {
+    alert('접근 권한이 없습니다!')
+    window.location.href = '/index.html'
   }
 }

@@ -34,11 +34,13 @@
                         추가</button>
                 </div>
             </div>
+            <button onclick="m_page()" type="button" class="btn group-btn"
+                style="background-color: #60749d; color:white; margin: 4px 2px; margin-left: 6px;">뒤로</button>
+            <button onclick="p_page()" type="button" class="btn group-btn"
+                style="background-color: #60749d; color:white; margin: 4px 2px;">다음</button>
             <div class="gallery" id="photo_info">
                 <!-- 이미지 갤러리 아이템들이 동적으로 추가될 공간 -->
             </div>
-            <button onclick="m_page()" type="button">뒤로</button>
-            <button onclick="p_page()" type="button">다음</button>
         </article>
     </main>
     <!-- 사진추가 모달창 -->
@@ -150,23 +152,26 @@
                                             id="addmember-btn">Search</button>
                                     </div>
                                     <div style="color: #7c838c;">
-                                        <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
+                                        <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
                                             Emails </p>
                                         <div id="email-list"
-                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
                                             <ul id="email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
                                     </div>
                                     <button type="button" onclick="addMembersToGroup()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
+                                        <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
+                                    </button>
                                     <button type="button" onclick="DeleteMembers()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
+                                            src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
                                     <div style="color: #4d6087;">
                                         <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
                                             Emails </p>
-                                        <div id="selected-email-list"
-                                            style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                        <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
+                                            overflow-y: auto; height: 250px;">
                                             <ul id="selected-email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>

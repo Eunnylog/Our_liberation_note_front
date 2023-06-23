@@ -29,42 +29,62 @@
         <!-- navbar -->
     </header>
     <!-- nav end -->
+
     <!-- content start -->
     <main>
         <article style="width: 100%; height: 100%; justify-content: center;">
+            <!-- 전체 페이지 위치를 위한 제일 큰 그리드 -->
             <div class="content"
                 style="display: grid; grid-template-columns: 50px 350px 50px 350px 50px 350px 50px; grid-template-rows: 50px 50px 230px 50px 230px 30px; background-color: aliceblue; justify-content: center; width:fit-content; height:fit-content; margin: 40px auto;">
+                <!-- 페이지 제목 -->
                 <div style="margin-left: 20px; margin-top: 10px; font-size:30px; font-weight: 500; grid-row: 1;">
                     Developers
                 </div>
                 <div
                     style="margin-left: 20px; margin-top: 10px; font-size: 18px; font-weight: 400; grid-column: 1/5 ;grid-row: 2;">
-                    ※ 사진을 클릭하시면 깃허브 링크로 이동할 수 있습니다!</div>
+                    ※ 사진을 클릭하시면 깃허브 링크로 이동할 수 있습니다!
+                </div>
+                <!-- 페이지 개발자 1 -->
                 <div class="shadow p-3 mb-5 bg-body rounded"
                     style="grid-column: 2; grid-row:3/4; text-align: center; flex-direction: column; margin-top: 15px; margin: auto; height: 100%;">
-                    <a href="https://github.com/kmy9810"><img src="/css/assets/develop_my.png"
-                            style="width: 300px; height:200px;" /></a>
+                    <!-- 클릭시 해당 깃허브로 이동 -->
+                    <a href="https://github.com/kmy9810">
+                        <img src="/css/assets/develop_my.png" style="width: 300px; height:200px;" />
+                    </a>
                 </div>
+                <!-- 페이지 개발자 2 -->
                 <div class="shadow p-3 mb-5 bg-body rounded"
                     style="grid-column: 4; grid-row: 3/4; text-align: center; flex-direction: column; margin-top: 15px; margin: auto; height: 100%;">
-                    <a href="https://github.com/Eunnylog"><img src="/css/assets/develop_je.png"
-                            style="width: 300px; height:200px" /></a>
+                    <!-- 클릭시 해당 깃허브로 이동 -->
+                    <a href="https://github.com/Eunnylog">
+                        <img src="/css/assets/develop_je.png" style="width: 300px; height:200px" />
+                    </a>
                 </div>
+                <!-- 페이지 게발자 3 -->
                 <div class="shadow p-3 mb-5 bg-body rounded"
                     style="grid-column: 6; grid-row: 3/4; text-align: center; flex-direction: column; margin-top: 15px; margin: auto; height: 100%;">
-                    <a href="https://github.com/Msgun7"><img src="/css/assets/develop_jg.png"
-                            style="width: 300px; height:200px" /></a>
+                    <!-- 클릭시 해당 깃허브로 이동 -->
+                    <a href="https://github.com/Msgun7">
+                        <img src="/css/assets/develop_jg.png" style="width: 300px; height:200px" />
+                    </a>
                 </div>
+                <!-- 페이지 개발자 4 -->
                 <div class="shadow p-3 mb-5 bg-body rounded"
                     style="grid-column: 2; grid-row: 5/6; text-align: center; flex-direction: column; margin-top: 15px; margin: auto; height: 100%;">
-                    <a href="https://github.com/yell2023"><img src="/css/assets/develop_yl.png"
-                            style="width: 300px; height:200px" /></a>
+                    <!-- 클릭시 해당 깃허브로 이동 -->
+                    <a href="https://github.com/yell2023">
+                        <img src="/css/assets/develop_yl.png" style="width: 300px; height:200px" />
+                    </a>
                 </div>
+                <!-- 페이지 개발자 5 -->
                 <div class="shadow p-3 mb-5 bg-body rounded"
                     style="grid-column: 4; grid-row: 5/6; text-align: center; flex-direction: column; margin-top: 15px; margin: auto; height: 100%;">
-                    <a href="https://github.com/choiyeji2022"><img src="/css/assets/develop_yj.png"
-                            style="width: 300px; height:200px" /></a>
+                    <!-- 클릭시 해당 깃허브로 이동 -->
+                    <a href="https://github.com/choiyeji2022">
+                        <img src="/css/assets/develop_yj.png" style="width: 300px; height:200px" />
+                    </a>
                 </div>
+                <!-- 오른쪽 하단 지도 아이콘 -->
                 <div style="grid-column: 6; grid-row: 5/6">
                     <img src="/css/assets/developers_page.png" />
                 </div>
@@ -158,31 +178,6 @@
             </div>
         </div>
     </div>
-    <!-- 회원탈퇴확인 모달창 -->
-    <div class="modal fade" id="deleteuser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        회원탈퇴</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form>
-                    <div class="modal-body">
-                        <h6>※ 탈퇴하기를 누르면 계정이 영구삭제됩니다. 계속 진행하시겠습니까?</h6>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
-                        </button>
-                        <button type="button" class="btn btn-primary" style="float: right"
-                            onclick="handlesUserDelete()">
-                            탈퇴하기
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <!-- 그룹만들기 모달창 -->
     <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
         <div class="modal-dialog">
@@ -207,23 +202,26 @@
                                             id="addmember-btn">Search</button>
                                     </div>
                                     <div style="color: #7c838c;">
-                                        <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
+                                        <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
                                             Emails </p>
                                         <div id="email-list"
-                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
                                             <ul id="email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
                                     </div>
                                     <button type="button" onclick="addMembersToGroup()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
+                                        <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
+                                    </button>
                                     <button type="button" onclick="DeleteMembers()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
+                                            src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
                                     <div style="color: #4d6087;">
                                         <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
                                             Emails </p>
-                                        <div id="selected-email-list"
-                                            style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                        <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
+                                            overflow-y: auto; height: 250px;">
                                             <ul id="selected-email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
@@ -231,7 +229,7 @@
                                     <div class="sign-up" style="display: flex;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
                                             onclick="document.getElementById('makegroup').style.display = 'none'"
-                                            style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                                            style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
                                         <button type="button" class="signup" onclick="addGroup()"
                                             style="background-color: #485d86;">Save</button>
                                     </div>
