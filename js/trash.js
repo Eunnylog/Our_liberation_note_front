@@ -11,6 +11,7 @@ async function getTrash() {
 
     if (response.status == 200) {
         const response_json = await response.json()
+        console.log(response_json)
         return response_json
     } else {
         alert("불러오는데 실패했습니다")
@@ -191,13 +192,13 @@ async function handleGrouptrash(group_id, name) {
         const response_json = await response.json()
         alert(`※ [${name}] 그룹이 정상적으로 삭제되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
         alert(`※ [${name}] 그룹이 정상적으로 복원되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else {
         alert("※실패하였습니다.")
@@ -225,13 +226,13 @@ async function handleNotetrash(note_id, group, name) {
         const response_json = await response.json()
         alert(`※ [${name}] 노트가 정상적으로 삭제되었습니다.`)
         window.location.replace(`${frontend_base_url}/my_diary.html`)
-        return response_json 
+        return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
         alert(`※ [${name}] 노트가 정상적으로 복원되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else {
         alert("※실패하였습니다.")
@@ -239,13 +240,8 @@ async function handleNotetrash(note_id, group, name) {
     }
 }
 
-async function handlePhototrash(photo_id, location, name) {
+async function handlePhototrash(photo_id, location, title, name) {
     let token = localStorage.getItem("access")
-    var userConfirmation = confirm("※ 확인을 누르시면 해당 사진이 휴지통으로 이동합니다. 삭제하시겠습니까?");
-
-    if (!userConfirmation) {
-        return false
-    }
 
     const response = await fetch(`${backend_base_url}/note/trash/${photo_id}`, {
         headers: {
@@ -255,20 +251,20 @@ async function handlePhototrash(photo_id, location, name) {
         method: 'POST',
         body: JSON.stringify({
             "location": location,
-            "name": name,
+            "title": title,
         })
     })
     if (response.status == 202) {
         const response_json = await response.json()
         alert(`※ [${name}] 사진이 정상적으로 삭제되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
         alert(`※ [${name}] 사진이 정상적으로 복원되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else {
         alert("※실패하였습니다.")
