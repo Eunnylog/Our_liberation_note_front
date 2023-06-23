@@ -1,6 +1,6 @@
 let access_token = localStorage.getItem('access')
-// let back_url = 'https://api.liberation-note.com'
-let back_url = 'http://127.0.0.1:8000'
+let back_url = 'https://api.liberation-note.com'
+// let back_url = 'http://127.0.0.1:8000'
 let group_data = []
 
 checkLogin()
@@ -109,6 +109,7 @@ async function showNoteList() {
         let temp_html2 = `
                             <a href="/" data-bs-toggle="modal" data-bs-target="#create_note">
                                 <section class="cp-card content" style="background-color: #d9e2f6;">
+                                +
                                 </section>
                             </a>
                         `
@@ -175,16 +176,7 @@ async function saveNote() {
 
         }
         else {
-            alert(response_json)
-
-            const regex = /string='([^']+)'/;
-            const match = JSON.stringify(response_json).match(regex)
-
-            if (match && match.length > 1) {
-                const cleanedString = match[1].replace("string=", "");
-                alert("※ " + cleanedString);
-
-            }
+            alert(response_json['non_field_errors'])
         }
 
     } else {

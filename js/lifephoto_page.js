@@ -1,4 +1,6 @@
+checkLogin()
 // lifephoto_page
+
 // input에 들어간 파일을 사진 넣기 버튼을 눌렀을때 넣어주는 함수
 function formFile(){
   // input으로 들어간 파일의 주소 가져오기
@@ -50,6 +52,7 @@ function formFile(){
     formFile4.value = null;
   }
 }
+
 // 해방필름 사전 png로 저장하는 로직
 function PrintDiv(div) {
   div = div[0];
@@ -66,6 +69,7 @@ function downloadURL(uri, name) {
   document.body.appendChild(link);
   link.click()
 }
+
 // 시간 지연 함수 사용한 파일 다운로드 함수
 function saveButton() {
   let loading = document.getElementById("loading");
@@ -82,12 +86,13 @@ function saveButton() {
   }, 3000);
 }
 
-
+// 취소 함수, 취소 버튼을 누르면 페이지를 다시 로드함
 function cancle() {
   location.reload()
 }
 
 // lifephoto_page_ver2
+
 // input에 들어간 파일을 사진 넣기 버튼을 눌렀을때 넣어주는 함수
 function inputFile(){
   // input으로 들어간 파일의 주소 가져오기
@@ -133,16 +138,20 @@ function inputFile(){
   }
   }
 
+  // 페이지 이동을 위한 함수
   window.onload = function () {
+    // 이전 페이지 처럼 되돌아 가기 위해 들어운 노트의 아이디를 불러옴
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
 
+    // 페이지 이동을 위해 각 버튼들의 필요한 id값을 불러옴
     var aiLink = document.getElementById('goAIpage');
     var photoLink = document.getElementById('goPhotopage');
     var planPage = document.getElementById('goPlanpage');
     var lifephotoPage = document.getElementById('goLifephoto')
     var lifephotoPage2 = document.getElementById('goLifephoto2')
 
+    // 버튼을 클릭했을때 페이지 이동시켜줌
     aiLink.onclick = function () {
         location.href = '/ai.html?note_id=' + note_id;
     }

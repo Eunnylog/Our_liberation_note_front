@@ -47,10 +47,10 @@
         </select>
         <div style="display: flex;">
           <button type="button" id="group-update-btn" class="btn group-btn"
-            style="background-color: #60749d; color:white; margin: 0px 10px;" onclick="groupUpdateModal()"> 그룹 수정
+            style="background-color: #485d86; color:white; margin: 0px 10px;" onclick="groupUpdateModal()"> 그룹 수정
           </button>
           <button type="button" id="group-delete-btn" class="btn group-btn"
-            style="background-color: #92a2c5; color:white;" data-bs-toggle="modal" data-bs-target="#deleteGroup"
+            style="background-color: #7689b1; color:white;" data-bs-toggle="modal" data-bs-target="#deleteGroup"
             onclick="deleteGroupModal()">그룹 삭제</button>
         </div>
       </div>
@@ -63,110 +63,6 @@
     </div>
   </main>
   <!-- content end -->
-  <!-- 회원가입 모달창 -->
-  <div class="modal fade" id="signup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="su">
-            Sign up</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="container">
-          <div class="global-cont">
-            <div class="inner-cont">
-              <div class="sign-in-up">
-                <form class="sign-in-form active">
-                  <input name="email" id="email" type="email" class="form-control" placeholder="email">
-                  <input name="password" id="password" type="password" class="form-control" placeholder="password">
-                  <input name="password2" id="password2" type="password" class="form-control" placeholder="password2">
-                  <div style="display: flex;">
-                    <input name="confirmcode" id="confirmcode" type="confirmcode" class="form-control"
-                      placeholder="email 인증코드" style="width: 250px;">
-                    <button type="button" class="signup" onclick="sendCode()"
-                      style="background-color: #60749d; width: 200px; margin-left: 10px;">인증코드 보내기</button>
-                  </div>
-                  <div class="sign-up">
-                    <button type="button" class="signup" onclick="handleSignup()">Sign up</button>
-                  </div>
-                </form>
-                <div class="divider">
-                  <span>or</span>
-                </div>
-                <div class="social-login">
-                  <button class="kakao" onclick="KakaoLogin()">Kakao</button>
-                  <button class="google" onclick="googleLogin()">Google</button>
-                  <button class="naver" onclick="naverLogin()">Naver</button>
-                  <!-- <button class="facebook" onclick="facebookLogin()">Facebook</button> -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- 로그인 모달창 -->
-  <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            Sign in</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="container">
-          <div class="global-cont">
-            <div class="inner-cont">
-              <div class="sign-in-up">
-                <form class="sign-in-form active">
-                  <input name="email" id="login-email" type="email" class="form-control" placeholder="Email">
-                  <input name="password" id="login-password" type="password" class="form-control"
-                    placeholder="Password">
-                  <button type="button" onclick="handleSignin()" class="btn btn-primary" style="float: center">
-                    Sign in
-                  </button>
-              </div>
-              </form>
-              <div class="divider">
-                <span>or</span>
-              </div>
-              <div class="social-login">
-                <button class="kakao" onclick="KakaoLogin()">Kakao</button>
-                <button class="google" onclick="googleLogin()">Google</button>
-                <button class="naver" onclick="naverLogin()">Naver</button>
-                <!-- <button class="facebook" onclick="facebookLogin()">Facebook</button> -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- 회원탈퇴확인 모달창 -->
-  <div class="modal fade" id="deleteuser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            회원탈퇴</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form>
-          <div class="modal-body">
-            <h6>※ 탈퇴하기를 누르면 계정이 영구삭제됩니다. 계속 진행하시겠습니까?</h6>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
-            </button>
-            <button type="button" class="btn btn-primary" style="float: right" onclick="handlesUserDelete()">
-              탈퇴하기
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
   <!--노트 추가 모달-->
   <div class="modal fade" id="create_note" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="margin: auto; max-width: 900px;">
@@ -190,7 +86,7 @@
                   <img src="https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png" alt="">
                   <div class="note_category" id="note_category">
                   </div>
-                  <button type="button" onclick="saveNote()" class="btn btn-primary" style="float: center">
+                  <button type="button" onclick="saveNote()" class="btn btn-primary" style="float: center; background-color: #485d86;">
                     Create
                   </button>
                 </form>
@@ -251,7 +147,7 @@
                   <div class="sign-up" style="display: flex;">
                     <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
                       onclick="document.getElementById('makegroup').style.display = 'none'"
-                      style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                      style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
                     <button type="button" class="signup" onclick="addGroup()"
                       style="background-color: #485d86;">Save</button>
                   </div>
@@ -314,7 +210,7 @@
                   <div class="sign-up" style="display: flex;">
                     <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
                       onclick="document.getElementById('updateGroup').style.display = 'none'"
-                      style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                      style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
                     <button type="button" class="signup" onclick="updateGroup()"
                       style="background-color: #485d86;">Save</button>
                   </div>
@@ -332,7 +228,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" style="color: #485d86;">Delete Group</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: #7689b1;"></button>
         </div>
         <div class="modal-body">
           <p style="color: #51565b;"> Delete 버튼을 누르면 그룹이 삭제됩니다.</p>
