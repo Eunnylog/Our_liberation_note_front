@@ -85,9 +85,12 @@ async function album() {
 
         console.log(response_json)
         if (response_json.length == 0) {
-            alert('마지막페이지 입니다!')
-            page = page * 1 - page
-            window.location.href = window.location.href.split('&')[0] + '&page=' + page
+            console.log(page)
+            if (page != 0) {
+                alert('마지막페이지 입니다!')
+                page = 0
+                window.location.href = window.location.href.split('&')[0] + '&page=' + page
+            }
         }
 
         const stampsresponse = await getUserprofile()
@@ -142,7 +145,7 @@ function p_page() {
     if (!page) {
         page = 1
     }
-    page = page * 1 + 6
+    page = page * 1 + 5
     window.location.href = window.location.href.split('&')[0] + '&page=' + page
 }
 
@@ -153,7 +156,7 @@ function m_page() {
     if (!page) {
         page = 1
     }
-    page = page * 1 - 6
+    page = page * 1 - 5
 
     if (page < 0) {
         alert('첫페이지 입니다!')
