@@ -86,7 +86,7 @@ async function album() {
         console.log(response_json)
         if (response_json.length == 0) {
             alert('마지막페이지 입니다!')
-            page = page * 1 - page
+            page = page * 1
             window.location.href = window.location.href.split('&')[0] + '&page=' + page
         }
 
