@@ -110,7 +110,7 @@ async function showNoteList() {
         let temp_html2 = `
                             <a href="/" data-bs-toggle="modal" data-bs-target="#create_note">
                                 <section class="cp-card content" style="background-color: #d9e2f6; text-align:center;">
-                                <img src="/css/assets/plus.png" style="justify-content: center; width:60%; height:50%; margin-top:34%;">
+                                <img src="/css/assets/plus.png" style="justify-content: center; width:60%; height:100%; margin-top:5%;">
                                 </section>
                             </a>
                         `

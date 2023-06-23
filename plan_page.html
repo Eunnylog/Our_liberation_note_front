@@ -65,7 +65,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="su">
+          <h5 class="modal-title" id="su" style="color: #485d86;">
             Send Email</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -95,7 +95,7 @@
     <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 700px;">
       <div class="modal-content" style="width:700px;">
         <div class="modal-header">
-          <h5 class="modal-title" id="plan_modal_title">
+          <h5 class="modal-title" id="plan_modal_title" style="color: #485d86;">
             Plan Info</h5>
           <h6 class="modal-title" id="plan_modal_id" hidden></h6>
           <button type="button" class="btn-close delete_search" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -128,7 +128,7 @@
     <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 1000px;">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
             일정 추가</h5>
           <button type="button" class="btn-close delete_search" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -271,7 +271,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Delete Note</h5>
+          <h5 class="modal-title" style="color: #485d86;">Delete Note</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="modal-body">
@@ -286,7 +286,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content" style="height: 500px">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div id="trash-modal-body" class="modal-body">
@@ -309,7 +309,27 @@
         <div class="modal-footer" id="trash-modal-footer">
         </div>
       </div>
+      <div id="trash-modal-body" class="modal-body">
+        <div id="trash-container">
+          <!-- 토글 -->
+          <div class="trash-toggle">
+            <input type="checkbox" id="photo-toggle">
+            <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+            <input type="checkbox" id="note-toggle">
+            <button id="noteButton" onclick="loadTrash('note')">노트</button>
+            <input type="checkbox" id="group-toggle">
+            <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+          </div>
+        </div>
+        <form>
+          <div id="trash-content" class="trash-content">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" id="trash-modal-footer">
+      </div>
     </div>
+  </div>
   </div>
   <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script> -->
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />

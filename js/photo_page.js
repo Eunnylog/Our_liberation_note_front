@@ -201,20 +201,32 @@ async function photo_detail(photo_id) {
                     </div>
                     
                     <div style="display: flex; align-items: center;">
-                    <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px; ">
-                    <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
-                        <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal">게시</button>
+                        <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px;">
+                        <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
+                            <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal">게시</button>
                     </div>
                     <hr/>
+                    <style>
+                        .comment_set div:hover {
+                            background-color: #f5f5f5; 
+                        }
+                    </style>
                     <div class="comment_set">
-                        ${comments.map(comment => `<div id="comment-$comment-${comment.id}">${comment.comment}
-                        <div style="display: flex; align-items: center;">
-                        <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" placeholder="comment">
-                        <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="editComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">수정</button>
-                        <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">삭제</button>
-                        </div>
-                        </div>`).join('')}
+                    ${comments.map(comment => `<b>${comment.user}</b>
+                                                <p style="float: right; color: gray;">${comment.created_at.split("T")[0]}</p>
+                                                <div id="comment-$comment-${comment.id}" style="width: 100%; margin-bottom: 10px;" onclick="toggleCommentEdit(event)">
+                                                    ${comment.comment}
+                                                    <div style="display: none;">
+                                                        <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" 
+                                                        onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
+                                                        <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" 
+                                                        onclick="editComment(event)" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
+                                                        <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" 
+                                                        onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">삭제</button>
+                                                    </div>
+                                                </div>`).join('')}
                     </div>`
+
     $('#photo-d').append(temp_html)
 
     $('#photo-detail-modal-footer').empty()
@@ -222,7 +234,7 @@ async function photo_detail(photo_id) {
     let temp_html2 = `<button id="patch_photo_box" type="button" class="btn btn-primary"
                             onclick="patchPhotoBox('${photo_id}')">수정</button>
                       <button id="photo-trash" type="button" class="btn btn-primary"
-                            onclick="handlePhototrash('${photo_id}','${location}','${name}')">삭제</button>`
+                            onclick="handlePhototrash('${photo_id}','${location}','${title}','${name}')">삭제</button>`
 
     $('#photo-detail-modal-footer').append(temp_html2)
 }
@@ -231,12 +243,12 @@ async function photo_detail(photo_id) {
 // 코멘트란을 토글로 하여 클릭했을때의 이벤트 지정
 
 function toggleCommentEdit(event) {
-    const li = event.target.closest('li');
+    const li = event.target.closest('div');
     const div = li.querySelector('div');
     div.style.display = div.style.display === 'none' ? 'flex' : 'none';
 }
 
-let commentItems = document.querySelectorAll('.comment_set li'); // 변수 선언을 밖으로 이동
+let commentItems = document.querySelectorAll('.comment_set div'); // 변수 선언을 밖으로 이동
 
 // li 요소들에 클릭시 이벤트 발생
 commentItems.forEach(item => {
