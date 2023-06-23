@@ -10,7 +10,6 @@ checkLogin()
 const userPayload = localStorage.getItem('payload')
 const userPayloadJson = JSON.parse(userPayload)
 const userEmail = userPayloadJson.email
-console.log('유저', userEmail)
 
 
 
@@ -28,7 +27,6 @@ window.onload = function () {
                         </div>
                     `
         $('#note_category').append(temp_html)
-        console.log(i)
     }
 };
 
@@ -41,7 +39,13 @@ async function getGroup() {
         method: 'GET',
     })
     const response_json = await response.json()
+
+    console.log(response_json)
     // $('#select_group').empty()
+    if (response_json.length == 0) {
+        alert('그룹을 먼저 생성해 주세요!')
+        window.location.href = '/index.html'
+    }
     response_json.forEach((a, index) => {
         let id = a['id']
         let name = a['name']
@@ -73,13 +77,11 @@ async function getGroup() {
 }
 
 getGroup().then(() => {
-    console.log('그룹', group_data);
     showMasterButton();
 });
 
 // 마스터만 그룹 수정&삭제 버튼 display
 async function showMasterButton() {
-    console.log('버튼 실행')
     let updateButton = document.getElementById("group-update-btn")
     let deleteButton = document.getElementById("group-delete-btn")
 
@@ -110,13 +112,12 @@ async function showNoteList() {
         let temp_html2 = `
                             <a href="/" data-bs-toggle="modal" data-bs-target="#create_note">
                                 <section class="cp-card content" style="background-color: #d9e2f6; text-align:center;">
-                                <img src="/css/assets/plus.png" style="justify-content: center; width:60%; height:50%; margin-top:34%;">
+                                <img src="/css/assets/plus.png" style="justify-content: center; width:60%; height:100%; margin-top:5%;">
                                 </section>
                             </a>
                         `
         $('#note_list').append(temp_html2);
         response_json.forEach((a) => {
-            console.log(a)
             const category = a['category']
             const name = a['name']
             const note_id = a['id']
@@ -224,7 +225,6 @@ async function groupUpdateModal() {
     $('#update-usersearch').val("")
 
     const selectedIndex = document.getElementById('select_group').value
-    console.log("selectedIndex", selectedIndex)
 
     $('#update-selected-email-ul').empty()
 
@@ -234,9 +234,7 @@ async function groupUpdateModal() {
         let members = group['members']
 
         if (parseInt(selectedIndex) === parseInt(id)) {
-            console.log(id, name, members)
             updatingGroupId = id;
-            console.log(updatingGroupId)
             let groupName = document.getElementById('update-groupname')
             let groupMembers = document.getElementById('update-selected-email-ul')
 
@@ -245,7 +243,6 @@ async function groupUpdateModal() {
             const membersArray = members.split(',')
 
             membersArray.forEach((member, index) => {
-                console.log("멤버", members)
                 let temp_html = `
                         <li class="selected_email" style="list-style-type: none; margin-bottom: 10px;">
                         ${member}
@@ -255,7 +252,6 @@ async function groupUpdateModal() {
                 groupMembers.innerHTML += temp_html;
                 // 기존 이메일을 배열에 추가
                 existingEmails.push(member.trim());
-                console.log('existingEmails', existingEmails)
             })
 
         }
@@ -281,10 +277,8 @@ $(document).ready(function () {
 
 // 멤버 검색
 async function updateAddMember() {
-    console.log("addmember")
     const access_token = localStorage.getItem("access")
     const membersEmail = document.getElementById("update-usersearch").value
-    console.log("emailinput", membersEmail)
 
     if (!membersEmail) {
         alert('이메일을 입력해주세요!')
@@ -293,7 +287,6 @@ async function updateAddMember() {
     const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
 
     axios.get(url).then(response => {
-        console.log(response.data);
 
         const emails = response.data.map(item => item.email);
 
@@ -340,15 +333,11 @@ function updateAddMembersToGroup() {
         if (!alreadyAdded && !existingEmail) {
             // selectedEmails = selectedEmails.concat(existingEmails);
             Array.prototype.push.apply(selectedEmails, existingEmails);
-            console.log('ex&selex', selectedEmails)
-            // selectedEmails.push(selectedEmail);
-            // console.log('selectedEmails', selectedEmails)
 
             if (!selectedEmails.includes(selectedEmail)) {
                 selectedEmails.push(selectedEmail);
-                console.log('selectedEmails', selectedEmails);
             } else {
-                console.log('이미 추가된 이메일입니다.');
+                alert('이미 추가된 이메일입니다.');
             }
 
 
@@ -389,7 +378,6 @@ async function updateDeleteMembers() {
         const selectedEmailIndex = selectedEmails.indexOf(selectedEmail);
 
         selectedEmails.splice(selectedEmailIndex, 1); // 선택된 이메일 삭제
-        console.log('selectedEmails', selectedEmails)
 
         checkedInput.parentElement.remove(); // 선택된 이메일 리스트에서 삭제
     }
@@ -401,13 +389,10 @@ async function updateDeleteMembers() {
 
 // 그룹 수정 등록
 async function updateGroup() {
-    console.log("updatingGroupId:", updatingGroupId)
     const access_token = localStorage.getItem("access")
     const groupName = document.getElementById("update-groupname").value
-    console.log('groupName', groupName)
 
     const membersList = document.getElementsByClassName("selected_email")
-    console.log('membersList', membersList) // \n이 포함되어서 정규표현식을 사용해야함
 
     const membersEmails = [];
 
@@ -430,19 +415,15 @@ async function updateGroup() {
         // 특수문자가 올바르게 전송되도록 보장하기 위해 인코딩한 후 쿼리 매개변수로 전달한다
         const membersResponse = await fetch(`${backend_base_url}/user/userlist?usersearch=${encodeURIComponent(memberEmail)}`);
         const membersData = await membersResponse.json();
-        console.log('membersData', membersData)
         // 해당 멤버의 id를 리스트에 추가
         const memberId = membersData[0].id;
-        console.log('memberId', memberId)
         memberIdList.push(memberId);
-        console.log("멤버아이디리스트", memberIdList)
     }
 
     const requestData = {
         name: groupName,
         members: memberIdList
     };
-    console.log("requestData", requestData)
 
     // members 배열 요소를 문자열로 바꾸고 콤마로 구분
     const dataToServer = {
@@ -464,7 +445,6 @@ async function updateGroup() {
         window.location.reload()
     } else {
         const data = await response.json();
-        console.log('data', data);
         if (data.message) {
             alert("※ " + data.message);
         } else if (data["non_field_errors"]) {
@@ -476,8 +456,6 @@ async function deleteGroupModal() {
     const selected_id = document.getElementById('select_group').value
     const selectedOption = document.getElementById('select_group').options[document.getElementById('select_group').selectedIndex];
     const selected_name = selectedOption.text;
-    console.log("selected_id", selected_id)
-    console.log("selected_name", selected_name)
 
     $('#modal-body').empty()
     $('#modal-footer').empty()
@@ -507,19 +485,15 @@ async function deleteGroupConfirm() {
     const response_json = await response.json()
 
     const selectedIndex = document.getElementById('select_group').value
-    console.log("selectedIndex", selectedIndex)
 
     response_json.forEach((group, index) => {
         let id = group['id']
         let name = group['name']
         let members = group['members']
         let master = group['master']
-        console.log("마스터", master)
 
         if (parseInt(selectedIndex) === parseInt(id)) {
-            console.log(id, name, members)
             updatingGroupId = id;
-            console.log(updatingGroupId)
         }
     })
 

@@ -33,7 +33,7 @@
 <body>
   <!-- nav start -->
   <header class="site-header navbar">
-  <!-- navbar -->
+    <!-- navbar -->
   </header>
   <!-- nav end -->
   <!-- content start -->
@@ -68,7 +68,7 @@
     <div class="modal-dialog" style="margin: auto; max-width: 900px;">
       <div class="modal-content" style="width:100%">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
             Create Note</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -80,13 +80,13 @@
                   <input name="note_name" id="note_name" type="text" class="form-control" placeholder="노트 이름"
                     style="width: 48%; float:left;">
                   <select name="group_name" id="group_name" onchange="showNoteList(); toggleArrow();"
-                    style="width: 48%; height:46px; float:right; margin-bottom:10px">
+                    style="width: 48%; height: 52px; float:right; margin-bottom:10px; padding: 10px; border: 1px solid #C2C7D0; border-radius: 5px; box-sizing: border-box;">
                     <option value="-1">그룹 선택</option>
                   </select>
-                  <img src="https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png" alt="">
                   <div class="note_category" id="note_category">
                   </div>
-                  <button type="button" onclick="saveNote()" class="btn btn-primary" style="float: center; background-color: #485d86;">
+                  <button type="button" onclick="saveNote()" class="btn btn-primary"
+                    style="float: center; background-color: #485d86;">
                     Create
                   </button>
                 </form>
@@ -228,7 +228,8 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" style="color: #485d86;">Delete Group</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: #7689b1;"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            style="background-color: #7689b1;"></button>
         </div>
         <div class="modal-body">
           <p style="color: #51565b;"> Delete 버튼을 누르면 그룹이 삭제됩니다.</p>
@@ -242,33 +243,58 @@
   <div class="modal" id="trash" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content" style="height: 500px">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <<<<<<< HEAD <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          =======
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div id="trash-modal-body" class="modal-body">
+            <div id="trash-container">
+              <!-- 토글 -->
+              <div class="trash-toggle">
+                <input type="checkbox" id="photo-toggle">
+                <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+                <input type="checkbox" id="note-toggle">
+                <button id="noteButton" onclick="loadTrash('note')">노트</button>
+                <input type="checkbox" id="group-toggle">
+                <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+              </div>
             </div>
-            <div id="trash-modal-body" class="modal-body">
-                <div id="trash-container">
-                    <!-- 토글 -->
-                    <div class="trash-toggle">
-                        <input type="checkbox" id="photo-toggle">
-                        <button id="photoButton" onclick="loadTrash('photo')">사진</button>
-                        <input type="checkbox" id="note-toggle">
-                        <button id="noteButton" onclick="loadTrash('note')">노트</button>
-                        <input type="checkbox" id="group-toggle">
-                        <button id="groupButton" onclick="loadTrash('group')">그룹</button>
-                    </div>
-                </div>
-                <form>
-                    <div id="trash-content" class="trash-content">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer" id="trash-modal-footer">
-            </div>
+            <form>
+              <div id="trash-content" class="trash-content">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer" id="trash-modal-footer">
+          </div>
+          >>>>>>> ebe8422dda92461766be2d8048fdd51f4fbfcb75
+      </div>
+      <div id="trash-modal-body" class="modal-body">
+        <div id="trash-container">
+          <!-- 토글 -->
+          <div class="trash-toggle">
+            <input type="checkbox" id="photo-toggle">
+            <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+            <input type="checkbox" id="note-toggle">
+            <button id="noteButton" onclick="loadTrash('note')">노트</button>
+            <input type="checkbox" id="group-toggle">
+            <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+          </div>
         </div>
+        <form>
+          <div id="trash-content" class="trash-content">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" id="trash-modal-footer">
+      </div>
     </div>
-</div>
-  
+  </div>
+  </div>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
