@@ -171,11 +171,36 @@
                     <button type="button" onclick="savePlan()" class="btn btn-primary"
                       style="width: 49%; background-color: #485d86;">저장</button>
                   </div>
+
                 </form>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  <!-- 그룹만들기 모달창 -->
+  <div class="modal fade" id="deleteuser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            회원탈퇴</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <h6>※ 탈퇴하기를 누르면 계정이 영구삭제됩니다. 계속 진행하시겠습니까?</h6>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
+            </button>
+            <button type="button" class="btn btn-primary" style="float: right" onclick="handlesUserDelete()">
+              탈퇴하기
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
