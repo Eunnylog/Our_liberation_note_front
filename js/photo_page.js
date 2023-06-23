@@ -39,9 +39,9 @@ async function addPhoto() {
         const note_id = urlParams.get('note_id');
 
         const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
-            // headers: {
-            //     // "Authorization": `Bearer ${access_token}`,
-            // },
+            headers: {
+                "Authorization": `Bearer ${access_token}`,
+            },
             method: 'POST',
 
             body: formData
@@ -343,8 +343,6 @@ async function patchPhoto() {
     const location_x = document.getElementById("p_location_x").value
     const location_y = document.getElementById("p_location_y").value
 
-
-
     const formData = new FormData();
 
     // 기존 이미지를 삭제하기 위해 'delete_image' 파라미터를 추가하여 서버에 전달
@@ -391,9 +389,11 @@ async function patchPhoto() {
     }
 }
 //photo_page.html > 사진추가 버튼 옆 업로드 이름 
-$("#image").on('change', function () {
-    var fileName = $("#image").val();
-    $(".upload-name").val(fileName);
+$(document).ready(function () {
+    $("#image").on('change', function () {
+        var fileName = $(this).val();
+        $(".upload-name").val(fileName);
+    });
 });
 
 
