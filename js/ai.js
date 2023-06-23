@@ -1,10 +1,10 @@
 let back_url = 'https://api.liberation-note.com'
-// let front_url = 'https://miyeong.net'
 let front_url = 'http://127.0.0.1:5500'
-// let back_url = 'http://127.0.0.1:8000'
+//let back_url = 'http://127.0.0.1:8000'
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
 
+checkGroup()
 checkLogin()
 
 function aiSubscribeCheck() {
@@ -261,7 +261,7 @@ async function aiStart() {
     const response = await fetch(`${back_url}/note/search`, {
       headers: {
         'content-type': 'application/json',
-        "Authorization": `Bearer ${access_token}`,
+        // "Authorization": `Bearer ${access_token}`,
       },
       method: 'POST',
       body: JSON.stringify({ destinations: destinations })
@@ -306,6 +306,7 @@ async function aiStart() {
 
       $('#carouselModal').modal('show');
 
+      document.getElementById('AI-mapbox').style.display = 'block';
       document.getElementById('map').style.display = 'block';
       document.getElementById('reload_btn').style.display = 'inline-block';
       document.getElementById('ai_answer_btn').style.display = 'inline-block';
@@ -397,6 +398,7 @@ function reload() {
   if (!confirm_answer) {
     return false
   }
+  document.getElementById('AI-mapbox').style.display = 'none';
   document.getElementById('map').style.display = 'none';
   document.getElementById('reload_btn').style.display = 'none';
   document.getElementById('ai_answer_btn').style.display = 'none';

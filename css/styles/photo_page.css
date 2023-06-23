@@ -55,7 +55,7 @@ body {
 	position: relative;
 	display: inline-block;
 	width: 300px;
-	height:300px;
+	height: 300px;
 	justify-self: center;
 }
 
@@ -116,33 +116,15 @@ body {
 	cursor: pointer;
 }
 
-
-
-/*
-
-The following rule will only run if your browser supports CSS grid.
-
-Remove or comment-out the code block below to see how the browser will fall-back to flexbox styling. 
-
-*/
-
 @supports (display: grid) {
 	.gallery {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-gap: 2rem;
-	} 
+	}
 
 	.gallery,
 	.gallery-item {
 		margin: 0;
 	}
-} 
-
-/* @media (min-width: 768px) {
-	.gallery {
-	  display: grid;
-	  grid-template-columns: repeat(3, 1fr);
-	  grid-gap: 2rem;
-	}
-  } */
+}

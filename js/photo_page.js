@@ -1,6 +1,9 @@
 // const backend_base_url = "https://api.liberation-note.com"
 // const frontend_base_url = "http://127.0.0.1:5500"
 let access_token = localStorage.getItem('access')
+checkGroup()
+checkLogin()
+
 
 // 사진 추가하기
 async function addPhoto() {
@@ -399,14 +402,10 @@ async function editComment(event) {
     var buttonValue = button.value;
     console.log("Button Value:", buttonValue);
 
-
     const photo_comment_id = button.value;
     // const photo_id = photo_comment_id.split("/")[0];
     const comment_id = photo_comment_id.split("/")[1];
 
-
-
-    // const comment_id = document.getElementById("commentEditBtn").value
     const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
     console.log(updatedComment)
 
@@ -435,8 +434,6 @@ async function deleteComment(event) {
 
     const photo_comment_id = button.value;
     const comment_id = photo_comment_id.split("/")[1];
-
-    // const comment_id = document.getElementById("commentEditBtn").value
 
     test = confirm("삭제 하시겠습니까?")
     if (!test) {

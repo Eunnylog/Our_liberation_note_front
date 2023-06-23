@@ -51,9 +51,9 @@ async function loadTrash(contentType) {
             $('#trash-content').append(trashImage);
 
             let temp_html2 = `<button type="button" class="btn btn-primary" 
-                            style="background-color:  #60749d;">복원</button>
+                            style="background-color:  #7689b1; border-color: #7689b1;">복원</button>
                           <button type="button" class="btn btn-primary" 
-                            style="background-color: #1F489A;">삭제</button>`
+                            style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
             $('#trash-modal-footer').append(temp_html2)
 
@@ -72,9 +72,9 @@ async function loadTrash(contentType) {
                 $('#trash-content').append(temp_html)
             });
             let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
-                            style="background-color:  #60749d;">복원</button>
+                            style="background-color:  #7689b1; border-color: #7689b1;">복원</button>
                           <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
-                            style="background-color: #1F489A;">삭제</button>`
+                            style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
@@ -87,9 +87,9 @@ async function loadTrash(contentType) {
             $('#trash-content').append(trashImage);
 
             let temp_html2 = `<button type="button" class="btn btn-primary" 
-                            style="background-color:  #60749d;">복원</button>
+                            style="background-color:  #7689b1; border-color: #7689b1;">복원</button>
                           <button type="button" class="btn btn-primary" 
-                            style="background-color: #1F489A;">삭제</button>`
+                            style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
             $('#trash-modal-footer').append(temp_html2)
 
@@ -112,9 +112,9 @@ async function loadTrash(contentType) {
                 $('#trash-content').append(temp_html)
             });
             let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
-                            style="background-color:  #60749d;">복원</button>
+                            style="background-color:  #7689b1; border-color: #7689b1;">복원</button>
                           <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
-                            style="background-color: #1F489A;">삭제</button>`
+                            style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
@@ -127,9 +127,9 @@ async function loadTrash(contentType) {
             $('#trash-content').append(trashImage);
 
             let temp_html2 = `<button type="button" class="btn btn-primary" 
-                            style="background-color:  #60749d;">복원</button>
+                            style="background-color:  #7689b1; border-color: #7689b1;">복원</button>
                           <button type="button" class="btn btn-primary" 
-                            style="background-color: #1F489A;">삭제</button>`
+                            style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
             $('#trash-modal-footer').append(temp_html2)
 
@@ -152,9 +152,9 @@ async function loadTrash(contentType) {
                 $('#trash-content').append(temp_html)
             });
             let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
-                            style="background-color:  #60749d;">복원</button>
+                            style="background-color:  #7689b1; border-color: #7689b1;">복원</button>
                           <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
-                            style="background-color: #1F489A;">삭제</button>`
+                            style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
