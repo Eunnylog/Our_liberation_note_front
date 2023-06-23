@@ -1,6 +1,3 @@
-// const backend_base_url = "https://api.miyeong.net"
-// const backend_base_url = "http://127.0.0.1:8000"
-// const frontend_base_url = "http://127.0.0.1:5500"
 let access_token = localStorage.getItem('access')
 
 // 사진 추가하기
@@ -65,13 +62,14 @@ async function album() {
         const urlParams = new URLSearchParams(window.location.search);
         const note_id = urlParams.get('note_id');
 
-    let menu_html = `<a class="btn group-btn" href="/plan_page.html?note_id=${note_id}"
+        let menu_html = `<a class="btn group-btn" href="/plan_page.html?note_id=${note_id}"
                         style="background-color: #92a2c5; color: white; margin: 0px 10px; 
                         text-decoration: none;">뒤로가기
                     </a>`
-    $('#menu_box').append(menu_html)
+        $('#menu_box').append(menu_html)
 
-        const response = await fetch(`${backend_base_url}/note/photo/${note_id}/${page}`, {
+        // const response = await fetch(`${backend_base_url}/note/photo/${note_id}/${page}`, {
+        const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
             headers: {
                 'content-type': 'application/json',
                 // 'Authorization': `Bearer ${accessToken}`
@@ -183,93 +181,98 @@ async function photo_detail(photo_id) {
     const memo = response_json["memo"]
     const comments = response_json["comment_set"]
     // const photo_id = response_json["photo_id"]
+    // ${comment.created_at}
 
     console.log(response_json)
-    let temp_html = `
-                    <img class="gallery-image" src="${image}"id='photo_image'>
-                    <div id='photo_name'>${name}</div>
-                    <div id='photo_start'>${start}</div>
-                    <div id='photo_title'>${title}</div> 
-                    <div id='photo_location'>${location}</div>
-                    <div id='photo_memo'>${memo}</div>
+
+    const modalTitle = document.getElementById("modal-title")
+    modalTitle.innerText = `${name}`
+
+    let temp_html = `<div id='photo_title' style="float:left; margin-bottom:5px;">${title}</div> 
+                    <div id='photo_start' style="float: right; margin-bottom:5px;">${start}</div>
+                    <img class="detail-image" src="${image}"id='photo_image'>
+                    <div id='photo_memo' style="margin-bottom: 10px;">${memo}</div>
+                    <div style="display: flex; align-items: center;">
+                        <img src="/css/assets/marker.png" alt="Image" style="width: 15px; height: 20px; margin-right: 5px; margin-bottom: 10px;">
+                        <div id='photo_location' style="margin-bottom: 10px;">${location}</div>
+                    </div>
                     
-                    <div>
+                    <div style="display: flex; align-items: center;">
+                    <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px; ">
                     <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
                         <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal">게시</button>
-                    <ul class="comment_set">
-                        ${comments.map(comment => `<li id="comment-$comment-${comment.id}">${comment.comment}
+                    </div>
+                    <hr/>
+                    <div class="comment_set">
+                        ${comments.map(comment => `<div id="comment-$comment-${comment.id}">${comment.comment}
+                        <div style="display: flex; align-items: center;">
                         <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" placeholder="comment">
                         <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="editComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">수정</button>
                         <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">삭제</button>
-                        </li>`).join('')}
-                    </ul>
-                    </div>
-                    
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
-                        </button>
-                        <button id="patch_photo_box" type="button" class="btn btn-primary"
-                            onclick="patchPhotoBox('${photo_id}')">수정</button>
-                        <button id="photo-trash" type="button" class="btn btn-primary"
-                            onclick="trashPhoto('${photo_id}')">휴지통</button>
-                    </div>
-                    `
+                        </div>
+                        </div>`).join('')}
+                    </div>`
     $('#photo-d').append(temp_html)
-}
 
+    $('#photo-detail-modal-footer').empty()
+
+    let temp_html2 = `<button id="patch_photo_box" type="button" class="btn btn-primary"
+                            onclick="patchPhotoBox('${photo_id}')">수정</button>
+                      <button id="photo-trash" type="button" class="btn btn-primary"
+                            onclick="handlePhototrash('${photo_id}','${location}','${name}')">삭제</button>`
+
+    $('#photo-detail-modal-footer').append(temp_html2)
+}
 
 function patchPhotoBox(photo_id) {
     console.log(photo_id)
     // // 수정 창으로 변경합니다.
     // let photo_detail = document.getElementById('photo-d');
     let image = document.getElementById('photo_image');
-    let name = document.getElementById('photo_name').innerHTML;
+    let name = document.getElementById('modal-title').innerHTML;
     let start = document.getElementById('photo_start').innerHTML;
     let title = document.getElementById('photo_title').innerHTML;
     let location = document.getElementById('photo_location').innerHTML;
     let memo = document.getElementById('photo_memo').innerHTML;
 
     $('#photo-d').empty();
-    temp_html = `           
-                            <div class="filebox">
-                                <input class="upload-name" value="첨부파일" src="${image}" placeholder="첨부파일" multiple
-                                    accept=".jpg, .png, .jpeg" style="width: 85.3%">
-                                <label for="image">사진추가</label>
-                                <input type="file" id="image" style="display: none" />
-                            </div>
-                            <div class="input-group-append" style="width: 100%;">
-                                <input name="name" id="p_name" type="text" value='${name}' class="form-control"
-                                    placeholder="사진 타이틀" style="width: 100%; height:40px;">
-                                <input name="start" id="p_start" type="date" value='${start}' class="form-control">
-                            </div>
-                            <div class="input-group-append" style="width: 100%;">
-                                <input name="title" id="p_title" value='${title}' type="text" class="form-control"
-                                    placeholder="주소 검색" style="width: 100%; height:40px;">
-                            </div>
-                            <div class="input-group"  style="flex-wrap: nowrap;">
-                                <div class="input-group-append" style="width: 90%;">
-                                    <input name="location" id="p_location" value='${location}' type="text" class="form-control"
-                                    placeholder="장소" style="width: 90%; height:40px;" placeholder="주소(미작성시 AI사용이 불가합니다!)">
-                                </div>
-                                <div class="input-group-append" style="width: 10%;">
-                                    <button type="button" onclick="searchLocation(2)" class="btn btn-primary"
-                                    style="margin-top:0px;height:40px; font-size:15px">검색</button>
-                                </div>
-                            </div>
-                            <div id="search_box2" style="width: 100%;  overflow: auto; height= 30px;"></div>
-                            <div class="input-group" style="flex-wrap: nowrap;">
-                                <textarea name="memo" id="p_memo" type="textarea" class="form-control" placeholder="memo"
-                                style="height:50px; min-height:50px; max-height:200px; width:100%" >${memo}</textarea>
-                            </div>
-                            <input name="p_location_x" id="p_location_x" type="text" class="form-control" hidden>
-                                <input name="p_location_y" id="p_location_y" type="text" class="form-control" hidden>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary delete_serarch" data-bs-dismiss="modal">취소하기
-                                </button>
-                                <button id="patch_photo" value='${photo_id}' type="button" class="btn btn-primary"
-                                    onclick="patchPhoto()">저장</button>
-                            </div> `;
+    let temp_html = `<div class="input-group" style="flex-wrap: nowrap; ">
+                        <input class="upload-name" value="첨부파일" src="${image}" placeholder="첨부파일" multiple
+                            accept=".jpg, .png, .jpeg" style="width: 80%; border-radius: 5px 0 0 5px; margin-bottom: 15px;">
+                        <label for="image" style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 5px 5px 0;">사진변경</label>
+                        <input type="file" id="image" style="display: none"/>
+                    </div>
+                    <div class="input-group-append" style="width: 100%;">
+                        <input name="name" id="p_name" type="text" value='${name}' class="form-control"
+                            placeholder="사진 타이틀" style="width: 100%; height:40px; margin-bottom: 15px;">
+                        <input name="start" id="p_start" type="date" value='${start}' class="form-control" style="margin-bottom: 15px;">
+                    </div>
+                    <div class="input-group" style="flex-wrap: nowrap; margin-bottom: 15px;">
+                        <input name="title" id="p_title" value='${title}' type="text" class="form-control"
+                            placeholder="목적지(지역명+상호명, 지역명+카테고리)" style="width: 80%; height:40px;">
+                        <button type="button" onclick="searchLocation('2')" class="btn btn-primary"
+                            style="margin-top:0px;height:40px; font-size:15px; width: 20%">검색</button>
+                    </div>
+                    <div class="input-group-append" style="width: 100%; margin-bottom: 15px;">
+                        <input name="location" id="p_location" value='${location}' type="text" class="form-control"
+                        placeholder="주소" style=" height:40px;" placeholder="주소(미작성시 AI사용이 불가합니다!)">
+                    </div>
+                    
+                    <div id="search_box2" style="width: 100%;  overflow: auto; height= 30px;"></div>
+                    <div class="input-group" style="flex-wrap: nowrap;">
+                        <textarea name="memo" id="p_memo" type="textarea" class="form-control" placeholder="memo"
+                        style="height:50px; min-height:100px; max-height:200px; width:100%" >${memo}</textarea>
+                    </div>
+                    <input name="p_location_x" id="p_location_x" type="text" class="form-control" hidden>
+                        <input name="p_location_y" id="p_location_y" type="text" class="form-control" hidden> `;
     $('#photo-d').append(temp_html)
+
+    $('#photo-detail-modal-footer').empty()
+
+    let temp_html2 = `<button type="button" class="btn btn-secondary delete_serarch" data-bs-dismiss="modal">취소</button>
+                      <button id="patch_photo" value='${photo_id}' type="button" class="btn btn-primary"onclick="patchPhoto()">저장</button>`
+
+    $('#photo-detail-modal-footer').append(temp_html2)
 }
 
 async function patchPhoto() {

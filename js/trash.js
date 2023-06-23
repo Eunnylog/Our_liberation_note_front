@@ -203,6 +203,7 @@ async function handleGrouptrash(group_id, name) {
         alert("※실패하였습니다.")
         console.log(photo_id)
     }
+
 }
 
 async function handleNotetrash(note_id, group, name) {
