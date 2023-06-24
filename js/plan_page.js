@@ -1,12 +1,7 @@
 let plan_data = []
 let plan_set = [];
 let access_token = localStorage.getItem('access')
-<<<<<<< HEAD
-// let back_url = 'https://api.liberation-note.com'
-let back_url = 'http://127.0.0.1:8000'
-=======
 let back_url = 'https://api.liberation-note.com'
->>>>>>> plan_page
 
 checkGroup()
 checkLogin()
@@ -162,12 +157,8 @@ async function savePlan() {
             window.location.reload();
         }, 1000);
     } else {
-<<<<<<< HEAD
-        alert('문제가 발생했습니다!')
-=======
         showToast('문제가 발생했습니다!')
         console.log(response.error)
->>>>>>> plan_page
     }
 }
 
