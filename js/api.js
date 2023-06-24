@@ -1,8 +1,15 @@
 // 기본 URL
 const backend_base_url = "https://api.liberation-note.com"
 // const backend_base_url = "http://127.0.0.1:8000"
+<<<<<<< HEAD
 const frontend_base_url = "http://127.0.0.1:5500"
 // const frontend_base_url = "https://liberation-note.com"
+=======
+const frontend_base_url = "https://liberation-note.com"
+// const frontend_base_url = "http://127.0.0.1:5500"
+
+
+>>>>>>> plan_page
 
 let jwtToken;
 
@@ -30,14 +37,14 @@ async function handleSignup() {
 
   if (response.status == 201) {
     document.getElementById("signup").querySelector('[data-bs-dismiss="modal"]').click();
-    alert("회원가입이 완료되었습니다!")
+    showToast("회원가입이 완료되었습니다!")
     window.location.replace(`${frontend_base_url}/index.html`)
   }
   else {
     const errorResponse = await response.json();
     console.log('error', errorResponse)
     if (errorResponse.message) {
-      alert("※ " + errorResponse.message);
+      showToast("※ " + errorResponse.message);
     }
   }
 }
@@ -111,7 +118,7 @@ async function handleSignin() {
       location.reload()
     }
     else {
-      alert("※이메일 혹은 비밀번호가 올바르지 않습니다!")
+      showToast("※이메일 혹은 비밀번호가 올바르지 않습니다!")
       console.log(response)
     }
   }
@@ -125,7 +132,7 @@ async function sendCode() {
   const email = document.getElementById("email").value
 
   if (!email) {
-    alert('이메일을 입력하세요!')
+    showToast('이메일을 입력하세요!')
     return
   }
 
@@ -138,7 +145,7 @@ async function sendCode() {
       "email": email,
     })
   })
-  alert("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
+  showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
   signupTimer()
 }
 
@@ -227,7 +234,7 @@ async function kakaoLoginApi(code) {
     localStorage.setItem("payload", jsonPayload);
     window.location.href = frontend_base_url
   } else {
-    alert(response_json['error'])
+    showToast(response_json['error'])
     window.location.href = frontend_base_url
   }
 }
@@ -275,7 +282,7 @@ async function googleLoginApi(decodeCode) {
     localStorage.setItem("payload", jsonPayload);
     window.location.href = frontend_base_url
   } else {
-    alert(response_json['error'])
+    showToast(response_json['error'])
     window.history.back()
   }
 }
@@ -321,7 +328,7 @@ async function naverLoginApi(Code) {
     localStorage.setItem("payload", jsonPayload);
     window.location.href = frontend_base_url
   } else {
-    alert(response_json['error'])
+    showToast(response_json['error'])
     window.history.back()
   }
 }
@@ -359,7 +366,7 @@ function checkLogin() {
   const payload = localStorage.getItem("payload");
 
   if (!payload) {
-    alert('로그인 또는 회원가입이 필요합니다!')
+    showToast('로그인 또는 회원가입이 필요합니다!')
     window.location.replace(`${frontend_base_url}/index.html`)
   }
 }
@@ -378,7 +385,7 @@ async function handlesUserDelete() {
     method: 'DELETE',
   })
   if (response.status == 204) {
-    alert("※ 회원탈퇴가 정상적으로 완료되었습니다!")
+    showToast("※ 회원탈퇴가 정상적으로 완료되었습니다!")
     localStorage.removeItem("access")
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
@@ -391,7 +398,7 @@ async function handlesUserDelete() {
     location.reload()
   }
   if (response.status == 403) {
-    alert("※ 권한이 없습니다!")
+    showToast("※ 권한이 없습니다!")
     location.reload()
   }
 }
@@ -403,34 +410,34 @@ function signUpsignInError() {
   const error = urlParams.get('err_msg');
 
   if (error === 'error') {
-    alert("※ 오류가 발생하였습니다. 다른 소셜 계정으로 다시 시도해주세요!");
+    showToast("※ 오류가 발생하였습니다. 다른 소셜 계정으로 다시 시도해주세요!");
   }
   if (error === 'failed_to_get') {
-    alert("※ 소셜 인증을 실패하였습니다. 다른 소셜 계정으로 다시 시도해주세요!");
+    showToast("※ 소셜 인증을 실패하였습니다. 다른 소셜 계정으로 다시 시도해주세요!");
   }
   if (status === '204') {
-    alert("※ 연결된 소셜 계정이 없습니다. 일반 로그인으로 시도해주세요!");
+    showToast("※ 연결된 소셜 계정이 없습니다. 일반 로그인으로 시도해주세요!");
   }
   if (status === '400') {
-    alert("※ 다른 소셜로 가입된 계정입니다. 다시 로그인해주세요!");
+    showToast("※ 다른 소셜로 가입된 계정입니다. 다시 로그인해주세요!");
   }
   if (error === 'failed_to_signin') {
-    alert("※ 로그인에 실패하였습니다. 다시 시도해주세요!");
+    showToast("※ 로그인에 실패하였습니다. 다시 시도해주세요!");
   }
   if (error === 'kakao_signup') {
-    alert("※ 카카오에서 요청을 거부했습니다. 다른 소셜 계정으로 다시 시도해주세요!");
+    showToast("※ 카카오에서 요청을 거부했습니다. 다른 소셜 계정으로 다시 시도해주세요!");
   }
   if (error === 'google_signup') {
-    alert("※ 구글에서 요청을 거부했습니다. 다른 소셜 계정으로 다시 시도해주세요!");
+    showToast("※ 구글에서 요청을 거부했습니다. 다른 소셜 계정으로 다시 시도해주세요!");
   }
   if (error === 'naver_signup') {
-    alert("※ 네이버에서 요청을 거부했습니다. 다른 소셜 계정으로 다시 시도해주세요!");
+    showToast("※ 네이버에서 요청을 거부했습니다. 다른 소셜 계정으로 다시 시도해주세요!");
   }
   if (error === 'github_signup') {
-    alert("※ 다른 소셜로 가입된 계정입니다. 다시 로그인해주세요!");
+    showToast("※ 다른 소셜로 가입된 계정입니다. 다시 로그인해주세요!");
   }
   if (status === '201') {
-    alert("※ 회원가입이 완료되었습니다!");
+    showToast("※ 회원가입이 완료되었습니다!");
   }
 }
 
@@ -464,7 +471,7 @@ function handleAi() {
   const isSubscribe = JSON.parse(localStorage.getItem("payload"))['is_subscribe'];
 
   if (isSubscribe === false) {
-    alert("※ 🤖AI기능을 사용하시려면 멤버십 구독을 해주세요!")
+    showToast("※ 🤖AI기능을 사용하시려면 멤버십 구독을 해주세요!")
   }
 
   if (isSubscribe === true) {
@@ -478,7 +485,7 @@ function checkSocialLogin() {
   const code = localStorage.getItem('code');
 
   if (code) {
-    alert("소셜 로그인은 비밀번호를 변경할 수 없습니다");
+    showToast("소셜 로그인은 비밀번호를 변경할 수 없습니다");
     location.reload();
     return;
   }
@@ -500,7 +507,7 @@ async function updatePassword() {
   }
 
   if (!updateData.check_password || !updateData.new_password) {
-    alert("빈칸을 입력해주세요.")
+    showToast("빈칸을 입력해주세요.")
     return
   }
 
@@ -515,7 +522,7 @@ async function updatePassword() {
   )
   const data = await response.json()
   if (response.status == 200) {
-    alert("회원정보 수정 완료!! 다시 로그인을 진행해 주세요!")
+    showToast("회원정보 수정 완료!! 다시 로그인을 진행해 주세요!")
     localStorage.removeItem("access")
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
@@ -523,7 +530,7 @@ async function updatePassword() {
 
 
   } else {
-    alert(data["message"])
+    showToast(data["message"])
   }
 
 }
@@ -544,7 +551,7 @@ function handleRadioClick() {
 
     document.getElementById("usersearch").value = selected_email
   } else {
-    alert("선택된 이메일이 없습니다.");
+    showToast("선택된 이메일이 없습니다.");
   }
 }
 
@@ -554,7 +561,7 @@ async function addMember() {
   const membersEmail = document.getElementById("usersearch").value
 
   if (!membersEmail) {
-    alert("이메일을 입력해주세요!")
+    showToast("이메일을 입력해주세요!")
     return
   }
 
@@ -579,7 +586,7 @@ async function addMember() {
   })
     .catch(error => {
       // 에러 처리
-      alert('문제가 발생했습니다!')
+      showToast('문제가 발생했습니다!')
     });
 }
 
@@ -624,11 +631,11 @@ function addMembersToGroup() {
       newEmailLi.appendChild(newInput);
     }
     else {
-      alert("이미 추가된 이메일입니다.");
+      showToast("이미 추가된 이메일입니다.");
     }
 
   } else {
-    alert("선택된 이메일이 없습니다.")
+    showToast("선택된 이메일이 없습니다.")
   }
   $('input[type=radio]').prop('checked', false);
 }
@@ -645,10 +652,10 @@ function DeleteMembers() {
       selectedEmails.splice(emailIndex, 1);
       checkedRadio.closest("li").remove();
     } else {
-      alert("선택된 이메일이 추가된 이메일 목록에 없습니다.");
+      showToast("선택된 이메일이 추가된 이메일 목록에 없습니다.");
     }
   } else {
-    alert("선택된 이메일이 없습니다.");
+    showToast("선택된 이메일이 없습니다.");
   }
   $('input[type=radio]').prop('checked', false);
 }
@@ -690,19 +697,22 @@ async function addGroup() {
   });
 
   if (!groupName) {
-    alert('그룹 이름을 적어주세요')
+    showToast('그룹 이름을 적어주세요')
     return;
   }
 
   if (response.status == 201) {
-    alert("그룹이 저장되었습니다.");
+    showToast("그룹이 저장되었습니다.");
     window.location.reload()
   } else {
     const data = await response.json();
+    console.log("data", data)
     if (data.message) {
-      alert("※ " + data.message);
+      showToast("※ " + data.message);
     } else if (data["non_field_errors"]) {
-      alert("※ " + data["non_field_errors"])
+      showToast("※ " + data["non_field_errors"])
+    } else if (data.error) {
+      showToast("※ " + data.error)
     }
   }
 }
@@ -726,7 +736,7 @@ async function getUserprofile() {
   } else {
     const data = await response.json();
     if (data.message) {
-      alert("※ " + data.message);
+      showToast("※ " + data.message);
     }
   }
 }
@@ -770,7 +780,7 @@ async function sendVerificationEmail() {
   const email = document.getElementById("sendEmail").value
 
   if (!email) {
-    alert('이메일을 입력해주세요!')
+    showToast('이메일을 입력해주세요!')
     return
   }
 
@@ -783,7 +793,7 @@ async function sendVerificationEmail() {
       "email": email,
     })
   })
-  alert("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
+  showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
   findPasswordTimer()
 }
 
@@ -798,7 +808,7 @@ async function ChangePassword() {
   }
 
   if (!changeData.code || !changeData.new_password) {
-    alert("빈칸을 입력해주세요.")
+    showToast("빈칸을 입력해주세요.")
     return
   }
 
@@ -812,12 +822,12 @@ async function ChangePassword() {
   )
 
   if (response.status == 200) {
-    alert("비밀번호 변경 완료!")
+    showToast("비밀번호 변경 완료!")
     location.replace(`${frontend_base_url}/index.html`)
   } else {
     const data = await response.json();
     if (data.message) {
-      alert("※ " + data.message);
+      showToast("※ " + data.message);
     }
   }
 }
@@ -833,7 +843,24 @@ async function checkGroup() {
     method: 'GET',
   });
   if (response.status == 403) {
-    alert('접근 권한이 없습니다!')
+    showToast('접근 권한이 없습니다!')
     window.location.href = '/index.html'
   }
+}
+
+//토스트//
+let removeToast;
+
+function showToast(string) {
+  const toast = document.getElementById("toast");
+
+  toast.classList.contains("reveal") ?
+    (clearTimeout(removeToast), removeToast = setTimeout(function () {
+      document.getElementById("toast").classList.remove("reveal")
+    }, 1000)) :
+    removeToast = setTimeout(function () {
+      document.getElementById("toast").classList.remove("reveal")
+    }, 1000)
+  toast.classList.add("reveal"),
+    toast.innerText = string
 }

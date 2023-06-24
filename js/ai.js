@@ -1,6 +1,6 @@
 let back_url = 'https://api.liberation-note.com'
-// const front_url = "https://liberation-note.com"
-let front_url = 'http://127.0.0.1:5500'
+const front_url = "https://liberation-note.com"
+// let front_url = 'http://127.0.0.1:5500'
 // let back_url = 'http://127.0.0.1:8000'
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
@@ -77,7 +77,7 @@ async function showStartSelect() {
         checkboxes.prop('checked', true);
       } else {
         $(this).prop('checked', false); // "전체 선택" 체크 해제
-        alert('선택할 항목이 없습니다.'); // 한글 알림 메시지 표시
+        showToast('선택할 항목이 없습니다.'); // 한글 알림 메시지 표시
       }
     } else {
       checkboxes.prop('checked', false);
@@ -91,7 +91,7 @@ async function showStartSelect() {
         checkboxes.prop('checked', true);
       } else {
         $(this).prop('checked', false); // "전체 선택" 체크 해제
-        alert('선택할 항목이 없습니다.'); // 한글 알림 메시지 표시
+        showToast('선택할 항목이 없습니다.'); // 한글 알림 메시지 표시
       }
     } else {
       checkboxes.prop('checked', false);
@@ -140,19 +140,19 @@ function saveAiFeed() {
   const availSpace = 10 - existItems;
 
   if (selItems.length === 0) {
-    alert('선택한 요소가 없습니다!');
+    showToast('선택한 요소가 없습니다!');
     return;
   }
 
   if (availSpace <= 0) {
-    alert('이미 10개의 아이템이 있습니다. 더 이상 추가할 수 없습니다!');
+    showToast('이미 10개의 아이템이 있습니다. 더 이상 추가할 수 없습니다!');
     return;
   }
 
   selItems.each(function (idx) {
     // If adding this item will exceed 10 items, stop adding.
     if (idx >= availSpace) {
-      alert('최대 10개의 항목만 추가 가능합니다!');
+      showToast('최대 10개의 항목만 추가 가능합니다!');
       // Remaining items and 'Select All' checkbox should be unchecked
       selItems.slice(idx).prop('checked', false);
       $('#checkAll').prop('checked', false);
@@ -176,7 +176,7 @@ function saveAiFeed() {
 
 function deleteAiFeed() {
   if ($('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').length === 0) {
-    alert('선택한 요소가 없습니다!');
+    showToast('선택한 요소가 없습니다!');
     return;
   }
 
@@ -261,7 +261,7 @@ async function aiStart() {
   });
 
   if (destinations.length == 0) {
-    alert('먹이를 추가해주세요!');
+    showToast('먹이를 추가해주세요!');
     return false;
   }
 
@@ -331,14 +331,13 @@ async function aiStart() {
 
       await loadMap(x_y_list);
     } else {
-      alert('문제가 발생했습니다!');
+      showToast('문제가 발생했습니다!');
     }
   } catch (error) {
     console.log(error);
   } finally {
     // 로딩창 숨김
     loading.style.display = 'none';
-    console.log('끝!');
   }
 }
 
@@ -410,7 +409,7 @@ async function loadMap(x_y_list) {
 
 
 function reload() {
-  let confirm_answer = confirm('다시하시면 이전 결과물은 볼 수 없습니다! 그래도 괜찮으신가요?')
+  let confirm_answer = confirm('이전 결과물은 볼 수 없습니다! 그래도 괜찮으신가요?')
   if (!confirm_answer) {
     return false
   }

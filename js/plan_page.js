@@ -1,8 +1,12 @@
 let plan_data = []
 let plan_set = [];
 let access_token = localStorage.getItem('access')
+<<<<<<< HEAD
 // let back_url = 'https://api.liberation-note.com'
 let back_url = 'http://127.0.0.1:8000'
+=======
+let back_url = 'https://api.liberation-note.com'
+>>>>>>> plan_page
 
 checkGroup()
 checkLogin()
@@ -139,7 +143,7 @@ async function savePlan() {
     note_id = params.get("note_id");
 
     if (plan_set.length == 0) {
-        alert('일정을 추가해주세요!')
+        showToast('일정을 추가해주세요!')
         return false
     }
 
@@ -153,10 +157,17 @@ async function savePlan() {
         body: JSON.stringify({ "plan_set": plan_set })
     });
     if (response.status == 200) {
-        alert("새로운 계획이 생성되었습니다!")
-        window.location.reload()
+        showToast("새로운 계획이 생성되었습니다!")
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
     } else {
+<<<<<<< HEAD
         alert('문제가 발생했습니다!')
+=======
+        showToast('문제가 발생했습니다!')
+        console.log(response.error)
+>>>>>>> plan_page
     }
 }
 
@@ -177,10 +188,12 @@ async function deletePlan() {
         method: 'DELETE',
     });
     if (response.status == 204) {
-        alert("계획이 삭제되었습니다!")
-        window.location.reload()
+        showToast("계획이 삭제되었습니다!")
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
     } else {
-        alert('문제가 발생했습니다!')
+        showToast('문제가 발생했습니다!')
     }
 }
 
@@ -241,7 +254,7 @@ async function patchPlan() {
     let startBox = document.getElementById("start")
 
     if (title == '' || start == '') {
-        alert('장소명과 날짜는 필수입니다!')
+        showToast('장소명과 날짜는 필수입니다!')
         titleBox.classList.add("custom-class");
         startBox.classList.add("custom-class");
         return false
@@ -269,10 +282,12 @@ async function patchPlan() {
         })
     });
     if (response.status == 200) {
-        alert("계획이 수정되었습니다!")
-        window.location.reload()
+        showToast("계획이 수정되었습니다!");
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
     } else {
-        alert('문제가 발생했습니다!')
+        showToast('문제가 발생했습니다!')
     }
 }
 
@@ -293,7 +308,7 @@ function addPlanList() {
     let startBox = document.getElementById("start")
 
     if (title == '' || start == '') {
-        alert('장소명과 날짜는 필수입니다!')
+        showToast('장소명과 날짜는 필수입니다!')
         titleBox.classList.add("custom-class");
         startBox.classList.add("custom-class");
         return false
@@ -320,7 +335,7 @@ function addPlanList() {
     });
 
     if (checkPlanList) {
-        alert('이미 추가한 일정입니다!')
+        showToast('이미 추가한 일정입니다!')
         return false;
     }
 
@@ -402,7 +417,7 @@ async function sendEmail() {
     });
 
     if (checkedEmails.length == 0) {
-        alert('이메일을 선택해주세요!')
+        showToast('이메일을 선택해주세요!')
         return false
     }
 
@@ -424,13 +439,15 @@ async function sendEmail() {
         });
 
         if (response.status == 200) {
-            alert("이메일 전송이 완료되었습니다!")
-            window.location.reload()
+            showToast("이메일 전송이 완료되었습니다!")
+            setTimeout(function () {
+                window.location.reload();
+            }, 1000);
         } else {
-            alert('문제가 발생했습니다!')
+            showToast('문제가 발생했습니다!')
         }
     } catch (error) {
-        alert('오류가 발생했습니다!');
+        showToast('오류가 발생했습니다!');
     } finally {
         // 로딩창 숨김
         loading.style.display = 'none';
@@ -465,7 +482,7 @@ async function selectEmailMember() {
         });
         $('#select_email_member').modal('show');
     } else {
-        alert('문제가 발생했습니다!')
+        showToast('문제가 발생했습니다!')
     }
 }
 

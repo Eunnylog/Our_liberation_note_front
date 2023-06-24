@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" type="image/png" href="/css/coplate/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="48x48" href="/css/favicon/android-icon-48x48.png">
     <link href="/css/styles/recipe_card.css" rek="stylesheet" type="text/css" />
     <link href="/css/styles/login.css" rel="stylesheet" type="text/css" />
     <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
@@ -20,20 +20,34 @@
     <script src="/js/api_key.js"></script>
     <script src="/js/api.js"></script>
     <script src="/js/trash.js"></script>
+    <!-- og tag 정의 -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://liberation-note.com">
+    <meta property="og:title" content="우리들의 해방일지">
+    <meta property="og:image" content="https://liberation-note.com/css/assets/logo1.png">
+    <meta property="og:description" content="친구들과 공유하는 시크릿 여행 계획 사이트">
+    <meta property="og:site_name" content="Our liberation note">
+    <meta property="og:locale" content="en_US">
+    <!-- 다음의 태그는 필수는 아니지만, 포함하는 것을 추천함 -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <style>
-        @font-face {
-            font-family: 'omyu_pretty';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
-            font-weight: normal;
-            font-style: normal;
-        }
-
         body {
             background-color: #ebf2ff;
         }
 
-        * {
-            font-family: omyu_pretty;
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        body {
+            animation: fade-in 2s;
         }
     </style>
 </head>
@@ -46,19 +60,20 @@
     <!-- nav end -->
     <!-- content start -->
     <main class="site-body" style="margin-top: 30px;">
+        <div id="toast"></div>
         <div class="main-header">
             <div class="content">
-                <h1 style="font-size: 50px;">Our liberation Note <br><br> 우리들의 해방일지</h1>
+                <h1 id="main-hearder-title" style="font-size: 37px;">Our liberation Note <br><br> 우리들의 해방일지</h1>
                 <div>
                     <!-- info 모달창 -->
                     <a href="/" class="btn btn-secondary"
-                        style="margin-bottom: 30px; font-size: 25px; background-color: #82CBC4; border-color: #82CBC4;"
+                        style="margin-bottom: 30px; font-size: 25px; background-color: #82b5cb; border-color: #82aecb;"
                         data-bs-toggle="modal" data-bs-target="#carouselModal">
                         Info
                     </a>
                     <!-- 다이어리 페이지로 이동 -->
                     <a href="/my_diary.html" class="btn btn-secondary"
-                        style="margin-bottom: 30px; font-size: 25px; background-color: #2FA599; border-color: #2FA599;">
+                        style="margin-bottom: 30px; font-size: 25px; background-color: #2f84a5; border-color: #2f7aa5;">
                         Start
                     </a>
                 </div>
@@ -279,7 +294,8 @@
                             <!-- 마이 다이어리 페이지 인포 -->
                             <div class="carousel-item" style="padding: 5px;">
                                 <h3 style="color: #485d86;"> 마이 다이어리 페이지</h3>
-                                <img src="/css/assets/info_mydiary.png" style="width: 100%; height:400px; margin: auto;">
+                                <img src="/css/assets/info_mydiary.png"
+                                    style="width: 100%; height:400px; margin: auto;">
                                 <div style="font-size: 20px; margin-top: 10px;">
                                     ① 빈 노트를 누르시면 모달창이 나타나며 새로운 노트를 생성할 수 있습니다!<br>
                                     ② 그룹을 선택해서 그룹마다 해당하는 노트를 볼 수 있습니다! <br>
@@ -443,7 +459,8 @@
                         </div>
                     </div>
                     <form>
-                        <div id="trash-content" class="trash-content" style="display: flex; flex-wrap: wrap; justify-content: center;">
+                        <div id="trash-content" class="trash-content"
+                            style="display: flex; flex-wrap: wrap; justify-content: center;">
                         </div>
                     </form>
                 </div>
