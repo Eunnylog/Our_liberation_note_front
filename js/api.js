@@ -327,7 +327,7 @@ async function naverLoginApi(Code) {
   }
 }
 
-
+// 로그아웃
 function handleLogout() {
   const payload = localStorage.getItem("payload");
   const cookies = document.cookie.split(';');
@@ -485,6 +485,7 @@ function checkSocialLogin() {
   }
 }
 
+// 비밀번호 변경 모달창이 뜨면 소셜계정인지 일반 계정인지 체크
 function changePasswordAndOpenModal() {
   checkSocialLogin(); // checkSocialLogin() 함수 실행
   $('#updatePassword').modal('show'); // 모달 창 열기
@@ -537,8 +538,11 @@ function cancel() {
 // 저장 전 선택한 이메일을 저장할 배열
 let selectedEmails = [];
 
+// 라디오 버튼 클릭 함수
 function handleRadioClick() {
   let selectedRadio = document.querySelector('input[name="email_radio"]:checked')
+
+  // 선택된 라디오 버튼이 있는 경우
   if (selectedRadio) {
     let selectedIndex = selectedRadio.value;
     let selected_email = document.getElementById(`email_${selectedIndex}`).value
@@ -636,14 +640,17 @@ function addMembersToGroup() {
 
 // 버튼 클릭 시 선택한 이메일 리스트에서 삭제
 function DeleteMembers() {
+  // 선택된 라디오 버튼의 객체 가져오기
   const checkedRadio = document.querySelector('input[name="checked_email_radio"]:checked');
 
+  // 선택된 라디오 버튼이 있는 경우
   if (checkedRadio) {
     const selectedEmail = checkedRadio.previousSibling.textContent.trim();
-    const emailIndex = selectedEmails.indexOf(selectedEmail);
+    const emailIndex = selectedEmails.indexOf(selectedEmail); // 추가된 이메일 목록에서 인덱스 찾기
 
+    // 목록에서 선택된 이메일이 있는 경우
     if (emailIndex > -1) {
-      selectedEmails.splice(emailIndex, 1);
+      selectedEmails.splice(emailIndex, 1); // 선택된 이메일 삭제
       checkedRadio.closest("li").remove();
     } else {
       alert("선택된 이메일이 추가된 이메일 목록에 없습니다.");
@@ -700,7 +707,6 @@ async function addGroup() {
     window.location.reload()
   } else {
     const data = await response.json();
-    console.log("data", data)
     if (data.message) {
       alert("※ " + data.message);
     } else if (data["non_field_errors"]) {

@@ -2,7 +2,7 @@ let access_token = localStorage.getItem('access')
 // let back_url = 'https://api.liberation-note.com'
 let back_url = 'http://127.0.0.1:8000'
 
-let group_data = []
+let group_data = [] // 그룹 정보 저장
 
 checkLogin()
 
@@ -214,6 +214,8 @@ async function groupUpdateModal() {
 
     selectedEmails = [];
 
+
+    // 저장된 그룹 정보 서버로부터 가져오기
     const response = await fetch(`${back_url}/user/group/`, {
         headers: {
             'content-type': 'application/json',
@@ -234,6 +236,7 @@ async function groupUpdateModal() {
         let name = group['name']
         let members = group['members']
 
+        // 선택한 그룹 id와 일치하는 경우
         if (parseInt(selectedIndex) === parseInt(id)) {
             updatingGroupId = id;
             let groupName = document.getElementById('update-groupname')
@@ -259,7 +262,7 @@ async function groupUpdateModal() {
     })
 }
 
-// 
+// 그룹 수정창이 닫힐 때
 $(document).ready(function () {
     $('#updateGroup').on('hidden.bs.modal', function () {
         // 모달이 닫힐 때 입력 필드 초기화
@@ -276,11 +279,12 @@ $(document).ready(function () {
 });
 
 
-// 멤버 검색
+// 멤버 이메일 검색
 async function updateAddMember() {
     const access_token = localStorage.getItem("access")
     const membersEmail = document.getElementById("update-usersearch").value
 
+    // 이메일이 입력되지 않은 경우
     if (!membersEmail) {
         alert('이메일을 입력해주세요!')
         return
@@ -316,10 +320,12 @@ async function updateAddMember() {
 function updateAddMembersToGroup() {
     const checkedInput = document.querySelector('input[name="email_radio"]:checked');
 
+    // 선택된 이메일이 없을 경우
     if (!checkedInput) {
         alert('선택한 이메일이 없습니다!')
         return
     }
+
     if (checkedInput) {
 
         const selectedEmail = checkedInput.previousSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
@@ -330,6 +336,7 @@ function updateAddMembersToGroup() {
         // 기존 이메일인지 확인
         const existingEmail = existingEmails.includes(selectedEmail);
 
+        // 추가되지 않았거나 기존 이메일이 아닌 경우
         if (!alreadyAdded && !existingEmail) {
             Array.prototype.push.apply(selectedEmails, existingEmails);
 
@@ -365,7 +372,7 @@ function updateAddMembersToGroup() {
     $('input[type=radio]').prop('checked', false);
 }
 
-// 저장 전 선택한 이메일 리스트에서 제거하는 함수
+// 그룹 저장 전 선택한 이메일 리스트에서 제거하는 함수
 async function updateDeleteMembers() {
     const checkedInput = document.querySelector('input[name="checked_email_radio"]:checked');
     if (checkedInput) {
