@@ -1,10 +1,23 @@
 let back_url = 'https://api.liberation-note.com'
+// const front_url = "https://liberation-note.com"
 let front_url = 'http://127.0.0.1:5500'
 // let back_url = 'http://127.0.0.1:8000'
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
 
+checkGroup()
 checkLogin()
+
+window.onload = function () {
+  params = new URLSearchParams(window.location.search);
+  note_id = params.get("note_id");
+
+  var back = document.getElementById('back');
+
+  back.onclick = function () {
+    location.href = `/plan_page.html?note_id=${note_id}`;
+  }
+};
 
 function aiSubscribeCheck() {
 
@@ -102,10 +115,10 @@ function showAiFeed() {
                       <div>
                         <div name="${a['id']}" style="display: flex; justify-content: space-between;">
                           <div>
-                            <h5 id='title' style="font-size:13px ">목적지 : ${a['title']}</h5>
-                            <h5 id='category' style="font-size:13px ">카테고리 : ${a['category']}</h5>
-                            <h5 name='start' value='${a['start']}' style="font-size:13px ">날짜 : ${a['start']}</h5>
-                            <h5 id='location' style="font-size:12px">주소 : ${a['location']}</h5>
+                            <h5 id='title' style="font-size:20px ">목적지 : ${a['title']}</h5>
+                            <h5 id='category' style="font-size:18px ">카테고리 : ${a['category']}</h5>
+                            <h5 name='start' value='${a['start']}' style="font-size:18px ">날짜 : ${a['start']}</h5>
+                            <h5 id='location' style="font-size:17px">주소 : ${a['location']}</h5>
                             <h5 id='location_x' hidden>${a['location_x']}</h5>
                             <h5 id='location_y' hidden>${a['location_y']}</h5>
                           </div>
@@ -260,7 +273,7 @@ async function aiStart() {
     const response = await fetch(`${back_url}/note/search`, {
       headers: {
         'content-type': 'application/json',
-        "Authorization": `Bearer ${access_token}`,
+        // "Authorization": `Bearer ${access_token}`,
       },
       method: 'POST',
       body: JSON.stringify({ destinations: destinations })
@@ -275,9 +288,10 @@ async function aiStart() {
       $('#info_box').empty();
 
       let temp_html1 = `
-        <div class="carousel-item active" style="padding: 10px;">
-          <h3>결과)</h3>
-          <h5>${formatted_titles}</h5>
+        <div class="carousel-item active" style="padding: 5px;">
+          <h3 style="text-align:center;">결과</h3>
+          <div style="margin: auto; width: 50%; height: 5px; background-color: #485d86;"></div>
+          <h5 style="margin-top: 20px">${formatted_titles}</h5>
         </div>
       `;
 
@@ -293,8 +307,11 @@ async function aiStart() {
         }
         let temp_html2 = `
           <div class="carousel-item" style="padding: 10px; width:100%; height:100%">
-            <h3 id='${idx}'>${a}</h3>
-            <h5>${answer}</h5>
+            <h3 id='${idx}' style="text-align:center;">${a}</h3>
+            <div style="margin: auto; width: 50%; height: 5px; background-color: #485d86;"></div>
+            <h5 style="text-align:center; margin-top: 20px;">${answer}</h5>
+            <div style="margin-bottom: 20px; width: 100%; height: 1px; border-bottom: 5px dotted #485d86;"></div>
+            참고자료<br>
             <a href="${crawling}" target="_blank">${crawling}</a>
           </div>
         `;

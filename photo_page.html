@@ -15,34 +15,48 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="/js/loader.js"></script>
     <script src="/js/api.js"></script>
+    <script src="/js/api_key.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/photo_map.js"></script>
+    <script src="/js/photo_page.js"></script>
+    <script src="/js/trash.js"></script>
 </head>
 
 <body>
     <header class="site-header navbar">
         <!-- navbar -->
     </header>
-    <div class="container" style="height: 150px;">
-        <h2 class="heading">우리들의 해방일기<span>Photo gallery</span></h2>
-    </div>
-    <main class="site-body" style="margin-top: 30px;">
+    <main class="site-body" style="margin-top: -50px;">
         <article class="review-detail max-content-width">
-            <div id="menu_box" style="margin-bottom: 30px;">
-                <a class="btn-close" href="" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"><button
-                        type="button" class="btn btn-primary">사진추가하기</button></a>
+            <div style="margin-bottom:30px;">
+                <h1 id="photopage_title" style="font-size:50px">Photo gallery</h1>
             </div>
-            <button onclick="m_page()" type="button">뒤로</button>
-            <button onclick="p_page()" type="button">다음</button>
-            <div class="gallery" id="photo_info">
+            <hr style="margin-bottom: 30px; clear: both;">
+            <div class="clearfix" style="width:100%; margin-bottom:5px;">
+                <div id="menu_box" style="float:left;">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"
+                        class="btn group-btn" style="background-color: #485D86; color:white; margin: 0px 10px;">사진
+                        추가</button>
+                </div>
+                <div style="float: right;">
+                    <button onclick="m_page()" type="button" class="btn group-btn"
+                        style="background-color: #7689b1; color:white; margin-left: 6px;">
+                        << </button>
+                            <button onclick="p_page()" type="button" class="btn group-btn"
+                                style="background-color: #485D86; color:white; "> >> </button>
+                </div>
+            </div>
+            <div class="gallery" id="photo_info" style="padding-bottom: 40px; padding-top: 20px;">
                 <!-- 이미지 갤러리 아이템들이 동적으로 추가될 공간 -->
             </div>
         </article>
     </main>
-
+    <!-- 사진추가 모달창 -->
     <div class="modal fade" id="photo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 700px;">
             <div class="modal-content" style="width:700px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
                         사진 추가</h5>
                     <button type="button" class="btn-close delete_search" data-bs-dismiss="modal"
                         aria-label="Close"></button>
@@ -52,32 +66,32 @@
                         <div class="inner-cont">
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
-                                    <div class="filebox">
+                                    <div class="input-group" style="flex-wrap: nowrap;">
                                         <input class="upload-name" value="첨부파일" placeholder="첨부파일" multiple
-                                            accept=".jpg, .png, .jpeg" style="width: 85%">
-                                        <label for="image">사진추가</label>
-                                        <input type="file" id="image" style="display: none" />
+                                            accept=".jpg, .png, .jpeg" style="width: 80%; height:40px;">
+                                        <label for="image"
+                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 4px 4px 0; background-color:  #485D86;">사진
+                                            추가</label>
+                                        <input type="file" id="image" style="display: none"
+                                            onchange="updateFileName(this)" />
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
                                         <input name="name" id="name" type="text" class="form-control"
                                             placeholder="사진 타이틀" style="width: 100%; height:40px;">
                                     </div>
                                     <div class="input-group" style="flex-wrap: nowrap;">
-                                        <div class="input-group-append" style="width: 100%;">
-                                            <input name="title" id="title" type="text" class="form-control"
-                                                placeholder="목적지(지역명+상호명, 지역명+카테고리)" style="width: 100%; height:40px;">
-                                        </div>
-                                        <div class="input-group-append" style="width: 10%;">
-                                            <button type="button" onclick="searchLocation('1')" class="btn btn-primary"
-                                                style="margin-top:0px;height:40px; font-size:15px">검색</button>
-                                        </div>
+                                        <input name="title" id="title" type="text" class="form-control"
+                                            placeholder="목적지(지역명+상호명, 지역명+카테고리)" style="width: 80%; height:40px;">
+                                        <button type="button" onclick="searchLocation('1')" class="btn btn-primary"
+                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; background-color:  #485D86;">검색</button>
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
                                         <input name="location" id="location" type="text" class="form-control"
-                                            placeholder="주소" style="width: 99%; height:40px;">
+                                            placeholder="주소" style="height:40px;">
                                     </div>
                                     <div id="search_box" style="width: 100%;  overflow: auto;"></div>
-                                    <input name="start" id="start" type="date" class="form-control">
+                                    <input name="start" id="start" type="date" class="form-control"
+                                        style="height:40px;">
                                     <input name="location_x" id="location_x" type="text" class="form-control" hidden>
                                     <input name="location_y" id="location_y" type="text" class="form-control" hidden>
                                     <textarea name="memo" id="memo" type="textarea" class="form-control"
@@ -85,10 +99,10 @@
                                         style="height:200px; min-height:200px; max-height:200px"></textarea>
                                     <div class="button-group">
                                         <button type="button" data-bs-dismiss="modal" aria-label="Close"
-                                            onclick="handleSignin()" class="btn btn-primary delete_search"
-                                            style="width: 49%;">취소</button>
+                                            class="btn btn-primary delete_search"
+                                            style="width: 49%; background-color:  #7689b1; border-color: #7689b1;">취소</button>
                                         <button type="button" onclick="addPhoto()" class="btn btn-primary"
-                                            style="width: 49%;">저장</button>
+                                            style="width: 49%; background-color:  #485D86; border-color: #485D86;">저장</button>
                                     </div>
                                 </form>
                             </div>
@@ -98,22 +112,31 @@
             </div>
         </div>
     </div>
+    <!-- 사진상세 모달창 -->
     <div class="modal fade" id="photo-detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content modal-xl">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content modal">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        사진 상세</h5>
+                    <h5 class="modal-title" id="modal-title" style="color: #485d86;"></h5>
                     <button type="button" class="btn-close delete_search" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-                <form enctype="multipart/form-data">
-                    <div class="modal-body" id="photo-d">
-                    </div>
-                </form>
+                <div id="modal-body" class="modal-body">
+                    <form enctype="multipart/form-data">
+                        <div id="photo-d">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" id="photo-detail-modal-footer">
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- 현재 날짜로 기본지정 -->
+    <script>
+        document.getElementById('start').value = new Date().toISOString().substring(0, 10);;
+    </script>
     <!-- 그룹만들기 모달창 -->
     <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
         <div class="modal-dialog">
@@ -138,23 +161,26 @@
                                             id="addmember-btn">Search</button>
                                     </div>
                                     <div style="color: #7c838c;">
-                                        <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
+                                        <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
                                             Emails </p>
                                         <div id="email-list"
-                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
                                             <ul id="email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
                                     </div>
                                     <button type="button" onclick="addMembersToGroup()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
+                                        <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
+                                    </button>
                                     <button type="button" onclick="DeleteMembers()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
+                                            src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
                                     <div style="color: #4d6087;">
                                         <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
                                             Emails </p>
-                                        <div id="selected-email-list"
-                                            style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                        <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
+                                        overflow-y: auto; height: 250px;">
                                             <ul id="selected-email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
@@ -162,7 +188,7 @@
                                     <div class="sign-up" style="display: flex;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
                                             onclick="document.getElementById('makegroup').style.display = 'none'"
-                                            style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                                            style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
                                         <button type="button" class="signup" onclick="addGroup()"
                                             style="background-color: #485d86;">Save</button>
                                     </div>
@@ -174,12 +200,51 @@
             </div>
         </div>
     </div>
-    <script src="/js/api_key.js"></script>
-    <script src="/js/api.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/js/photo_map.js"></script>
-    <script src="/js/photo_page.js"></script>
-    <script src="/js/trash.js"></script>
+    <!-- 휴지통 모달 -->
+    <div class="modal" id="trash" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content" style="height: 500px">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="trash-modal-body" class="modal-body">
+                    <div id="trash-container">
+                        <!-- 토글 -->
+                        <div class="trash-toggle">
+                            <input type="checkbox" id="photo-toggle">
+                            <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+                            <input type="checkbox" id="note-toggle">
+                            <button id="noteButton" onclick="loadTrash('note')">노트</button>
+                            <input type="checkbox" id="group-toggle">
+                            <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+                        </div>
+                    </div>
+                    <form>
+                        <div id="trash-content" class="trash-content">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" id="trash-modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var buttons = document.querySelectorAll("button");
+        buttons.forEach(function (button) {
+            button.addEventListener("click", function (event) {
+                var buttonId = event.target.id;
+
+                console.log("Button ID:", buttonId);
+            });
+        });
+
+        function updateFileName(inputElement) {
+            var fileName = inputElement.files[0].name;
+            document.querySelector('.upload-name').value = fileName;
+        }
+    </script>
 </body>
 
 </html>

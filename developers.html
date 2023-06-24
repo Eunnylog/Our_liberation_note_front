@@ -97,7 +97,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="su">
+                    <h5 class="modal-title" id="su" style="color: #485d86;">
                         Sign up</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -106,7 +106,7 @@
                         <div class="inner-cont">
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
-                                    <input name="email" id="email" type="email" class="form-control"
+                                    <input name="email" type="email" id="email" class="form-control"
                                         placeholder="email">
                                     <input name="password" id="password" type="password" class="form-control"
                                         placeholder="password">
@@ -116,21 +116,26 @@
                                         <input name="confirmcode" id="confirmcode" type="confirmcode"
                                             class="form-control" placeholder="email 인증코드" style="width: 250px;">
                                         <button type="button" class="signup" onclick="sendCode()"
-                                            style="background-color: #60749d; width: 200px; margin-left: 10px;">인증코드
+                                            style="background-color: #7689b1; width: 200px; margin-left: 10px;">인증코드
                                             보내기</button>
                                     </div>
+                                    <p style="margin: 10px 0px;">
+                                        <label for="Timer" style="color:#7a7f83">Expires At</label>
+                                        <input id="signupTimer" type="text" value="" readonly
+                                            style="border: double 5px; border-color: #60749d; border-radius: 10px; text-align: center; margin-top:10px;" />
+                                    </p>
                                     <div class="sign-up">
-                                        <button type="button" class="signup" onclick="handleSignup()">Sign up</button>
+                                        <button type="button" class="signup" onclick="handleSignup()"
+                                            style="background-color: #485d86;">Sign up</button>
                                     </div>
                                 </form>
                                 <div class="divider">
-                                    <span>or</span>
+                                    <span style="color: #7a7f83">or</span>
                                 </div>
                                 <div class="social-login">
-                                    <button class="kakao" onclick="KakaoLogin()">Kakao</button>
+                                    <button class="kakao" onclick="kakaoLogin()">Kakao</button>
                                     <button class="google" onclick="googleLogin()">Google</button>
                                     <button class="naver" onclick="naverLogin()">Naver</button>
-                                    <!-- <button class="facebook" onclick="facebookLogin()">Facebook</button> -->
                                 </div>
                             </div>
                         </div>
@@ -144,8 +149,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        Sign in</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
+                        Log in</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="container">
@@ -158,48 +163,26 @@
                                     <input name="password" id="login-password" type="password" class="form-control"
                                         placeholder="Password">
                                     <button type="button" onclick="handleSignin()" class="btn btn-primary"
-                                        style="float: center">
-                                        Signin
+                                        style="float: center; background-color: #485d86;">
+                                        Log in
                                     </button>
                             </div>
                             </form>
                             <div class="divider">
-                                <span>or</span>
+                                <span style="color: #7a7f83">or</span>
                             </div>
                             <div class="social-login">
-                                <button class="kakao" onclick="KakaoLogin()">Kakao</button>
+                                <button class="kakao" onclick="kakaoLogin()">Kakao</button>
                                 <button class="google" onclick="googleLogin()">Google</button>
                                 <button class="naver" onclick="naverLogin()">Naver</button>
-                                <!-- <button class="facebook" onclick="facebookLogin()">Facebook</button> -->
                             </div>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#findPassword" id="find-password"
+                                class="findpassword"
+                                style="text-decoration: none; font-size: 18px; color: #60749d; margin: 10px 0px;">
+                                비밀번호를 잃어버리셨나요? </a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- 회원탈퇴확인 모달창 -->
-    <div class="modal fade" id="deleteuser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                        회원탈퇴</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form>
-                    <div class="modal-body">
-                        <h6>※ 탈퇴하기를 누르면 계정이 영구삭제됩니다. 계속 진행하시겠습니까?</h6>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
-                        </button>
-                        <button type="button" class="btn btn-primary" style="float: right"
-                            onclick="handlesUserDelete()">
-                            탈퇴하기
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
@@ -223,17 +206,30 @@
                                         <input name="addemail" id="usersearch" type="email" class="form-control"
                                             autocomplete="off" placeholder="Email to add" style="width: 300px;">
                                         <button type="button" class="signup" onclick="addMember()"
-                                            style="width: 100px; margin-left: 10px;">추가</button>
+                                            style="width: 100px; background-color: #485d86; margin-left: 25px;"
+                                            id="addmember-btn">Search</button>
+                                    </div>
+                                    <div style="color: #7c838c;">
+                                        <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
+                                            Emails </p>
+                                        <div id="email-list"
+                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
+                                            <ul id="email-ul" style="position: relative; right: 10px;">
+                                            </ul>
+                                        </div>
                                     </div>
                                     <button type="button" onclick="addMembersToGroup()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
+                                        <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
+                                    </button>
                                     <button type="button" onclick="DeleteMembers()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
+                                            src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
                                     <div style="color: #4d6087;">
                                         <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
                                             Emails </p>
-                                        <div id="selected-email-list"
-                                            style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                        <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
+                                            overflow-y: auto; height: 250px;">
                                             <ul id="selected-email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
@@ -241,7 +237,7 @@
                                     <div class="sign-up" style="display: flex;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
                                             onclick="document.getElementById('makegroup').style.display = 'none'"
-                                            style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                                            style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
                                         <button type="button" class="signup" onclick="addGroup()"
                                             style="background-color: #485d86;">Save</button>
                                     </div>
@@ -253,9 +249,90 @@
             </div>
         </div>
     </div>
+    <!-- 휴지통 모달 -->
+    <div class="modal" id="trash" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content" style="height: 500px">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="trash-modal-body" class="modal-body">
+                    <div id="trash-container">
+                        <!-- 토글 -->
+                        <div class="trash-toggle">
+                            <input type="checkbox" id="photo-toggle">
+                            <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+                            <input type="checkbox" id="note-toggle">
+                            <button id="noteButton" onclick="loadTrash('note')">노트</button>
+                            <input type="checkbox" id="group-toggle">
+                            <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+                        </div>
+                    </div>
+                    <form>
+                        <div id="trash-content" class="trash-content">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" id="trash-modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 비밀번호 재발급 모달창 -->
+    <div class="modal fade" id="findPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <p>Change Password</p>
+                        <span style="font-size: 15px; color: #7a7f83;"> 이메일 인증 후 비밀번호를 새로 변경합니다. </span>
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">이메일:</label>
+                            <input type="email" class="form-control" id="sendEmail" name="email"
+                                placeholder="이메일을 입력해주세요.">
+                            <button type="button" class="signup btn btn-primary" onclick="sendVerificationEmail()"
+                                style="border-color: #60749d; background-color: #60749d; margin: 20px 0px; float: right;">전송</button>
+                        </div>
+                        <p style="display: inherit; margin: 10px 0px;">
+                            <label for="Timer">유효 시간</label>
+                            <input id="findPasswordTimer" type="text" value="" readonly
+                                style="margin: 10px 10px; border: double 5px; border-color: #60749d; border-radius: 10px; text-align: center; margin-top:10px;" />
+                        </p>
+                        <div class="mb-3" style="margin-top: 20px;">
+                            <label for="recipient-name" class="col-form-label ">인증번호 확인:</label>
+                            <input type="code" class="form-control" id="confirm-code" placeholder="인증번호를 입력해주세요.">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">새 비밀번호:</label>
+                            <input type="password" class="form-control" id="change_password"
+                                placeholder="새로운 비밀번호를 입력해주세요.">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">비밀번호 확인:</label>
+                            <input type="password" class="form-control" id="check_change_password"
+                                placeholder="새로운 비밀번호를 입력해주세요.">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        onclick="document.getElementById('findPassword').style.display = 'none'">취소</button>
+                    <button style="border-color: #60749d; background-color: #60749d;" type="button"
+                        class="btn btn-primary" onclick="ChangePassword()">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="/js/loader.js"></script>
 <script src="/js/api.js"></script>
-
+<script src="/js/trash.js"></script>
 
 </html>

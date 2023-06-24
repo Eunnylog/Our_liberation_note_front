@@ -21,8 +21,19 @@
     <script src="/js/api.js"></script>
     <script src="/js/trash.js"></script>
     <style>
+        @font-face {
+            font-family: 'omyu_pretty';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         body {
             background-color: #ebf2ff;
+        }
+
+        * {
+            font-family: omyu_pretty;
         }
     </style>
 </head>
@@ -37,20 +48,23 @@
     <main class="site-body" style="margin-top: 30px;">
         <div class="main-header">
             <div class="content">
-                <h1>Our liberation Note <br><br> 우리들의 해방일지</h1>
+                <h1 style="font-size: 50px;">Our liberation Note <br><br> 우리들의 해방일지</h1>
                 <div>
                     <!-- info 모달창 -->
-                    <a href="/" class="btn btn-secondary" style="margin-bottom: 30px;" data-bs-toggle="modal" data-bs-target="#carouselModal">
+                    <a href="/" class="btn btn-secondary"
+                        style="margin-bottom: 30px; font-size: 25px; background-color: #82CBC4; border-color: #82CBC4;"
+                        data-bs-toggle="modal" data-bs-target="#carouselModal">
                         Info
                     </a>
                     <!-- 다이어리 페이지로 이동 -->
-                    <a href="/my_diary.html" class="btn btn-secondary" style="margin-bottom: 30px;">
+                    <a href="/my_diary.html" class="btn btn-secondary"
+                        style="margin-bottom: 30px; font-size: 25px; background-color: #2FA599; border-color: #2FA599;">
                         Start
                     </a>
                 </div>
                 <!-- 여행 mbti 검사 페이지로 이동 -->
-                <a href="https://ourliberationnote.waveon.io/" target="_blank" class="btn btn-secondary" style="margin-bottom: 30px;">
-                    mbti 검사하러 가기
+                <a href="https://ourliberationnote.waveon.io/" target="_blank" class="mbti-link">
+                    <span>나의 여행 MBTI 테스트 하러가기!</span>
                 </a>
             </div>
         </div>
@@ -80,7 +94,7 @@
                                         <input name="confirmcode" id="confirmcode" type="confirmcode"
                                             class="form-control" placeholder="email 인증코드" style="width: 250px;">
                                         <button type="button" class="signup" onclick="sendCode()"
-                                            style="background-color: #60749d; width: 200px; margin-left: 10px;">인증코드
+                                            style="background-color: #7689b1; width: 200px; margin-left: 10px;">인증코드
                                             보내기</button>
                                     </div>
                                     <p style="margin: 10px 0px;">
@@ -90,7 +104,7 @@
                                     </p>
                                     <div class="sign-up">
                                         <button type="button" class="signup" onclick="handleSignup()"
-                                            style="background-color: #435b8a;">Sign up</button>
+                                            style="background-color: #485d86;">Sign up</button>
                                     </div>
                                 </form>
                                 <div class="divider">
@@ -114,7 +128,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
-                        Sign in</h5>
+                        Log in</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="container">
@@ -127,8 +141,8 @@
                                     <input name="password" id="login-password" type="password" class="form-control"
                                         placeholder="Password">
                                     <button type="button" onclick="handleSignin()" class="btn btn-primary"
-                                        style="float: center; background-color: #435b8a;">
-                                        Signin
+                                        style="float: center; background-color: #485d86;">
+                                        Log in
                                     </button>
                             </div>
                             </form>
@@ -199,23 +213,26 @@
                                             id="addmember-btn">Search</button>
                                     </div>
                                     <div style="color: #7c838c;">
-                                        <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
+                                        <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
                                             Emails </p>
                                         <div id="email-list"
-                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
                                             <ul id="email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
                                     </div>
                                     <button type="button" onclick="addMembersToGroup()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
+                                        <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
+                                    </button>
                                     <button type="button" onclick="DeleteMembers()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
+                                            src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
                                     <div style="color: #4d6087;">
                                         <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
                                             Emails </p>
-                                        <div id="selected-email-list"
-                                            style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                        <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
+                                            overflow-y: auto; height: 250px;">
                                             <ul id="selected-email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
@@ -223,7 +240,7 @@
                                     <div class="sign-up" style="display: flex;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
                                             onclick="document.getElementById('makegroup').style.display = 'none'"
-                                            style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                                            style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
                                         <button type="button" class="signup" onclick="addGroup()"
                                             style="background-color: #485d86;">Save</button>
                                     </div>
@@ -241,18 +258,18 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content" style="height: 850px;">
                 <div class="modal-header">
-                    <h5 class="modal-title">Info</h5>
+                    <h5 class="modal-title" style="color: #485d86;">Info</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" style="position: relative;">
+                <div class="modal-body" style="height: 600px;">
                     <!-- Carousel -->
                     <div id="carouselExampleIndicators" class="carousel slide">
                         <div class="carousel-inner">
                             <!-- 메인 페이지 인포 -->
                             <div class="carousel-item active" style="padding: 5px;">
-                                <h3>메인페이지</h3>
-                                <img src="/css/assets/info_main.png" style="width: 100%; height:90%; margin: auto;">
-                                <div style="font-size: 18px; margin-top: 10px;">
+                                <h3 style="color: #485d86;">메인페이지</h3>
+                                <img src="/css/assets/info_main.png" style="width: 100%; height: 400px; margin: auto;">
+                                <div style="font-size: 20px; margin-top: 10px;">
                                     ① start를 누르시면 다이어리 생성 페이지로 이동합니다!<br>
                                     ② mbti 검사하기를 누르시면 자신의 여행 mbti와 잘 맞는 mbti, 안맞는 mbti를 확인하실 수 있습니다!<br>
                                     ③ ≡ 표시를 누르시면 메뉴를 확인하실 수 있습니다!<br>
@@ -261,9 +278,9 @@
                             </div>
                             <!-- 마이 다이어리 페이지 인포 -->
                             <div class="carousel-item" style="padding: 5px;">
-                                <h3> 마이 다이어리 페이지</h3>
-                                <img src="/css/assets/info_mydiary.png" style="width: 100%; height:90%; margin: auto;">
-                                <div style="font-size: 18px; margin-top: 10px;">
+                                <h3 style="color: #485d86;"> 마이 다이어리 페이지</h3>
+                                <img src="/css/assets/info_mydiary.png" style="width: 100%; height:400px; margin: auto;">
+                                <div style="font-size: 20px; margin-top: 10px;">
                                     ① 빈 노트를 누르시면 모달창이 나타나며 새로운 노트를 생성할 수 있습니다!<br>
                                     ② 그룹을 선택해서 그룹마다 해당하는 노트를 볼 수 있습니다! <br>
                                     ③ 원하는 노트를 누르면 그 노트의 플랜 페이지로 이동합니다!
@@ -271,35 +288,35 @@
                             </div>
                             <!-- 플랜 페이지 인포 -->
                             <div class="carousel-item" style="padding: 5px;">
-                                <h3> 플랜 페이지</h3>
-                                <img src="/css/assets/info_plan.png" style="width: 100%; height:90%; margin: auto;">
+                                <h3 style="color: #485d86;"> 플랜 페이지</h3>
+                                <img src="/css/assets/info_plan.png" style="width: 100%; height:400px; margin: auto;">
                                 <div style="font-size: 18px; margin-top: 10px;">
                                     ① 선택한 노트의 이름이 나타납니다~ <br>
                                     ② 일정추가를 누르면 모달창이 나타나고 일정을 입력하면 캘린더에 추가됩니다! <br>
                                     ③ 사진첩 가기를 누르면 사진첩페이지로 이동합니다! <br>
                                     ④ AI랑 놀기를 누르면 등록한 일정을 토대로 최적의 경로를 알 수 있습니다~ <br>
-                                    ⑤ 계획표 전송을 누르면 그룹 멤버중 보내고 싶은 멤버들을 선택할 수 있는 모달창이 뜨고 계획을 메일로 전송할 수 있습니다!<br>
+                                    ⑤ 계획표 전송을 누르면 그룹 멤버중 보내고 싶은 멤버들을 선택할 수 있는 모달창이 뜨고 계획이 메일로 전송됩니다!<br>
                                     ⑥ 해방필름을 누르면 해방필름 페이지로 이동합니다!
                                 </div>
                             </div>
                             <!-- 사진첩 페이지 인포 -->
                             <div class="carousel-item" style="padding: 5px;">
-                                <h3> 사진첩 페이지</h3>
-                                <img src="" style="width: 100%; height:90%; margin: auto;">
+                                <h3 style="color: #485d86;"> 사진첩 페이지</h3>
+                                <img src="/css/assets/info_photo.png" style="width: 100%; height:400px; margin: auto;">
                                 <div style="font-size: 18px; margin-top: 10px;">
-                                    ① <br>
-                                    ② <br>
-                                    ③ <br>
-                                    ④ <br>
-                                    ⑤ <br>
-                                    ⑥
+                                    ① 포토페이지에 들어가면 노트 이름이 상단에 뜹니다!<br>
+                                    ② 사진 추가를 누르면 모달창이 열리고 내용을 작성하면 사진을 추가할 수 있습니다.<br>
+                                    ③ 사진을 누르면 사진 상세를 볼 수 있는 모달창이 뜨고, 상세페이지에서 댓글 수정, 삭제를 할 수 있습니다!<br>
+                                    ④ 수정 버튼을 누르면 수정을 할 수 있는 모달창으로 변경됩니다!<br>
+                                    ⑤ 삭제를 누르면 사진이 삭제되고 삭제되었다는 알림창이 뜹니다~ <br>
+                                    ⑥ 사진 왼쪽 하단 스탬프를 누르면 스탬프에 색이 바뀌며 마이페이지에서 지도에 표시됩니다! 표시된 장소의 사진을 한번에 볼 수 있습니다!
                                 </div>
                             </div>
                             <!-- AI 페이지 인포 -->
                             <div class="carousel-item" style="padding: 5px;">
-                                <h3> AI 페이지(유료기능)</h3>
-                                <img src="/css/assets/info_AI.png" style="width: 100%; height:90%; margin: auto;">
-                                <div style="font-size: 18px; margin-top: 10px;">
+                                <h3 style="color: #485d86;"> AI 페이지(유료기능)</h3>
+                                <img src="/css/assets/info_AI.png" style="width: 100%; height:400px; margin: auto;">
+                                <div style="font-size: 20px; margin-top: 10px;">
                                     ① 먼저 AI로 경로를 짤 날짜를 선택해주세요~ <br>
                                     ② 원하는 항목을 선택하거나 전체 선택으로 항목을 선택해주세요! <br>
                                     ③ 선택 후 AI 밥주기 버튼을 눌러주세요~ 밥주기 버튼을 누르면 선택한 항목들이 work 창으로 이동합니다. <br>
@@ -310,10 +327,10 @@
                             </div>
                             <!-- 해방네컷 페이지 인포 -->
                             <div class="carousel-item" style="padding: 5px;">
-                                <h3> 해방네컷 페이지</h3>
+                                <h3 style="color: #485d86;"> 해방네컷 페이지</h3>
                                 <img src="/css/assets/info_lifephoto.png"
-                                    style="width: 100%; height: 100%; margin: auto;">
-                                <div style="font-size: 18px; margin-top: 10px;">
+                                    style="width: 100%; height: 400px; margin: auto;">
+                                <div style="font-size: 20px; margin-top: 10px;">
                                     ① 해방네컷은 세로버전과 가로버전으로 이루어져 있습니다! 원하는 버전을 눌러 이용해주세요!<br>
                                     ② 파일 선택으로 이미지를 넣고 파일 넣기를 누르면 프레임에 사진이 들어갑니다!<br>
                                     ③ 파일을 <span style="color: red;">네 개 모두</span> 넣고 사진 넣기를 눌러주세요!! <br>
@@ -322,9 +339,9 @@
                             </div>
                             <!-- 마이페이지 인포 -->
                             <div class="carousel-item" style="padding: 5px;">
-                                <h3> 마이페이지 </h3>
-                                <img src="/css/assets/info_mypage.png" style="width: 100%; height:90%; margin: auto;">
-                                <div style="font-size: 18px; margin-top: 10px;">
+                                <h3 style="color: #485d86;"> 마이페이지 </h3>
+                                <img src="/css/assets/info_mypage.png" style="width: 100%; height:400px; margin: auto;">
+                                <div style="font-size: 20px; margin-top: 10px;">
                                     ① 유저의 이메일이 적혀있어 본인의 이메일을 확인할 수 있습니다!<br>
                                     ② 소속한 그룹을 볼 수 있습니다! 본인이 그룹장 이리면 옆에 함께 표시됩니다<br>
                                     ③ 그룹 만들기를 누르면 그룹을 만들고 멤버들을 추가 할 수 있는 모달창이 나타납니다!<br> 네비게이션 바의 Make group으로 어디서나 그룹을
@@ -348,7 +365,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        style="background-color: #485d86;">Close</button>
                 </div>
             </div>
         </div>
@@ -407,13 +425,13 @@
     <!-- 휴지통 모달 -->
     <div class="modal" id="trash" tabindex="-1">
         <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
+            <div class="modal-content" style="height: 500px">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="trash-modal-body" class="modal-body">
-                    <div>
+                    <div id="trash-container">
                         <!-- 토글 -->
                         <div class="trash-toggle">
                             <input type="checkbox" id="photo-toggle">
@@ -425,11 +443,11 @@
                         </div>
                     </div>
                     <form>
-                        <div id="trash-content" class="trash-content">
+                        <div id="trash-content" class="trash-content" style="display: flex; flex-wrap: wrap; justify-content: center;">
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer" id="modal-footer">
+                <div class="modal-footer" id="trash-modal-footer">
                 </div>
             </div>
         </div>

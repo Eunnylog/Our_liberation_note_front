@@ -4,6 +4,7 @@ let access_token = localStorage.getItem('access')
 // let back_url = 'https://api.liberation-note.com'
 let back_url = 'http://127.0.0.1:8000'
 
+checkGroup()
 checkLogin()
 
 
@@ -442,7 +443,7 @@ async function selectEmailMember() {
     const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            // "Authorization": `Bearer ${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'GET',
     });
@@ -505,10 +506,19 @@ async function deleteNoteModal() {
     $('#modal-body').append(temp_html)
 
     let temp_html2 = `<button type="button" class="btn" data-bs-dismiss="modal"
-                        style="background-color: #92a2c5; border-color: #92a2c5; color:white;">Close</button>
+                        style="background-color: #7689b1; border-color: #7689b1; color:white;">Close</button>
                       <button type="button" class="btn"
-                        style="background-color: #60749d; border-color: #60749d; color:white; margin: 0px 10px;"
+                        style="background-color: #485d86; border-color: #485d86; color:white; margin: 0px 10px;"
                         onclick="handleNotetrash('${selected_id}','${selected_group}','${selected_name}')">Delete</button>`
 
     $('#modal-footer').append(temp_html2)
 }
+
+
+
+function saveNoteID() {
+    params = new URLSearchParams(window.location.search);
+    const note_id = params.get("note_id");
+    localStorage.setItem('note_id', note_id)
+}
+saveNoteID()

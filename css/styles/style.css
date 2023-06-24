@@ -1,3 +1,15 @@
+@font-face {
+  font-family: 'omyu_pretty';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: omyu_pretty !important;
+  font-size: 20px;
+}
+
 :root {
   --border: #e3e1dc;
   --max-width: 1100px;
@@ -71,8 +83,8 @@ body>.site-body {
 
 .site-header .logo {
   display: flex;
-  width: 150px;
-  margin-top: 30px;
+  width: 200px;
+  margin-top: 5px;
   margin-right: 10px;
   justify-content: space-between
 }
@@ -143,6 +155,49 @@ ul.navba2 li {
 .max-content-width {
   max-width: var(--max-content-width);
   width: 100%;
+}
+
+.mbti-link {
+  margin-bottom: 30px;
+  font-size: 30px;
+  color: white;
+  text-decoration: none;
+  transition: all .3s ease;
+}
+
+.mbti-link:hover {
+  color: #39d9c8;
+  transition: all .3s ease;
+  text-decoration: none;
+}
+
+.mbti-link>span {
+  position: relative;
+  font-size: 30px;
+}
+
+.mbti-link>span::after {
+  content: '';
+  width: 0%;
+  left: 50%;
+  height: 1px;
+  display: block;
+  position: absolute;
+  margin-top: 3px;
+  border-bottom: 2px solid #39d9c8;
+  transition: all .3s ease;
+}
+
+.mbti-link:hover>span::after {
+  content: '';
+  width: 100%;
+  left: 0px;
+  height: 1px;
+  display: block;
+  position: absolute;
+  margin-top: 3px;
+  border-bottom: 2px solid #39d9c8;
+  transition: all .3s ease;
 }
 
 /* content-list */
@@ -897,82 +952,6 @@ input[type="checkbox"]:checked+label {
   }
 }
 
-
-/* 멘토링 상태변경 토글 */
-/* 멘토 상태변경 토글 */
-/* .toggle_box {
-  display: flex;
-  align-items: center;
-  z-index: -1;
-  margin-top: 20px;
-}
-
-#custom_input {
-  display: none;
-}
-
-#custom_input + label.toggle_btn_label {
-  position: relative;
-  width: 12rem;
-  height: 3rem;
-}
-
-#custom_input + label.toggle_btn_label > span {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 40px;
-  background-color: #ccc;
-  
-  transition: all .4s;
-
-}
-
-#custom_input + label.toggle_btn_label > span:before {
-  display: flex;
-  position: absolute;
-  height: 2.5rem;
-  width: fit-content;
-  padding: 0 1rem;
-  left: 0.25rem;
-  bottom: 0.25rem;
-  border-radius: 20px;
-  background-color: #fff;
-  
-  content: "초기값";
-  align-items: center;
-  font-weight: bold;
-  color: rgb(29, 29, 29);
-
-  -webkit-transition: all .4s;
-  transition: all .4s;
-}
-
-#custom_input:checked + label.toggle_btn_label > span {
-  background-color: black;
-}
-
-#custom_input:checked + label.toggle_btn_label > span:before {
-  -webkit-transform: translateX(calc(11.5rem - 100%));
-  -ms-transform: translateX(calc(11.5rem - 100%));
-  transform: translateX(calc(11.5rem - 100%));
-  right: 0.25rem;
-  bottom: 0.25rem;
-  content: "변경값";
-}
-
-#custom_input:disabled + label.toggle_btn_label {
-  display: none;
-} */
-
-
-/* #note-toggle, #photo-toggle{
-  display: none;
-} */
-
 .trash-toggle {
   background-color: #ECECEC;
   border-radius: 10px;
@@ -999,3 +978,12 @@ input[type="checkbox"]:checked+label {
   border-radius: 10px;
 }
 
+select {
+  background: url('https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png') calc(100% - 5px) center no-repeat;
+  background-size: auto;
+  padding: 5px;
+  border: 1px solid #485d86;
+  border-radius: 4px;
+  outline: 0 none;
+  position: relative;
+}

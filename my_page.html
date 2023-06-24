@@ -40,8 +40,8 @@
         style="display: grid; grid-template-columns: 250px 50px 200px 200px 200px 100px; grid-template-rows: 100px 150px 50px 100px 100px 150px 100px;">
         <!-- 티켓모양 유저 정보 창 -->
         <div class="shadow mb-5 bg-body rounded" id="user_info"
-          style="float:left; grid-column: 1; grid-row: 1/3;; text-align: center; flex-direction: column; margin-top: 15px; margin-left: 25px;">
-          <div style="background-color: #60749d; width: 100%; height: 20px; color: white;"> TICKET</div>
+          style="float:left; grid-column: 1; grid-row: 1/3;; text-align: center; flex-direction: column; margin-top: 15px; margin-left: 25px; height: 80%;">
+          <div style="background-color: #60749d; width: 100%; height: 25px; color: white;"> TICKET</div>
           <!-- 유저 정보창 작은 그리드 -->
           <div
             style="display: grid; grid-template-columns: 10px 30px 25px 25px 20px 10px 20px 25px 25px 30px 5px 10px; grid-row: 100px 25px 25px 50px;">
@@ -49,7 +49,7 @@
             <img src="/css/assets/mypage_code.png"
               style="grid-column: 10; grid-row: 1/3; margin-top: 15px; height: 80px; padding-left: 20px;" />
             <!-- 유저 이메일 들어가는 자리 -->
-            <p style="text-align: center; font-size: 16px; grid-row: 2 ;grid-column: 2/12; justify-content: center;"
+            <p style="text-align: center; font-size: 20px; grid-row: 2 ;grid-column: 2/12; justify-content: center;"
               id="email">
             </p>
             <div style="background-color: #60749d; grid-row: 3; grid-column: 1/12; height: 10px; width: 100%;"></div>
@@ -74,7 +74,7 @@
             style="display:grid; grid-template-columns: 100px 100px 100px 100px 100px 200px; grid-template-rows: 50px 100px 200px 100px 250px;">
             <div
               style="font-size: 30px; float: left; background-color: #60749d; color: white; width: 680px; text-align: center;">
-              Map 
+              STAMP 
             </div>
             <!-- 지도 불러와지는 부분 -->
             <div class="stamp-map" id="stamp-map"
@@ -84,7 +84,7 @@
         </div>
         <!-- 그룹 창 -->
         <div class="shadow mb-5 bg-body rounded" id="group_info" style="margin-left: 25px; grid-row: 3/6; height: 80%;">
-          <div style="text-align: center; background-color: #60749d; color: white; height: 20px;"> MY GROUP </div>
+          <div style="text-align: center; background-color: #60749d; color: white; height: 25px;"> MY GROUP </div>
           <!-- 그룹이 많으면 스크롤이 들어감 -->
           <div style="overflow-y: auto; height: 80%; margin-top: 10px;">
             <!-- 불러온 유저의 그룹이 들어가는 부분 -->
@@ -95,9 +95,9 @@
         <!-- 그룹 생성 모달을 띄워주는 창 -->
         <div class="shadow  mb-5 bg-body rounded" id="group_info"
           style="margin-left: 25px; grid-row: 6; text-align: center;">
-          <div style="background-color: #60749d; width: 100%; height: 20px; color: white;"> MAKE GROUP </div>
+          <div style="background-color: #60749d; width: 100%; height: 25px; color: white;"> MAKE GROUP </div>
           <button href="" data-bs-toggle="modal" data-bs-target="#makegroup" id="makegroup-button"
-            style="justify-items: center; font-size: 18px; justify-content: center; border-color: transparent; background-color: transparent; margin-top: 20px;">
+            style="justify-items: center; font-size: 20px; justify-content: center; border-color: transparent; background-color: transparent; margin-top: 15px;">
             그룹 만들기 
           </button>
         </div>
@@ -109,14 +109,14 @@
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 id="stamp-modal-title" class="modal-title">주소</h5>
+          <h5 id="stamp-modal-title" class="modal-title" style="color: #485d86;" >주소</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div id="stamp-modal-body" class="modal-body">
           사진
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" onclick="" style="background-color: #1F489A;">뭐하지?</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="background-color: #485d86;">닫기</button>
         </div>
       </div>
     </div>
@@ -126,7 +126,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
             회원탈퇴</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -135,9 +135,9 @@
             <h6>※ 탈퇴하기를 누르면 계정이 영구삭제됩니다. 계속 진행하시겠습니까?</h6>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #7689b1; border: #7689b1;">취소하기
             </button>
-            <button type="button" class="btn btn-primary" style="float: right" onclick="handlesUserDelete()">
+            <button type="button" class="btn btn-primary" style="float: right; background-color: #485d86; border: #485d86;" onclick="handlesUserDelete()">
               탈퇴하기
             </button>
           </div>
@@ -168,23 +168,26 @@
                       id="addmember-btn">Search</button>
                   </div>
                   <div style="color: #7c838c;">
-                    <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
+                    <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
                       Emails </p>
                     <div id="email-list"
-                      style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                      style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
                       <ul id="email-ul" style="position: relative; right: 10px;">
                       </ul>
                     </div>
                   </div>
                   <button type="button" onclick="addMembersToGroup()"
-                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
+                    style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
+                    <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
+                  </button>
                   <button type="button" onclick="DeleteMembers()"
-                    style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
+                    style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
+                      src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
                   <div style="color: #4d6087;">
                     <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
                       Emails </p>
-                    <div id="selected-email-list"
-                      style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                    <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
+                                        overflow-y: auto; height: 250px;">
                       <ul id="selected-email-ul" style="position: relative; right: 10px;">
                       </ul>
                     </div>
@@ -192,7 +195,7 @@
                   <div class="sign-up" style="display: flex;">
                     <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
                       onclick="document.getElementById('makegroup').style.display = 'none'"
-                      style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                      style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
                     <button type="button" class="signup" onclick="addGroup()"
                       style="background-color: #485d86;">Save</button>
                   </div>
@@ -232,17 +235,48 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #6e81a8;"
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #7689b1; border-color: #7689b1;"
             onclick="document.getElementById('updatePassword').style.display = 'none'">Cancel</button>
-          <button style="border-color: #60749d; background-color: #485d86;" type="button" class="btn btn-primary"
+          <button style="border-color: #485d86; background-color: #485d86;" type="button" class="btn btn-primary"
             onclick="updatePassword()">Save</button>
         </div>
       </div>
     </div>
   </div>
+  <!-- 휴지통 모달 -->
+  <div class="modal" id="trash" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content" style="height: 500px">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="trash-modal-body" class="modal-body">
+                <div id="trash-container">
+                    <!-- 토글 -->
+                    <div class="trash-toggle">
+                        <input type="checkbox" id="photo-toggle">
+                        <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+                        <input type="checkbox" id="note-toggle">
+                        <button id="noteButton" onclick="loadTrash('note')">노트</button>
+                        <input type="checkbox" id="group-toggle">
+                        <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+                    </div>
+                </div>
+                <form>
+                    <div id="trash-content" class="trash-content">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" id="trash-modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
   <script src="/js/loader.js"></script>
   <script src="/js/api.js"></script>
   <script src="/js/my_page.js"></script>
+  <script src="/js/trash.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 

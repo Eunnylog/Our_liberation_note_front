@@ -37,26 +37,27 @@
       <hr style="margin-bottom: 30px;">
       <div style="margin-bottom: 30px; display:inline-block; text-align: center; width:100%; margin-bottom:50px;">
         <button type="button" id="back" class="btn group-btn"
-          style="background-color: #60749d; color:white; margin: 0px 10px;" onclick=""> 뒤로 가기 </button>
-        <button type="button" class="btn group-btn" style="background-color: #92a2c5; color:white; margin: 0px 10px;"
+          style="background-color: #485d86; color:white; margin: 0px 10px;" onclick=""> 뒤로 가기 </button>
+        <button type="button" class="btn group-btn" style="background-color: #7689b1; color:white; margin: 0px 10px;"
           onclick="$('#save_plan_modal').modal('show'); $('#search_box').empty();"> 일정 추가 </button>
         <button type="button" id="goPhoto" class="btn group-btn"
-          style="background-color: #60749d; color:white; margin: 0px 10px;" onclick=""> 사진첩 가기</button>
+          style="background-color: #485d86; color:white; margin: 0px 10px;" onclick=""> 사진첩 가기</button>
         <button type="button" id="goAI" class="btn group-btn"
-          style="background-color: #92a2c5; color:white; margin: 0px 10px;" onclick="">AI랑 놀기</button>
-        <button type="button" class="btn group-btn" style="background-color: #60749d; color:white; margin: 0px 10px;"
-          onclick="selectEmailMember();">계획표 전송</button>
+          style="background-color: #7689b1; color:white; margin: 0px 10px;" onclick="">AI랑 놀기</button>
+        <button type="button" class="btn group-btn" data-bs-toggle="modal" data-bs-target="#select_email_member"
+          style="background-color: #485d86; color:white; margin: 0px 10px;" onclick="selectEmailMember();">계획표
+          전송</button>
         <button type="button" id="lifePhoto" class="btn group-btn"
-          style="background-color: #92a2c5; color:white; margin: 0px 10px;">해방필름</button>
-        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteNote" onclick="deleteNoteModal()" class="btn group-btn"
-          style="background-color: #60749d; color:white; margin: 0px 10px;">노트삭제</button>
+          style="background-color: #7689b1; color:white; margin: 0px 10px;">해방필름</button>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteNote" onclick="deleteNoteModal()"
+          class="btn group-btn" style="background-color: #485d86; color:white; margin: 0px 10px;">노트삭제</button>
       </div>
       <!-- 로딩창 -->
       <div id="loading" style="display: none;">
         <div class="overlay"></div>
         <div class="spinner"></div>
       </div>
-      <div id='calendar'></div>
+      <div id='calendar' style="padding-bottom: 40px; padding-top: 20px;"></div>
     </article>
   </main>
   <!-- 이메일전송 모달창 -->
@@ -64,7 +65,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="su">
+          <h5 class="modal-title" id="su" style="color: #485d86;">
             Send Email</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -77,55 +78,11 @@
                   </div>
                   <div class="sign-up" style="display: flex;">
                     <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                      onclick="document.getElementById('select_email_member').style.display = 'none'"
-                      style="margin-right: 10px; background-color: #60749d;">취소</button>
-                    <button type="button" class="signup" onclick="sendEmail()">이메일 보내기</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- 회원가입 모달창 -->
-  <div class="modal fade" id="signup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="su">
-            Sign up</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="container">
-          <div class="global-cont">
-            <div class="inner-cont">
-              <div class="sign-in-up">
-                <form class="sign-in-form active">
-                  <input name="email" id="email" type="email" class="form-control" placeholder="email">
-                  <input name="password" id="password" type="password" class="form-control" placeholder="password">
-                  <input name="password2" id="password2" type="password" class="form-control" placeholder="password2">
-                  <div style="display: flex;">
-                    <input name="confirmcode" id="confirmcode" type="confirmcode" class="form-control"
-                      placeholder="email 인증코드" style="width: 250px; height:60px">
-                    <button type="button" class="signup" onclick="sendCode()"
-                      style="background-color: #60749d; width: 200px; margin-left: 10px; height:50px">인증코드
+                      style="margin-right: 10px; background-color: #7689b1;">취소</button>
+                    <button type="button" class="signup" onclick="sendEmail()" style="background-color: #485d86;">이메일
                       보내기</button>
                   </div>
-                  <div class="sign-up">
-                    <button type="button" class="signup" onclick="handleSignup()">Sign up</button>
-                  </div>
                 </form>
-                <div class="divider">
-                  <span>or</span>
-                </div>
-                <div class="social-login">
-                  <button class="kakao" onclick="KakaoLogin()">Kakao</button>
-                  <button class="google" onclick="googleLogin()">Google</button>
-                  <button class="naver" onclick="naverLogin()">Naver</button>
-                  <!-- <button class="facebook" onclick="facebookLogin()">Facebook</button> -->
-                </div>
               </div>
             </div>
           </div>
@@ -133,36 +90,32 @@
       </div>
     </div>
   </div>
-  <!-- 로그인 모달창 -->
-  <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
+  <!--show_plan 모달-->
+  <div class="modal fade" id="plan_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 700px;">
+      <div class="modal-content" style="width:700px;">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            Sign in</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="plan_modal_title" style="color: #485d86;">
+            Plan Info</h5>
+          <h6 class="modal-title" id="plan_modal_id" hidden></h6>
+          <button type="button" class="btn-close delete_search" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="container">
           <div class="global-cont">
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <input name="email" id="login-email" type="email" class="form-control" placeholder="Email">
-                  <input name="password" id="login-password" type="password" class="form-control"
-                    placeholder="Password">
-                  <button type="button" onclick="handleSignin()" class="btn btn-primary" style="float: center">
-                    Sign in
+                  <div id="plan_info" style="padding: 10px;; text-align:left">
+                  </div>
+                  <button type="button" onclick="deletePlan()" class="btn btn-primary"
+                    style="float: center; width:49%; background-color: #7689b1;">
+                    삭제
                   </button>
-              </div>
-              </form>
-              <div class="divider">
-                <span>or</span>
-              </div>
-              <div class="social-login">
-                <button class="kakao" onclick="KakaoLogin()">Kakao</button>
-                <button class="google" onclick="googleLogin()">Google</button>
-                <button class="naver" onclick="naverLogin()">Naver</button>
-                <!-- <button class="facebook" onclick="facebookLogin()">Facebook</button> -->
+                  <button id="patch_box" type="button" onclick="patchBox()" class="btn btn-primary"
+                    style="float: center; width:49%; background-color: #485d86;">
+                    수정
+                  </button>
+                </form>
               </div>
             </div>
           </div>
@@ -170,7 +123,64 @@
       </div>
     </div>
   </div>
-  <!-- 회원탈퇴확인 모달창 -->
+  <!--save_plan 모달-->
+  <div class="modal fade" id="save_plan_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 1000px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
+            일정 추가</h5>
+          <button type="button" class="btn-close delete_search" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="container">
+          <div class="global-cont">
+            <div class="inner-cont">
+              <div class="sign-in-up">
+                <form class="sign-in-form active">
+                  <div class="input-group" style="flex-wrap: nowrap;">
+                    <input name="title" id="title" type="text" class="form-control" placeholder="장소명(지역명+상호명, 키워드)"
+                      style="width: 60%; height:40px;">
+                    <div class="input-group-append" style="width: 10%;">
+                      <button type="button" onclick="searchLocation()" class="btn btn-primary"
+                        style="margin-top:0px;height:40px; font-size:15px; background-color: #485d86;">검색</button>
+                    </div>
+                    <input name="category" id="category" type="text" class="form-control" placeholder="category"
+                      style="width: 29%; height:40px;">
+                  </div>
+                  <div id="search_box" style="width: 100%;  overflow: auto; margin: 0px 0px 0px 0px"></div>
+                  <div class="input-group" style="flex-wrap: nowrap;">
+                    <input name="location" id="location" type="text" class="form-control"
+                      style="width: 48%; height:48px;" placeholder="주소(미작성시 AI사용이 불가합니다!)">
+                    <button type="button" class="btn btn-primary" onclick="addPlanList()"
+                      style="width: 20%; margin-top:0px; background-color: #485d86;"
+                      class="btn btn-primary">일정추가</button>
+                  </div>
+                  <div class="input-group" style="flex-wrap: nowrap;">
+                    <input name="start" id="start" type="date" class="form-control" style="width: 48%;">
+                    <input name="time" id="time" type="text" class="form-control" placeholder="시간" style="width: 48%;">
+                    <input name="location_x" id="location_x" type="text" class="form-control" hidden>
+                    <input name="location_y" id="location_y" type="text" class="form-control" hidden>
+                  </div>
+                  <textarea name="memo" id="memo" type="textarea" class="form-control" placeholder="memo"
+                    style="height:200px; min-height:200px; max-height:200px"></textarea>
+                  <div id="plan_list" style="width:100%; height:200px; overflow-x: auto; margin-top: 10px;"
+                    class="form-control"></div>
+                  <div class="button-group">
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close"
+                      class="btn btn-primary delete_search" style="width: 49%; background-color: #7689b1;">취소</button>
+                    <button type="button" onclick="savePlan()" class="btn btn-primary"
+                      style="width: 49%; background-color: #485d86;">저장</button>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 그룹만들기 모달창 -->
   <div class="modal fade" id="deleteuser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -191,91 +201,6 @@
             </button>
           </div>
         </form>
-      </div>
-    </div>
-  </div>
-  <!--show_plan 모달-->
-  <div class="modal fade" id="plan_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 700px;">
-      <div class="modal-content" style="width:700px;">
-        <div class="modal-header">
-          <h5 class="modal-title" id="plan_modal_title">
-            Plan Info</h5>
-          <h6 class="modal-title" id="plan_modal_id" hidden></h6>
-          <button type="button" class="btn-close delete_search" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="container">
-          <div class="global-cont">
-            <div class="inner-cont">
-              <div class="sign-in-up">
-                <form class="sign-in-form active">
-                  <div id="plan_info" style="padding: 10px;; text-align:left">
-                  </div>
-                  <button type="button" onclick="deletePlan()" class="btn btn-primary" style="float: center; width:49%">
-                    삭제
-                  </button>
-                  <button id="patch_box" type="button" onclick="patchBox()" class="btn btn-primary"
-                    style="float: center; width:49%">
-                    수정
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--save_plan 모달-->
-  <div class="modal fade" id="save_plan_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 1000px;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            일정 추가</h5>
-          <button type="button" class="btn-close delete_search" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="container">
-          <div class="global-cont">
-            <div class="inner-cont">
-              <div class="sign-in-up">
-                <form class="sign-in-form active">
-                  <div class="input-group" style="flex-wrap: nowrap;">
-                    <input name="title" id="title" type="text" class="form-control" placeholder="장소명(지역명+상호명, 키워드)"
-                      style="width: 60%; height:40px;">
-                    <div class="input-group-append" style="width: 10%;">
-                      <button type="button" onclick="searchLocation()" class="btn btn-primary"
-                        style="margin-top:0px;height:40px; font-size:15px">검색</button>
-                    </div>
-                    <input name="category" id="category" type="text" class="form-control" placeholder="category"
-                      style="width: 29%; height:40px;">
-                  </div>
-                  <div id="search_box" style="width: 100%;  overflow: auto; margin: 0px 0px 0px 0px"></div>
-                  <div class="input-group" style="flex-wrap: nowrap;">
-                    <input name="location" id="location" type="text" class="form-control"
-                      style="width: 48%; height:48px;" placeholder="주소(미작성시 AI사용이 불가합니다!)">
-                    <button type="button" class="btn btn-primary" onclick="addPlanList()"
-                      style="width: 20%; margin-top:0px" class="btn btn-primary">일정추가</button>
-                  </div>
-                  <div class="input-group" style="flex-wrap: nowrap;">
-                    <input name="start" id="start" type="date" class="form-control" style="width: 48%;">
-                    <input name="time" id="time" type="text" class="form-control" placeholder="시간" style="width: 48%;">
-                    <input name="location_x" id="location_x" type="text" class="form-control" hidden>
-                    <input name="location_y" id="location_y" type="text" class="form-control" hidden>
-                  </div>
-                  <textarea name="memo" id="memo" type="textarea" class="form-control" placeholder="memo"
-                    style="height:200px; min-height:200px; max-height:200px"></textarea>
-                  <div class="button-group">
-                    <button type="button" data-bs-dismiss="modal" aria-label="Close"
-                      class="btn btn-primary delete_search" style="width: 49%;">취소</button>
-                    <button type="button" onclick="savePlan()" class="btn btn-primary" style="width: 49%;">저장</button>
-                  </div>
-                  <div id="plan_list"></div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -326,7 +251,7 @@
                   <div class="sign-up" style="display: flex;">
                     <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
                       onclick="document.getElementById('makegroup').style.display = 'none'"
-                      style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                      style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
                     <button type="button" class="signup" onclick="addGroup()"
                       style="background-color: #485d86;">Save</button>
                   </div>
@@ -338,46 +263,67 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="select_member" tabindex="-1" aria-labelledby="su" aria-hidden="true">
+  <!-- 노트 삭제 모달 -->
+  <div class="modal" tabindex="-1" id="deleteNote">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="su">
-            Send Email</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="container">
-          <div class="global-cont">
-            <div class="inner-cont">
-              <div class="sign-in-up">
-                <form class="sign-in-form active">
-                  <div style="width:100%;" id="member_list">
-                  </div>
-                  <div class="sign-up" style="display: flex;">
-                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close" onclick="cancle()"
-                      style="margin-right: 10px; background-color: #60749d;">취소</button>
-                    <button type="button" class="signup" onclick="sendEmail()">이메일 보내기</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-   <!-- 노트 삭제 모달 -->
-   <div class="modal" tabindex="-1" id="deleteNote">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Delete Note</h5>
+          <h5 class="modal-title" style="color: #485d86;">Delete Note</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="modal-body">
         </div>
         <div class="modal-footer" id="modal-footer">
         </div>
+      </div>
+    </div>
+  </div>
+  <!-- 휴지통 모달 -->
+  <div class="modal" id="trash" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content" style="height: 500px">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div id="trash-modal-body" class="modal-body">
+          <div id="trash-container">
+            <!-- 토글 -->
+            <div class="trash-toggle">
+              <input type="checkbox" id="photo-toggle">
+              <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+              <input type="checkbox" id="note-toggle">
+              <button id="noteButton" onclick="loadTrash('note')">노트</button>
+              <input type="checkbox" id="group-toggle">
+              <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+            </div>
+          </div>
+          <form>
+            <div id="trash-content" class="trash-content">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" id="trash-modal-footer">
+        </div>
+      </div>
+      <div id="trash-modal-body" class="modal-body">
+        <div id="trash-container">
+          <!-- 토글 -->
+          <div class="trash-toggle">
+            <input type="checkbox" id="photo-toggle">
+            <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+            <input type="checkbox" id="note-toggle">
+            <button id="noteButton" onclick="loadTrash('note')">노트</button>
+            <input type="checkbox" id="group-toggle">
+            <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+          </div>
+        </div>
+        <form>
+          <div id="trash-content" class="trash-content">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" id="trash-modal-footer">
       </div>
     </div>
   </div>
