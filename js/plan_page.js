@@ -516,6 +516,7 @@ async function deleteNoteModal() {
 }
 
 
+
 function saveNoteID() {
     params = new URLSearchParams(window.location.search);
     const note_id = params.get("note_id");

@@ -57,7 +57,7 @@
         <div class="overlay"></div>
         <div class="spinner"></div>
       </div>
-      <div id='calendar'></div>
+      <div id='calendar' style="padding-bottom: 40px; padding-top: 20px;"></div>
     </article>
   </main>
   <!-- 이메일전송 모달창 -->
@@ -65,7 +65,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="su">
+          <h5 class="modal-title" id="su" style="color: #485d86;">
             Send Email</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -95,7 +95,7 @@
     <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 700px;">
       <div class="modal-content" style="width:700px;">
         <div class="modal-header">
-          <h5 class="modal-title" id="plan_modal_title">
+          <h5 class="modal-title" id="plan_modal_title" style="color: #485d86;">
             Plan Info</h5>
           <h6 class="modal-title" id="plan_modal_id" hidden></h6>
           <button type="button" class="btn-close delete_search" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -128,7 +128,7 @@
     <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 1000px;">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
             일정 추가</h5>
           <button type="button" class="btn-close delete_search" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -177,6 +177,30 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  <!-- 그룹만들기 모달창 -->
+  <div class="modal fade" id="deleteuser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            회원탈퇴</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <h6>※ 탈퇴하기를 누르면 계정이 영구삭제됩니다. 계속 진행하시겠습니까?</h6>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
+            </button>
+            <button type="button" class="btn btn-primary" style="float: right" onclick="handlesUserDelete()">
+              탈퇴하기
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -244,7 +268,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Delete Note</h5>
+          <h5 class="modal-title" style="color: #485d86;">Delete Note</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="modal-body">
@@ -257,9 +281,9 @@
   <!-- 휴지통 모달 -->
   <div class="modal" id="trash" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content">
+      <div class="modal-content" style="height: 500px">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div id="trash-modal-body" class="modal-body">
@@ -275,7 +299,8 @@
             </div>
           </div>
           <form>
-            <div id="trash-content" class="trash-content">
+            <div id="trash-content" class="trash-content"
+              style="display: flex; flex-wrap: wrap; justify-content: center;">
             </div>
           </form>
         </div>
@@ -283,15 +308,16 @@
         </div>
       </div>
     </div>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
-    <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
-    <script src="/js/plan_page.js"></script>
-    <script src="/js/api_key.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
-    <script src="/js/map.js"></script>
-    <script src="/js/trash.js"></script>
+  </div>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
+  <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+  <script src="/js/plan_page.js"></script>
+  <script src="/js/api_key.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+  <script src="/js/map.js"></script>
+  <script src="/js/trash.js"></script>
 </body>
 
 </html>

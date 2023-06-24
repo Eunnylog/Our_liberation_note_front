@@ -11,6 +11,7 @@ async function getTrash() {
 
     if (response.status == 200) {
         const response_json = await response.json()
+        console.log(response_json)
         return response_json
     } else {
         alert("불러오는데 실패했습니다")
@@ -136,17 +137,19 @@ async function loadTrash(contentType) {
         } else {
             photos.forEach((photo, index) => {
                 const photo_id = photo.id
+                const photo_title = photo.title
                 const photo_name = photo.name
                 const photo_created_at = photo.created_at
                 const photo_location = photo.location
                 const image = backend_base_url + '/note' + photo.image
 
                 let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:10px;">
-                                    <img src="${image}" alt="Image description" style="width: 140px; height: 140px; margin-top:15px">
+                                    <img src="${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px">
                                     <a id='name_${index}'>${photo_name}</a>
                                     <input type="radio" name="trash-radio" value="${index}" style="width:10px" onclick="handleTrashRadio('photo')">
                                     <input id='id_${index}' value="${photo_id}" hidden>
                                     <input id='location_${index}' value="${photo_location}" hidden>
+                                    <input id='title_${index}' value="${photo_title}" hidden>
                                 </div>`
 
                 $('#trash-content').append(temp_html)
@@ -191,13 +194,13 @@ async function handleGrouptrash(group_id, name) {
         const response_json = await response.json()
         alert(`※ [${name}] 그룹이 정상적으로 삭제되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
         alert(`※ [${name}] 그룹이 정상적으로 복원되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else {
         alert("※실패하였습니다.")
@@ -225,13 +228,13 @@ async function handleNotetrash(note_id, group, name) {
         const response_json = await response.json()
         alert(`※ [${name}] 노트가 정상적으로 삭제되었습니다.`)
         window.location.replace(`${frontend_base_url}/my_diary.html`)
-        return response_json 
+        return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
         alert(`※ [${name}] 노트가 정상적으로 복원되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else {
         alert("※실패하였습니다.")
@@ -239,13 +242,8 @@ async function handleNotetrash(note_id, group, name) {
     }
 }
 
-async function handlePhototrash(photo_id, location, name) {
+async function handlePhototrash(photo_id, location, title, name) {
     let token = localStorage.getItem("access")
-    var userConfirmation = confirm("※ 확인을 누르시면 해당 사진이 휴지통으로 이동합니다. 삭제하시겠습니까?");
-
-    if (!userConfirmation) {
-        return false
-    }
 
     const response = await fetch(`${backend_base_url}/note/trash/${photo_id}`, {
         headers: {
@@ -255,20 +253,20 @@ async function handlePhototrash(photo_id, location, name) {
         method: 'POST',
         body: JSON.stringify({
             "location": location,
-            "name": name,
+            "title": title,
         })
     })
     if (response.status == 202) {
         const response_json = await response.json()
         alert(`※ [${name}] 사진이 정상적으로 삭제되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
         alert(`※ [${name}] 사진이 정상적으로 복원되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else {
         alert("※실패하였습니다.")
@@ -321,7 +319,8 @@ function handleTrashRestore() {
 
     if (selectedPhotoIndex !== null) {
         const selected_location = document.getElementById(`location_${selectedIndex}`).value;
-        handlePhototrash(selected_id, selected_location, selected_name)
+        const selected_title = document.getElementById(`title_${selectedIndex}`).value;
+        handlePhototrash(selected_id, selected_location, selected_title, selected_name)
     }
 
 }

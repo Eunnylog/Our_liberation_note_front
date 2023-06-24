@@ -3,6 +3,13 @@ checkGroup()
 checkLogin()
 
 
+window.addEventListener('load', function () {
+    const noteName = localStorage.getItem('noteName');
+    const photopageTitle = document.getElementById("photopage_title");
+    photopageTitle.innerHTML = noteName + " | Photo gallery";
+});
+
+
 // 사진 추가하기
 async function addPhoto() {
     const image = document.getElementById("image");
@@ -32,9 +39,9 @@ async function addPhoto() {
         const note_id = urlParams.get('note_id');
 
         const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
-            // headers: {
-            //     // "Authorization": `Bearer ${access_token}`,
-            // },
+            headers: {
+                "Authorization": `Bearer ${access_token}`,
+            },
             method: 'POST',
 
             body: formData
@@ -52,7 +59,7 @@ async function addPhoto() {
         console.error(error);
     }
 }
-// 어떤 부분때문에 사진이 밀리게 되는걸까
+
 async function album() {
     try {
         params = new URLSearchParams(window.location.search);
@@ -66,13 +73,13 @@ async function album() {
         const note_id = urlParams.get('note_id');
 
         let menu_html = `<a class="btn group-btn" href="/plan_page.html?note_id=${note_id}"
-                        style="background-color: #60749d; color:white; margin: 0px 1px; 
+                        style="background-color: #7689b1; color:white; margin: 0px 1px; 
                         text-decoration: none;">뒤로가기
                     </a>`
         $('#menu_box').append(menu_html)
 
-        // const response = await fetch(`${backend_base_url}/note/photo/${note_id}/${page}`, {
-        const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
+        const response = await fetch(`${backend_base_url}/note/photo/${note_id}/${page}`, {
+            // const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
             headers: {
                 'content-type': 'application/json',
                 // 'Authorization': `Bearer ${accessToken}`
@@ -87,10 +94,11 @@ async function album() {
             console.log(page)
             if (page != 0) {
                 alert('마지막페이지 입니다!')
-                page = 0
+                page = page - page
                 window.location.href = window.location.href.split('&')[0] + '&page=' + page
             }
         }
+
 
         const stampsresponse = await getUserprofile()
         const stamps = stampsresponse.stamps
@@ -142,9 +150,9 @@ function p_page() {
     page = params.get("page");
 
     if (!page) {
-        page = 1
+        page = 0
     }
-    page = page * 1 + 5
+    page = page * 1 + 6
     window.location.href = window.location.href.split('&')[0] + '&page=' + page
 }
 
@@ -153,9 +161,9 @@ function m_page() {
     page = params.get("page");
 
     if (!page) {
-        page = 1
+        page = 0
     }
-    page = page * 1 - 5
+    page = page * 1 - 6
 
     if (page < 0) {
         alert('첫페이지 입니다!')
@@ -204,47 +212,71 @@ async function photo_detail(photo_id) {
                     </div>
                     
                     <div style="display: flex; align-items: center;">
-                    <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px; ">
-                    <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
-                        <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal">게시</button>
+                        <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px;">
+                        <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
+                            <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">게시</button>
                     </div>
                     <hr/>
+                    <div>
+                    <style>
+                        .comment_set div:hover {
+                            background-color: #f5f5f5;
+                        }
+                    </style>
                     <div class="comment_set">
-                        ${comments.map(comment => `<div id="comment-$comment-${comment.id}">${comment.comment}
-                        <div style="display: flex; align-items: center;">
-                        <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" placeholder="comment">
-                        <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="editComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">수정</button>
-                        <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal">삭제</button>
-                        </div>
-                        </div>`).join('')}
-                    </div>`
+                    ${comments.map(comment => `<b>${comment.user}</b>
+                                                <p style="float: right; color: gray;">${comment.created_at.split("T")[0]}</p>
+                                                <div id="comment-$comment-${comment.id}" value="${comment.user}" style="width: 100%; margin-bottom: 10px;" onclick="toggleCommentEdit(event)" >
+                                                    ${comment.comment}
+                                                    <div style="display: none;">
+                                                        <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" 
+                                                        onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
+                                                        <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" 
+                                                        onclick="editComment(event)" class="btn btn-primary" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
+                                                        <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" 
+                                                        onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #485d86; border-color: #485d86;">삭제</button>
+                                                    </div>
+                                                </div>`).join('')}
+                    </div>`;
     $('#photo-d').append(temp_html)
 
     $('#photo-detail-modal-footer').empty()
 
     let temp_html2 = `<button id="patch_photo_box" type="button" class="btn btn-primary"
-                            onclick="patchPhotoBox('${photo_id}')">수정</button>
+                            onclick="patchPhotoBox('${photo_id}')" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
                       <button id="photo-trash" type="button" class="btn btn-primary"
-                            onclick="handlePhototrash('${photo_id}','${location}','${name}')">삭제</button>`
+                            onclick="handlePhototrash('${photo_id}','${location}','${title}','${name}')" style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
     $('#photo-detail-modal-footer').append(temp_html2)
 }
 
 
-// 코멘트란을 토글로 하여 클릭했을때의 이벤트 지정
-
 function toggleCommentEdit(event) {
-    const li = event.target.closest('li');
-    const div = li.querySelector('div');
-    div.style.display = div.style.display === 'none' ? 'flex' : 'none';
+    const comments_set = event.target.closest('div');
+    const div = comments_set.querySelector('div');
+    const user_email = comments_set.getAttribute("value")
+    console.log(user_email)
+    // payload를 모두 문자열로 가져오기
+    let storage = localStorage.getItem('payload');
+    // 가져온 paylad(JSON 문자열)를 객체, 배열로 변환
+    const personObj = JSON.parse(storage);
+    console.log(personObj);
+    let email;
+    // user_id 키의 값만 가져오기
+    if (personObj) {
+        email = personObj['email'];
+    }
+    if (user_email == email) {
+        div.style.display = div.style.display === 'none' ? 'flex' : 'none';
+    } else if (user_email != null) {
+        alert("작성자만이 댓글을 수정할 수 있습니다.")
+    }
 }
 
-let commentItems = document.querySelectorAll('.comment_set li'); // 변수 선언을 밖으로 이동
-
-// li 요소들에 클릭시 이벤트 발생
+let commentItems = document.querySelectorAll('.comment_set div'); // 변수 선언을 밖으로 이동
+// 클릭시 이벤트 발생
 commentItems.forEach(item => {
     item.addEventListener('click', toggleCommentEdit);
-    alert("ㅇㄹㄹ")
 });
 
 
@@ -264,7 +296,7 @@ function patchPhotoBox(photo_id) {
     let temp_html = `<div class="input-group" style="flex-wrap: nowrap; ">
                         <input class="upload-name" value="첨부파일" src="${image}" placeholder="첨부파일" multiple
                             accept=".jpg, .png, .jpeg" style="width: 80%; border-radius: 5px 0 0 5px; margin-bottom: 15px;">
-                        <label for="image" style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 5px 5px 0;">사진변경</label>
+                        <label for="image" style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 5px 5px 0; background-color:  #485D86;">사진변경</label>
                         <input type="file" id="image" style="display: none"/>
                     </div>
                     <div class="input-group-append" style="width: 100%;">
@@ -276,7 +308,7 @@ function patchPhotoBox(photo_id) {
                         <input name="title" id="p_title" value='${title}' type="text" class="form-control"
                             placeholder="목적지(지역명+상호명, 지역명+카테고리)" style="width: 80%; height:40px;">
                         <button type="button" onclick="searchLocation('2')" class="btn btn-primary"
-                            style="margin-top:0px;height:40px; font-size:15px; width: 20%">검색</button>
+                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; background-color:  #485D86;">검색</button>
                     </div>
                     <div class="input-group-append" style="width: 100%; margin-bottom: 15px;">
                         <input name="location" id="p_location" value='${location}' type="text" class="form-control"
@@ -294,8 +326,8 @@ function patchPhotoBox(photo_id) {
 
     $('#photo-detail-modal-footer').empty()
 
-    let temp_html2 = `<button type="button" class="btn btn-secondary delete_serarch" data-bs-dismiss="modal">취소</button>
-                      <button id="patch_photo" value='${photo_id}' type="button" class="btn btn-primary"onclick="patchPhoto()">저장</button>`
+    let temp_html2 = `<button type="button" class="btn btn-secondary delete_serarch" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">취소</button>
+                      <button id="patch_photo" value='${photo_id}' type="button" class="btn btn-primary"onclick="patchPhoto()" style="background-color:  #485D86; border-color: #485D86;">저장</button>`
 
     $('#photo-detail-modal-footer').append(temp_html2)
 }
@@ -310,8 +342,6 @@ async function patchPhoto() {
     const memo = document.getElementById('p_memo').value;
     const location_x = document.getElementById("p_location_x").value
     const location_y = document.getElementById("p_location_y").value
-
-
 
     const formData = new FormData();
 
@@ -359,9 +389,11 @@ async function patchPhoto() {
     }
 }
 //photo_page.html > 사진추가 버튼 옆 업로드 이름 
-$("#image").on('change', function () {
-    var fileName = $("#image").val();
-    $(".upload-name").val(fileName);
+$(document).ready(function () {
+    $("#image").on('change', function () {
+        var fileName = $(this).val();
+        $(".upload-name").val(fileName);
+    });
 });
 
 
