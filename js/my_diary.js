@@ -172,7 +172,7 @@ async function saveNote() {
 
         if (response.status == 201) {
             localStorage.setItem('noteName', note_name);
-            alert("새로운 노트가 생성되었습니다!")
+            showToast("새로운 노트가 생성되었습니다!")
             window.location.href = `/plan_page.html?note_id=${response_json['id']}`
 
         } else if (!note_name) {

@@ -55,7 +55,7 @@ async function addPhoto() {
             throw new Error("서버가 응답하지 않습니다.");
         }
     } catch (error) {
-        alert("에러가 발생했습니다.");
+        showToast("에러가 발생했습니다.");
         console.error(error);
     }
 }
@@ -269,7 +269,7 @@ function toggleCommentEdit(event) {
     if (user_email == email) {
         div.style.display = div.style.display === 'none' ? 'flex' : 'none';
     } else if (user_email != null) {
-        alert("작성자만이 댓글을 수정할 수 있습니다.")
+        showToast("작성자만이 댓글을 수정할 수 있습니다.")
     }
 }
 
@@ -383,7 +383,7 @@ async function patchPhoto() {
             throw new Error("서버가 응답하지 않습니다.");
         }
     } catch (error) {
-        alert("에러가 발생했습니다.");
+        showToast("에러가 발생했습니다.");
         console.error(error);
         // window.location.reload()
     }
@@ -416,11 +416,11 @@ async function addComment() {
             console.log('코멘트 추가 성공');
         } else {
             let response_json = await response.json()
-            alert(response_json['non_field_errors']);
+            showToast(response_json['non_field_errors']);
         }
     }
     catch (error) {
-        alert('에러가 발생했습니다.');
+        showToast('에러가 발생했습니다.');
         console.error(error);
     }
 }
@@ -478,15 +478,15 @@ async function deleteComment(event) {
     })
         .then(response => {
             if (response.status == 204) {
-                alert("댓글이 삭제되었습니다");
+                showToast("댓글이 삭제되었습니다");
                 window.location.reload();
             } else {
-                alert('댓글이 삭제에 실패했습니다.');
+                showToast('댓글이 삭제에 실패했습니다.');
             }
         })
         .catch(error => {
             console.error("댓글 삭제 중 오류 발생", error);
-            alert("댓글 삭제 중 오류 발생")
+            showToast("댓글 삭제 중 오류 발생")
         });
 
 }
@@ -522,7 +522,7 @@ async function handleStamp(photo_id) {
         return response_json
     }
     else {
-        alert("※실패")
+        showToast("※실패")
         console.log(photo_id)
     }
 }
