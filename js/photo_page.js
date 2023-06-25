@@ -226,7 +226,7 @@ async function photo_detail(photo_id) {
                     <div style="display: flex; align-items: center;">
                         <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px;">
                         <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
-                            <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">게시</button>
+                            <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" style="background-color:  #7689b1; border-color: #7689b1;">게시</button>
                     </div>
                     <hr/>
                     <div>
@@ -244,7 +244,7 @@ async function photo_detail(photo_id) {
                                                         <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" 
                                                         onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
                                                         <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" 
-                                                        onclick="editComment(event)" class="btn btn-primary" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
+                                                        onclick="editComment(event)" class="btn btn-primary" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
                                                         <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" 
                                                         onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #485d86; border-color: #485d86;">삭제</button>
                                                     </div>
@@ -420,17 +420,25 @@ async function patchPhoto() {
 }
 
 //photo_page.html > 사진추가 버튼 옆 업로드 이름 
-$(document).ready(function() {
+$(document).ready(function () {
     $("#image").on('change', function () {
         var fileName = $(this).val();
         $(".upload-name").val(fileName);
     });
 });
 
+
 // 코멘트 추가 back과 연결
 async function addComment() {
     const photo_id = document.getElementById("commentBtn").value;
     const commentText = document.getElementById("comment").value;
+    const commentbox = document.getElementById("comment");
+
+    if (!commentText) {
+        showToast('댓글을 입력해주세요!')
+        commentbox.classList.add("custom-class");
+        return false
+    }
 
     try {
         const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
@@ -443,7 +451,10 @@ async function addComment() {
         });
 
         if (response.ok) {
-            console.log('코멘트 추가 성공');
+            showToast('새로운 댓글이 작성되었습니다!');
+            setTimeout(function () {
+                window.location.reload();
+            }, 1000);
         } else {
             let response_json = await response.json()
             showToast(response_json['non_field_errors']);
@@ -459,14 +470,18 @@ async function editComment(event) {
 
     var button = event.target;
     var buttonValue = button.value;
-    console.log("Button Value:", buttonValue);
 
     const photo_comment_id = button.value;
-    // const photo_id = photo_comment_id.split("/")[0];
     const comment_id = photo_comment_id.split("/")[1];
 
     const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
-    console.log(updatedComment)
+    const updatedCommentBox = document.getElementById(`comment_edit${comment_id}`)
+
+    if (!updatedComment) {
+        showToast('수정할 댓글을 작성해주세요!')
+        updatedCommentBox.classList.add("custom-class");
+        return false
+    }
 
     fetch(`${backend_base_url}/note/comment/${comment_id}`, {
         headers: {
@@ -478,7 +493,10 @@ async function editComment(event) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            showToast('댓글이 수정되었습니다!')
+            setTimeout(function () {
+                window.location.reload();
+            }, 1000);
         })
         .catch(error => {
             console.error('Error', error)

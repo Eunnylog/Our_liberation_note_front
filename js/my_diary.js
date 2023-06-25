@@ -37,13 +37,13 @@ async function getGroup() {
     const response_json = await response.json()
 
     console.log(response_json)
-    // $('#select_group').empty()
+    $('#select_group').empty()
     // if (response_json.length == 0) {
-    //     showToast('그룹을 먼저 생성해 주세요!')
+    //     alert('그룹을 먼저 생성해 주세요!')
     //     window.location.href = '/index.html'
     // }
     if (response_json.length == 0) {
-        showToast('그룹을 먼저 생성해 주세요!')
+        alert('그룹을 먼저 생성해 주세요!')
         setTimeout(function () {
             window.location.href = '/index.html'
         }, 1500);
