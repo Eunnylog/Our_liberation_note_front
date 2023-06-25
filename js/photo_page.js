@@ -300,10 +300,13 @@ function patchPhotoBox(photo_id) {
     let title = document.getElementById('photo_title').innerHTML;
     let location = document.getElementById('photo_location').innerHTML;
     let memo = document.getElementById('photo_memo').innerHTML;
+    let imageUrl = image.src;
+    var path = imageUrl.split('media/')[1];
+    var decodedPath = decodeURIComponent(path);
 
     $('#photo-d').empty();
     let temp_html = `<div class="input-group" style="flex-wrap: nowrap; ">
-                        <input class="upload-name" id="p_imgbox" src="${image}" placeholder="첨부파일" multiple
+                        <input class="upload-name" id="p_imgbox" src="${image}" placeholder="${decodedPath}" multiple
                             accept=".jpg, .png, .jpeg" style="width: 80%; border-radius: 5px 0 0 5px; margin-bottom: 15px;">
                         <label for="image" style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 5px 5px 0; background-color:  #485D86;">사진변경</label>
                         <input type="file" id="image" style="display: none"/>
