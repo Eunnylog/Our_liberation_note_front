@@ -1,6 +1,6 @@
 let back_url = 'https://api.liberation-note.com'
-// const front_url = "https://liberation-note.com"
-let front_url = 'http://127.0.0.1:5500'
+const front_url = "https://liberation-note.com"
+// let front_url = 'http://127.0.0.1:5500'
 // let back_url = 'http://127.0.0.1:8000'
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
@@ -325,7 +325,7 @@ async function aiStart() {
             <div style="margin: auto; width: 50%; height: 5px; background-color: #485d86;"></div>
             <h5 style="text-align:center; margin-top: 20px;">${answer}</h5>
             <div style="margin-bottom: 20px; width: 100%; height: 1px; border-bottom: 5px dotted #485d86;"></div>
-            참고자료<br>
+            가볼만한 블로그<br>
             <a href="${crawling}" target="_blank">${crawling}</a>
           </div>
         `;
