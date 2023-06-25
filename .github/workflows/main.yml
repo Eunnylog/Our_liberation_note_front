@@ -23,6 +23,13 @@ jobs:
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
 
+      - name: CloudFront Invalidation
+        env:
+          CLOUD_FRONT_ID: ${{ secrets.DISTRIBUTION_ID}}
+        run: |
+          aws cloudfront create-invalidation \
+          --distribution-id $CLOUD_FRONT_ID --paths /*
+
       - name: Invalidate cache CloudFront
         uses: chetan/invalidate-cloudfront-action@master
         env:
