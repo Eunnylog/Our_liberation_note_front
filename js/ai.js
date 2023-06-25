@@ -259,7 +259,9 @@ async function aiStart() {
       y: location_y
     };
 
-    if (!location_x | !location_y) {
+    console.log(destination)
+
+    if (!location_x && !location_y) {
 
     } else {
       destinations.push(destination);
