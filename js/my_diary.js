@@ -129,8 +129,8 @@ async function showNoteList() {
                                 </a>
                             `
             $('#note_list').append(temp_html);
-            showMasterButton(); // showMasterButton 함수 호출
         })
+        showMasterButton(); // showMasterButton 함수 호출
     }
 }
 
@@ -467,29 +467,6 @@ async function deleteGroupModal() {
 }
 
 async function deleteGroupConfirm() {
-    // const access_token = localStorage.getItem('access')
-    // const response = await fetch(`${back_url}/user/group/`, {
-    //     headers: {
-    //         'content-type': 'application/json',
-    //         'Authorization': `Bearer ${access_token}`,
-    //     },
-    //     method: 'GET',
-    // })
-    // const response_json = await response.json()
-
-    // const selectedIndex = document.getElementById('select_group').value
-
-    // response_json.forEach((group, index) => {
-    //     let id = group['id']
-    //     let name = group['name']
-    //     let members = group['members']
-    //     let master = group['master']
-
-    //     if (parseInt(selectedIndex) === parseInt(id)) {
-    //         updatingGroupId = id;
-    //     }
-    // })
-
     const deleteResponse = await fetch(`${backend_base_url}/user/group/${updatingGroupId}/`, {
         headers: {
             'Content-Type': 'application/json',
