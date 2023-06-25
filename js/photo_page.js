@@ -143,7 +143,7 @@ async function album() {
             if (existPhoto.includes(photo_id)) {
                 temp_html += `<img class="exist-stamp" id="exist-stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
             } else {
-                temp_html += `<img class="stamp" id="stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
+                temp_html += `<img class="stamp" id="stamp" src="/css/assets/stamp2.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
             }
 
             temp_html += `</div>`;
@@ -309,7 +309,7 @@ function patchPhotoBox(photo_id) {
                         <input class="upload-name" id="p_imgbox" src="${image}" placeholder="${decodedPath}" multiple
                             accept=".jpg, .png, .jpeg" style="width: 80%; border-radius: 5px 0 0 5px; margin-bottom: 15px;">
                         <label for="image" style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 5px 5px 0; background-color:  #485D86;">사진변경</label>
-                        <input type="file" id="image" style="display: none"/>
+                        <input type="file" id="image" style="display: none">
                     </div>
                     <div class="input-group-append" style="width: 100%;">
                         <input name="name" id="p_name" type="text" value='${name}' class="form-control"
@@ -418,14 +418,14 @@ async function patchPhoto() {
         // window.location.reload()
     }
 }
+
 //photo_page.html > 사진추가 버튼 옆 업로드 이름 
-$(document).ready(function () {
+$(document).ready(function() {
     $("#image").on('change', function () {
         var fileName = $(this).val();
         $(".upload-name").val(fileName);
     });
 });
-
 
 // 코멘트 추가 back과 연결
 async function addComment() {
