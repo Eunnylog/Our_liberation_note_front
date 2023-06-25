@@ -1,8 +1,8 @@
 // 기본 URL
 const backend_base_url = "https://api.liberation-note.com"
 // const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "https://liberation-note.com"
-// const frontend_base_url = "http://127.0.0.1:5500"
+// const frontend_base_url = "https://liberation-note.com"
+const frontend_base_url = "http://127.0.0.1:5500"
 
 
 
@@ -665,6 +665,7 @@ function DeleteMembers() {
 // 그룹 생성
 async function addGroup() {
   const access_token = localStorage.getItem("access");
+  const groupNameInput = document.getElementById("groupname");
   const groupName = document.getElementById("groupname").value;
   const membersList = document.getElementById("selected-email-ul");
 
@@ -699,7 +700,9 @@ async function addGroup() {
   });
 
   if (!groupName) {
+
     showToast('그룹 이름을 적어주세요')
+    groupNameInput.classList.add("custom-class");
     return;
   }
 

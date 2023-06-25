@@ -39,9 +39,15 @@ async function getGroup() {
 
     console.log(response_json)
     // $('#select_group').empty()
+    // if (response_json.length == 0) {
+    //     showToast('그룹을 먼저 생성해 주세요!')
+    //     window.location.href = '/index.html'
+    // }
     if (response_json.length == 0) {
         showToast('그룹을 먼저 생성해 주세요!')
-        window.location.href = '/index.html'
+        setTimeout(function () {
+            window.location.href = '/index.html'
+        }, 1000);
     }
     response_json.forEach((a, index) => {
         let id = a['id']
@@ -130,8 +136,8 @@ async function showNoteList() {
                                 </a>
                             `
             $('#note_list').append(temp_html);
-            showMasterButton(); // showMasterButton 함수 호출
         })
+        showMasterButton(); // showMasterButton 함수 호출
     }
 }
 
