@@ -32,8 +32,18 @@
     <div id="toast"></div>
     <!-- Dropdown Structure -->
     <article class="review-detail max-content-width">
-      <div style="text-align: left; margin-bottom:30px;">
+      <div style="display: flex;">
         <h1 id="note_title"></h1>
+        <div class="dropdown" style="margin-left: auto; margin-top:10px;">
+          <button class="btn btn-secondary btn-sm dropdown-toggle" onclick="loadGroupMembers()"
+            style="background-color: #485D86; border-color: #485D86; color:white; margin: 0px 10px; height: 45px; border-radius: 8px;"
+            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="/css/assets/members.png" alt="Stamp Image" style="width: 30px; height:30px">
+          </button>
+          <ul id="members-list" class="dropdown-menu dropdown-menu-dark"
+            style="right: 0; left: auto; background-color: #7689b1; border-color: #7689b1; color:white;">
+          </ul>
+        </div>
       </div>
       <hr style="margin-bottom: 30px;">
       <div style="margin-bottom: 30px; display:inline-block; text-align: center; width:100%; margin-bottom:50px;">
@@ -300,8 +310,7 @@
             </div>
           </div>
           <form>
-            <div id="trash-content" class="trash-content"
-              style="display: flex; flex-wrap: wrap; justify-content: center;">
+            <div id="trash-content" class="trash-content">
             </div>
           </form>
         </div>

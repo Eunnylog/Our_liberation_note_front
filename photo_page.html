@@ -75,8 +75,7 @@
                                         <label for="image"
                                             style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 4px 4px 0; background-color:  #485D86;">사진
                                             추가</label>
-                                        <input type="file" id="image" style="display: none"
-                                            onchange="updateFileName(this)" />
+                                        <input type="file" id="image" style="display: none" />
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
                                         <input name="name" id="name" type="text" class="form-control"
@@ -204,35 +203,35 @@
         </div>
     </div>
     <!-- 휴지통 모달 -->
-    <div class="modal" id="trash" tabindex="-1">
-        <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content" style="height: 500px">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div id="trash-modal-body" class="modal-body">
-                    <div id="trash-container">
-                        <!-- 토글 -->
-                        <div class="trash-toggle">
-                            <input type="checkbox" id="photo-toggle">
-                            <button id="photoButton" onclick="loadTrash('photo')">사진</button>
-                            <input type="checkbox" id="note-toggle">
-                            <button id="noteButton" onclick="loadTrash('note')">노트</button>
-                            <input type="checkbox" id="group-toggle">
-                            <button id="groupButton" onclick="loadTrash('group')">그룹</button>
-                        </div>
-                    </div>
-                    <form>
-                        <div id="trash-content" class="trash-content">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer" id="trash-modal-footer">
-                </div>
-            </div>
+  <div class="modal" id="trash" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content" style="height: 500px">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div id="trash-modal-body" class="modal-body">
+          <div id="trash-container">
+            <!-- 토글 -->
+            <div class="trash-toggle">
+              <input type="checkbox" id="photo-toggle">
+              <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+              <input type="checkbox" id="note-toggle">
+              <button id="noteButton" onclick="loadTrash('note')">노트</button>
+              <input type="checkbox" id="group-toggle">
+              <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+            </div>
+          </div>
+          <form>
+            <div id="trash-content" class="trash-content">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" id="trash-modal-footer">
+        </div>
+      </div>
     </div>
+  </div>
     <script>
         var buttons = document.querySelectorAll("button");
         buttons.forEach(function (button) {
