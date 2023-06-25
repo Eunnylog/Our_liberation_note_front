@@ -41,7 +41,9 @@ async function getGroup() {
     // $('#select_group').empty()
     if (response_json.length == 0) {
         showToast('그룹을 먼저 생성해 주세요!')
-        window.location.href = '/index.html'
+        setTimeout(function () {
+            window.location.href = '/index.html'
+        }, 1500);
     }
     response_json.forEach((a, index) => {
         let id = a['id']
