@@ -1,6 +1,6 @@
 let access_token = localStorage.getItem('access')
-// let back_url = 'https://api.liberation-note.com'
-let back_url = 'http://127.0.0.1:8000'
+let back_url = 'https://api.liberation-note.com'
+// let back_url = 'http://127.0.0.1:8000'
 
 let group_data = [] // 그룹 정보 저장
 
@@ -76,7 +76,8 @@ async function getGroup() {
 }
 
 getGroup().then(() => {
-    showMasterButton();
+    showNoteList()
+    // showMasterButton();
 });
 
 // 마스터만 그룹 수정&삭제 버튼 display
