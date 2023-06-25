@@ -47,7 +47,7 @@ async function loadTrash(contentType) {
     if (contentType === 'group') {
         if (groups.length === 0) {
             let trashImage = `<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-            <img src="/css/assets/trash.png" alt="Empty Group Image" style="width:150px; height:150px; margin-top:80px">
+            <img src="/css/assets/trash.png" alt="Empty Group Image" style="width:150px; height:150px; margin-top:50px;">
             </div>`;
             $('#trash-content').append(trashImage);
 
@@ -83,7 +83,7 @@ async function loadTrash(contentType) {
     else if (contentType === 'note') {
         if (notes.length === 0) {
             let trashImage = `<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-            <img src="/css/assets/trash.png" alt="Empty Group Image" style="width:150px; height:150px; margin-top:80px">
+            <img src="/css/assets/trash.png" alt="Empty Group Image" style="width:150px; height:150px; margin-top:50px;">
             </div>`;
             $('#trash-content').append(trashImage);
 
@@ -103,7 +103,7 @@ async function loadTrash(contentType) {
                 const category = note.category
 
                 let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:20px">
-                                <img src="/css/note_img/note_${category}.png" alt="Image description" style="width: 130px; height: 170px; margin-top:15px">
+                                <img src="/css/note_img/note_${category}.png" alt="Image description" style="width: 130px; height: 170px; margin-top:15px;">
                                 <a id='name_${index}'>${note_name}</a>
                                 <input id='id_${index}' value="${note_id}" hidden>
                                 <input id='group_${index}' value="${group}" hidden>
@@ -123,7 +123,7 @@ async function loadTrash(contentType) {
     else if (contentType === 'photo') {
         if (photos.length === 0) {
             let trashImage = `<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-            <img src="/css/assets/trash.png" alt="Empty Group Image" style="width:150px; height:150px; margin-top:80px">
+            <img src="/css/assets/trash.png" alt="Empty Group Image" style="width:150px; height:150px; margin-top:50px;">
             </div>`;
             $('#trash-content').append(trashImage);
 
@@ -144,7 +144,7 @@ async function loadTrash(contentType) {
                 const image = backend_base_url + '/note' + photo.image
 
                 let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:10px;">
-                                    <img src="${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px">
+                                    <img src="${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px;">
                                     <a id='name_${index}'>${photo_name}</a>
                                     <input type="radio" name="trash-radio" value="${index}" style="width:10px" onclick="handleTrashRadio('photo')">
                                     <input id='id_${index}' value="${photo_id}" hidden>
@@ -194,13 +194,13 @@ async function handleGrouptrash(group_id, name) {
         const response_json = await response.json()
         alert(`※ [${name}] 그룹이 정상적으로 삭제되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
         alert(`※ [${name}] 그룹이 정상적으로 복원되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else {
         alert("※실패하였습니다.")
@@ -228,13 +228,13 @@ async function handleNotetrash(note_id, group, name) {
         const response_json = await response.json()
         alert(`※ [${name}] 노트가 정상적으로 삭제되었습니다.`)
         window.location.replace(`${frontend_base_url}/my_diary.html`)
-        return response_json 
+        return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
         alert(`※ [${name}] 노트가 정상적으로 복원되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else {
         alert("※실패하였습니다.")
@@ -260,13 +260,13 @@ async function handlePhototrash(photo_id, location, title, name) {
         const response_json = await response.json()
         alert(`※ [${name}] 사진이 정상적으로 삭제되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
         alert(`※ [${name}] 사진이 정상적으로 복원되었습니다.`)
         window.location.reload()
-        return response_json 
+        return response_json
 
     } else {
         alert("※실패하였습니다.")

@@ -1,8 +1,8 @@
 let plan_data = []
 let plan_set = [];
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.liberation-note.com'
-// let back_url = 'http://127.0.0.1:8000'
+// let back_url = 'https://api.liberation-note.com'
+let back_url = 'http://127.0.0.1:8000'
 
 checkGroup()
 checkLogin()
@@ -477,7 +477,7 @@ async function savePayIsSubscribe() {
     const response = await fetch(`${back_url}/payments/subscription/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            // "Authorization": `Bearer ${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'GET',
     });
@@ -514,3 +514,41 @@ async function deleteNoteModal() {
 
     $('#modal-footer').append(temp_html2)
 }
+
+
+function saveNoteID() {
+    params = new URLSearchParams(window.location.search);
+    const note_id = params.get("note_id");
+    localStorage.setItem('note_id', note_id)
+}
+saveNoteID()
+
+async function loadGroupMembers() {
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
+    const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'GET',
+    });
+    const response_json = await response.json()
+
+    const group_set = response_json.group_set
+
+    const membersArray = group_set.members.split(',');
+    const filteredMembers = membersArray.filter(member => member.trim() !== group_set.master);
+
+    $('#members-list').empty()
+
+    let temp_html = `<li class="dropdown-item">${group_set.master}</li>
+                        <hr class="dropdown-divider"/>`;
+
+    filteredMembers.forEach(member => {
+        temp_html += `<li class="dropdown-item">${member}</li>`;
+    });
+
+    $('#members-list').append(temp_html);
+}
+

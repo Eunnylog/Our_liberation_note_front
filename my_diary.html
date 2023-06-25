@@ -33,7 +33,7 @@
 <body>
   <!-- nav start -->
   <header class="site-header navbar">
-  <!-- navbar -->
+    <!-- navbar -->
   </header>
   <!-- nav end -->
   <!-- content start -->
@@ -53,10 +53,19 @@
             style="background-color: #7689b1; color:white;" data-bs-toggle="modal" data-bs-target="#deleteGroup"
             onclick="deleteGroupModal()">그룹 삭제</button>
         </div>
+        <div class="dropdown" style="margin-left: auto;" >
+          <button class="btn btn-secondary btn-sm dropdown-toggle" onclick="loadGroupMembers()"
+          style="background-color: #485D86; border-color: #485D86; color:white; margin: 0px 10px; height: 45px; border-radius: 8px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="/css/assets/members.png" alt="Stamp Image" style="width: 30px; height:30px">
+          </button>
+          <ul id="members-list" class="dropdown-menu dropdown-menu-dark" style="right: 0; left: auto; background-color: #7689b1; border-color: #7689b1; color:white;">
+          </ul>
+        </div>
       </div>
       <div class="contents" id="note_list">
         <a href="/" data-bs-toggle="modal" data-bs-target="#create_note">
-          <section class="cp-card content" style="background-color: #d9e2f6;">
+          <section class="cp-card content" style="background-color: #d9e2f6; text-align:center;">
+            <img src="/css/assets/plus.png" style="justify-content: center; width:60%; height:100%; margin-top:5%;">
           </section>
         </a>
       </div>
@@ -68,7 +77,7 @@
     <div class="modal-dialog" style="margin: auto; max-width: 900px;">
       <div class="modal-content" style="width:100%">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
             Create Note</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -79,14 +88,14 @@
                 <form class="sign-in-form active">
                   <input name="note_name" id="note_name" type="text" class="form-control" placeholder="노트 이름"
                     style="width: 48%; float:left;">
-                  <select name="group_name" id="group_name" onchange="showNoteList(); toggleArrow();"
-                    style="width: 48%; height:46px; float:right; margin-bottom:10px">
+                  <select name="group_name" id="group_name" onchange="showNoteList();"
+                    style="width: 48%; height: 52px; float:right; margin-bottom:10px; padding: 10px; border: 1px solid #C2C7D0; border-radius: 5px; box-sizing: border-box;">
                     <option value="-1">그룹 선택</option>
                   </select>
-                  <img src="https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png" alt="">
                   <div class="note_category" id="note_category">
                   </div>
-                  <button type="button" onclick="saveNote()" class="btn btn-primary" style="float: center; background-color: #485d86;">
+                  <button type="button" onclick="saveNote()" class="btn btn-primary"
+                    style="float: center; background-color: #485d86;">
                     Create
                   </button>
                 </form>
@@ -228,7 +237,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" style="color: #485d86;">Delete Group</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: #7689b1;"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <p style="color: #51565b;"> Delete 버튼을 누르면 그룹이 삭제됩니다.</p>
@@ -241,7 +250,7 @@
   <!-- 휴지통 모달 -->
   <div class="modal" id="trash" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content" style="height: 500px">
+        <div class="modal-content" style="height: 500px">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -268,7 +277,6 @@
         </div>
     </div>
 </div>
-  
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
