@@ -486,8 +486,7 @@ async function addComment() {
 
 async function editComment(event) {
     var button = event.target;
-    const buttonComment_id = button.value;
-    const comment_id = buttonComment_id.split("/")[0];
+    const comment_id = button.value;
 
     const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
     const updatedCommentBox = document.getElementById(`comment_edit${comment_id}`)
@@ -526,8 +525,7 @@ async function editComment(event) {
 
 async function deleteComment(event) {
     var button = event.target;
-    const buttonComment_id = button.value;
-    const comment_id = buttonComment_id.split("/")[0];
+    const comment_id = button.value;
 
     test = confirm("삭제 하시겠습니까?")
     if (!test) {
