@@ -40,7 +40,7 @@ async function getGroup() {
     console.log(response_json)
     // $('#select_group').empty()
     if (response_json.length == 0) {
-        alert('그룹을 먼저 생성해 주세요!')
+        showToast('그룹을 먼저 생성해 주세요!')
         window.location.href = '/index.html'
     }
     response_json.forEach((a, index) => {
@@ -141,7 +141,7 @@ async function saveNote() {
     const group_name = document.getElementById("group_name").value
 
     if (group_name == '-1') {
-        alert('그룹을 선택해주세요!')
+        showToast('그룹을 선택해주세요!')
         return false
     }
 
@@ -173,14 +173,14 @@ async function saveNote() {
             window.location.href = `/plan_page.html?note_id=${response_json['id']}`
 
         } else if (!note_name) {
-            alert('노트 이름을 입력해주세요!!')
+            showToast('노트 이름을 입력해주세요!!')
         }
         else {
-            alert(response_json['non_field_errors'])
+            showToast(response_json['non_field_errors'])
         }
 
     } else {
-        alert('표지를 선택해 주세요!')
+        showToast('표지를 선택해 주세요!')
     }
 
 }
@@ -279,7 +279,7 @@ async function updateAddMember() {
     const membersEmail = document.getElementById("update-usersearch").value
 
     if (!membersEmail) {
-        alert('이메일을 입력해주세요!')
+        showToast('이메일을 입력해주세요!')
         return
     }
     const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
@@ -305,7 +305,7 @@ async function updateAddMember() {
     })
         .catch(error => {
             // 에러 처리
-            alert('문제가 발생했습니다!')
+            showToast('문제가 발생했습니다!')
         });
 }
 
@@ -314,7 +314,7 @@ function updateAddMembersToGroup() {
     const checkedInput = document.querySelector('input[name="email_radio"]:checked');
 
     if (!checkedInput) {
-        alert('선택한 이메일이 없습니다!')
+        showToast('선택한 이메일이 없습니다!')
         return
     }
     if (checkedInput) {
@@ -355,7 +355,7 @@ function updateAddMembersToGroup() {
             selectedEmailUl.appendChild(newEmailLi)
 
         } else {
-            alert("이미 추가된 이메일입니다.");
+            showToast("이미 추가된 이메일입니다.");
         }
 
     }
@@ -375,7 +375,7 @@ async function updateDeleteMembers() {
         checkedInput.parentElement.remove(); // 선택된 이메일 리스트에서 삭제
     }
     else {
-        alert("선택된 이메일이 없습니다.");
+        showToast("선택된 이메일이 없습니다.");
     }
     $('input[type=radio]').prop('checked', false);
 }
@@ -434,14 +434,14 @@ async function updateGroup() {
     });
 
     if (response.status == 200) {
-        alert("그룹이 수정되었습니다.")
+        showToast("그룹이 수정되었습니다.")
         window.location.reload()
     } else {
         const data = await response.json();
         if (data.message) {
-            alert("※ " + data.message);
+            showToast("※ " + data.message);
         } else if (data["non_field_errors"]) {
-            alert("※ " + data["non_field_errors"])
+            showToast("※ " + data["non_field_errors"])
         }
     }
 }
@@ -499,11 +499,11 @@ async function deleteGroupConfirm() {
     })
 
     if (deleteResponse.ok) {
-        alert("삭제되었습니다!");
+        showToast("삭제되었습니다!");
         window.location.replace(`${frontend_base_url}/index.html`)
     } else {
         const response_json = await deleteResponse.json()
-        alert(`오류가 발생했습니다: ${response_json}`)
+        showToast(`오류가 발생했습니다: ${response_json}`)
     }
 }
 
