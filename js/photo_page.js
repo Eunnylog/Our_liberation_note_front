@@ -17,7 +17,7 @@ async function addPhoto() {
     const title = document.getElementById("title").value;
     const start = document.getElementById("start").value;
     const location = document.getElementById("location").value;
-    const memo = document.getElementById("memo").value;
+    const memo = document.getElementById("memo").value.trim() || '';
     let location_x = document.getElementById("location_x").value
     let location_y = document.getElementById("location_y").value
 
@@ -31,8 +31,23 @@ async function addPhoto() {
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
 
-    console.log(formData)
-    console.log(location_x, location_y)
+    let nameBox = document.getElementById("name")
+    let titleBox = document.getElementById("title")
+    let imgBox = document.getElementById("imgbox")
+
+
+    if (name == '' || title == '' || imgBox == '') {
+        showToast('필수요소를 모두 입력해주세요!')
+        nameBox.classList.add("custom-class");
+        titleBox.classList.add("custom-class");
+        imgBox.classList.add("custom-class");
+
+        return false
+    } else {
+        nameBox.classList.remove("custom-class");
+        titleBox.classList.remove("custom-class");
+        imgBox.classList.remove("custom-class");
+    }
 
     try {
         const urlParams = new URLSearchParams(window.location.search);
@@ -43,7 +58,6 @@ async function addPhoto() {
                 "Authorization": `Bearer ${access_token}`,
             },
             method: 'POST',
-
             body: formData
         });
 
@@ -55,7 +69,7 @@ async function addPhoto() {
             throw new Error("서버가 응답하지 않습니다.");
         }
     } catch (error) {
-        showToast("에러가 발생했습니다.");
+        showToast('이미지를 선택해주세요!');
         console.error(error);
     }
 }
@@ -93,7 +107,7 @@ async function album() {
         if (response_json.length == 0) {
             console.log(page)
             if (page != 0) {
-                alert('마지막페이지 입니다!')
+                showToast('마지막페이지 입니다!')
                 page = page - page
                 window.location.href = window.location.href.split('&')[0] + '&page=' + page
             }
@@ -129,7 +143,7 @@ async function album() {
             if (existPhoto.includes(photo_id)) {
                 temp_html += `<img class="exist-stamp" id="exist-stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
             } else {
-                temp_html += `<img class="stamp" id="stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
+                temp_html += `<img class="stamp" id="stamp" src="/css/assets/stamp2.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
             }
 
             temp_html += `</div>`;
@@ -166,7 +180,7 @@ function m_page() {
     page = page * 1 - 6
 
     if (page < 0) {
-        alert('첫페이지 입니다!')
+        showToast('첫페이지 입니다!')
         return fals
     }
     window.location.href = window.location.href.split('&')[0] + '&page=' + page
@@ -180,7 +194,6 @@ async function photo_detail(photo_id) {
     const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
         headers: {
             'content-type': 'application/json',
-            // 'Authorization': `Bearer ${accessToken}`
         },
         method: 'GET',
     })
@@ -192,10 +205,9 @@ async function photo_detail(photo_id) {
     const start = response_json["start"]
     const title = response_json["title"]
     const location = response_json["location"]
-    const memo = response_json["memo"]
+    const memo = response_json["memo"] || '' //메모는 입력값이 없을때 공백으로 취급
     const comments = response_json["comment_set"]
-    // const photo_id = response_json["photo_id"]
-    // ${comment.created_at}
+
 
     console.log(response_json)
 
@@ -255,12 +267,10 @@ function toggleCommentEdit(event) {
     const comments_set = event.target.closest('div');
     const div = comments_set.querySelector('div');
     const user_email = comments_set.getAttribute("value")
-    console.log(user_email)
     // payload를 모두 문자열로 가져오기
     let storage = localStorage.getItem('payload');
     // 가져온 paylad(JSON 문자열)를 객체, 배열로 변환
     const personObj = JSON.parse(storage);
-    console.log(personObj);
     let email;
     // user_id 키의 값만 가져오기
     if (personObj) {
@@ -282,7 +292,6 @@ commentItems.forEach(item => {
 
 
 function patchPhotoBox(photo_id) {
-    console.log(photo_id)
     // // 수정 창으로 변경합니다.
     // let photo_detail = document.getElementById('photo-d');
     let image = document.getElementById('photo_image');
@@ -291,13 +300,16 @@ function patchPhotoBox(photo_id) {
     let title = document.getElementById('photo_title').innerHTML;
     let location = document.getElementById('photo_location').innerHTML;
     let memo = document.getElementById('photo_memo').innerHTML;
+    let imageUrl = image.src;
+    var path = imageUrl.split('media/')[1];
+    var decodedPath = decodeURIComponent(path);
 
     $('#photo-d').empty();
     let temp_html = `<div class="input-group" style="flex-wrap: nowrap; ">
-                        <input class="upload-name" value="첨부파일" src="${image}" placeholder="첨부파일" multiple
+                        <input class="upload-name" id="p_imgbox" src="${image}" placeholder="${decodedPath}" multiple
                             accept=".jpg, .png, .jpeg" style="width: 80%; border-radius: 5px 0 0 5px; margin-bottom: 15px;">
                         <label for="image" style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 5px 5px 0; background-color:  #485D86;">사진변경</label>
-                        <input type="file" id="image" style="display: none"/>
+                        <input type="file" id="image" style="display: none">
                     </div>
                     <div class="input-group-append" style="width: 100%;">
                         <input name="name" id="p_name" type="text" value='${name}' class="form-control"
@@ -359,6 +371,24 @@ async function patchPhoto() {
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
 
+    let nameBox = document.getElementById("p_name")
+    let titleBox = document.getElementById("p_title")
+    let imgBox = document.getElementById("p_imgbox")
+
+
+    if (name == '' || title == '' || imgBox == '') {
+        showToast('필수요소를 모두 입력해주세요!')
+        nameBox.classList.add("custom-class");
+        titleBox.classList.add("custom-class");
+        imgBox.classList.add("custom-class");
+
+        return false
+    } else {
+        nameBox.classList.remove("custom-class");
+        titleBox.classList.remove("custom-class");
+        imgBox.classList.remove("custom-class");
+    }
+
     console.log(name)
     for (const pair of formData.entries()) {
         console.log(pair[0] + ':', pair[1]);
@@ -368,9 +398,9 @@ async function patchPhoto() {
         // const photo_id = urlParams.get('photo_id');
 
         const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
-            // headers: {
-            //     // "Authorization": `Bearer ${access_token}`,
-            // },
+            headers: {
+                // "Authorization": `Bearer ${access_token}`,
+            },
             method: 'PATCH',
             body: formData
         });
@@ -388,14 +418,14 @@ async function patchPhoto() {
         // window.location.reload()
     }
 }
+
 //photo_page.html > 사진추가 버튼 옆 업로드 이름 
-$(document).ready(function () {
+$(document).ready(function() {
     $("#image").on('change', function () {
         var fileName = $(this).val();
         $(".upload-name").val(fileName);
     });
 });
-
 
 // 코멘트 추가 back과 연결
 async function addComment() {
@@ -528,3 +558,13 @@ async function handleStamp(photo_id) {
 }
 
 checkLogin()
+
+
+function removeRedLine() {
+    let nameBox = document.getElementById("name")
+    let titleBox = document.getElementById("title")
+    let imgBox = document.getElementById("imgbox")
+    nameBox.classList.remove("custom-class");
+    titleBox.classList.remove("custom-class");
+    imgBox.classList.remove("custom-class");
+}

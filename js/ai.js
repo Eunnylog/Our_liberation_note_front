@@ -325,7 +325,7 @@ async function aiStart() {
             <div style="margin: auto; width: 50%; height: 5px; background-color: #485d86;"></div>
             <h5 style="text-align:center; margin-top: 20px;">${answer}</h5>
             <div style="margin-bottom: 20px; width: 100%; height: 1px; border-bottom: 5px dotted #485d86;"></div>
-            참고자료<br>
+            가볼만한 블로그<br>
             <a href="${crawling}" target="_blank">${crawling}</a>
           </div>
         `;

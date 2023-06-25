@@ -1,8 +1,7 @@
 let access_token = localStorage.getItem('access')
 let back_url = 'https://api.liberation-note.com'
-// let back_url = 'http://127.0.0.1:8000'
 
-let group_data = []
+let group_data = [] // 그룹 정보 저장
 
 checkLogin()
 
@@ -39,9 +38,15 @@ async function getGroup() {
 
     console.log(response_json)
     // $('#select_group').empty()
+    // if (response_json.length == 0) {
+    //     showToast('그룹을 먼저 생성해 주세요!')
+    //     window.location.href = '/index.html'
+    // }
     if (response_json.length == 0) {
         showToast('그룹을 먼저 생성해 주세요!')
-        window.location.href = '/index.html'
+        setTimeout(function () {
+            window.location.href = '/index.html'
+        }, 1500);
     }
     response_json.forEach((a, index) => {
         let id = a['id']
@@ -74,7 +79,8 @@ async function getGroup() {
 }
 
 getGroup().then(() => {
-    showMasterButton();
+    showNoteList()
+    // showMasterButton();
 });
 
 // 마스터만 그룹 수정&삭제 버튼 display
@@ -211,6 +217,8 @@ async function groupUpdateModal() {
 
     selectedEmails = [];
 
+
+    // 저장된 그룹 정보 서버로부터 가져오기
     const response = await fetch(`${back_url}/user/group/`, {
         headers: {
             'content-type': 'application/json',
@@ -231,6 +239,7 @@ async function groupUpdateModal() {
         let name = group['name']
         let members = group['members']
 
+        // 선택한 그룹 id와 일치하는 경우
         if (parseInt(selectedIndex) === parseInt(id)) {
             updatingGroupId = id;
             let groupName = document.getElementById('update-groupname')
@@ -256,7 +265,7 @@ async function groupUpdateModal() {
     })
 }
 
-// 
+// 그룹 수정창이 닫힐 때
 $(document).ready(function () {
     $('#updateGroup').on('hidden.bs.modal', function () {
         // 모달이 닫힐 때 입력 필드 초기화
@@ -269,17 +278,23 @@ $(document).ready(function () {
 
         // 라디오 버튼 체크 해제
         $('input[type=radio]').prop('checked', false);
+        $('.custom-class').removeClass('custom-class');
     });
 });
 
 
-// 멤버 검색
+// 멤버 이메일 검색
 async function updateAddMember() {
     const access_token = localStorage.getItem("access")
     const membersEmail = document.getElementById("update-usersearch").value
+    const membersEmailInput = document.getElementById("update-usersearch")
 
+    membersEmailInput.classList.remove("custom-class");
+
+    // 이메일이 입력되지 않은 경우
     if (!membersEmail) {
         showToast('이메일을 입력해주세요!')
+        membersEmailInput.classList.add("custom-class")
         return
     }
     const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
@@ -313,10 +328,12 @@ async function updateAddMember() {
 function updateAddMembersToGroup() {
     const checkedInput = document.querySelector('input[name="email_radio"]:checked');
 
+    // 선택된 이메일이 없을 경우
     if (!checkedInput) {
         showToast('선택한 이메일이 없습니다!')
         return
     }
+
     if (checkedInput) {
 
         const selectedEmail = checkedInput.previousSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
@@ -327,6 +344,7 @@ function updateAddMembersToGroup() {
         // 기존 이메일인지 확인
         const existingEmail = existingEmails.includes(selectedEmail);
 
+        // 추가되지 않았거나 기존 이메일이 아닌 경우
         if (!alreadyAdded && !existingEmail) {
             Array.prototype.push.apply(selectedEmails, existingEmails);
 
@@ -362,7 +380,7 @@ function updateAddMembersToGroup() {
     $('input[type=radio]').prop('checked', false);
 }
 
-// 저장 전 선택한 이메일 리스트에서 제거하는 함수
+// 그룹 저장 전 선택한 이메일 리스트에서 제거하는 함수
 async function updateDeleteMembers() {
     const checkedInput = document.querySelector('input[name="checked_email_radio"]:checked');
     if (checkedInput) {
@@ -384,6 +402,7 @@ async function updateDeleteMembers() {
 async function updateGroup() {
     const access_token = localStorage.getItem("access")
     const groupName = document.getElementById("update-groupname").value
+    const groupNameInput = document.getElementById("update-groupname")
 
     const membersList = document.getElementsByClassName("selected_email") // \n이 포함되어서 정규표현식을 사용해야함
 
@@ -433,6 +452,13 @@ async function updateGroup() {
         body: JSON.stringify(dataToServer)
     });
 
+    if (!groupName) {
+
+        showToast('그룹 이름을 적어주세요')
+        groupNameInput.classList.add("custom-class");
+        return;
+    }
+
     if (response.status == 200) {
         showToast("그룹이 수정되었습니다.")
         window.location.reload()
@@ -458,29 +484,29 @@ async function deleteGroupModal() {
     $('#modal-body').append(temp_html)
 
     let temp_html2 = `<button type="button" class="btn" data-bs-dismiss="modal"
-                        style="background-color: #92a2c5; border-color: #92a2c5; color:white;">Close</button>
+                        style="background-color: #7689b1; border-color: #7689b1; color:white;">Close</button>
                       <button type="button" class="btn"
-                        style="background-color: #60749d; border-color: #60749d; color:white; margin: 0px 10px;"
+                        style="background-color: #485D86; border-color: #485D86; color:white; margin: 0px 10px;"
                         onclick="handleGrouptrash('${selected_id}','${selected_name}')">Delete</button>`
 
     $('#modal-footer').append(temp_html2)
 }
 
-async function deleteGroupConfirm() {
-    const deleteResponse = await fetch(`${backend_base_url}/user/group/${updatingGroupId}/`, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': "Bearer " + access_token,
-        },
-        method: 'DELETE',
-    })
+async function loadGroupMembers() {
 
-    if (deleteResponse.ok) {
-        showToast("삭제되었습니다!");
-        window.location.replace(`${frontend_base_url}/index.html`)
-    } else {
-        const response_json = await deleteResponse.json()
-        showToast(`오류가 발생했습니다: ${response_json}`)
-    }
+    const selectedGroup = group_data.find(group => group.id == $('#select_group').val());
+    const membersArray = selectedGroup.members.split(',');
+    const filteredMembers = membersArray.filter(member => member.trim() !== selectedGroup.master);
+
+    $('#members-list').empty()
+
+
+    let temp_html = `<li class="dropdown-item">${selectedGroup.master}</li>
+                        <hr class="dropdown-divider"/>`;
+
+    filteredMembers.forEach(member => {
+        temp_html += `<li class="dropdown-item">${member}</li>`;
+    });
+
+    $('#members-list').append(temp_html);
 }
-
