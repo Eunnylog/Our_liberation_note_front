@@ -50,7 +50,8 @@
         <button type="button" id="back" class="btn group-btn"
           style="background-color: #485d86; color:white; margin: 0px 10px;" onclick=""> 뒤로 가기 </button>
         <button type="button" class="btn group-btn" style="background-color: #7689b1; color:white; margin: 0px 10px;"
-          onclick="$('#save_plan_modal').modal('show'); $('#search_box').empty();"> 일정 추가 </button>
+          onclick="$('#save_plan_modal').modal('show'); $('#search_box').empty(); planList();"> 일정 추가
+        </button>
         <button type="button" id="goPhoto" class="btn group-btn"
           style="background-color: #485d86; color:white; margin: 0px 10px;" onclick=""> 사진첩 가기</button>
         <button type="button" id="goAI" class="btn group-btn"
@@ -174,7 +175,8 @@
                   </div>
                   <textarea name="memo" id="memo" type="textarea" class="form-control" placeholder="memo"
                     style="height:200px; min-height:200px; max-height:200px"></textarea>
-                  <div id="plan_list" style="width:100%; height:200px; overflow-x: auto; margin-top: 10px;"
+                  <div id="plan_list"
+                    style="width:100%; height:200px; overflow-x: auto; margin-top: 10px; text-align:center;"
                     class="form-control"></div>
                   <div class="button-group">
                     <button type="button" data-bs-dismiss="modal" aria-label="Close"
