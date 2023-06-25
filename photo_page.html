@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <link rel="icon" type="image/png" sizes="48x48" href="/css/favicon/android-icon-48x48.png">
     <link href="/css/styles/login.css" rel="stylesheet" type="text/css" />
     <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
     <link href="/css/styles/theme.css" rel="stylesheet" type="text/css" />
@@ -36,7 +37,8 @@
             <div class="clearfix" style="width:100%; margin-bottom:5px;">
                 <div id="menu_box" style="float:left;">
                     <button type="button" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"
-                        class="btn group-btn" style="background-color: #485D86; color:white; margin: 0px 10px;">사진
+                        onclick="removeRedLine()" class="btn group-btn"
+                        style="background-color: #485D86; color:white; margin: 0px 10px;">사진
                         추가</button>
                 </div>
                 <div style="float: right;">
@@ -68,13 +70,12 @@
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
                                     <div class="input-group" style="flex-wrap: nowrap;">
-                                        <input class="upload-name" value="첨부파일" placeholder="첨부파일" multiple
+                                        <input class="upload-name" id="imgbox" placeholder="첨부파일" multiple
                                             accept=".jpg, .png, .jpeg" style="width: 80%; height:40px;">
                                         <label for="image"
                                             style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 4px 4px 0; background-color:  #485D86;">사진
                                             추가</label>
-                                        <input type="file" id="image" style="display: none"
-                                            onchange="updateFileName(this)" />
+                                        <input type="file" id="image" style="display: none" />
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
                                         <input name="name" id="name" type="text" class="form-control"
@@ -202,42 +203,40 @@
         </div>
     </div>
     <!-- 휴지통 모달 -->
-    <div class="modal" id="trash" tabindex="-1">
-        <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content" style="height: 500px">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">🗑 휴지통</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div id="trash-modal-body" class="modal-body">
-                    <div id="trash-container">
-                        <!-- 토글 -->
-                        <div class="trash-toggle">
-                            <input type="checkbox" id="photo-toggle">
-                            <button id="photoButton" onclick="loadTrash('photo')">사진</button>
-                            <input type="checkbox" id="note-toggle">
-                            <button id="noteButton" onclick="loadTrash('note')">노트</button>
-                            <input type="checkbox" id="group-toggle">
-                            <button id="groupButton" onclick="loadTrash('group')">그룹</button>
-                        </div>
-                    </div>
-                    <form>
-                        <div id="trash-content" class="trash-content">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer" id="trash-modal-footer">
-                </div>
-            </div>
+  <div class="modal" id="trash" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content" style="height: 500px">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div id="trash-modal-body" class="modal-body">
+          <div id="trash-container">
+            <!-- 토글 -->
+            <div class="trash-toggle">
+              <input type="checkbox" id="photo-toggle">
+              <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+              <input type="checkbox" id="note-toggle">
+              <button id="noteButton" onclick="loadTrash('note')">노트</button>
+              <input type="checkbox" id="group-toggle">
+              <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+            </div>
+          </div>
+          <form>
+            <div id="trash-content" class="trash-content">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" id="trash-modal-footer">
+        </div>
+      </div>
     </div>
+  </div>
     <script>
         var buttons = document.querySelectorAll("button");
         buttons.forEach(function (button) {
             button.addEventListener("click", function (event) {
                 var buttonId = event.target.id;
-
-                console.log("Button ID:", buttonId);
             });
         });
 
@@ -245,7 +244,25 @@
             var fileName = inputElement.files[0].name;
             document.querySelector('.upload-name').value = fileName;
         }
+
+
+        function checkData() {
+            var input = document.getElementById(".upload-name");
+            if (input.value === "") {
+                alert('이미지가 입력되지 않았습니다!');
+                input.style.animation = "blink 1s infinite"; // 반짝이는 애니메이션 적용
+            }
+        }
     </script>
+    <style>
+        @keyframes blink {
+            50% {
+                border-color: red;
+                background-color: yellow;
+                color: red;
+            }
+        }
+    </style>
 </body>
 
 </html>

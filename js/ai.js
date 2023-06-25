@@ -241,6 +241,8 @@ async function aiStart() {
     return false;
   }
 
+  let total;
+
   let destinations = [];
   $('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').each(function () {
     let checkedDiv = $(this).closest('div[name]');
@@ -257,11 +259,23 @@ async function aiStart() {
       y: location_y
     };
 
-    destinations.push(destination);
+    if (!location_x | !location_y) {
+
+    } else {
+      destinations.push(destination);
+    }
+    total += 1
   });
 
-  if (destinations.length == 0) {
+  if (destinations.length != total) {
+    showToast('주소지가 정확하지 않은 곳은 제외 되었습니다!')
+  }
+
+  if (destinations.length == 0 && total == destinations.length) {
     showToast('먹이를 추가해주세요!');
+    return false;
+  } else if (destinations.length == 0 && total != destinations.length) {
+    showToast('주소지가 정확한 먹이를 추가해주세요!')
     return false;
   }
 
@@ -311,7 +325,7 @@ async function aiStart() {
             <div style="margin: auto; width: 50%; height: 5px; background-color: #485d86;"></div>
             <h5 style="text-align:center; margin-top: 20px;">${answer}</h5>
             <div style="margin-bottom: 20px; width: 100%; height: 1px; border-bottom: 5px dotted #485d86;"></div>
-            참고자료<br>
+            가볼만한 블로그<br>
             <a href="${crawling}" target="_blank">${crawling}</a>
           </div>
         `;

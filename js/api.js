@@ -361,11 +361,10 @@ function checkLogin() {
   const payload = localStorage.getItem("payload");
 
   if (!payload) {
-    showToast('로그인 또는 회원가입이 필요합니다!')
+    alert('로그인 또는 회원가입이 필요합니다!')
     window.location.replace(`${frontend_base_url}/index.html`)
   }
 }
-
 
 // 회원탈퇴
 async function handlesUserDelete() {
@@ -558,9 +557,13 @@ function handleRadioClick() {
 async function addMember() {
   const access_token = localStorage.getItem("access")
   const membersEmail = document.getElementById("usersearch").value
+  const membersEmailInput = document.getElementById("usersearch")
+
+  membersEmailInput.classList.remove("custom-class");
 
   if (!membersEmail) {
     showToast("이메일을 입력해주세요!")
+    membersEmailInput.classList.add("custom-class")
     return
   }
 
@@ -596,6 +599,7 @@ $(document).ready(function () {
     $('#groupname').val("");
     $("#selected-email-list").empty();
     $('input[type=radio]').prop('checked', false);
+    $('.custom-class').removeClass('custom-class');
   });
 });
 

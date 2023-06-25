@@ -1,6 +1,5 @@
 let access_token = localStorage.getItem('access')
 let back_url = 'https://api.liberation-note.com'
-// let back_url = 'http://127.0.0.1:8000'
 
 let group_data = [] // 그룹 정보 저장
 
@@ -47,7 +46,7 @@ async function getGroup() {
         showToast('그룹을 먼저 생성해 주세요!')
         setTimeout(function () {
             window.location.href = '/index.html'
-        }, 1000);
+        }, 1500);
     }
     response_json.forEach((a, index) => {
         let id = a['id']
@@ -279,6 +278,7 @@ $(document).ready(function () {
 
         // 라디오 버튼 체크 해제
         $('input[type=radio]').prop('checked', false);
+        $('.custom-class').removeClass('custom-class');
     });
 });
 
@@ -287,10 +287,14 @@ $(document).ready(function () {
 async function updateAddMember() {
     const access_token = localStorage.getItem("access")
     const membersEmail = document.getElementById("update-usersearch").value
+    const membersEmailInput = document.getElementById("update-usersearch")
+
+    membersEmailInput.classList.remove("custom-class");
 
     // 이메일이 입력되지 않은 경우
     if (!membersEmail) {
         showToast('이메일을 입력해주세요!')
+        membersEmailInput.classList.add("custom-class")
         return
     }
     const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
@@ -398,6 +402,7 @@ async function updateDeleteMembers() {
 async function updateGroup() {
     const access_token = localStorage.getItem("access")
     const groupName = document.getElementById("update-groupname").value
+    const groupNameInput = document.getElementById("update-groupname")
 
     const membersList = document.getElementsByClassName("selected_email") // \n이 포함되어서 정규표현식을 사용해야함
 
@@ -447,6 +452,13 @@ async function updateGroup() {
         body: JSON.stringify(dataToServer)
     });
 
+    if (!groupName) {
+
+        showToast('그룹 이름을 적어주세요')
+        groupNameInput.classList.add("custom-class");
+        return;
+    }
+
     if (response.status == 200) {
         showToast("그룹이 수정되었습니다.")
         window.location.reload()
@@ -472,52 +484,29 @@ async function deleteGroupModal() {
     $('#modal-body').append(temp_html)
 
     let temp_html2 = `<button type="button" class="btn" data-bs-dismiss="modal"
-                        style="background-color: #92a2c5; border-color: #92a2c5; color:white;">Close</button>
+                        style="background-color: #7689b1; border-color: #7689b1; color:white;">Close</button>
                       <button type="button" class="btn"
-                        style="background-color: #60749d; border-color: #60749d; color:white; margin: 0px 10px;"
+                        style="background-color: #485D86; border-color: #485D86; color:white; margin: 0px 10px;"
                         onclick="handleGrouptrash('${selected_id}','${selected_name}')">Delete</button>`
 
     $('#modal-footer').append(temp_html2)
 }
 
-async function deleteGroupConfirm() {
-    // const access_token = localStorage.getItem('access')
-    // const response = await fetch(`${back_url}/user/group/`, {
-    //     headers: {
-    //         'content-type': 'application/json',
-    //         'Authorization': `Bearer ${access_token}`,
-    //     },
-    //     method: 'GET',
-    // })
-    // const response_json = await response.json()
+async function loadGroupMembers() {
 
-    // const selectedIndex = document.getElementById('select_group').value
+    const selectedGroup = group_data.find(group => group.id == $('#select_group').val());
+    const membersArray = selectedGroup.members.split(',');
+    const filteredMembers = membersArray.filter(member => member.trim() !== selectedGroup.master);
 
-    // response_json.forEach((group, index) => {
-    //     let id = group['id']
-    //     let name = group['name']
-    //     let members = group['members']
-    //     let master = group['master']
+    $('#members-list').empty()
 
-    //     if (parseInt(selectedIndex) === parseInt(id)) {
-    //         updatingGroupId = id;
-    //     }
-    // })
 
-    const deleteResponse = await fetch(`${backend_base_url}/user/group/${updatingGroupId}/`, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': "Bearer " + access_token,
-        },
-        method: 'DELETE',
-    })
+    let temp_html = `<li class="dropdown-item">${selectedGroup.master}</li>
+                        <hr class="dropdown-divider"/>`;
 
-    if (deleteResponse.ok) {
-        showToast("삭제되었습니다!");
-        window.location.replace(`${frontend_base_url}/index.html`)
-    } else {
-        const response_json = await deleteResponse.json()
-        showToast(`오류가 발생했습니다: ${response_json}`)
-    }
+    filteredMembers.forEach(member => {
+        temp_html += `<li class="dropdown-item">${member}</li>`;
+    });
+
+    $('#members-list').append(temp_html);
 }
-
