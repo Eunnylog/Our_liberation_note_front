@@ -2,11 +2,13 @@ let access_token = localStorage.getItem('access')
 checkGroup()
 checkLogin()
 
+
 window.addEventListener('load', function () {
     const noteName = localStorage.getItem('noteName');
     const photopageTitle = document.getElementById("photopage_title");
     photopageTitle.innerHTML = noteName + " | Photo gallery";
 });
+
 
 // 사진 추가하기
 async function addPhoto() {
@@ -15,7 +17,7 @@ async function addPhoto() {
     const title = document.getElementById("title").value;
     const start = document.getElementById("start").value;
     const location = document.getElementById("location").value;
-    const memo = document.getElementById("memo").value;
+    const memo = document.getElementById("memo").value.trim() || '';
     let location_x = document.getElementById("location_x").value
     let location_y = document.getElementById("location_y").value
 
@@ -29,19 +31,29 @@ async function addPhoto() {
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
 
-    console.log(formData)
-    console.log(location_x, location_y)
+    let nameBox = document.getElementById("name")
+    let titleBox = document.getElementById("title")
+
+    if (name == '' || title == '') {
+        alert('사진 타이틀과 장소는 필수입니다!')
+        nameBox.classList.add("custom-class");
+        titleBox.classList.add("custom-class");
+
+        return false
+    } else {
+        nameBox.classList.remove("custom-class");
+        titleBox.classList.remove("custom-class");
+    }
 
     try {
         const urlParams = new URLSearchParams(window.location.search);
         const note_id = urlParams.get('note_id');
 
         const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
-            // headers: {
-            //     // "Authorization": `Bearer ${access_token}`,
-            // },
+            headers: {
+                "Authorization": `Bearer ${access_token}`,
+            },
             method: 'POST',
-
             body: formData
         });
 
@@ -53,7 +65,7 @@ async function addPhoto() {
             throw new Error("서버가 응답하지 않습니다.");
         }
     } catch (error) {
-        alert("에러가 발생했습니다.");
+        alert('이미지를 선택해주세요!');
         console.error(error);
     }
 }
@@ -178,7 +190,6 @@ async function photo_detail(photo_id) {
     const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
         headers: {
             'content-type': 'application/json',
-            // 'Authorization': `Bearer ${accessToken}`
         },
         method: 'GET',
     })
@@ -190,10 +201,9 @@ async function photo_detail(photo_id) {
     const start = response_json["start"]
     const title = response_json["title"]
     const location = response_json["location"]
-    const memo = response_json["memo"]
+    const memo = response_json["memo"] || '' //메모는 입력값이 없을때 공백으로 취급
     const comments = response_json["comment_set"]
-    // const photo_id = response_json["photo_id"]
-    // ${comment.created_at}
+
 
     console.log(response_json)
 

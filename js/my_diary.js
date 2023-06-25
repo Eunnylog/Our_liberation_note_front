@@ -1,11 +1,10 @@
 let access_token = localStorage.getItem('access')
 let back_url = 'https://api.liberation-note.com'
-// const back_url = "http://127.0.0.1:8000"
+// let back_url = 'http://127.0.0.1:8000'
 
 let group_data = []
 
 checkLogin()
-
 
 const userPayload = localStorage.getItem('payload')
 const userPayloadJson = JSON.parse(userPayload)
@@ -176,6 +175,8 @@ async function saveNote() {
             alert("새로운 노트가 생성되었습니다!")
             window.location.href = `/plan_page.html?note_id=${response_json['id']}`
 
+        } else if (!note_name) {
+            alert('노트 이름을 입력해주세요!!')
         }
         else {
             alert(response_json['non_field_errors'])
@@ -287,7 +288,6 @@ async function updateAddMember() {
     const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
 
     axios.get(url).then(response => {
-
         const emails = response.data.map(item => item.email);
 
 
@@ -331,15 +331,11 @@ function updateAddMembersToGroup() {
         const existingEmail = existingEmails.includes(selectedEmail);
 
         if (!alreadyAdded && !existingEmail) {
-            // selectedEmails = selectedEmails.concat(existingEmails);
             Array.prototype.push.apply(selectedEmails, existingEmails);
 
             if (!selectedEmails.includes(selectedEmail)) {
                 selectedEmails.push(selectedEmail);
-            } else {
-                alert('이미 추가된 이메일입니다.');
             }
-
 
             // 선택된 이메일을 ul에 추가
             const selectedEmailUl = document.getElementById("update-selected-email-ul");
@@ -392,7 +388,7 @@ async function updateGroup() {
     const access_token = localStorage.getItem("access")
     const groupName = document.getElementById("update-groupname").value
 
-    const membersList = document.getElementsByClassName("selected_email")
+    const membersList = document.getElementsByClassName("selected_email") // \n이 포함되어서 정규표현식을 사용해야함
 
     const membersEmails = [];
 
@@ -474,28 +470,28 @@ async function deleteGroupModal() {
 }
 
 async function deleteGroupConfirm() {
-    const access_token = localStorage.getItem('access')
-    const response = await fetch(`${back_url}/user/group/`, {
-        headers: {
-            'content-type': 'application/json',
-            'Authorization': `Bearer ${access_token}`,
-        },
-        method: 'GET',
-    })
-    const response_json = await response.json()
+    // const access_token = localStorage.getItem('access')
+    // const response = await fetch(`${back_url}/user/group/`, {
+    //     headers: {
+    //         'content-type': 'application/json',
+    //         'Authorization': `Bearer ${access_token}`,
+    //     },
+    //     method: 'GET',
+    // })
+    // const response_json = await response.json()
 
-    const selectedIndex = document.getElementById('select_group').value
+    // const selectedIndex = document.getElementById('select_group').value
 
-    response_json.forEach((group, index) => {
-        let id = group['id']
-        let name = group['name']
-        let members = group['members']
-        let master = group['master']
+    // response_json.forEach((group, index) => {
+    //     let id = group['id']
+    //     let name = group['name']
+    //     let members = group['members']
+    //     let master = group['master']
 
-        if (parseInt(selectedIndex) === parseInt(id)) {
-            updatingGroupId = id;
-        }
-    })
+    //     if (parseInt(selectedIndex) === parseInt(id)) {
+    //         updatingGroupId = id;
+    //     }
+    // })
 
     const deleteResponse = await fetch(`${backend_base_url}/user/group/${updatingGroupId}/`, {
         headers: {
