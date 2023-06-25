@@ -854,7 +854,7 @@ async function checkGroup() {
     method: 'GET',
   });
   if (response.status == 403) {
-    showToast('접근 권한이 없습니다!')
+    alert('접근 권한이 없습니다!')
     window.location.href = '/index.html'
   }
 }
