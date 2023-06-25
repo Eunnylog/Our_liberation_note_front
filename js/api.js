@@ -673,6 +673,13 @@ async function addGroup() {
   const groupName = document.getElementById("groupname").value;
   const membersList = document.getElementById("selected-email-ul");
 
+  if (!groupName) {
+
+    showToast('그룹 이름을 적어주세요')
+    groupNameInput.classList.add("custom-class");
+    return false;
+  }
+
   const membersEmails = Array.from(membersList.getElementsByTagName("li")).map(li => li.textContent);
 
   // 멤버 id 저장용 빈 배열 준비
@@ -703,12 +710,7 @@ async function addGroup() {
     body: JSON.stringify(requestData)
   });
 
-  if (!groupName) {
 
-    showToast('그룹 이름을 적어주세요')
-    groupNameInput.classList.add("custom-class");
-    return;
-  }
 
   if (response.status == 201) {
     showToast("그룹이 저장되었습니다.");
