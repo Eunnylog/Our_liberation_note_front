@@ -523,10 +523,39 @@ async function deleteNoteModal() {
 }
 
 
-
 function saveNoteID() {
     params = new URLSearchParams(window.location.search);
     const note_id = params.get("note_id");
     localStorage.setItem('note_id', note_id)
 }
 saveNoteID()
+
+async function loadGroupMembers() {
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
+    const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'GET',
+    });
+    const response_json = await response.json()
+
+    const group_set = response_json.group_set
+
+    const membersArray = group_set.members.split(',');
+    const filteredMembers = membersArray.filter(member => member.trim() !== group_set.master);
+
+    $('#members-list').empty()
+
+    let temp_html = `<li class="dropdown-item">${group_set.master}</li>
+                        <hr class="dropdown-divider"/>`;
+
+    filteredMembers.forEach(member => {
+        temp_html += `<li class="dropdown-item">${member}</li>`;
+    });
+
+    $('#members-list').append(temp_html);
+}
+
