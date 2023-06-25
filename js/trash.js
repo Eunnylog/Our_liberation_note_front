@@ -14,7 +14,7 @@ async function getTrash() {
         console.log(response_json)
         return response_json
     } else {
-        alert("불러오는데 실패했습니다")
+        showToast("불러오는데 실패했습니다")
     }
 }
 
@@ -192,18 +192,22 @@ async function handleGrouptrash(group_id, name) {
 
     if (response.status == 202) {
         const response_json = await response.json()
-        alert(`※ [${name}] 그룹이 정상적으로 삭제되었습니다.`)
-        window.location.reload()
+        showToast(`※ [${name}] 그룹이 정상적으로 삭제되었습니다.`)
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
         return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        alert(`※ [${name}] 그룹이 정상적으로 복원되었습니다.`)
-        window.location.reload()
+        showToast(`※ [${name}] 그룹이 정상적으로 복원되었습니다.`)
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
         return response_json
 
     } else {
-        alert("※실패하였습니다.")
+        showToast("※실패하였습니다.")
         console.log(photo_id)
     }
 
@@ -226,18 +230,20 @@ async function handleNotetrash(note_id, group, name) {
 
     if (response.status == 202) {
         const response_json = await response.json()
-        alert(`※ [${name}] 노트가 정상적으로 삭제되었습니다.`)
+        showToast(`※ [${name}] 노트가 정상적으로 삭제되었습니다.`)
         window.location.replace(`${frontend_base_url}/my_diary.html`)
         return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        alert(`※ [${name}] 노트가 정상적으로 복원되었습니다.`)
-        window.location.reload()
+        showToast(`※ [${name}] 노트가 정상적으로 복원되었습니다.`)
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
         return response_json
 
     } else {
-        alert("※실패하였습니다.")
+        showToast("※실패하였습니다.")
         console.log(photo_id)
     }
 }
@@ -258,18 +264,22 @@ async function handlePhototrash(photo_id, location, title, name) {
     })
     if (response.status == 202) {
         const response_json = await response.json()
-        alert(`※ [${name}] 사진이 정상적으로 삭제되었습니다.`)
-        window.location.reload()
+        showToast(`※ [${name}] 사진이 정상적으로 삭제되었습니다.`)
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
         return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        alert(`※ [${name}] 사진이 정상적으로 복원되었습니다.`)
-        window.location.reload()
+        showToast(`※ [${name}] 사진이 정상적으로 복원되었습니다.`)
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
         return response_json
 
     } else {
-        alert("※실패하였습니다.")
+        showToast("※실패하였습니다.")
         console.log(photo_id)
     }
 }
@@ -299,7 +309,7 @@ function handleTrashRestore() {
     var selectedRadio = document.querySelector('input[name="trash-radio"]:checked');
 
     if (!selectedRadio) {
-        alert("※ 항목을 선택해주세요!");
+        showToast("※ 항목을 선택해주세요!");
         return;
     }
 
@@ -342,10 +352,12 @@ async function deleteGroup(group_id) {
     })
 
     if (response.status == 204) {
-        alert('※ 삭제되었습니다.')
-        window.location.reload()
+        showToast('※ 삭제되었습니다.')
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
     } else {
-        alert('※ 문제가 발생했습니다!')
+        showToast('※ 문제가 발생했습니다!')
     }
 }
 
@@ -366,10 +378,12 @@ async function deleteNote(note_id) {
     });
 
     if (response.status == 204) {
-        alert('※ 삭제되었습니다.')
-        window.location.reload()
+        showToast('※ 삭제되었습니다.')
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
     } else {
-        alert('※ 문제가 발생했습니다!')
+        showToast('※ 문제가 발생했습니다!')
     }
 }
 
@@ -390,10 +404,12 @@ async function deletePhoto(photo_id) {
     });
 
     if (response.status == 204) {
-        alert('※ 삭제되었습니다.')
-        window.location.reload()
+        showToast('※ 삭제되었습니다.')
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
     } else {
-        alert('※ 문제가 발생했습니다!')
+        showToast('※ 문제가 발생했습니다!')
     }
 }
 
@@ -401,7 +417,7 @@ function handleTrashDelete() {
     var selectedRadio = document.querySelector('input[name="trash-radio"]:checked');
 
     if (!selectedRadio) {
-        alert("※ 항목을 선택해주세요!");
+        showToast("※ 항목을 선택해주세요!");
         return;
     }
 

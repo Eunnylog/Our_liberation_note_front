@@ -1,6 +1,5 @@
 let access_token = localStorage.getItem('access')
-// let back_url = 'https://api.liberation-note.com'
-const back_url = "http://127.0.0.1:8000"
+let back_url = 'https://api.liberation-note.com'
 
 let group_data = []
 
@@ -9,8 +8,6 @@ checkLogin()
 const userPayload = localStorage.getItem('payload')
 const userPayloadJson = JSON.parse(userPayload)
 const userEmail = userPayloadJson.email
-
-
 
 function loadNoteCategory() {
 
@@ -42,7 +39,7 @@ async function getGroup() {
     console.log(response_json)
     // $('#select_group').empty()
     if (response_json.length == 0) {
-        alert('그룹을 먼저 생성해 주세요!')
+        showToast('그룹을 먼저 생성해 주세요!')
         window.location.href = '/index.html'
     }
     response_json.forEach((a, index) => {
@@ -136,7 +133,6 @@ async function showNoteList() {
     }
 }
 
-// showNoteList()
 
 async function saveNote() {
     let radios = Array.from(document.getElementsByName('note_category'));
@@ -144,7 +140,7 @@ async function saveNote() {
     const group_name = document.getElementById("group_name").value
 
     if (group_name == '-1') {
-        alert('그룹을 선택해주세요!')
+        showToast('그룹을 선택해주세요!')
         return false
     }
 
@@ -172,18 +168,18 @@ async function saveNote() {
 
         if (response.status == 201) {
             localStorage.setItem('noteName', note_name);
-            alert("새로운 노트가 생성되었습니다!")
+            showToast("새로운 노트가 생성되었습니다!")
             window.location.href = `/plan_page.html?note_id=${response_json['id']}`
 
         } else if (!note_name) {
-            alert('노트 이름을 입력해주세요!!')
+            showToast('노트 이름을 입력해주세요!!')
         }
         else {
-            alert(response_json['non_field_errors'])
+            showToast(response_json['non_field_errors'])
         }
 
     } else {
-        alert('표지를 선택해 주세요!')
+        showToast('표지를 선택해 주세요!')
     }
 
 }
@@ -282,7 +278,7 @@ async function updateAddMember() {
     const membersEmail = document.getElementById("update-usersearch").value
 
     if (!membersEmail) {
-        alert('이메일을 입력해주세요!')
+        showToast('이메일을 입력해주세요!')
         return
     }
     const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
@@ -308,7 +304,7 @@ async function updateAddMember() {
     })
         .catch(error => {
             // 에러 처리
-            alert('문제가 발생했습니다!')
+            showToast('문제가 발생했습니다!')
         });
 }
 
@@ -317,7 +313,7 @@ function updateAddMembersToGroup() {
     const checkedInput = document.querySelector('input[name="email_radio"]:checked');
 
     if (!checkedInput) {
-        alert('선택한 이메일이 없습니다!')
+        showToast('선택한 이메일이 없습니다!')
         return
     }
     if (checkedInput) {
@@ -358,7 +354,7 @@ function updateAddMembersToGroup() {
             selectedEmailUl.appendChild(newEmailLi)
 
         } else {
-            alert("이미 추가된 이메일입니다.");
+            showToast("이미 추가된 이메일입니다.");
         }
 
     }
@@ -378,7 +374,7 @@ async function updateDeleteMembers() {
         checkedInput.parentElement.remove(); // 선택된 이메일 리스트에서 삭제
     }
     else {
-        alert("선택된 이메일이 없습니다.");
+        showToast("선택된 이메일이 없습니다.");
     }
     $('input[type=radio]').prop('checked', false);
 }
@@ -437,14 +433,14 @@ async function updateGroup() {
     });
 
     if (response.status == 200) {
-        alert("그룹이 수정되었습니다.")
+        showToast("그룹이 수정되었습니다.")
         window.location.reload()
     } else {
         const data = await response.json();
         if (data.message) {
-            alert("※ " + data.message);
+            showToast("※ " + data.message);
         } else if (data["non_field_errors"]) {
-            alert("※ " + data["non_field_errors"])
+            showToast("※ " + data["non_field_errors"])
         }
     }
 }
@@ -487,4 +483,3 @@ async function loadGroupMembers() {
 
     $('#members-list').append(temp_html);
 }
-
