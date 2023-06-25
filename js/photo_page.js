@@ -33,16 +33,20 @@ async function addPhoto() {
 
     let nameBox = document.getElementById("name")
     let titleBox = document.getElementById("title")
+    let imgBox = document.getElementById("imgbox")
 
-    if (name == '' || title == '') {
-        showToast('사진 타이틀과 장소는 필수입니다!')
+
+    if (name == '' || title == '' || imgBox == '') {
+        showToast('필수요소를 모두 입력해주세요!')
         nameBox.classList.add("custom-class");
         titleBox.classList.add("custom-class");
+        imgBox.classList.add("custom-class");
 
         return false
     } else {
         nameBox.classList.remove("custom-class");
         titleBox.classList.remove("custom-class");
+        imgBox.classList.remove("custom-class");
     }
 
     try {
@@ -299,7 +303,7 @@ function patchPhotoBox(photo_id) {
 
     $('#photo-d').empty();
     let temp_html = `<div class="input-group" style="flex-wrap: nowrap; ">
-                        <input class="upload-name" value="첨부파일" src="${image}" placeholder="첨부파일" multiple
+                        <input class="upload-name" id="p_imgbox" src="${image}" placeholder="사진을 추가하지 않을 시 사진은 유지됩니다." multiple
                             accept=".jpg, .png, .jpeg" style="width: 80%; border-radius: 5px 0 0 5px; margin-bottom: 15px;">
                         <label for="image" style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 5px 5px 0; background-color:  #485D86;">사진변경</label>
                         <input type="file" id="image" style="display: none"/>
@@ -364,6 +368,24 @@ async function patchPhoto() {
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
 
+    let nameBox = document.getElementById("p_name")
+    let titleBox = document.getElementById("p_title")
+    let imgBox = document.getElementById("p_imgbox")
+
+
+    if (name == '' || title == '' || imgBox == '') {
+        showToast('필수요소를 모두 입력해주세요!')
+        nameBox.classList.add("custom-class");
+        titleBox.classList.add("custom-class");
+        imgBox.classList.add("custom-class");
+
+        return false
+    } else {
+        nameBox.classList.remove("custom-class");
+        titleBox.classList.remove("custom-class");
+        imgBox.classList.remove("custom-class");
+    }
+
     console.log(name)
     for (const pair of formData.entries()) {
         console.log(pair[0] + ':', pair[1]);
@@ -373,9 +395,9 @@ async function patchPhoto() {
         // const photo_id = urlParams.get('photo_id');
 
         const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
-            // headers: {
-            //     // "Authorization": `Bearer ${access_token}`,
-            // },
+            headers: {
+                // "Authorization": `Bearer ${access_token}`,
+            },
             method: 'PATCH',
             body: formData
         });
@@ -545,3 +567,13 @@ async function handleStamp(photo_id) {
 }
 
 checkLogin()
+
+
+function removeRedLine() {
+    let nameBox = document.getElementById("name")
+    let titleBox = document.getElementById("title")
+    let imgBox = document.getElementById("imgbox")
+    nameBox.classList.remove("custom-class");
+    titleBox.classList.remove("custom-class");
+    imgBox.classList.remove("custom-class");
+}

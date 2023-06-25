@@ -37,7 +37,8 @@
             <div class="clearfix" style="width:100%; margin-bottom:5px;">
                 <div id="menu_box" style="float:left;">
                     <button type="button" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"
-                        class="btn group-btn" style="background-color: #485D86; color:white; margin: 0px 10px;">사진
+                        onclick="removeRedLine()" class="btn group-btn"
+                        style="background-color: #485D86; color:white; margin: 0px 10px;">사진
                         추가</button>
                 </div>
                 <div style="float: right;">
@@ -69,7 +70,7 @@
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
                                     <div class="input-group" style="flex-wrap: nowrap;">
-                                        <input class="upload-name" value="첨부파일" placeholder="첨부파일" multiple
+                                        <input class="upload-name" id="imgbox" placeholder="이미지를 넣어주세요." multiple
                                             accept=".jpg, .png, .jpeg" style="width: 80%; height:40px;">
                                         <label for="image"
                                             style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 4px 4px 0; background-color:  #485D86;">사진
