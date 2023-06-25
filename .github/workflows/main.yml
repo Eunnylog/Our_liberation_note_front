@@ -27,7 +27,7 @@ jobs:
         uses: chetan/invalidate-cloudfront-action@master
         env:
           DISTRIBUTION: ${{ secrets.DISTRIBUTION_ID }}
-          PATHS: '/index.html'
+          PATHS: '/*'
         continue-on-error: true
 
       - name: Slack - Send Msg
@@ -39,10 +39,3 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.Slack_URL }}
         if: always()
-
-      - name: CloudFront Invalidation
-        env:
-          CLOUD_FRONT_ID: ${{ secrets.DISTRIBUTION_ID}}
-        run: |
-          aws cloudfront create-invalidation \
-          --distribution-id $CLOUD_FRONT_ID --paths /*
