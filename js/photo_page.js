@@ -126,9 +126,16 @@ async function album() {
                 existPhoto.push(photo);
             }
         });
+        $('#basic-photo').empty()
+        if (response_json.length === 0) {
+            let temp_html =`<div style="all: unset; display: flex; justify-content: center; align-items: center; height: 100%; margin-top:50px;">
+                                <img src="/css/assets/basicphoto.png" alt="Empty Group Image" onclick="removeRedLine()" data-bs-toggle="modal" data-bs-target="#photo"
+                                style="width:150px; height:150px; margin-top:50px;">
+                            </div>`
 
-        $('#photo_info').empty()
+            $('#basic-photo').append(temp_html);
 
+        } else {
         response_json.forEach((a) => {
             console.log(a)
             const image = backend_base_url + '/note' + a["image"];
@@ -150,6 +157,7 @@ async function album() {
 
             $('#photo_info').append(temp_html);
         });
+    }
     } catch (error) {
         console.log(error)
     }
@@ -226,7 +234,8 @@ async function photo_detail(photo_id) {
                     <div style="display: flex; align-items: center;">
                         <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px;">
                         <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
-                            <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">게시</button>
+                            <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" 
+                            style="background-color:  #7689b1; border-color: #7689b1; height: 37px;"><b>+</b></button>
                     </div>
                     <hr/>
                     <div>
@@ -244,9 +253,9 @@ async function photo_detail(photo_id) {
                                                         <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" 
                                                         onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
                                                         <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" 
-                                                        onclick="editComment(event)" class="btn btn-primary" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
+                                                        onclick="editComment(event)" class="btn btn-primary" style="background-color:  #7689b1; border-color: #7689b1;">Update</button>
                                                         <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" 
-                                                        onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #485d86; border-color: #485d86;">삭제</button>
+                                                        onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #485d86; border-color: #485d86;">Delete</button>
                                                     </div>
                                                 </div>`).join('')}
                     </div>`;
@@ -255,9 +264,9 @@ async function photo_detail(photo_id) {
     $('#photo-detail-modal-footer').empty()
 
     let temp_html2 = `<button id="patch_photo_box" type="button" class="btn btn-primary"
-                            onclick="patchPhotoBox('${photo_id}')" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
+                            onclick="patchPhotoBox('${photo_id}')" style="background-color:  #7689b1; border-color: #7689b1;">Update</button>
                       <button id="photo-trash" type="button" class="btn btn-primary"
-                            onclick="handlePhototrash('${photo_id}','${location}','${title}','${name}')" style="background-color: #485d86; border-color: #485d86;">삭제</button>`
+                            onclick="handlePhototrash('${photo_id}','${location}','${title}','${name}')" style="background-color: #485d86; border-color: #485d86;">Delete</button>`
 
     $('#photo-detail-modal-footer').append(temp_html2)
 }
@@ -308,7 +317,7 @@ function patchPhotoBox(photo_id) {
     let temp_html = `<div class="input-group" style="flex-wrap: nowrap; ">
                         <input class="upload-name" id="p_imgbox" src="${image}" placeholder="${decodedPath}" multiple
                             accept=".jpg, .png, .jpeg" style="width: 80%; border-radius: 5px 0 0 5px; margin-bottom: 15px;">
-                        <label for="image" style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 5px 5px 0; background-color:  #485D86;">사진변경</label>
+                        <label for="image" style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 5px 5px 0; background-color:  #485D86;">Upload</label>
                         <input type="file" id="image" style="display: none">
                     </div>
                     <div class="input-group-append" style="width: 100%;">
@@ -320,7 +329,7 @@ function patchPhotoBox(photo_id) {
                         <input name="title" id="p_title" value='${title}' type="text" class="form-control"
                             placeholder="목적지(지역명+상호명, 지역명+카테고리)" style="width: 80%; height:40px;">
                         <button type="button" onclick="searchLocation('2')" class="btn btn-primary"
-                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; background-color:  #485D86;">검색</button>
+                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; background-color:  #485D86;">Search</button>
                     </div>
                     <div class="input-group-append" style="width: 100%; margin-bottom: 15px;">
                         <input name="location" id="p_location" value='${location}' type="text" class="form-control"
@@ -338,8 +347,8 @@ function patchPhotoBox(photo_id) {
 
     $('#photo-detail-modal-footer').empty()
 
-    let temp_html2 = `<button type="button" class="btn btn-secondary delete_serarch" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">취소</button>
-                      <button id="patch_photo" value='${photo_id}' type="button" class="btn btn-primary"onclick="patchPhoto()" style="background-color:  #485D86; border-color: #485D86;">저장</button>`
+    let temp_html2 = `<button type="button" class="btn btn-secondary delete_serarch" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">Close</button>
+                      <button id="patch_photo" value='${photo_id}' type="button" class="btn btn-primary"onclick="patchPhoto()" style="background-color:  #485D86; border-color: #485D86;">Save</button>`
 
     $('#photo-detail-modal-footer').append(temp_html2)
 }
@@ -420,17 +429,25 @@ async function patchPhoto() {
 }
 
 //photo_page.html > 사진추가 버튼 옆 업로드 이름 
-$(document).ready(function() {
+$(document).ready(function () {
     $("#image").on('change', function () {
         var fileName = $(this).val();
         $(".upload-name").val(fileName);
     });
 });
 
+
 // 코멘트 추가 back과 연결
 async function addComment() {
     const photo_id = document.getElementById("commentBtn").value;
     const commentText = document.getElementById("comment").value;
+    const commentbox = document.getElementById("comment");
+
+    if (!commentText) {
+        showToast('댓글을 입력해주세요!')
+        commentbox.classList.add("custom-class");
+        return false
+    }
 
     try {
         const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
@@ -443,11 +460,15 @@ async function addComment() {
         });
 
         if (response.ok) {
-            console.log('코멘트 추가 성공');
+            showToast('새로운 댓글이 작성되었습니다!');
+            setTimeout(function () {
+                window.location.reload();
+            }, 1000);
         } else {
             let response_json = await response.json()
             showToast(response_json['non_field_errors']);
         }
+
     }
     catch (error) {
         showToast('에러가 발생했습니다.');
@@ -459,14 +480,18 @@ async function editComment(event) {
 
     var button = event.target;
     var buttonValue = button.value;
-    console.log("Button Value:", buttonValue);
 
     const photo_comment_id = button.value;
-    // const photo_id = photo_comment_id.split("/")[0];
     const comment_id = photo_comment_id.split("/")[1];
 
     const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
-    console.log(updatedComment)
+    const updatedCommentBox = document.getElementById(`comment_edit${comment_id}`)
+
+    if (!updatedComment) {
+        showToast('수정할 댓글을 작성해주세요!')
+        updatedCommentBox.classList.add("custom-class");
+        return false
+    }
 
     fetch(`${backend_base_url}/note/comment/${comment_id}`, {
         headers: {
@@ -478,7 +503,10 @@ async function editComment(event) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            showToast('댓글이 수정되었습니다!')
+            setTimeout(function () {
+                window.location.reload();
+            }, 1000);
         })
         .catch(error => {
             console.error('Error', error)
