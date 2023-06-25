@@ -11,7 +11,7 @@ async function searchLocation() {
         .then(response => {
             const places = response.data.documents;
             if (places.length == 0) {
-                alert('검색결과가 없습니다!')
+                showToast('검색결과가 없습니다!')
                 return false
             }
             var searchBox = document.getElementById('search_box');
@@ -49,7 +49,7 @@ async function searchLocation() {
         .catch(error => {
             // 에러 처리
             console.error(error);
-            alert('문제가 발생했습니다!')
+            showToast('장소를 입력해주세요!')
         });
 
 }

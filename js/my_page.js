@@ -110,7 +110,7 @@ async function getMarkerStamps(photo_location) {
         const response_json = await response.json()
         return response_json
     } else {
-        alert("불러오는데 실패했습니다")
+        showToast("불러오는데 실패했습니다")
     }
 }
 

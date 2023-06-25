@@ -10,6 +10,20 @@
   font-size: 20px;
 }
 
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+body {
+  animation: fade-in 0.5s;
+}
+
 :root {
   --border: #e3e1dc;
   --max-width: 1100px;
@@ -986,4 +1000,28 @@ select {
   border-radius: 4px;
   outline: 0 none;
   position: relative;
+}
+
+/* 토스트 css */
+#toast {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  padding: 15px 20px;
+  transform: translate(-50%, 10px);
+  border-radius: 30px;
+  overflow: hidden;
+  font-size: .8rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .5s, visibility .5s, transform .5s;
+  background: rgba(31, 79, 201, 0.764);
+  color: #fff;
+  z-index: 10000;
+}
+
+#toast.reveal {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0)
 }
