@@ -361,11 +361,10 @@ function checkLogin() {
   const payload = localStorage.getItem("payload");
 
   if (!payload) {
-    showToast('로그인 또는 회원가입이 필요합니다!')
+    alert('로그인 또는 회원가입이 필요합니다!')
     window.location.replace(`${frontend_base_url}/index.html`)
   }
 }
-
 
 // 회원탈퇴
 async function handlesUserDelete() {
