@@ -3,9 +3,7 @@ let plan_set = [];
 let access_token = localStorage.getItem('access')
 let back_url = 'https://api.liberation-note.com'
 
-checkGroup()
 checkLogin()
-
 
 window.onload = function () {
     params = new URLSearchParams(window.location.search);
@@ -28,14 +26,11 @@ window.onload = function () {
     back.onclick = function () {
         location.href = '/my_diary.html';
     }
-
-
-
 };
 
 
-
 async function showPlanPage() {
+    await checkGroup()
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
     let note_name = localStorage.getItem('noteName')
@@ -311,9 +306,6 @@ function addPlanList() {
         startBox.classList.remove("custom-class");
     }
 
-    var plan_list = document.getElementById('plan_list')
-    plan_list.innerText = ''
-
     let plan = {
         "title": title,
         "location": location,
@@ -342,7 +334,6 @@ function addPlanList() {
                         <button onclick="deletePlanList('${plan}', event)" style="width:150px; border-radius:20px;">${title}<br>(${start})</button>
                     `
     $('#plan_list').append(temp_html)
-
 
     document.getElementById("title").value = ''
     document.getElementById("location").value = ''
@@ -527,8 +518,6 @@ async function deleteNoteModal() {
                         onclick="handleNotetrash('${selected_id}','${selected_group}','${selected_name}')">Delete</button>`
 
     $('#modal-footer').append(temp_html2)
-
-    $('#plan_list').empty()
 }
 
 
@@ -568,9 +557,3 @@ async function loadGroupMembers() {
     $('#members-list').append(temp_html);
 }
 
-
-function planList() {
-    $('#plan_list').empty()
-    var plan_list = document.getElementById('plan_list')
-    plan_list.innerText = '일정 추가시 여기에 추가됩니다!'
-}
