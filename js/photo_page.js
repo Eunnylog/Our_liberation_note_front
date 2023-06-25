@@ -407,6 +407,11 @@ async function addComment() {
     const photo_id = document.getElementById("commentBtn").value;
     const commentText = document.getElementById("comment").value;
 
+    if (commentText.trim() === "") {
+        showToast("댓글을 입력해주세요.");
+        return;
+    }
+
     try {
         const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
             method: 'POST',
@@ -416,6 +421,7 @@ async function addComment() {
             },
             body: JSON.stringify({ comment: commentText })
         });
+
 
         if (response.ok) {
             console.log('코멘트 추가 성공');
@@ -433,8 +439,8 @@ async function addComment() {
 async function editComment(event) {
 
     var button = event.target;
-    var buttonValue = button.value;
-    console.log("Button Value:", buttonValue);
+    // var buttonValue = button.value;
+    // console.log("Button Value:", buttonValue);
 
     const photo_comment_id = button.value;
     // const photo_id = photo_comment_id.split("/")[0];
@@ -442,6 +448,12 @@ async function editComment(event) {
 
     const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
     console.log(updatedComment)
+
+    if (updatedComment.trim() === "") {
+        showToast("수정할 댓글을 입력해주세요.");
+        return;
+    }
+
 
     fetch(`${backend_base_url}/note/comment/${comment_id}`, {
         headers: {
