@@ -243,9 +243,9 @@ async function photo_detail(photo_id) {
                                                     <div style="display: none;">
                                                         <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" 
                                                         onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
-                                                        <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" 
+                                                        <button type="button" id="commentEditBtn${comment.id}" value="${comment.id}" 
                                                         onclick="editComment(event)" class="btn btn-primary" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
-                                                        <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" 
+                                                        <button type="button" id="commentDeleteBtn${comment.id}" value="${comment.id}" 
                                                         onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #485d86; border-color: #485d86;">삭제</button>
                                                     </div>
                                                 </div>`).join('')}
@@ -306,11 +306,7 @@ function patchPhotoBox(photo_id) {
 
     $('#photo-d').empty();
     let temp_html = `<div class="input-group" style="flex-wrap: nowrap; ">
-<<<<<<< HEAD
-                        <input class="upload-name" id="p_imgbox" src="${image}" placeholder="사진을 추가하지 않을 시 사진은 유지됩니다." multiple
-=======
                         <input class="upload-name" id="p_imgbox" src="${image}" placeholder="${decodedPath}" multiple
->>>>>>> 3a673e785a56e76b44064d3bfb8be642962ed517
                             accept=".jpg, .png, .jpeg" style="width: 80%; border-radius: 5px 0 0 5px; margin-bottom: 15px;">
                         <label for="image" style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 5px 5px 0; background-color:  #485D86;">사진변경</label>
                         <input type="file" id="image" style="display: none">
@@ -424,7 +420,7 @@ async function patchPhoto() {
 }
 
 //photo_page.html > 사진추가 버튼 옆 업로드 이름 
-$(document).ready(function() {
+$(document).ready(function () {
     $("#image").on('change', function () {
         var fileName = $(this).val();
         $(".upload-name").val(fileName);
@@ -454,6 +450,7 @@ async function addComment() {
 
         if (response.ok) {
             console.log('코멘트 추가 성공');
+
         } else {
             let response_json = await response.json()
             showToast(response_json['non_field_errors']);
@@ -466,14 +463,8 @@ async function addComment() {
 }
 
 async function editComment(event) {
-
     var button = event.target;
-    // var buttonValue = button.value;
-    // console.log("Button Value:", buttonValue);
-
-    const photo_comment_id = button.value;
-    // const photo_id = photo_comment_id.split("/")[0];
-    const comment_id = photo_comment_id.split("/")[1];
+    const comment_id = button.value;
 
     const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
     console.log(updatedComment)
@@ -504,11 +495,7 @@ async function editComment(event) {
 async function deleteComment(event) {
 
     var button = event.target;
-    var buttonValue = button.value;
-    console.log("Button Value:", buttonValue);
-
-    const photo_comment_id = button.value;
-    const comment_id = photo_comment_id.split("/")[1];
+    const comment_id = button.value;
 
     test = confirm("삭제 하시겠습니까?")
     if (!test) {
