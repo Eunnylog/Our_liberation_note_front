@@ -252,9 +252,9 @@ async function photo_detail(photo_id) {
                                                     <div style="display: none;">
                                                         <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" 
                                                         onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
-                                                        <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" 
+                                                        <button type="button" id="commentEditBtn${comment.id}" value="${comment.id}" 
                                                         onclick="editComment(event)" class="btn btn-primary" style="background-color:  #7689b1; border-color: #7689b1;">Update</button>
-                                                        <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" 
+                                                        <button type="button" id="commentDeleteBtn${comment.id}" value="${comment.id}" 
                                                         onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #485d86; border-color: #485d86;">Delete</button>
                                                     </div>
                                                 </div>`).join('')}
@@ -477,12 +477,10 @@ async function addComment() {
 }
 
 async function editComment(event) {
-
+    
     var button = event.target;
-    var buttonValue = button.value;
-
-    const photo_comment_id = button.value;
-    const comment_id = photo_comment_id.split("/")[1];
+    const buttonComment_id = button.value;
+    const comment_id = buttonComment_id.split("/")[1];
 
     const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
     const updatedCommentBox = document.getElementById(`comment_edit${comment_id}`)
@@ -516,11 +514,8 @@ async function editComment(event) {
 async function deleteComment(event) {
 
     var button = event.target;
-    var buttonValue = button.value;
-    console.log("Button Value:", buttonValue);
-
-    const photo_comment_id = button.value;
-    const comment_id = photo_comment_id.split("/")[1];
+    const buttonComment_id = button.value;
+    const comment_id = buttonComment_id.split("/")[1];
 
     test = confirm("삭제 하시겠습니까?")
     if (!test) {
