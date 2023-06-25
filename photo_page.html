@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <link rel="icon" type="image/png" sizes="48x48" href="/css/favicon/android-icon-48x48.png">
     <link href="/css/styles/login.css" rel="stylesheet" type="text/css" />
     <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
     <link href="/css/styles/theme.css" rel="stylesheet" type="text/css" />
@@ -236,8 +237,6 @@
         buttons.forEach(function (button) {
             button.addEventListener("click", function (event) {
                 var buttonId = event.target.id;
-
-                console.log("Button ID:", buttonId);
             });
         });
 
@@ -245,7 +244,25 @@
             var fileName = inputElement.files[0].name;
             document.querySelector('.upload-name').value = fileName;
         }
+
+
+        function checkData() {
+            var input = document.getElementById(".upload-name");
+            if (input.value === "") {
+                alert('이미지가 입력되지 않았습니다!');
+                input.style.animation = "blink 1s infinite"; // 반짝이는 애니메이션 적용
+            }
+        }
     </script>
+    <style>
+        @keyframes blink {
+            50% {
+                border-color: red;
+                background-color: yellow;
+                color: red;
+            }
+        }
+    </style>
 </body>
 
 </html>

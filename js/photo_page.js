@@ -17,7 +17,7 @@ async function addPhoto() {
     const title = document.getElementById("title").value;
     const start = document.getElementById("start").value;
     const location = document.getElementById("location").value;
-    const memo = document.getElementById("memo").value;
+    const memo = document.getElementById("memo").value.trim() || '';
     let location_x = document.getElementById("location_x").value
     let location_y = document.getElementById("location_y").value
 
@@ -31,8 +31,19 @@ async function addPhoto() {
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
 
-    console.log(formData)
-    console.log(location_x, location_y)
+    let nameBox = document.getElementById("name")
+    let titleBox = document.getElementById("title")
+
+    if (name == '' || title == '') {
+        showToast('사진 타이틀과 장소는 필수입니다!')
+        nameBox.classList.add("custom-class");
+        titleBox.classList.add("custom-class");
+
+        return false
+    } else {
+        nameBox.classList.remove("custom-class");
+        titleBox.classList.remove("custom-class");
+    }
 
     try {
         const urlParams = new URLSearchParams(window.location.search);
@@ -43,7 +54,6 @@ async function addPhoto() {
                 "Authorization": `Bearer ${access_token}`,
             },
             method: 'POST',
-
             body: formData
         });
 
@@ -55,7 +65,7 @@ async function addPhoto() {
             throw new Error("서버가 응답하지 않습니다.");
         }
     } catch (error) {
-        showToast("에러가 발생했습니다.");
+        showToast('이미지를 선택해주세요!');
         console.error(error);
     }
 }
@@ -93,7 +103,7 @@ async function album() {
         if (response_json.length == 0) {
             console.log(page)
             if (page != 0) {
-                alert('마지막페이지 입니다!')
+                showToast('마지막페이지 입니다!')
                 page = page - page
                 window.location.href = window.location.href.split('&')[0] + '&page=' + page
             }
@@ -166,7 +176,7 @@ function m_page() {
     page = page * 1 - 6
 
     if (page < 0) {
-        alert('첫페이지 입니다!')
+        showToast('첫페이지 입니다!')
         return fals
     }
     window.location.href = window.location.href.split('&')[0] + '&page=' + page
@@ -180,7 +190,6 @@ async function photo_detail(photo_id) {
     const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
         headers: {
             'content-type': 'application/json',
-            // 'Authorization': `Bearer ${accessToken}`
         },
         method: 'GET',
     })
@@ -192,10 +201,9 @@ async function photo_detail(photo_id) {
     const start = response_json["start"]
     const title = response_json["title"]
     const location = response_json["location"]
-    const memo = response_json["memo"]
+    const memo = response_json["memo"] || '' //메모는 입력값이 없을때 공백으로 취급
     const comments = response_json["comment_set"]
-    // const photo_id = response_json["photo_id"]
-    // ${comment.created_at}
+
 
     console.log(response_json)
 
@@ -255,12 +263,10 @@ function toggleCommentEdit(event) {
     const comments_set = event.target.closest('div');
     const div = comments_set.querySelector('div');
     const user_email = comments_set.getAttribute("value")
-    console.log(user_email)
     // payload를 모두 문자열로 가져오기
     let storage = localStorage.getItem('payload');
     // 가져온 paylad(JSON 문자열)를 객체, 배열로 변환
     const personObj = JSON.parse(storage);
-    console.log(personObj);
     let email;
     // user_id 키의 값만 가져오기
     if (personObj) {
@@ -282,7 +288,6 @@ commentItems.forEach(item => {
 
 
 function patchPhotoBox(photo_id) {
-    console.log(photo_id)
     // // 수정 창으로 변경합니다.
     // let photo_detail = document.getElementById('photo-d');
     let image = document.getElementById('photo_image');

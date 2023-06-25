@@ -241,6 +241,8 @@ async function aiStart() {
     return false;
   }
 
+  let total;
+
   let destinations = [];
   $('#ai_work_box input[type=checkbox]:checked').not('#checkAll2').each(function () {
     let checkedDiv = $(this).closest('div[name]');
@@ -257,11 +259,23 @@ async function aiStart() {
       y: location_y
     };
 
-    destinations.push(destination);
+    if (!location_x | !location_y) {
+
+    } else {
+      destinations.push(destination);
+    }
+    total += 1
   });
 
-  if (destinations.length == 0) {
+  if (destinations.length != total) {
+    showToast('주소지가 정확하지 않은 곳은 제외 되었습니다!')
+  }
+
+  if (destinations.length == 0 && total == destinations.length) {
     showToast('먹이를 추가해주세요!');
+    return false;
+  } else if (destinations.length == 0 && total != destinations.length) {
+    showToast('주소지가 정확한 먹이를 추가해주세요!')
     return false;
   }
 
