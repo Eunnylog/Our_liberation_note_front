@@ -32,7 +32,7 @@
 
     <!-- content start -->
     <main>
-        <article style="width: 100%; height: 100%; justify-content: center;">
+        <article style="width: 100%; justify-content: center; min-height: 100%; height:auto; padding-bottom: 300px; position: relative;">
             <!-- 전체 페이지 위치를 위한 제일 큰 그리드 -->
             <div class="content"
                 style="display: grid; grid-template-columns: 50px 350px 50px 350px 50px 350px 50px; grid-template-rows: 50px 50px 230px 50px 230px 30px; background-color: aliceblue; justify-content: center; width:fit-content; height:fit-content; margin: 40px auto;">
@@ -91,11 +91,12 @@
             </div>
         </article>
     </main>
+    <!-- content end -->
     <!-- footer start -->
-    <footer style="background-color: #fbfcfd; position: absolute; bottom: 0px; width: 100%;">
+    <footer style="background-color: #fbfcfd; position: flex; bottom: 0; transform: translateY(-100%); width: 100%; height: 200px;">
         <div style="background-color:#60749d; width: 100%; height: 10px;"></div>
         <p style="font-size: 30px; margin-top: 10px; text-align: center;">CONTACT</p>
-        <div style="display: flex; padding: 0px 0px 20px; justify-content: center;">
+        <div style="display: flex; justify-content: center;">
             <div style="margin-right: 20px; width: 150px;">
                 <p style="font-size: 25px;">김미영</p>
                 <a style="text-decoration: none; color:black" href="https://github.com/kmy9810"><img src="/css/assets/github-logo.png" style="width:30px;"> kmy9810</a>
@@ -105,7 +106,7 @@
                 <a style="text-decoration: none; color:black" href="https://github.com/Eunnylog"><img src="/css/assets/github-logo.png" style="width:30px;"> Eunnylog</a>
             </div>
             <div style="margin-right: 20px; width: 150px;">
-                <p style="font-size: 25px;">연재건</p>
+                <p style="font-size: 25px;">연제건</p>
                 <a style="text-decoration: none; color:black" href="https://github.com/Msgun7"><img src="/css/assets/github-logo.png" style="width:30px;"> Msgun7</a>
             </div>
             <div style="margin-right: 20px; width: 150px;">
@@ -119,7 +120,6 @@
         </div>
     </footer>
     <!-- footer end -->
-    <!-- content end -->
     <!-- 회원가입 모달창 -->
     <div class="modal fade" id="signup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
         <div class="modal-dialog">
