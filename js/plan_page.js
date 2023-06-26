@@ -332,7 +332,9 @@ function addPlanList() {
     plan_set.push(plan);
 
     var plan_list = document.getElementById('plan_list')
-    plan_list.innerText = ''
+    if (plan_list.innerText == '일정 추가시 여기에 추가됩니다!'){
+        plan_list.innerText = ''
+    }
 
     let temp_html = `
                         <button onclick="deletePlanList('${plan}', event)" style="width:150px; border-radius:20px;">${title}<br>(${start})</button>
