@@ -129,8 +129,8 @@ async function album() {
         $('#basic-photo').empty()
         if (response_json.length === 0) {
             let temp_html =`<div style="all: unset; display: flex; justify-content: center; align-items: center; height: 100%; margin-top:50px;">
-                                <img src="/css/assets/basicphoto.png" alt="Empty Group Image" onclick="removeRedLine()" data-bs-toggle="modal" data-bs-target="#photo"
-                                style="width:150px; height:150px; margin-top:50px;">
+                                <img class="empty-img" src="/css/assets/basicphoto.png" alt="Empty Group Image" onclick="removeRedLine()" data-bs-toggle="modal" data-bs-target="#photo"
+                                style="width:150px; height:150px; margin-top:50px; cursor:pointer;">
                             </div>`
 
             $('#basic-photo').append(temp_html);
