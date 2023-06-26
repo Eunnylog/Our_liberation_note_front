@@ -557,3 +557,8 @@ async function loadGroupMembers() {
     $('#members-list').append(temp_html);
 }
 
+function planList() {
+    $('#plan_list').empty()
+    var plan_list = document.getElementById('plan_list')
+    plan_list.innerText = '일정 추가시 여기에 추가됩니다!'
+}
