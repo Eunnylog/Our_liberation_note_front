@@ -194,6 +194,7 @@ function patchBox() {
     let time = document.getElementById('plan_time').innerHTML.split(':')[1].trim();
     let memo = document.getElementById('plan_memo').innerHTML.split(':')[1].trim();
     let category = document.getElementById('plan_category').innerHTML.split(':')[1].trim();
+    console.log(title, location, time, memo, category)
     // date 포멧팅
     let dateString = document.getElementById('plan_date').innerHTML.split(':')[1].trim();
     let dateParts = dateString.split('.').map(part => part.trim());
@@ -219,7 +220,7 @@ function patchBox() {
                             <input name="start" id="start" value='${date}' type="date" class="form-control">
                             <input name="time" id="time" value='${time}' type="text" class="form-control" placeholder="시간">
                             <textarea name="memo" id="memo" value='${memo}'  type="textarea" class="form-control" placeholder="memo"
-                                style="height:200px; min-height:200px; max-height:200px"></textarea>
+                                style="height:200px; min-height:200px; max-height:200px">${memo}</textarea>
     `;
 
     const btnElement = document.getElementById('patch_box');
