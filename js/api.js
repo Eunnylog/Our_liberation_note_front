@@ -7,6 +7,14 @@ const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
 
+// 모바일 막기
+window.onload = function () {
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    alert("모바일에서는 이 페이지를 볼 수 없습니다.");
+    window.location.href = "about:blank";
+  }
+}
+
 // 회원 가입
 async function handleSignup() {
   const email = document.getElementById("email").value
