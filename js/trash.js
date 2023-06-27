@@ -65,10 +65,11 @@ async function loadTrash(contentType) {
                 const group_created_at = group.created_at
 
                 let temp_html = `<div style="margin-top:15px;">
-                                <input type="checkbox" name="trash-checkbox" value="${index}" style="width:10px" onclick="handleTrashCheckbox('group')">
+                                <input type="checkbox" name="trash-checkbox" id="trash-checkbox${group_id}" value="${index}" style="width:20px; height: 20px;" onclick="handleTrashCheckbox('group')">
+                                <label for="trash-checkbox${group_id}"></label>
                                 <a id='name_${index}'>${group_name} | ${group_created_at}</a>
                                 <input id='id_${index}' value="${group_id}" hidden>
-                            </div>`
+                                </div>`
 
                 $('#trash-content').append(temp_html)
             });
@@ -107,7 +108,8 @@ async function loadTrash(contentType) {
                                 <a id='name_${index}'>${note_name}</a>
                                 <input id='id_${index}' value="${note_id}" hidden>
                                 <input id='group_${index}' value="${group}" hidden>
-                                <input type="checkbox" name="trash-checkbox" value="${index}" style="width:10px" onclick="handleTrashCheckbox('note')">
+                                <input type="checkbox" name="trash-checkbox${note_id}" value="${index}" style="width:10px" onclick="handleTrashCheckbox('note')">
+                                <label for="trash-checkbox${note_id}"></label>
                             </div>`
 
                 $('#trash-content').append(temp_html)
@@ -146,7 +148,8 @@ async function loadTrash(contentType) {
                 let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:10px;">
                                     <img src="${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px;">
                                     <a id='name_${index}'>${photo_name}</a>
-                                    <input type="checkbox" name="trash-checkbox" value="${index}" style="width:10px" onclick="handleTrashCheckbox('photo')">
+                                    <input type="checkbox" name="trash-checkbox${photo_id}" value="${index}" style="width:10px" onclick="handleTrashCheckbox('photo')">
+                                    <label for="trash-checkbox${photo_id}"></label>
                                     <input id='id_${index}' value="${photo_id}" hidden>
                                     <input id='location_${index}' value="${photo_location}" hidden>
                                     <input id='title_${index}' value="${photo_title}" hidden>
@@ -176,7 +179,7 @@ async function loadTrash(contentType) {
     selectedButton.classList.add("active");
 }
 
-async function handleGrouptrash(group_id, name) {
+async function handleGrouptrash(selectedGroups) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash`, {
@@ -186,12 +189,7 @@ async function handleGrouptrash(group_id, name) {
         },
         method: 'POST',
         body: JSON.stringify({
-            "group_set": [
-                {
-                    "id": group_id,
-                    "name": name
-                }
-            ]
+            "group_set": selectedGroups
         })
     })
     if (response.status == 202) {
@@ -212,12 +210,11 @@ async function handleGrouptrash(group_id, name) {
 
     } else {
         showToast("※실패하였습니다.")
-        console.log(photo_id)
     }
 
 }
 
-async function handleNotetrash(note_id, group, name) {
+async function handleNotetrash(selectedNotes) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash`, {
@@ -227,13 +224,7 @@ async function handleNotetrash(note_id, group, name) {
         },
         method: 'POST',
         body: JSON.stringify({
-            "note_set": [
-                {
-                    "id": note_id,
-                    "name": name,
-                    "group": group,
-                }
-            ]
+            "note_set": selectedNotes
         })
     })
 
@@ -257,7 +248,7 @@ async function handleNotetrash(note_id, group, name) {
     }
 }
 
-async function handlePhototrash(photo_id, location, title, name) {
+async function handlePhototrash(selectedPhotos) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash`, {
@@ -267,13 +258,7 @@ async function handlePhototrash(photo_id, location, title, name) {
         },
         method: 'POST',
         body: JSON.stringify({
-            "photo_set": [
-                {
-                    "id": photo_id,
-                    "location": location,
-                    "title": title,
-                }
-            ]
+            "photo_set": selectedPhotos
         })
     })
     if (response.status == 202) {
@@ -320,33 +305,59 @@ function handleTrashCheckbox(contentType) {
 }
 
 function handleTrashRestore() {
-    var selectedcheckbox = document.querySelector('input[name="trash-checkbox"]:checked');
+    var selectedcheckboxes = document.querySelectorAll('input[name="trash-checkbox"]:checked');
 
-    if (!selectedcheckbox) {
+    if (selectedcheckboxes.length === 0) {
         showToast("※ 항목을 선택해주세요!");
         return;
     }
 
-    let selectedIndex = selectedcheckbox.value;
-    let selected_id = document.getElementById(`id_${selectedIndex}`).value;
-    let selected_name = document.getElementById(`name_${selectedIndex}`).innerText;
-    let name = selected_name.split('|')[0].trim();
+    const selectedGroups = [];
+    const selectedNotes = [];
+    const selectedPhotos = [];
 
-    if (selectedGroupIndex !== null) {
-        handleGrouptrash(selected_id, name);
-    }
+    selectedcheckboxes.forEach(selectedcheckbox => {
+        let selectedIndex = selectedcheckbox.value;
+        let selected_id = document.getElementById(`id_${selectedIndex}`).value;
+        let selected_name = document.getElementById(`name_${selectedIndex}`).innerText;
+        let name = selected_name.split('|')[0].trim();
 
-    if (selectedNoteIndex !== null) {
-        const selected_group = document.getElementById(`group_${selectedIndex}`).value;
-        handleNotetrash(selected_id, selected_group, selected_name)
-    }
+        if (selectedGroupIndex !== null) {
+            selectedGroups.push({
+                id: selected_id,
+                name: name
+            });
+            if(selectedGroups!== null){
+                handleGrouptrash(selectedGroups);
+            }
+        }
 
-    if (selectedPhotoIndex !== null) {
-        const selected_location = document.getElementById(`location_${selectedIndex}`).value;
-        const selected_title = document.getElementById(`title_${selectedIndex}`).value;
-        handlePhototrash(selected_id, selected_location, selected_title, selected_name)
-    }
+        if (selectedNoteIndex !== null) {
+            const selected_group = document.getElementById(`group_${selectedIndex}`).value;
+            selectedNotes.push({
+                id: selected_id,
+                group: selected_group,
+                name: selected_name
+            });
+            if(selectedNotes!== null){
+                handleNotetrash(selectedNotes);
+            }
+        }
 
+        if (selectedPhotoIndex !== null) {
+            const selected_location = document.getElementById(`location_${selectedIndex}`).value;
+            const selected_title = document.getElementById(`title_${selectedIndex}`).value;
+            selectedPhotos.push({
+                id: selected_id,
+                location: selected_location,
+                title: selected_title,
+                name: selected_name
+            });
+            if(selectedPhotos!== null){
+                handlePhototrash(selectedPhotos);
+            }
+        }
+    })
 }
 
 async function deleteGroup(group_id) {
