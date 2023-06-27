@@ -128,7 +128,7 @@ async function album() {
         });
         $('#basic-photo').empty()
         if (response_json.length === 0) {
-            let temp_html =`<div style="all: unset; display: flex; justify-content: center; align-items: center; height: 100%; margin-top:50px;">
+            let temp_html = `<div style="all: unset; display: flex; justify-content: center; align-items: center; height: 100%; margin-top:50px;">
                                 <img class="empty-img" src="/css/assets/basicphoto.png" alt="Empty Group Image" onclick="removeRedLine()" data-bs-toggle="modal" data-bs-target="#photo"
                                 style="width:150px; height:150px; margin-top:50px; cursor:pointer;">
                             </div>`
@@ -136,28 +136,28 @@ async function album() {
             $('#basic-photo').append(temp_html);
 
         } else {
-        response_json.forEach((a) => {
-            console.log(a)
-            const image = backend_base_url + '/note' + a["image"];
-            const title = a['title'];
-            const photo_id = a['id'];
+            response_json.forEach((a) => {
+                console.log(a)
+                const image = backend_base_url + '/note' + a["image"];
+                const title = a['title'];
+                const photo_id = a['id'];
 
-            let temp_html = `<div class="gallery-item">
+                let temp_html = `<div class="gallery-item">
                             <a class="gallery-image" href="" onclick="photo_detail('${photo_id}')" data-bs-toggle="modal" data-bs-target="#photo-detail">
                                 <img class="gallery-image" src="${image}" alt="${title}">
                             </a> `
 
-            if (existPhoto.includes(photo_id)) {
-                temp_html += `<img class="exist-stamp" id="exist-stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
-            } else {
-                temp_html += `<img class="stamp" id="stamp" src="/css/assets/stamp2.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
-            }
+                if (existPhoto.includes(photo_id)) {
+                    temp_html += `<img class="exist-stamp" id="exist-stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
+                } else {
+                    temp_html += `<img class="stamp" id="stamp" src="/css/assets/stamp2.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
+                }
 
-            temp_html += `</div>`;
+                temp_html += `</div>`;
 
-            $('#photo_info').append(temp_html);
-        });
-    }
+                $('#photo_info').append(temp_html);
+            });
+        }
     } catch (error) {
         console.log(error)
     }
@@ -224,7 +224,7 @@ async function photo_detail(photo_id) {
 
     let temp_html = `<div id='photo_title' style="float:left; margin-bottom:5px;">${title}</div> 
                     <div id='photo_start' style="float: right; margin-bottom:5px;">${start}</div>
-                    <img class="detail-image" src="${image}"id='photo_image'>
+                    <img class="detail-image" src="${image}"id='photo_image' style="height:500px;">
                     <div id='photo_memo' style="margin-bottom: 10px;">${memo}</div>
                     <div style="display: flex; align-items: center;">
                         <img src="/css/assets/marker.png" alt="Image" style="width: 15px; height: 20px; margin-right: 5px; margin-bottom: 10px;">
@@ -253,9 +253,9 @@ async function photo_detail(photo_id) {
                                                         <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" 
                                                         onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
                                                         <button type="button" id="commentEditBtn${comment.id}" value="${comment.id}" 
-                                                        onclick="editComment(event)" class="btn btn-primary" style="background-color:  #7689b1; border-color: #7689b1;">Update</button>
-                                                        <button type="button" id="commentDeleteBtn${comment.id}" value="${comment.id}" 
-                                                        onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #485d86; border-color: #485d86;">Delete</button>
+                                                        onclick="editComment(event)" class="btn btn-primary" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
+                                                        <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" 
+                                                        onclick="deleteComment(event)" class="btn btn-secondary" style="background-color: #485d86; border-color: #485d86;">삭제</button>
                                                     </div>
                                                 </div>`).join('')}
                     </div>`;
@@ -468,9 +468,11 @@ async function addComment() {
         if (response.ok) {
             console.log('코멘트 추가 성공');
             showToast('새로운 댓글이 작성되었습니다!');
-            setTimeout(function () {
-                window.location.reload();
-            }, 1000);
+            commentText.value = '';
+            await photo_detail(photo_id)
+            // setTimeout(function () {
+            //     window.location.reload();
+            // }, 1000);
 
         } else {
             let response_json = await response.json()
@@ -483,7 +485,7 @@ async function addComment() {
         console.error(error);
     }
 }
-
+//비동기화 시켜야한다. 근데 힘드네? 
 async function editComment(event) {
     var button = event.target;
     const comment_id = button.value;
@@ -502,55 +504,66 @@ async function editComment(event) {
         return;
     }
 
+    try {
+        const response = await fetch(`${backend_base_url}/note/comment/${comment_id}`, {
+            headers: {
+                'content-type': 'application/json',
+                "Authorization": `Bearer ${access_token}`,
+            },
+            method: 'PATCH',
+            body: JSON.stringify({ comment: updatedComment })
+        });
 
-    fetch(`${backend_base_url}/note/comment/${comment_id}`, {
-        headers: {
-            'content-type': 'application/json',
-            "Authorization": `Bearer ${access_token}`,
-        },
-        method: 'PATCH',
-        body: JSON.stringify({ comment: updatedComment })
-    })
-        .then(response => response.json())
-        .then(data => {
-            showToast('댓글이 수정되었습니다!')
-            setTimeout(function () {
-                window.location.reload();
-            }, 1000);
-        })
-        .catch(error => {
-            console.error('Error', error)
-        })
+        if (response.ok) {
+            const response_json = await response.json();
+            let photo_id = response_json["photo"]
+            console.log(response_json);
+            showToast('댓글이 수정되었습니다!');
+            photo_detail(photo_id);
+        } else {
+            showToast('댓글이 수정에 실패했습니다!');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
-async function deleteComment(event) {
-    var button = event.target;
-    const comment_id = button.value;
 
+async function deleteComment(event) {
+    // var button = event.target;
+    // const comment_id = button.value;
+    var button = event.target;
+    const photo_comment_id = button.value;
+    const photo_id = photo_comment_id.split("/")[0];
+    const comment_id = photo_comment_id.split("/")[1];
+
+    // console.log(comment_id)
     test = confirm("삭제 하시겠습니까?")
     if (!test) {
-        return false
+        return
     }
-
-    fetch(`${backend_base_url}/note/comment/${comment_id}`, {
-        headers: {
-            'content-type': 'application/json',
-            "Authorization": `Bearer ${access_token}`,
-        },
-        method: 'DELETE',
-    })
-        .then(response => {
-            if (response.status == 204) {
-                showToast("댓글이 삭제되었습니다");
-                window.location.reload();
-            } else {
-                showToast('댓글이 삭제에 실패했습니다.');
-            }
+    try {
+        const response = await fetch(`${backend_base_url}/note/comment/${comment_id}`, {
+            headers: {
+                'content-type': 'application/json',
+                "Authorization": `Bearer ${access_token}`,
+            },
+            method: 'DELETE',
         })
-        .catch(error => {
-            console.error("댓글 삭제 중 오류 발생", error);
-            showToast("댓글 삭제 중 오류 발생")
-        });
+        if (response.ok) {
+            // const response_json = await response.json();
+            // // let photo_id = response_json["photo"]
+            // console.log(response_json);
+            showToast('댓글이 삭제되었습니다.');
+            photo_detail(photo_id);
+
+        } else {
+            showToast('댓글이 삭제에 실패했습니다.');
+        }
+    } catch (error) {
+        console.error("댓글 삭제 중 오류 발생", error);
+        showToast("댓글 삭제 중 오류 발생")
+    }
 
 }
 
