@@ -189,7 +189,6 @@ async function handleGrouptrash(group_id, name) {
             "name": name,
         })
     })
-
     if (response.status == 202) {
         const response_json = await response.json()
         showToast(`※ [${name}] 그룹이 정상적으로 삭제되었습니다.`)
