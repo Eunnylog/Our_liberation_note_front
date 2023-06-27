@@ -129,8 +129,8 @@ async function album() {
         $('#basic-photo').empty()
         if (response_json.length === 0) {
             let temp_html =`<div style="all: unset; display: flex; justify-content: center; align-items: center; height: 100%; margin-top:50px;">
-                                <img src="/css/assets/basicphoto.png" alt="Empty Group Image" onclick="removeRedLine()" data-bs-toggle="modal" data-bs-target="#photo"
-                                style="width:150px; height:150px; margin-top:50px;">
+                                <img class="empty-img" src="/css/assets/basicphoto.png" alt="Empty Group Image" onclick="removeRedLine()" data-bs-toggle="modal" data-bs-target="#photo"
+                                style="width:150px; height:150px; margin-top:50px; cursor:pointer;">
                             </div>`
 
             $('#basic-photo').append(temp_html);
@@ -252,9 +252,9 @@ async function photo_detail(photo_id) {
                                                     <div style="display: none;">
                                                         <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" 
                                                         onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
-                                                        <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" 
+                                                        <button type="button" id="commentEditBtn${comment.id}" value="${comment.id}" 
                                                         onclick="editComment(event)" class="btn btn-primary" style="background-color:  #7689b1; border-color: #7689b1;">Update</button>
-                                                        <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" 
+                                                        <button type="button" id="commentDeleteBtn${comment.id}" value="${comment.id}" 
                                                         onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #485d86; border-color: #485d86;">Delete</button>
                                                     </div>
                                                 </div>`).join('')}
@@ -449,6 +449,11 @@ async function addComment() {
         return false
     }
 
+    if (commentText.trim() === "") {
+        showToast("댓글을 입력해주세요.");
+        return;
+    }
+
     try {
         const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
             method: 'POST',
@@ -459,11 +464,14 @@ async function addComment() {
             body: JSON.stringify({ comment: commentText })
         });
 
+
         if (response.ok) {
+            console.log('코멘트 추가 성공');
             showToast('새로운 댓글이 작성되었습니다!');
             setTimeout(function () {
                 window.location.reload();
             }, 1000);
+
         } else {
             let response_json = await response.json()
             showToast(response_json['non_field_errors']);
@@ -477,12 +485,8 @@ async function addComment() {
 }
 
 async function editComment(event) {
-
     var button = event.target;
-    var buttonValue = button.value;
-
-    const photo_comment_id = button.value;
-    const comment_id = photo_comment_id.split("/")[1];
+    const comment_id = button.value;
 
     const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
     const updatedCommentBox = document.getElementById(`comment_edit${comment_id}`)
@@ -492,6 +496,12 @@ async function editComment(event) {
         updatedCommentBox.classList.add("custom-class");
         return false
     }
+
+    if (updatedComment.trim() === "") {
+        showToast("수정할 댓글을 입력해주세요.");
+        return;
+    }
+
 
     fetch(`${backend_base_url}/note/comment/${comment_id}`, {
         headers: {
@@ -514,13 +524,8 @@ async function editComment(event) {
 }
 
 async function deleteComment(event) {
-
     var button = event.target;
-    var buttonValue = button.value;
-    console.log("Button Value:", buttonValue);
-
-    const photo_comment_id = button.value;
-    const comment_id = photo_comment_id.split("/")[1];
+    const comment_id = button.value;
 
     test = confirm("삭제 하시겠습니까?")
     if (!test) {

@@ -50,7 +50,8 @@
         <button type="button" id="back" class="btn group-btn"
           style="background-color: #485d86; color:white; margin: 0px 10px;" onclick=""> 뒤로 가기 </button>
         <button type="button" class="btn group-btn" style="background-color: #7689b1; color:white; margin: 0px 10px;"
-          onclick="$('#save_plan_modal').modal('show'); $('#search_box').empty();"> 일정 추가 </button>
+          onclick="$('#save_plan_modal').modal('show'); $('#search_box').empty(); planList();"> 일정 추가
+        </button>
         <button type="button" id="goPhoto" class="btn group-btn"
           style="background-color: #485d86; color:white; margin: 0px 10px;" onclick=""> 사진첩 가기</button>
         <button type="button" id="goAI" class="btn group-btn"
@@ -71,6 +72,34 @@
       <div id='calendar' style="padding-bottom: 40px; padding-top: 20px;"></div>
     </article>
   </main>
+  <!-- footer start -->
+  <footer style="background-color: #fbfcfd;">
+    <div style="background-color:#60749d; width: 100%; height: 10px;"></div>
+    <p style="font-size: 30px; margin-top: 10px; text-align: center;">CONTACT</p>
+    <div style="display: flex; padding: 0px 0px 20px; justify-content: center;">
+        <div style="margin-right: 20px; width: 150px;">
+            <p style="font-size: 25px;">김미영</p>
+            <a style="text-decoration: none; color:black" href="https://github.com/kmy9810"><img src="/css/assets/github-logo.png" style="width:30px;"> kmy9810</a>
+        </div>
+        <div style="margin-right: 20px; width: 150px;">
+            <p style="font-size: 25px;">김정은</p>
+            <a style="text-decoration: none; color:black" href="https://github.com/Eunnylog"><img src="/css/assets/github-logo.png" style="width:30px;"> Eunnylog</a>
+        </div>
+        <div style="margin-right: 20px; width: 150px;">
+            <p style="font-size: 25px;">연제건</p>
+            <a style="text-decoration: none; color:black" href="https://github.com/Msgun7"><img src="/css/assets/github-logo.png" style="width:30px;"> Msgun7</a>
+        </div>
+        <div style="margin-right: 20px; width: 150px;">
+            <p style="font-size: 25px;">양예린</p>
+            <a style="text-decoration: none; color:black" href="https://github.com/yell2023"><img src="/css/assets/github-logo.png" style="width:30px;"> yell2023</a>
+        </div>
+        <div style="margin-right: 20px; width: 150px;">
+            <p style="font-size: 25px;">최예지</p>
+            <a style="text-decoration: none; color:black" href="https://github.com/choiyeji2022"><img src="/css/assets/github-logo.png" style="width:30px;"> choiyeji2022</a>
+        </div>
+    </div>
+  </footer>
+<!-- footer end -->
   <!-- 이메일전송 모달창 -->
   <div class=" modal fade" id="select_email_member" tabindex="-1" aria-labelledby="su" aria-hidden="true">
     <div class="modal-dialog">
@@ -161,7 +190,7 @@
                   <div id="search_box" style="width: 100%;  overflow: auto; margin: 0px 0px 0px 0px"></div>
                   <div class="input-group" style="flex-wrap: nowrap;">
                     <input name="location" id="location" type="text" class="form-control"
-                      style="width: 48%; height:48px;" placeholder="주소(미작성시 AI사용이 불가합니다!)">
+                      style="width: 48%; height:48px;" placeholder="주소(검색기능 미사용시 AI사용에 어려움이 있습니다!)">
                     <button type="button" class="btn btn-primary" onclick="addPlanList()"
                       style="width: 20%; margin-top:0px; background-color: #485d86;"
                       class="btn btn-primary">일정추가</button>
@@ -174,7 +203,8 @@
                   </div>
                   <textarea name="memo" id="memo" type="textarea" class="form-control" placeholder="memo"
                     style="height:200px; min-height:200px; max-height:200px"></textarea>
-                  <div id="plan_list" style="width:100%; height:200px; overflow-x: auto; margin-top: 10px;"
+                  <div id="plan_list"
+                    style="width:100%; height:200px; overflow-x: auto; margin-top: 10px; text-align:center;"
                     class="form-control"></div>
                   <div class="button-group">
                     <button type="button" data-bs-dismiss="modal" aria-label="Close"

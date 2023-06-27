@@ -3,9 +3,7 @@ let plan_set = [];
 let access_token = localStorage.getItem('access')
 let back_url = 'http://127.0.0.1:8000'
 
-checkGroup()
 checkLogin()
-
 
 window.onload = function () {
     params = new URLSearchParams(window.location.search);
@@ -31,8 +29,8 @@ window.onload = function () {
 };
 
 
-
 async function showPlanPage() {
+    await checkGroup()
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
     let note_name = localStorage.getItem('noteName')
@@ -196,6 +194,7 @@ function patchBox() {
     let time = document.getElementById('plan_time').innerHTML.split(':')[1].trim();
     let memo = document.getElementById('plan_memo').innerHTML.split(':')[1].trim();
     let category = document.getElementById('plan_category').innerHTML.split(':')[1].trim();
+    console.log(title, location, time, memo, category)
     // date 포멧팅
     let dateString = document.getElementById('plan_date').innerHTML.split(':')[1].trim();
     let dateParts = dateString.split('.').map(part => part.trim());
@@ -221,7 +220,7 @@ function patchBox() {
                             <input name="start" id="start" value='${date}' type="date" class="form-control">
                             <input name="time" id="time" value='${time}' type="text" class="form-control" placeholder="시간">
                             <textarea name="memo" id="memo" value='${memo}'  type="textarea" class="form-control" placeholder="memo"
-                                style="height:200px; min-height:200px; max-height:200px"></textarea>
+                                style="height:200px; min-height:200px; max-height:200px">${memo}</textarea>
     `;
 
     const btnElement = document.getElementById('patch_box');
@@ -331,6 +330,11 @@ function addPlanList() {
     }
 
     plan_set.push(plan);
+
+    var plan_list = document.getElementById('plan_list')
+    if (plan_list.innerText == '일정 추가시 여기에 추가됩니다!'){
+        plan_list.innerText = ''
+    }
 
     let temp_html = `
                         <button onclick="deletePlanList('${plan}', event)" style="width:150px; border-radius:20px;">${title}<br>(${start})</button>
@@ -559,3 +563,8 @@ async function loadGroupMembers() {
     $('#members-list').append(temp_html);
 }
 
+function planList() {
+    $('#plan_list').empty()
+    var plan_list = document.getElementById('plan_list')
+    plan_list.innerText = '일정 추가시 여기에 추가됩니다!'
+}
