@@ -730,6 +730,26 @@ async function addMember() {
     });
 }
 
+function showNoEmailInfo() {
+  const noEmailInfo = document.getElementById('no-email-info');
+
+  if ($('#selected-email-ul').children().length === 0) {
+    console.log($('#selected-email-ul').children().length)
+    noEmailInfo.style.display = "block";
+  } else {
+    console.log($('#selected-email-ul').children().length)
+    noEmailInfo.style.display = "none";
+  }
+}
+
+// const openModalButton = document.getElementById('makegroup-button');
+// if (openModalButton) {
+//   openModalButton.addEventListener('click', () => {
+//     showNoEmailInfo();
+//   });
+// }
+
+
 $(document).ready(function () {
   $('#makegroup').on('hide.bs.modal', function () {
     // 모달 창을 닫을 때 입력 값 다 지우기
@@ -743,13 +763,17 @@ $(document).ready(function () {
   });
 });
 
+
+
 function cancleGroupMake() {
   $('#email-list').empty()
   let temp_html2 = `<ul id="email-ul" style="position: relative; right: 10px;"></ul>`
   $('#email-list').append(temp_html2)
   $('#selected-email-list').empty()
   let temp_html = `<ul id="selected-email-ul" style="position: relative; right: 10px;">
-  </ul>`
+  </ul>
+  <div id="no-email-info"> 이메일을 추가하지 않으면 본인만 구성원으로 등록됩니다!</div>
+  `
   $('#selected-email-list').append(temp_html)
   selectedEmails = [];
 
@@ -795,6 +819,7 @@ function addMembersToGroup() {
     showToast("선택된 이메일이 없습니다.")
   }
   $('input[type=radio]').prop('checked', false);
+  showNoEmailInfo();
 }
 
 // 버튼 클릭 시 선택한 이메일 리스트에서 삭제
@@ -818,6 +843,7 @@ function DeleteMembers() {
     showToast("선택된 이메일이 없습니다.");
   }
   $('input[type=radio]').prop('checked', false);
+  showNoEmailInfo();
 }
 
 // 그룹 생성
