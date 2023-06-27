@@ -1,9 +1,3 @@
-// let back_url = 'https://api.liberation-note.com' // 삭제
-// const front_url = "https://liberation-note.com" // 삭제
-let front_url = 'http://127.0.0.1:5500' // 삭제
-let back_url = 'http://127.0.0.1:8000' // 삭제
-
-
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
 

@@ -1,8 +1,6 @@
 let plan_data = []
 let plan_set = [];
 let access_token = localStorage.getItem('access')
-// let back_url = 'https://api.liberation-note.com' //삭제하기
-let back_url = 'http://127.0.0.1:8000'//삭제하기
 
 checkLogin()
 
