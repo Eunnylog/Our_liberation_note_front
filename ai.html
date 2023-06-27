@@ -126,23 +126,28 @@
         <div style="display: flex; padding: 0px 0px 20px; justify-content: center;">
             <div style="margin-right: 20px; width: 150px;">
                 <p style="font-size: 25px;">김미영</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/kmy9810"><img src="/css/assets/github-logo.png" style="width:30px;"> kmy9810</a>
+                <a style="text-decoration: none; color:black" href="https://github.com/kmy9810"><img
+                        src="/css/assets/github-logo.png" style="width:30px;"> kmy9810</a>
             </div>
             <div style="margin-right: 20px; width: 150px;">
                 <p style="font-size: 25px;">김정은</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/Eunnylog"><img src="/css/assets/github-logo.png" style="width:30px;"> Eunnylog</a>
+                <a style="text-decoration: none; color:black" href="https://github.com/Eunnylog"><img
+                        src="/css/assets/github-logo.png" style="width:30px;"> Eunnylog</a>
             </div>
             <div style="margin-right: 20px; width: 150px;">
                 <p style="font-size: 25px;">연제건</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/Msgun7"><img src="/css/assets/github-logo.png" style="width:30px;"> Msgun7</a>
+                <a style="text-decoration: none; color:black" href="https://github.com/Msgun7"><img
+                        src="/css/assets/github-logo.png" style="width:30px;"> Msgun7</a>
             </div>
             <div style="margin-right: 20px; width: 150px;">
                 <p style="font-size: 25px;">양예린</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/yell2023"><img src="/css/assets/github-logo.png" style="width:30px;"> yell2023</a>
+                <a style="text-decoration: none; color:black" href="https://github.com/yell2023"><img
+                        src="/css/assets/github-logo.png" style="width:30px;"> yell2023</a>
             </div>
             <div style="margin-right: 20px; width: 150px;">
                 <p style="font-size: 25px;">최예지</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/choiyeji2022"><img src="/css/assets/github-logo.png" style="width:30px;"> choiyeji2022</a>
+                <a style="text-decoration: none; color:black" href="https://github.com/choiyeji2022"><img
+                        src="/css/assets/github-logo.png" style="width:30px;"> choiyeji2022</a>
             </div>
         </div>
     </footer>
@@ -186,13 +191,15 @@
         </div>
     </div>
     <!-- 그룹만들기 모달창 -->
-    <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
+    <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="su" style="color: #485d86;">
                         Make Group</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" onclick="cancleGroupMake()" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="container">
                     <div class="global-cont">
@@ -209,31 +216,35 @@
                                             id="addmember-btn">Search</button>
                                     </div>
                                     <div style="color: #7c838c;">
-                                        <p style="justify-content: left; color:#8d949e; margin-top: 20px;"> Searched
+                                        <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
                                             Emails </p>
                                         <div id="email-list"
-                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
                                             <ul id="email-ul" style="position: relative; right: 10px;">
                                             </ul>
                                         </div>
                                     </div>
                                     <button type="button" onclick="addMembersToGroup()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬇️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
+                                        <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
+                                    </button>
                                     <button type="button" onclick="DeleteMembers()"
-                                        style="width: 40px; height: 45px; margin-left: 10px; background-color: #485d86;">⬆️</button>
+                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
+                                            src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
                                     <div style="color: #4d6087;">
                                         <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
                                             Emails </p>
-                                        <div id="selected-email-list"
-                                            style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px;">
+                                        <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
+                                            overflow-y: auto; height: 250px;">
                                             <ul id="selected-email-ul" style="position: relative; right: 10px;">
                                             </ul>
+                                            <div id="no-email-info"> 이메일을 추가하지 않으면 본인만 구성원으로 등록됩니다!</div>
                                         </div>
                                     </div>
                                     <div class="sign-up" style="display: flex;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                                            onclick="document.getElementById('makegroup').style.display = 'none'"
-                                            style="margin-right: 10px; background-color: #6e81a8;">Cancel</button>
+                                            onclick="document.getElementById('makegroup').style.display = 'none'; cancleGroupMake()"
+                                            style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
                                         <button type="button" class="signup" onclick="addGroup()"
                                             style="background-color: #485d86;">Save</button>
                                     </div>

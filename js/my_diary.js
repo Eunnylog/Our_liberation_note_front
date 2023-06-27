@@ -1,4 +1,5 @@
 let access_token = localStorage.getItem('access')
+let back_url = 'https://api.liberation-note.com'
 
 let group_data = [] // 그룹 정보 저장
 
@@ -147,14 +148,25 @@ async function saveNote() {
     let radios = Array.from(document.getElementsByName('note_category'));
     let selected = radios.find(radio => radio.checked);
     const group_name = document.getElementById("group_name").value
+    const group_name_box = document.getElementById("group_name")
 
     if (group_name == '-1') {
         showToast('그룹을 선택해주세요!')
+        group_name_box.classList.add("custom-class")
         return false
+    } else {
+        group_name_box.classList.remove("custom-class")
     }
 
     const note_name = document.getElementById("note_name").value
+    const note_name_box = document.getElementById("note_name")
 
+    if (!note_name) {
+        showToast('노트 이름을 입력해주세요!!')
+        note_name_box.classList.add("custom-class")
+    } else {
+        note_name_box.classList.remove("custom-class")
+    }
     let category_value;
     if (selected) {
         category_value = selected.value;
@@ -183,6 +195,10 @@ async function saveNote() {
         } else if (!note_name) {
             showToast('노트 이름을 입력해주세요!!')
         }
+        else if (response_json.error) {
+            note_name_box.classList.add("custom-class")
+            showToast('이미 같은 이름의 노트가 존재합니다.')
+        }
         else {
             showToast(response_json['non_field_errors'])
         }
@@ -191,6 +207,25 @@ async function saveNote() {
         showToast('표지를 선택해 주세요!')
     }
 
+}
+
+$(document).ready(function () {
+    $('#create_note').on('hide.bs.modal', function () {
+        // 모달 창을 닫을 때 입력 값 다 지우기
+        $('#note_name').val("");
+        $('#group_name').val("");
+        $('input[type=radio]').prop('checked', false);
+        $('.custom-class').removeClass('custom-class');
+        removeNoteRedLine()
+    });
+});
+
+
+function removeNoteRedLine() {
+    let noteBox = document.getElementById("note_name")
+    let groupBox = document.getElementById("group_name")
+    noteBox.classList.remove("custom-class")
+    groupBox.classList.remove("custom-class")
 }
 
 function saveLocalNoteName(note_name, group_id) {
@@ -274,6 +309,7 @@ $(document).ready(function () {
         $('#update-usersearch').val("");
         $('#update-groupname').val("");
         $('.selected-email').empty();
+        $('#update-email-ul').empty();
         $('#email-list').empty();
         $("#update-selected-email-ul").empty(); // 선택된 그룹 멤버도 초기화
         existingEmails = []; // 기존 이메일 배열 초기화
