@@ -1,7 +1,6 @@
 let plan_data = []
 let plan_set = [];
 let access_token = localStorage.getItem('access')
-let back_url = 'http://127.0.0.1:8000'
 
 checkLogin()
 
@@ -37,7 +36,7 @@ async function showPlanPage() {
 
     $('#note_title').text(note_name);
 
-    const response = await fetch(`${back_url}/note/plan/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             // "Authorization": `Bearer ${access_token}`,
@@ -108,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             let year = droppedDate.getFullYear();
             let newDate = `${year}-${month}-${date}`;
 
-            fetch(`${back_url}/note/plan-detail/${plan_id}`, {
+            fetch(`${backend_base_url}/note/plan-detail/${plan_id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -141,7 +140,7 @@ async function savePlan() {
     }
 
 
-    const response = await fetch(`${back_url}/note/plan/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             // "Authorization": `Bearer ${access_token}`,
@@ -169,7 +168,7 @@ async function deletePlan() {
     }
 
     plan_id = document.getElementById('plan_modal_id').innerHTML;
-    const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
+    const response = await fetch(`${backend_base_url}/note/plan-detail/${plan_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -254,7 +253,7 @@ async function patchPlan() {
     }
 
 
-    const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
+    const response = await fetch(`${backend_base_url}/note/plan-detail/${plan_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -422,7 +421,7 @@ async function sendEmail() {
         // 로딩창 표시
         loading.style.display = 'block';
 
-        const response = await fetch(`${back_url}/note/email/${note_id}`, {
+        const response = await fetch(`${backend_base_url}/note/email/${note_id}`, {
             headers: {
                 'content-type': 'application/json',
                 // "Authorization": `Bearer ${access_token}`,
@@ -452,7 +451,7 @@ async function sendEmail() {
 async function selectEmailMember() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
-    const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/note-detail/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -485,7 +484,7 @@ async function selectEmailMember() {
 async function savePayIsSubscribe() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
-    const response = await fetch(`${back_url}/payments/subscription/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/payments/subscription/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -537,7 +536,7 @@ saveNoteID()
 async function loadGroupMembers() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
-    const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/note-detail/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
