@@ -25,6 +25,15 @@ window.onload = function () {
     }
 };
 
+async function showGroupModal() {
+    $('#makegroup').modal('show');
+
+    $('#makegroup').on('hidden.bs.modal', function () {
+        showToast('그룹을 먼저 생성해 주세요!');
+        $('#makegroup').modal('show');  // 모달이 숨겨진 후 다시 보여주기
+    });
+}
+
 async function getGroup() {
     const response = await fetch(`${backend_base_url}/user/group/`, {
         headers: {
@@ -37,15 +46,9 @@ async function getGroup() {
 
     console.log(response_json)
     $('#select_group').empty()
-    // if (response_json.length == 0) {
-    //     alert('그룹을 먼저 생성해 주세요!')
-    //     window.location.href = '/index.html'
-    // }
     if (response_json.length == 0) {
-        alert('그룹을 먼저 생성해 주세요!')
-        setTimeout(function () {
-            window.location.href = '/index.html'
-        }, 1500);
+        showToast('그룹을 먼저 생성해 주세요!')
+        await showGroupModal();
     }
     response_json.forEach((a, index) => {
         let id = a['id']

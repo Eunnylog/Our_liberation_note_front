@@ -1005,11 +1005,13 @@ select {
   position: fixed;
   top: 10px;
   left: 50%;
-  padding: 15px 20px;
+  padding: 20px 25px;
+  /* 박스 크기를 키움 */
   transform: translate(-50%, 10px);
-  border-radius: 30px;
+  border-radius: 35px;
+  /* 박스 모서리를 둥글게 만드는 데 사용하는 값 조절 */
   overflow: hidden;
-  font-size: .8rem;
+  font-size: 1.1rem;
   opacity: 0;
   visibility: hidden;
   transition: opacity .5s, visibility .5s, transform .5s;
