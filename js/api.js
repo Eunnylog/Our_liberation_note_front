@@ -591,8 +591,21 @@ $(document).ready(function () {
     $("#selected-email-list").empty();
     $('input[type=radio]').prop('checked', false);
     $('.custom-class').removeClass('custom-class');
+    selectedEmails = [];
   });
 });
+
+function cancleGroupMake() {
+  $('#email-list').empty()
+  let temp_html2 = `<ul id="email-ul" style="position: relative; right: 10px;"></ul>`
+  $('#email-list').append(temp_html2)
+  $('#selected-email-list').empty()
+  let temp_html = `<ul id="selected-email-ul" style="position: relative; right: 10px;">
+  </ul>`
+  $('#selected-email-list').append(temp_html)
+  selectedEmails = [];
+
+}
 
 
 // 멤버 추가 버튼 클릭 시 이메일 리스트에 추가
@@ -604,8 +617,10 @@ function addMembersToGroup() {
 
     const selectedEmail = checkedInput.previousSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
 
+
     // 이미 추가된 이메일인지 확인
     const alreadyAdded = selectedEmails.includes(selectedEmail);
+
 
     if (!alreadyAdded) {
       selectedEmails.push(selectedEmail);
@@ -700,8 +715,6 @@ async function addGroup() {
     method: 'POST',
     body: JSON.stringify(requestData)
   });
-
-
 
   if (response.status == 201) {
     showToast("그룹이 저장되었습니다.");
