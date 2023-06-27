@@ -866,3 +866,11 @@ function showToast(string) {
   toast.classList.add("reveal"),
     toast.innerText = string
 }
+
+
+// 코드 실행 막기 함수
+function checkCode(str) {
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}

@@ -28,14 +28,6 @@ window.onload = function () {
 };
 
 
-// 메모장 코드 실행 막기 함수
-function checkCode(str) {
-    var div = document.createElement('div');
-    div.appendChild(document.createTextNode(str));
-    return div.innerHTML;
-}
-
-
 async function showPlanPage() {
     await checkGroup()
     params = new URLSearchParams(window.location.search);
