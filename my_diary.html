@@ -49,12 +49,14 @@
             style="background-color: #7689b1; color:white;" data-bs-toggle="modal" data-bs-target="#deleteGroup"
             onclick="deleteGroupModal()">그룹 삭제</button>
         </div>
-        <div class="dropdown" style="margin-left: auto;" >
+        <div class="dropdown" style="margin-left: auto;">
           <button class="btn btn-secondary btn-sm dropdown-toggle" onclick="loadGroupMembers()"
-          style="background-color: #485D86; border-color: #485D86; color:white; margin: 0px 10px; height: 45px; border-radius: 8px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            style="background-color: #485D86; border-color: #485D86; color:white; margin: 0px 10px; height: 45px; border-radius: 8px;"
+            type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="/css/assets/members.png" alt="Stamp Image" style="width: 30px; height:30px">
           </button>
-          <ul id="members-list" class="dropdown-menu dropdown-menu-dark" style="right: 0; left: auto; background-color: #7689b1; border-color: #7689b1; color:white;">
+          <ul id="members-list" class="dropdown-menu dropdown-menu-dark"
+            style="right: 0; left: auto; background-color: #7689b1; border-color: #7689b1; color:white;">
           </ul>
         </div>
       </div>
@@ -83,7 +85,7 @@
               <div class="sign-in-up">
                 <form class="sign-in-form active">
                   <input name="note_name" id="note_name" type="text" class="form-control" placeholder="노트 이름"
-                    style="width: 48%; float:left;">
+                    style="width: 48%; float:left; height: 52px;">
                   <select name="group_name" id="group_name" onchange="showNoteList();"
                     style="width: 48%; height: 52px; float:right; margin-bottom:10px; padding: 10px; border: 1px solid #C2C7D0; border-radius: 5px; box-sizing: border-box;">
                     <option value="-1">그룹 선택</option>
@@ -246,33 +248,33 @@
   <!-- 휴지통 모달 -->
   <div class="modal" id="trash" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content" style="height: 500px">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div id="trash-modal-body" class="modal-body">
-                <div id="trash-container">
-                    <!-- 토글 -->
-                    <div class="trash-toggle">
-                        <input type="checkbox" id="photo-toggle">
-                        <button id="photoButton" onclick="loadTrash('photo')">사진</button>
-                        <input type="checkbox" id="note-toggle">
-                        <button id="noteButton" onclick="loadTrash('note')">노트</button>
-                        <input type="checkbox" id="group-toggle">
-                        <button id="groupButton" onclick="loadTrash('group')">그룹</button>
-                    </div>
-                </div>
-                <form>
-                    <div id="trash-content" class="trash-content">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer" id="trash-modal-footer">
-            </div>
+      <div class="modal-content" style="height: 500px">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div id="trash-modal-body" class="modal-body">
+          <div id="trash-container">
+            <!-- 토글 -->
+            <div class="trash-toggle">
+              <input type="checkbox" id="photo-toggle">
+              <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+              <input type="checkbox" id="note-toggle">
+              <button id="noteButton" onclick="loadTrash('note')">노트</button>
+              <input type="checkbox" id="group-toggle">
+              <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+            </div>
+          </div>
+          <form>
+            <div id="trash-content" class="trash-content">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" id="trash-modal-footer">
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
