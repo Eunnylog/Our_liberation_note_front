@@ -250,12 +250,12 @@ async function photo_detail(photo_id) {
                                                 <div id="comment-$comment-${comment.id}" value="${comment.user}" style="width: 100%; margin-bottom: 10px;" onclick="toggleCommentEdit(event)" >
                                                     ${comment.comment}
                                                     <div style="display: none;">
-                                                        <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" 
+                                                        <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" style="padding: 10px;"
                                                         onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
                                                         <button type="button" id="commentEditBtn${comment.id}" value="${comment.id}" 
-                                                        onclick="editComment(event)" class="btn btn-primary" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
+                                                        onclick="editComment(event)" class="btn btn-primary" style="background-color:  #7689b1; border-color: #7689b1;">update</button>
                                                         <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" 
-                                                        onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #485d86; border-color: #485d86;">삭제</button>
+                                                        onclick="deleteComment(event)" class="btn btn-secondary" style="background-color: #485d86; border-color: #485d86;">delete</button>
                                                     </div>
                                                 </div>`).join('')}
                     </div>`;
@@ -333,7 +333,7 @@ function patchPhotoBox(photo_id) {
                     </div>
                     <div class="input-group-append" style="width: 100%; margin-bottom: 15px;">
                         <input name="location" id="p_location" value='${location}' type="text" class="form-control"
-                        placeholder="주소" style=" height:40px;" placeholder="주소(미작성시 AI사용이 불가합니다!)">
+                        placeholder="주소" style=" height:40px;" placeholder="주소(검색기능 미사용시 스탬프 기능의 사용이 제한됩니다.)">
                     </div>
                     
                     <div id="search_box2" style="width: 100%;  overflow: auto; height= 30px;"></div>
@@ -485,7 +485,8 @@ async function addComment() {
         console.error(error);
     }
 }
-//비동기화 시켜야한다. 근데 힘드네? 
+
+
 async function editComment(event) {
     var button = event.target;
     const comment_id = button.value;
@@ -530,14 +531,11 @@ async function editComment(event) {
 
 
 async function deleteComment(event) {
-    // var button = event.target;
-    // const comment_id = button.value;
     var button = event.target;
     const photo_comment_id = button.value;
     const photo_id = photo_comment_id.split("/")[0];
     const comment_id = photo_comment_id.split("/")[1];
 
-    // console.log(comment_id)
     test = confirm("삭제 하시겠습니까?")
     if (!test) {
         return
@@ -551,9 +549,6 @@ async function deleteComment(event) {
             method: 'DELETE',
         })
         if (response.ok) {
-            // const response_json = await response.json();
-            // // let photo_id = response_json["photo"]
-            // console.log(response_json);
             showToast('댓글이 삭제되었습니다.');
             photo_detail(photo_id);
 
