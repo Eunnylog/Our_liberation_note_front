@@ -147,6 +147,17 @@ async function loadStampPhotopage(location) {
 }
 
 async function loadGroupStampmap(group_name) {
+
+    $('#map-title').empty()
+
+    let temp_html = `<div style="font-size: 30px; float: left; background-color: #60749d; color: white; width: 680px; text-align: center;">
+                        ${group_name} STAMP
+                        <a class="allstamp" href="#" onclick="location.reload(); return false;" style="font-size: 20px; color: white;">전체보기</a>
+                    </div>`
+
+    $('#map-title').append(temp_html)
+
+
     var container = document.getElementById('stamp-map');
     var options = {
         center: new kakao.maps.LatLng(35.9424, 127.661),
