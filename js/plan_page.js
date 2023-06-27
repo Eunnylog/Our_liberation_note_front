@@ -203,9 +203,9 @@ function patchBox() {
     let day = dateParts[2].length === 1 ? '0' + dateParts[2] : dateParts[2];
     let date = `${year}-${month}-${day}`;
 
-    console.log(dateString, document.getElementById('plan_date').innerHTML)
 
     let delete_btn = document.getElementById('delete_btn');
+    delete_btn.removeAttribute('data-bs-dismiss');
     delete_btn.innerHTML = '삭제';
     delete_btn.setAttribute("onClick", `deletePlan()`)
 
@@ -228,6 +228,9 @@ function patchBox() {
         let delete_btn = document.getElementById('delete_btn');
         delete_btn.innerHTML = '취소';
         delete_btn.setAttribute("onClick", ``)
+
+        //모달 꺼지는 속성 다시 추가
+        delete_btn.setAttribute('data-bs-dismiss', 'modal');
 
         const btnElement = document.getElementById('patch_box');
         btnElement.innerText = '수정';
@@ -284,6 +287,9 @@ function delete_patch_box() {
     // 검색지 지우기
     let planInfoDiv = document.getElementById('plan_info');
     planInfoDiv.innerHTML = ''
+
+    //모달 꺼지는 속성 다시 추가
+    delete_btn.setAttribute('data-bs-dismiss', 'modal');
 }
 
 async function patchPlan() {
