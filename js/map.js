@@ -15,6 +15,7 @@ async function searchLocation() {
                 return false
             }
             var searchBox = document.getElementById('search_box');
+            searchBox.style.display = 'block';
             searchBox.style.height = '200px';
             searchBox.style.padding = '20px';
             // searchBox.style.margin = '20px auto 20px auto';
@@ -71,5 +72,6 @@ function handleRadio() {
         document.getElementById("location_x").value = location_x;
         document.getElementById("location_y").value = location_y;
         document.getElementById("category").value = category;
+
     }
 }

@@ -57,14 +57,14 @@ function formFile() {
   }
 }
 // 세로버전 보여주는 로직
-function lifephoto2Click(){
+function lifephoto2Click() {
   let photocontainer1 = document.getElementById("photo-container1")
   let photocontainer2 = document.getElementById("photo-container2")
   photocontainer1.style.display = "none"
   photocontainer2.style.display = "block"
 }
 // 가로버전 보여주는 로직
-function lifephoto1Click(){
+function lifephoto1Click() {
   let photocontainer1 = document.getElementById("photo-container1")
   let photocontainer2 = document.getElementById("photo-container2")
   photocontainer2.style.display = "none"
@@ -72,6 +72,7 @@ function lifephoto1Click(){
 }
 // 해방필름 사전 png로 저장하는 로직
 function PrintDiv(div) {
+
   div = div[0];
   html2canvas(div).then(function (canvas) {
     let myFilm = canvas.toDataURL();
@@ -89,31 +90,51 @@ function downloadURL(uri, name) {
 
 // 시간 지연 함수 사용한 파일 다운로드 함수
 function saveButton() {
-    let loading = document.getElementById("loading");
+  let selectFile1 = document.getElementById("lifephoto1").src;
+  let selectFile2 = document.getElementById("lifephoto2").src;
+  let selectFile3 = document.getElementById("lifephoto3").src;
+  let selectFile4 = document.getElementById("lifephoto4").src;
 
-    // 로딩창 표시
-    loading.style.display = "block";
+  let selectFile1_2 = document.getElementById("image1").src;
+  let selectFile2_2 = document.getElementById("image2").src;
+  let selectFile3_2 = document.getElementById("image3").src;
+  let selectFile4_2 = document.getElementById("image4").src;
+  imgUrl = `${frontend_base_url}/css/assets/null.png`
 
-    let photocontainer1 = document.getElementById("photo-container1")
-    
-    if(photocontainer1.style.display == "block"){
-      // 시간지연 함수로 파일 다운로드 진행
-      setTimeout(function () {
-        PrintDiv($('#photo-container'));
+  console.log(selectFile1_2, selectFile2_2, selectFile3, selectFile4)
 
-        // 파일 다운로드 완료되면 로딩참 숨김
-        loading.style.display = "none"
-      }, 3000);
-    } else{
-      // 시간지연 함수로 파일 다운로드 진행
-      setTimeout(function () {
-        PrintDiv($('#photo-container2'));
-
-        // 파일 다운로드 완료되면 로딩참 숨김
-        loading.style.display = "none"
-      }, 3000);
+  if (selectFile1 == imgUrl || selectFile2 == imgUrl || selectFile3 == imgUrl || selectFile4 == imgUrl) {
+    if (selectFile1_2 == imgUrl || selectFile2_2 == imgUrl || selectFile3_2 == imgUrl || selectFile4_2 == imgUrl) {
+      showToast("이미지를 네장 다 넣고 다운로드를 눌러주세요!")
+      return false
     }
-    }
+  }
+
+  let loading = document.getElementById("loading");
+
+  // 로딩창 표시
+  loading.style.display = "block";
+
+  let photocontainer1 = document.getElementById("photo-container1")
+
+  if (photocontainer1.style.display == "block") {
+    // 시간지연 함수로 파일 다운로드 진행
+    setTimeout(function () {
+      PrintDiv($('#photo-container'));
+
+      // 파일 다운로드 완료되면 로딩참 숨김
+      loading.style.display = "none"
+    }, 3000);
+  } else {
+    // 시간지연 함수로 파일 다운로드 진행
+    setTimeout(function () {
+      PrintDiv($('#photo-container2'));
+
+      // 파일 다운로드 완료되면 로딩참 숨김
+      loading.style.display = "none"
+    }, 3000);
+  }
+}
 
 // 취소 함수, 취소 버튼을 누르면 페이지를 다시 로드함
 function cancle() {
