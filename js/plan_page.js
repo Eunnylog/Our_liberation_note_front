@@ -28,6 +28,14 @@ window.onload = function () {
 };
 
 
+// 메모장 코드 실행 막기 함수
+function checkCode(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+}
+
+
 async function showPlanPage() {
     await checkGroup()
     params = new URLSearchParams(window.location.search);
@@ -49,14 +57,16 @@ async function showPlanPage() {
             id: a['id'],
             title: a['title'],
             start: a['start'],
-            location: a['location'] ?? '주소가 없으면 ai 사용이 어렵습니다!',
-            time: a['time'] ?? '내용없음',
-            memo: a['memo'] ?? '내용없음',
-            place_category: a['category'] ?? '없음',
+            location: a['location'],
+            time: a['time'],
+            memo: a['memo'],
+            place_category: a['category'],
         };
         plan_data.push(dic)
     })
 }
+
+console.log(plan_data)
 
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -193,7 +203,6 @@ function patchBox() {
     let time = document.getElementById('plan_time').innerHTML.split(':')[1].trim();
     let memo = document.getElementById('plan_memo').innerHTML.split(':')[1].trim();
     let category = document.getElementById('plan_category').innerHTML.split(':')[1].trim();
-    console.log(title, location, time, memo, category)
     // date 포멧팅
     let dateString = document.getElementById('plan_date').innerHTML.split(':')[1].trim();
     let dateParts = dateString.split('.').map(part => part.trim());
@@ -201,6 +210,42 @@ function patchBox() {
     let month = dateParts[1].length === 1 ? '0' + dateParts[1] : dateParts[1];
     let day = dateParts[2].length === 1 ? '0' + dateParts[2] : dateParts[2];
     let date = `${year}-${month}-${day}`;
+
+    console.log(dateString, document.getElementById('plan_date').innerHTML)
+
+    let delete_btn = document.getElementById('delete_btn');
+    delete_btn.innerHTML = '삭제';
+    delete_btn.setAttribute("onClick", `deletePlan()`)
+
+    let patch_info = document.getElementById('patch_info');
+    let patch_info_box = document.getElementById('patch_info_box');
+    patch_info_box.style.display = 'block'
+    patch_info_box.style.textAlign = 'left'
+    patch_info_box.style.padding = '10px'
+
+    patch_info.innerHTML = '< 뒤로'
+    patch_info.onclick = function () {
+        planInfoDiv.innerHTML = `
+            <h3 id='plan_title'>${title}</h3>
+            <h5 id='plan_category'>카테고리:${category}</h5>
+            <h5 id='plan_date'>Date: ${dateString}</h5>
+            <h5 id='plan_location'>Location: ${location}</h5>
+            <h5 id='plan_time'>Time: ${time}</h5>
+            <h5 id='plan_memo'>Memo: ${memo}</h5>
+        `
+        let delete_btn = document.getElementById('delete_btn');
+        delete_btn.innerHTML = '취소';
+        delete_btn.setAttribute("onClick", ``)
+
+        const btnElement = document.getElementById('patch_box');
+        btnElement.innerText = '수정';
+        btnElement.setAttribute("onClick", `patchBox()`)
+
+        patch_info.innerHTML = ''
+        patch_info_box.style.display = 'none'
+        patch_info_box.style.textAlign = ''
+        patch_info_box.style.padding = ''
+    }
 
     planInfoDiv.innerHTML = `
                             <div class="input-group" style="flex-wrap: nowrap;">
@@ -228,16 +273,33 @@ function patchBox() {
 
 }
 
+function delete_patch_box() {
+    let patch_info = document.getElementById('patch_info');
+    let patch_info_box = document.getElementById('patch_info_box');
+    patch_info_box.style.display = 'none'
+    patch_info_box.style.textAlign = ''
+    patch_info_box.style.padding = ''
+    patch_info.innerHTML = ''
+
+    let delete_btn = document.getElementById('delete_btn');
+    delete_btn.innerHTML = '취소';
+    delete_btn.setAttribute("onClick", ``)
+
+    const btnElement = document.getElementById('patch_box');
+    btnElement.innerText = '수정';
+    btnElement.setAttribute("onClick", `patchBox()`)
+}
+
 async function patchPlan() {
-    plan_id = document.getElementById('plan_modal_id').innerHTML;
-    let title = document.getElementById('title').value;
-    let location = document.getElementById('location').value;
-    let time = document.getElementById('time').value;
-    let memo = document.getElementById('memo').value;
-    let start = document.getElementById('start').value;
-    let category = document.getElementById('category').value;
-    let location_x = document.getElementById("location_x").value
-    let location_y = document.getElementById("location_y").value
+    plan_id = checkCode(document.getElementById('plan_modal_id').innerHTML);
+    let title = checkCode(document.getElementById('title').value);
+    let location = checkCode(document.getElementById('location').value);
+    let time = checkCode(document.getElementById('time').value);
+    let memo = checkCode(document.getElementById('memo').value);
+    let start = checkCode(document.getElementById('start').value);
+    let category = checkCode(document.getElementById('category').value);
+    let location_x = checkCode(document.getElementById("location_x").value)
+    let location_y = checkCode(document.getElementById("location_y").value)
 
     let titleBox = document.getElementById("title")
     let startBox = document.getElementById("start")
@@ -284,12 +346,12 @@ async function patchPlan() {
 let title_li = [];
 
 function addPlanList() {
-    const title = document.getElementById("title").value
-    const location = document.getElementById("location").value
-    const start = document.getElementById("start").value
-    const memo = document.getElementById("memo").value
-    const time = document.getElementById("time").value
-    const category = document.getElementById("category").value
+    const title = checkCode(document.getElementById("title").value)
+    const location = checkCode(document.getElementById("location").value)
+    const start = checkCode(document.getElementById("start").value)
+    const memo = checkCode(document.getElementById("memo").value)
+    const time = checkCode(document.getElementById("time").value)
+    const category = checkCode(document.getElementById("category").value)
     const location_x = document.getElementById("location_x").value
     const location_y = document.getElementById("location_y").value
 
@@ -331,7 +393,7 @@ function addPlanList() {
     plan_set.push(plan);
 
     var plan_list = document.getElementById('plan_list')
-    if (plan_list.innerText == '일정 추가시 여기에 추가됩니다!'){
+    if (plan_list.innerText == '일정 추가시 여기에 추가됩니다!') {
         plan_list.innerText = ''
     }
 
@@ -348,6 +410,10 @@ function addPlanList() {
     document.getElementById("category").value = ''
     document.getElementById("location_x").value = ''
     document.getElementById("location_y").value = ''
+
+    // 검색지 지우기
+    var searchBox = document.getElementById('search_box');
+    searchBox.style.display = 'none';
 }
 
 
@@ -387,6 +453,10 @@ function deletePlanList(plan, event) {
 
         // 클릭된 버튼 삭제
         event.target.remove();
+    }
+    var plan_list = document.getElementById('plan_list')
+    if (plan_list.innerText == '') {
+        plan_list.innerText = '일정 추가시 여기에 추가됩니다!'
     }
 
 }
