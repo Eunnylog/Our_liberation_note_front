@@ -129,8 +129,8 @@ async function album() {
         $('#basic-photo').empty()
         if (response_json.length === 0) {
             let temp_html =`<div style="all: unset; display: flex; justify-content: center; align-items: center; height: 100%; margin-top:50px;">
-                                <img src="/css/assets/basicphoto.png" alt="Empty Group Image" onclick="removeRedLine()" data-bs-toggle="modal" data-bs-target="#photo"
-                                style="width:150px; height:150px; margin-top:50px;">
+                                <img class="empty-img" src="/css/assets/basicphoto.png" alt="Empty Group Image" onclick="removeRedLine()" data-bs-toggle="modal" data-bs-target="#photo"
+                                style="width:150px; height:150px; margin-top:50px; cursor:pointer;">
                             </div>`
 
             $('#basic-photo').append(temp_html);
@@ -486,8 +486,7 @@ async function addComment() {
 
 async function editComment(event) {
     var button = event.target;
-    const buttonComment_id = button.value;
-    const comment_id = buttonComment_id.split("/")[1];
+    const comment_id = button.value;
 
     const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
     const updatedCommentBox = document.getElementById(`comment_edit${comment_id}`)
@@ -526,8 +525,7 @@ async function editComment(event) {
 
 async function deleteComment(event) {
     var button = event.target;
-    const buttonComment_id = button.value;
-    const comment_id = buttonComment_id.split("/")[1];
+    const comment_id = button.value;
 
     test = confirm("삭제 하시겠습니까?")
     if (!test) {

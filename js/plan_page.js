@@ -1,7 +1,6 @@
 let plan_data = []
 let plan_set = [];
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.liberation-note.com'
 
 checkLogin()
 
@@ -37,7 +36,7 @@ async function showPlanPage() {
 
     $('#note_title').text(note_name);
 
-    const response = await fetch(`${back_url}/note/plan/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             // "Authorization": `Bearer ${access_token}`,
@@ -108,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             let year = droppedDate.getFullYear();
             let newDate = `${year}-${month}-${date}`;
 
-            fetch(`${back_url}/note/plan-detail/${plan_id}`, {
+            fetch(`${backend_base_url}/note/plan-detail/${plan_id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -141,7 +140,7 @@ async function savePlan() {
     }
 
 
-    const response = await fetch(`${back_url}/note/plan/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             // "Authorization": `Bearer ${access_token}`,
@@ -169,7 +168,7 @@ async function deletePlan() {
     }
 
     plan_id = document.getElementById('plan_modal_id').innerHTML;
-    const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
+    const response = await fetch(`${backend_base_url}/note/plan-detail/${plan_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -194,6 +193,7 @@ function patchBox() {
     let time = document.getElementById('plan_time').innerHTML.split(':')[1].trim();
     let memo = document.getElementById('plan_memo').innerHTML.split(':')[1].trim();
     let category = document.getElementById('plan_category').innerHTML.split(':')[1].trim();
+    console.log(title, location, time, memo, category)
     // date 포멧팅
     let dateString = document.getElementById('plan_date').innerHTML.split(':')[1].trim();
     let dateParts = dateString.split('.').map(part => part.trim());
@@ -219,7 +219,7 @@ function patchBox() {
                             <input name="start" id="start" value='${date}' type="date" class="form-control">
                             <input name="time" id="time" value='${time}' type="text" class="form-control" placeholder="시간">
                             <textarea name="memo" id="memo" value='${memo}'  type="textarea" class="form-control" placeholder="memo"
-                                style="height:200px; min-height:200px; max-height:200px"></textarea>
+                                style="height:200px; min-height:200px; max-height:200px">${memo}</textarea>
     `;
 
     const btnElement = document.getElementById('patch_box');
@@ -253,7 +253,7 @@ async function patchPlan() {
     }
 
 
-    const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
+    const response = await fetch(`${backend_base_url}/note/plan-detail/${plan_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -329,6 +329,11 @@ function addPlanList() {
     }
 
     plan_set.push(plan);
+
+    var plan_list = document.getElementById('plan_list')
+    if (plan_list.innerText == '일정 추가시 여기에 추가됩니다!'){
+        plan_list.innerText = ''
+    }
 
     let temp_html = `
                         <button onclick="deletePlanList('${plan}', event)" style="width:150px; border-radius:20px;">${title}<br>(${start})</button>
@@ -416,7 +421,7 @@ async function sendEmail() {
         // 로딩창 표시
         loading.style.display = 'block';
 
-        const response = await fetch(`${back_url}/note/email/${note_id}`, {
+        const response = await fetch(`${backend_base_url}/note/email/${note_id}`, {
             headers: {
                 'content-type': 'application/json',
                 // "Authorization": `Bearer ${access_token}`,
@@ -446,7 +451,7 @@ async function sendEmail() {
 async function selectEmailMember() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
-    const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/note-detail/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -479,7 +484,7 @@ async function selectEmailMember() {
 async function savePayIsSubscribe() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
-    const response = await fetch(`${back_url}/payments/subscription/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/payments/subscription/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -531,7 +536,7 @@ saveNoteID()
 async function loadGroupMembers() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
-    const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/note-detail/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -557,3 +562,8 @@ async function loadGroupMembers() {
     $('#members-list').append(temp_html);
 }
 
+function planList() {
+    $('#plan_list').empty()
+    var plan_list = document.getElementById('plan_list')
+    plan_list.innerText = '일정 추가시 여기에 추가됩니다!'
+}
