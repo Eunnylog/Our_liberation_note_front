@@ -1,13 +1,10 @@
 // 기본 URL
-const backend_base_url = "https://api.liberation-note.com"
-// const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "https://liberation-note.com"
-// const frontend_base_url = "http://127.0.0.1:5500"
-
-
+// const backend_base_url = "https://api.liberation-note.com"
+// const frontend_base_url = "https://liberation-note.com"
+const backend_base_url = "http://127.0.0.1:8000"
+const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
-
 
 // 회원 가입
 async function handleSignup() {
@@ -15,7 +12,6 @@ async function handleSignup() {
   const password = document.getElementById("password").value
   const password2 = document.getElementById("password2").value
   const confirmcode = document.getElementById("confirmcode").value
-
 
   const response = await fetch(`${backend_base_url}/user/signup/`, {
     headers: {
@@ -77,7 +73,6 @@ async function signupTimer() {
 
   TIMER();
 }
-
 
 // 로그인
 async function handleSignin() {
@@ -143,7 +138,6 @@ async function sendCode() {
   showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
   signupTimer()
 }
-
 
 if (localStorage.getItem("social")) {
 } else if (location.href.split('=')[1]) {  // 로그인 정보가 url에 있는 경우
@@ -386,7 +380,6 @@ async function handlesUserDelete() {
     localStorage.removeItem("is_subscribe")
     localStorage.removeItem("noteName")
     localStorage.removeItem("trashCount")
-    document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
     localStorage.removeItem("code")
     localStorage.removeItem("state")
     location.reload()
@@ -522,8 +515,6 @@ async function updatePassword() {
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
     location.replace(`${frontend_base_url}/index.html`)
-
-
   } else {
     showToast(data["message"])
   }

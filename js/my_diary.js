@@ -1,5 +1,4 @@
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.liberation-note.com'
 
 let group_data = [] // 그룹 정보 저장
 
@@ -27,7 +26,7 @@ window.onload = function () {
 };
 
 async function getGroup() {
-    const response = await fetch(`${back_url}/user/group/`, {
+    const response = await fetch(`${backend_base_url}/user/group/`, {
         headers: {
             'content-type': 'application/json',
             'Authorization': `Bearer ${access_token}`,
@@ -103,7 +102,7 @@ async function showNoteList() {
     localStorage.removeItem("is_subscribe")
     const group_id = document.getElementById("select_group").value
     if (group_id) {
-        const response = await fetch(`${back_url}/note/${group_id}`, {
+        const response = await fetch(`${backend_base_url}/note/${group_id}`, {
             headers: {
                 'content-type': 'application/json',
                 "Authorization": `Bearer ${access_token}`,
@@ -157,7 +156,7 @@ async function saveNote() {
     if (selected) {
         category_value = selected.value;
 
-        const response = await fetch(`${back_url}/note/`, {
+        const response = await fetch(`${backend_base_url}/note/`, {
 
             headers: {
                 "Content-Type": "application/json",
@@ -219,7 +218,7 @@ async function groupUpdateModal() {
 
 
     // 저장된 그룹 정보 서버로부터 가져오기
-    const response = await fetch(`${back_url}/user/group/`, {
+    const response = await fetch(`${backend_base_url}/user/group/`, {
         headers: {
             'content-type': 'application/json',
             'Authorization': `Bearer ${access_token}`,
