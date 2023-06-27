@@ -1,7 +1,3 @@
-let back_url = 'https://api.liberation-note.com'
-const front_url = "https://liberation-note.com"
-// let front_url = 'http://127.0.0.1:5500'
-// let back_url = 'http://127.0.0.1:8000'
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
 
@@ -39,7 +35,7 @@ function aiSubscribeCheck() {
 async function showStartSelect() {
   params = new URLSearchParams(window.location.search);
   note_id = params.get("note_id");
-  const response = await fetch(`${back_url}/note/plan/${note_id}`, {
+  const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
     headers: {
       'content-type': 'application/json',
       // "Authorization": `${access_token}`,
@@ -286,7 +282,7 @@ async function aiStart() {
     var loading = document.getElementById('loading');
     loading.style.display = 'block';
 
-    const response = await fetch(`${back_url}/note/search`, {
+    const response = await fetch(`${backend_base_url}/note/search`, {
       headers: {
         'content-type': 'application/json',
         // "Authorization": `Bearer ${access_token}`,
