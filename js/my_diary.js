@@ -304,6 +304,7 @@ $(document).ready(function () {
         $('#update-usersearch').val("");
         $('#update-groupname').val("");
         $('.selected-email').empty();
+        $('#update-email-ul').empty();
         $('#email-list').empty();
         $("#update-selected-email-ul").empty(); // 선택된 그룹 멤버도 초기화
         existingEmails = []; // 기존 이메일 배열 초기화

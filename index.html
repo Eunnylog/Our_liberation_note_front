@@ -211,7 +211,8 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="su" style="color: #485d86;">
                         Make Group</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" onclick="cancleGroupMake()" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="container">
                     <div class="global-cont">
@@ -254,7 +255,7 @@
                                     </div>
                                     <div class="sign-up" style="display: flex;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                                            onclick="document.getElementById('makegroup').style.display = 'none'"
+                                            onclick="document.getElementById('makegroup').style.display = 'none'; cancleGroupMake()"
                                             style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
                                         <button type="button" class="signup" onclick="addGroup()"
                                             style="background-color: #485d86;">Save</button>
