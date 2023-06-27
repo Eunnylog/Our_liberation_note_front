@@ -72,6 +72,39 @@
       <div id='calendar' style="padding-bottom: 40px; padding-top: 20px;"></div>
     </article>
   </main>
+  <!-- footer start -->
+  <footer style="background-color: #fbfcfd;">
+    <div style="background-color:#60749d; width: 100%; height: 10px;"></div>
+    <p style="font-size: 30px; margin-top: 10px; text-align: center;">CONTACT</p>
+    <div style="display: flex; padding: 0px 0px 20px; justify-content: center;">
+      <div style="margin-right: 20px; width: 150px;">
+        <p style="font-size: 25px;">김미영</p>
+        <a style="text-decoration: none; color:black" href="https://github.com/kmy9810"><img
+            src="/css/assets/github-logo.png" style="width:30px;"> kmy9810</a>
+      </div>
+      <div style="margin-right: 20px; width: 150px;">
+        <p style="font-size: 25px;">김정은</p>
+        <a style="text-decoration: none; color:black" href="https://github.com/Eunnylog"><img
+            src="/css/assets/github-logo.png" style="width:30px;"> Eunnylog</a>
+      </div>
+      <div style="margin-right: 20px; width: 150px;">
+        <p style="font-size: 25px;">연제건</p>
+        <a style="text-decoration: none; color:black" href="https://github.com/Msgun7"><img
+            src="/css/assets/github-logo.png" style="width:30px;"> Msgun7</a>
+      </div>
+      <div style="margin-right: 20px; width: 150px;">
+        <p style="font-size: 25px;">양예린</p>
+        <a style="text-decoration: none; color:black" href="https://github.com/yell2023"><img
+            src="/css/assets/github-logo.png" style="width:30px;"> yell2023</a>
+      </div>
+      <div style="margin-right: 20px; width: 150px;">
+        <p style="font-size: 25px;">최예지</p>
+        <a style="text-decoration: none; color:black" href="https://github.com/choiyeji2022"><img
+            src="/css/assets/github-logo.png" style="width:30px;"> choiyeji2022</a>
+      </div>
+    </div>
+  </footer>
+  <!-- footer end -->
   <!-- 이메일전송 모달창 -->
   <div class=" modal fade" id="select_email_member" tabindex="-1" aria-labelledby="su" aria-hidden="true">
     <div class="modal-dialog">
@@ -110,18 +143,22 @@
           <h5 class="modal-title" id="plan_modal_title" style="color: #485d86;">
             Plan Info</h5>
           <h6 class="modal-title" id="plan_modal_id" hidden></h6>
-          <button type="button" class="btn-close delete_search" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" onclick="delete_patch_box()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
         </div>
         <div class="container">
           <div class="global-cont">
             <div class="inner-cont">
               <div class="sign-in-up">
+                <div id="patch_info_box" style="display:none;"><a style="text-decoration: none; color:gray" href="#"
+                    id="patch_info"></a></div>
                 <form class="sign-in-form active">
                   <div id="plan_info" style="padding: 10px;; text-align:left">
                   </div>
-                  <button type="button" onclick="deletePlan()" class="btn btn-primary"
-                    style="float: center; width:49%; background-color: #7689b1;">
-                    삭제
+                  <button type="button" class="btn btn-primary" id="delete_btn" data-bs-dismiss="modal"
+                    aria-label="Close" style="float: center; width:49%; background-color: #7689b1;"
+                    onclick="delete_patch_box()">
+                    취소
                   </button>
                   <button id="patch_box" type="button" onclick="patchBox()" class="btn btn-primary"
                     style="float: center; width:49%; background-color: #485d86;">
@@ -194,7 +231,8 @@
     </div>
   </div>
   <!-- 그룹만들기 모달창 -->
-  <div class="modal fade" id="deleteuser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="deleteuser" tabindex="-1" aria-labelledby="su" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -218,7 +256,8 @@
     </div>
   </div>
   <!-- 그룹만들기 모달창 -->
-  <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
+  <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true" data-bs-backdrop="static"
+    data-bs-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

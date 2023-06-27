@@ -13,7 +13,7 @@
 
 body {
 	min-height: 100vh;
-	background-color: #fafafa;
+	background-color: #ebf2ff !important;
 }
 
 /* .container {
@@ -127,3 +127,8 @@ body {
 	border: 2px solid red !important;
 	animation: shake 0.5s ease-in-out !important;
 }
+
+.empty-img:hover {
+	width: 200px;
+	transform: scale(1.2);
+  }
