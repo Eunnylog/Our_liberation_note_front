@@ -49,18 +49,48 @@
                                 style="background-color: #485D86; color:white; "> >> </button>
                 </div>
             </div>
+            <div id="basic-photo">
+            </div>
             <div class="gallery" id="photo_info" style="padding-bottom: 40px; padding-top: 20px;">
                 <!-- 이미지 갤러리 아이템들이 동적으로 추가될 공간 -->
             </div>
         </article>
     </main>
+    <!-- footer start -->
+    <footer style="background-color: #fbfcfd;">
+        <div style="background-color:#60749d; width: 100%; height: 10px;"></div>
+        <p style="font-size: 30px; margin-top: 10px; text-align: center;">CONTACT</p>
+        <div style="display: flex; padding: 0px 0px 20px; justify-content: center;">
+            <div style="margin-right: 20px; width: 150px;">
+                <p style="font-size: 25px;">김미영</p>
+                <a style="text-decoration: none; color:black" href="https://github.com/kmy9810"><img src="/css/assets/github-logo.png" style="width:30px;"> kmy9810</a>
+            </div>
+            <div style="margin-right: 20px; width: 150px;">
+                <p style="font-size: 25px;">김정은</p>
+                <a style="text-decoration: none; color:black" href="https://github.com/Eunnylog"><img src="/css/assets/github-logo.png" style="width:30px;"> Eunnylog</a>
+            </div>
+            <div style="margin-right: 20px; width: 150px;">
+                <p style="font-size: 25px;">연제건</p>
+                <a style="text-decoration: none; color:black" href="https://github.com/Msgun7"><img src="/css/assets/github-logo.png" style="width:30px;"> Msgun7</a>
+            </div>
+            <div style="margin-right: 20px; width: 150px;">
+                <p style="font-size: 25px;">양예린</p>
+                <a style="text-decoration: none; color:black" href="https://github.com/yell2023"><img src="/css/assets/github-logo.png" style="width:30px;"> yell2023</a>
+            </div>
+            <div style="margin-right: 20px; width: 150px;">
+                <p style="font-size: 25px;">최예지</p>
+                <a style="text-decoration: none; color:black" href="https://github.com/choiyeji2022"><img src="/css/assets/github-logo.png" style="width:30px;"> choiyeji2022</a>
+            </div>
+        </div>
+    </footer>
+    <!-- footer end -->
     <!-- 사진추가 모달창 -->
     <div class="modal fade" id="photo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 700px;">
             <div class="modal-content" style="width:700px;">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
-                        사진 추가</h5>
+                        Add photo</h5>
                     <button type="button" class="btn-close delete_search" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -73,8 +103,7 @@
                                         <input class="upload-name" id="imgbox" placeholder="이미지를 넣어주세요." multiple
                                             accept=".jpg, .png, .jpeg" style="width: 80%; height:40px;">
                                         <label for="image"
-                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 4px 4px 0; background-color:  #485D86;">사진
-                                            추가</label>
+                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 4px 4px 0; background-color:  #485D86;">Upload</label>
                                         <input type="file" id="image" style="display: none" />
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
@@ -85,7 +114,7 @@
                                         <input name="title" id="title" type="text" class="form-control"
                                             placeholder="목적지(지역명+상호명, 지역명+카테고리)" style="width: 80%; height:40px;">
                                         <button type="button" onclick="searchLocation('1')" class="btn btn-primary"
-                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; background-color:  #485D86;">검색</button>
+                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; background-color:  #485D86;">Search</button>
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
                                         <input name="location" id="location" type="text" class="form-control"
@@ -102,9 +131,9 @@
                                     <div class="button-group">
                                         <button type="button" data-bs-dismiss="modal" aria-label="Close"
                                             class="btn btn-primary delete_search"
-                                            style="width: 49%; background-color:  #7689b1; border-color: #7689b1;">취소</button>
+                                            style="width: 49%; background-color:  #7689b1; border-color: #7689b1;">Close</button>
                                         <button type="button" onclick="addPhoto()" class="btn btn-primary"
-                                            style="width: 49%; background-color:  #485D86; border-color: #485D86;">저장</button>
+                                            style="width: 49%; background-color:  #485D86; border-color: #485D86;">Save</button>
                                     </div>
                                 </form>
                             </div>

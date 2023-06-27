@@ -105,6 +105,34 @@
       </div>
     </article>
   </main>
+  <!-- footer start -->
+  <footer style="background-color: #fbfcfd;">
+    <div style="background-color:#60749d; width: 100%; height: 10px;"></div>
+    <p style="font-size: 30px; margin-top: 10px; text-align: center;">CONTACT</p>
+    <div style="display: flex; padding: 0px 0px 20px; justify-content: center;">
+        <div style="margin-right: 20px; width: 150px;">
+            <p style="font-size: 25px;">김미영</p>
+            <a style="text-decoration: none; color:black" href="https://github.com/kmy9810"><img src="/css/assets/github-logo.png" style="width:30px;"> kmy9810</a>
+        </div>
+        <div style="margin-right: 20px; width: 150px;">
+            <p style="font-size: 25px;">김정은</p>
+            <a style="text-decoration: none; color:black" href="https://github.com/Eunnylog"><img src="/css/assets/github-logo.png" style="width:30px;"> Eunnylog</a>
+        </div>
+        <div style="margin-right: 20px; width: 150px;">
+            <p style="font-size: 25px;">연제건</p>
+            <a style="text-decoration: none; color:black" href="https://github.com/Msgun7"><img src="/css/assets/github-logo.png" style="width:30px;"> Msgun7</a>
+        </div>
+        <div style="margin-right: 20px; width: 150px;">
+            <p style="font-size: 25px;">양예린</p>
+            <a style="text-decoration: none; color:black" href="https://github.com/yell2023"><img src="/css/assets/github-logo.png" style="width:30px;"> yell2023</a>
+        </div>
+        <div style="margin-right: 20px; width: 150px;">
+            <p style="font-size: 25px;">최예지</p>
+            <a style="text-decoration: none; color:black" href="https://github.com/choiyeji2022"><img src="/css/assets/github-logo.png" style="width:30px;"> choiyeji2022</a>
+        </div>
+    </div>
+  </footer>
+<!-- footer end --> 
   <!-- 스탬프 사진 모달 -->
   <div id="stamp-modal" class="modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable">
@@ -118,7 +146,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-            style="background-color: #485d86;">닫기</button>
+            style="background-color: #485d86; border-color:#485d86">Close</button>
         </div>
       </div>
     </div>
@@ -251,33 +279,33 @@
   <!-- 휴지통 모달 -->
   <div class="modal" id="trash" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content" style="height: 500px">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div id="trash-modal-body" class="modal-body">
-                <div id="trash-container">
-                    <!-- 토글 -->
-                    <div class="trash-toggle">
-                        <input type="checkbox" id="photo-toggle">
-                        <button id="photoButton" onclick="loadTrash('photo')">사진</button>
-                        <input type="checkbox" id="note-toggle">
-                        <button id="noteButton" onclick="loadTrash('note')">노트</button>
-                        <input type="checkbox" id="group-toggle">
-                        <button id="groupButton" onclick="loadTrash('group')">그룹</button>
-                    </div>
-                </div>
-                <form>
-                    <div id="trash-content" class="trash-content">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer" id="trash-modal-footer">
-            </div>
+      <div class="modal-content" style="height: 500px">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div id="trash-modal-body" class="modal-body">
+          <div id="trash-container">
+            <!-- 토글 -->
+            <div class="trash-toggle">
+              <input type="checkbox" id="photo-toggle">
+              <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+              <input type="checkbox" id="note-toggle">
+              <button id="noteButton" onclick="loadTrash('note')">노트</button>
+              <input type="checkbox" id="group-toggle">
+              <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+            </div>
+          </div>
+          <form>
+            <div id="trash-content" class="trash-content">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" id="trash-modal-footer">
+        </div>
+      </div>
     </div>
-</div>
+  </div>
   <script src="/js/loader.js"></script>
   <script src="/js/api.js"></script>
   <script src="/js/my_page.js"></script>

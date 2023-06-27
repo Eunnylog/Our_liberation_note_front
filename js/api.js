@@ -5,9 +5,7 @@ const backend_base_url = "https://api.liberation-note.com"
 const frontend_base_url = "http://127.0.0.1:5500"
 
 
-
 let jwtToken;
-
 
 // 회원 가입
 async function handleSignup() {
@@ -15,7 +13,6 @@ async function handleSignup() {
   const password = document.getElementById("password").value
   const password2 = document.getElementById("password2").value
   const confirmcode = document.getElementById("confirmcode").value
-
 
   const response = await fetch(`${backend_base_url}/user/signup/`, {
     headers: {
@@ -77,7 +74,6 @@ async function signupTimer() {
 
   TIMER();
 }
-
 
 // 로그인
 async function handleSignin() {
@@ -143,7 +139,6 @@ async function sendCode() {
   showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
   signupTimer()
 }
-
 
 if (localStorage.getItem("social")) {
 } else if (location.href.split('=')[1]) {  // 로그인 정보가 url에 있는 경우
@@ -386,7 +381,6 @@ async function handlesUserDelete() {
     localStorage.removeItem("is_subscribe")
     localStorage.removeItem("noteName")
     localStorage.removeItem("trashCount")
-    document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
     localStorage.removeItem("code")
     localStorage.removeItem("state")
     location.reload()
@@ -522,8 +516,6 @@ async function updatePassword() {
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
     location.replace(`${frontend_base_url}/index.html`)
-
-
   } else {
     showToast(data["message"])
   }
@@ -600,8 +592,21 @@ $(document).ready(function () {
     $("#selected-email-list").empty();
     $('input[type=radio]').prop('checked', false);
     $('.custom-class').removeClass('custom-class');
+    selectedEmails = [];
   });
 });
+
+function cancleGroupMake() {
+  $('#email-list').empty()
+  let temp_html2 = `<ul id="email-ul" style="position: relative; right: 10px;"></ul>`
+  $('#email-list').append(temp_html2)
+  $('#selected-email-list').empty()
+  let temp_html = `<ul id="selected-email-ul" style="position: relative; right: 10px;">
+  </ul>`
+  $('#selected-email-list').append(temp_html)
+  selectedEmails = [];
+
+}
 
 
 // 멤버 추가 버튼 클릭 시 이메일 리스트에 추가
@@ -613,8 +618,10 @@ function addMembersToGroup() {
 
     const selectedEmail = checkedInput.previousSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
 
+
     // 이미 추가된 이메일인지 확인
     const alreadyAdded = selectedEmails.includes(selectedEmail);
+
 
     if (!alreadyAdded) {
       selectedEmails.push(selectedEmail);
@@ -709,8 +716,6 @@ async function addGroup() {
     method: 'POST',
     body: JSON.stringify(requestData)
   });
-
-
 
   if (response.status == 201) {
     showToast("그룹이 저장되었습니다.");
@@ -854,7 +859,7 @@ async function checkGroup() {
     method: 'GET',
   });
   if (response.status == 403) {
-    showToast('접근 권한이 없습니다!')
+    alert('접근 권한이 없습니다!')
     window.location.href = '/index.html'
   }
 }
@@ -874,4 +879,12 @@ function showToast(string) {
     }, 1000)
   toast.classList.add("reveal"),
     toast.innerText = string
+}
+
+
+// 코드 실행 막기 함수
+function checkCode(str) {
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
 }

@@ -40,8 +40,8 @@ async function injectNavbar() {
         let payload_parse = JSON.parse(payload)
 
         // payload에서 불러온 email값 넣어주기
-        intro.innerText = `Hello~ ${payload_parse.email}! 😄`
-        
+        intro.innerText = `Hello~ ${payload_parse.email.split('@')[0]} 😄`
+
         // 로그인 전 숨겼던 항목 보여주기
         intro.style.display = "block"
         nav_mydiary.style.display = "block"
@@ -60,6 +60,8 @@ async function injectNavbar() {
 
         newA.innerText = "Logout"
         newA.setAttribute("onClick", "handleLogout()")
+        newA.setAttribute("href", "#")
+        newA.style.color = "white"
 
 
         // 만든 로그아웃 넣어주기
@@ -69,5 +71,15 @@ async function injectNavbar() {
 
     }
 }
+$(document).ready(function () {
+    $(document).click(function (event) {
+    let backgroundclick = $(event.target);
+    let shownav = $(".navbar-collapse").hasClass("show");
+    if (shownav === true && !backgroundclick.hasClass("navbar-toggler")) {
+    $(".navbar-toggler").click();
+    }
+    });
+    });
+    
 
 injectNavbar();

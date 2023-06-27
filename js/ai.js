@@ -39,7 +39,7 @@ function aiSubscribeCheck() {
 async function showStartSelect() {
   params = new URLSearchParams(window.location.search);
   note_id = params.get("note_id");
-  const response = await fetch(`${back_url}/note/plan/${note_id}`, {
+  const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
     headers: {
       'content-type': 'application/json',
       // "Authorization": `${access_token}`,
@@ -259,7 +259,9 @@ async function aiStart() {
       y: location_y
     };
 
-    if (!location_x | !location_y) {
+    console.log(destination)
+
+    if (!location_x && !location_y) {
 
     } else {
       destinations.push(destination);
@@ -284,7 +286,7 @@ async function aiStart() {
     var loading = document.getElementById('loading');
     loading.style.display = 'block';
 
-    const response = await fetch(`${back_url}/note/search`, {
+    const response = await fetch(`${backend_base_url}/note/search`, {
       headers: {
         'content-type': 'application/json',
         // "Authorization": `Bearer ${access_token}`,

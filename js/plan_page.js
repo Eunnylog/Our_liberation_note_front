@@ -1,11 +1,8 @@
 let plan_data = []
 let plan_set = [];
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.liberation-note.com'
 
-checkGroup()
 checkLogin()
-
 
 window.onload = function () {
     params = new URLSearchParams(window.location.search);
@@ -31,18 +28,18 @@ window.onload = function () {
 };
 
 
-
 async function showPlanPage() {
+    await checkGroup()
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
     let note_name = localStorage.getItem('noteName')
 
     $('#note_title').text(note_name);
 
-    const response = await fetch(`${back_url}/note/plan/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            // "Authorization": `Bearer ${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'GET',
     })
@@ -52,14 +49,16 @@ async function showPlanPage() {
             id: a['id'],
             title: a['title'],
             start: a['start'],
-            location: a['location'] ?? '주소가 없으면 ai 사용이 어렵습니다!',
-            time: a['time'] ?? '내용없음',
-            memo: a['memo'] ?? '내용없음',
-            place_category: a['category'] ?? '없음',
+            location: a['location'],
+            time: a['time'],
+            memo: a['memo'],
+            place_category: a['category'],
         };
         plan_data.push(dic)
     })
 }
+
+console.log(plan_data)
 
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -88,7 +87,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             eventInfoDiv.innerHTML = `
                 <h3 id='plan_title'>${info.event.title}</h3>
-                <h5 id='plan_category'>카테고리:${info.event.extendedProps.place_category}</h5>
+                <h5 id='plan_category'>카테고리: ${info.event.extendedProps.place_category}</h5>
                 <h5 id='plan_date'>Date: ${formattedDate}</h5>
                 <h5 id='plan_location'>Location: ${info.event.extendedProps.location}</h5>
                 <h5 id='plan_time'>Time: ${info.event.extendedProps.time}</h5>
@@ -110,7 +109,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             let year = droppedDate.getFullYear();
             let newDate = `${year}-${month}-${date}`;
 
-            fetch(`${back_url}/note/plan-detail/${plan_id}`, {
+            fetch(`${backend_base_url}/note/plan-detail/${plan_id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -143,7 +142,7 @@ async function savePlan() {
     }
 
 
-    const response = await fetch(`${back_url}/note/plan/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             // "Authorization": `Bearer ${access_token}`,
@@ -171,7 +170,7 @@ async function deletePlan() {
     }
 
     plan_id = document.getElementById('plan_modal_id').innerHTML;
-    const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
+    const response = await fetch(`${backend_base_url}/note/plan-detail/${plan_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -204,6 +203,42 @@ function patchBox() {
     let day = dateParts[2].length === 1 ? '0' + dateParts[2] : dateParts[2];
     let date = `${year}-${month}-${day}`;
 
+    console.log(dateString, document.getElementById('plan_date').innerHTML)
+
+    let delete_btn = document.getElementById('delete_btn');
+    delete_btn.innerHTML = '삭제';
+    delete_btn.setAttribute("onClick", `deletePlan()`)
+
+    let patch_info = document.getElementById('patch_info');
+    let patch_info_box = document.getElementById('patch_info_box');
+    patch_info_box.style.display = 'block'
+    patch_info_box.style.textAlign = 'left'
+    patch_info_box.style.padding = '10px'
+
+    patch_info.innerHTML = '< 뒤로'
+    patch_info.onclick = function () {
+        planInfoDiv.innerHTML = `
+            <h3 id='plan_title'>${title}</h3>
+            <h5 id='plan_category'>카테고리:${category}</h5>
+            <h5 id='plan_date'>Date: ${dateString}</h5>
+            <h5 id='plan_location'>Location: ${location}</h5>
+            <h5 id='plan_time'>Time: ${time}</h5>
+            <h5 id='plan_memo'>Memo: ${memo}</h5>
+        `
+        let delete_btn = document.getElementById('delete_btn');
+        delete_btn.innerHTML = '취소';
+        delete_btn.setAttribute("onClick", ``)
+
+        const btnElement = document.getElementById('patch_box');
+        btnElement.innerText = '수정';
+        btnElement.setAttribute("onClick", `patchBox()`)
+
+        patch_info.innerHTML = ''
+        patch_info_box.style.display = 'none'
+        patch_info_box.style.textAlign = ''
+        patch_info_box.style.padding = ''
+    }
+
     planInfoDiv.innerHTML = `
                             <div class="input-group" style="flex-wrap: nowrap;">
                                 <input name="title" id="title" type="text" value='${title}' class="form-control" placeholder="장소명(지역명+상호명)"
@@ -221,7 +256,7 @@ function patchBox() {
                             <input name="start" id="start" value='${date}' type="date" class="form-control">
                             <input name="time" id="time" value='${time}' type="text" class="form-control" placeholder="시간">
                             <textarea name="memo" id="memo" value='${memo}'  type="textarea" class="form-control" placeholder="memo"
-                                style="height:200px; min-height:200px; max-height:200px"></textarea>
+                                style="height:200px; min-height:200px; max-height:200px">${memo}</textarea>
     `;
 
     const btnElement = document.getElementById('patch_box');
@@ -230,16 +265,37 @@ function patchBox() {
 
 }
 
+function delete_patch_box() {
+    let patch_info = document.getElementById('patch_info');
+    let patch_info_box = document.getElementById('patch_info_box');
+    patch_info_box.style.display = 'none'
+    patch_info_box.style.textAlign = ''
+    patch_info_box.style.padding = ''
+    patch_info.innerHTML = ''
+
+    let delete_btn = document.getElementById('delete_btn');
+    delete_btn.innerHTML = '취소';
+    delete_btn.setAttribute("onClick", ``)
+
+    const btnElement = document.getElementById('patch_box');
+    btnElement.innerText = '수정';
+    btnElement.setAttribute("onClick", `patchBox()`)
+
+    // 검색지 지우기
+    let planInfoDiv = document.getElementById('plan_info');
+    planInfoDiv.innerHTML = ''
+}
+
 async function patchPlan() {
-    plan_id = document.getElementById('plan_modal_id').innerHTML;
-    let title = document.getElementById('title').value;
-    let location = document.getElementById('location').value;
-    let time = document.getElementById('time').value;
-    let memo = document.getElementById('memo').value;
-    let start = document.getElementById('start').value;
-    let category = document.getElementById('category').value;
-    let location_x = document.getElementById("location_x").value
-    let location_y = document.getElementById("location_y").value
+    plan_id = checkCode(document.getElementById('plan_modal_id').innerHTML);
+    let title = checkCode(document.getElementById('title').value);
+    let location = checkCode(document.getElementById('location').value);
+    let time = checkCode(document.getElementById('time').value);
+    let memo = checkCode(document.getElementById('memo').value);
+    let start = checkCode(document.getElementById('start').value);
+    let category = checkCode(document.getElementById('category').value);
+    let location_x = checkCode(document.getElementById("location_x").value)
+    let location_y = checkCode(document.getElementById("location_y").value)
 
     let titleBox = document.getElementById("title")
     let startBox = document.getElementById("start")
@@ -255,7 +311,7 @@ async function patchPlan() {
     }
 
 
-    const response = await fetch(`${back_url}/note/plan-detail/${plan_id}`, {
+    const response = await fetch(`${backend_base_url}/note/plan-detail/${plan_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -286,12 +342,12 @@ async function patchPlan() {
 let title_li = [];
 
 function addPlanList() {
-    const title = document.getElementById("title").value
-    const location = document.getElementById("location").value
-    const start = document.getElementById("start").value
-    const memo = document.getElementById("memo").value
-    const time = document.getElementById("time").value
-    const category = document.getElementById("category").value
+    const title = checkCode(document.getElementById("title").value)
+    const location = checkCode(document.getElementById("location").value)
+    const start = checkCode(document.getElementById("start").value)
+    const memo = checkCode(document.getElementById("memo").value)
+    const time = checkCode(document.getElementById("time").value)
+    const category = checkCode(document.getElementById("category").value)
     const location_x = document.getElementById("location_x").value
     const location_y = document.getElementById("location_y").value
 
@@ -332,6 +388,11 @@ function addPlanList() {
 
     plan_set.push(plan);
 
+    var plan_list = document.getElementById('plan_list')
+    if (plan_list.innerText == '일정 추가시 여기에 추가됩니다!') {
+        plan_list.innerText = ''
+    }
+
     let temp_html = `
                         <button onclick="deletePlanList('${plan}', event)" style="width:150px; border-radius:20px;">${title}<br>(${start})</button>
                     `
@@ -345,6 +406,10 @@ function addPlanList() {
     document.getElementById("category").value = ''
     document.getElementById("location_x").value = ''
     document.getElementById("location_y").value = ''
+
+    // 검색지 지우기
+    var searchBox = document.getElementById('search_box');
+    searchBox.style.display = 'none';
 }
 
 
@@ -385,6 +450,10 @@ function deletePlanList(plan, event) {
         // 클릭된 버튼 삭제
         event.target.remove();
     }
+    var plan_list = document.getElementById('plan_list')
+    if (plan_list.innerText == '') {
+        plan_list.innerText = '일정 추가시 여기에 추가됩니다!'
+    }
 
 }
 
@@ -418,7 +487,7 @@ async function sendEmail() {
         // 로딩창 표시
         loading.style.display = 'block';
 
-        const response = await fetch(`${back_url}/note/email/${note_id}`, {
+        const response = await fetch(`${backend_base_url}/note/email/${note_id}`, {
             headers: {
                 'content-type': 'application/json',
                 // "Authorization": `Bearer ${access_token}`,
@@ -448,7 +517,7 @@ async function sendEmail() {
 async function selectEmailMember() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
-    const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/note-detail/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -481,7 +550,7 @@ async function selectEmailMember() {
 async function savePayIsSubscribe() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
-    const response = await fetch(`${back_url}/payments/subscription/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/payments/subscription/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -533,7 +602,7 @@ saveNoteID()
 async function loadGroupMembers() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
-    const response = await fetch(`${back_url}/note/note-detail/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/note-detail/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${access_token}`,
@@ -559,3 +628,8 @@ async function loadGroupMembers() {
     $('#members-list').append(temp_html);
 }
 
+function planList() {
+    $('#plan_list').empty()
+    var plan_list = document.getElementById('plan_list')
+    plan_list.innerText = '일정 추가시 여기에 추가됩니다!'
+}

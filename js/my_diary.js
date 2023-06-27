@@ -1,5 +1,4 @@
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.liberation-note.com'
 
 let group_data = [] // 그룹 정보 저장
 
@@ -26,8 +25,17 @@ window.onload = function () {
     }
 };
 
+async function showGroupModal() {
+    $('#makegroup').modal('show');
+
+    $('#makegroup').on('hidden.bs.modal', function () {
+        showToast('그룹을 먼저 생성해 주세요!');
+        $('#makegroup').modal('show');  // 모달이 숨겨진 후 다시 보여주기
+    });
+}
+
 async function getGroup() {
-    const response = await fetch(`${back_url}/user/group/`, {
+    const response = await fetch(`${backend_base_url}/user/group/`, {
         headers: {
             'content-type': 'application/json',
             'Authorization': `Bearer ${access_token}`,
@@ -38,15 +46,9 @@ async function getGroup() {
 
     console.log(response_json)
     $('#select_group').empty()
-    // if (response_json.length == 0) {
-    //     alert('그룹을 먼저 생성해 주세요!')
-    //     window.location.href = '/index.html'
-    // }
     if (response_json.length == 0) {
-        alert('그룹을 먼저 생성해 주세요!')
-        setTimeout(function () {
-            window.location.href = '/index.html'
-        }, 1500);
+        showToast('그룹을 먼저 생성해 주세요!')
+        await showGroupModal();
     }
     response_json.forEach((a, index) => {
         let id = a['id']
@@ -103,7 +105,7 @@ async function showNoteList() {
     localStorage.removeItem("is_subscribe")
     const group_id = document.getElementById("select_group").value
     if (group_id) {
-        const response = await fetch(`${back_url}/note/${group_id}`, {
+        const response = await fetch(`${backend_base_url}/note/${group_id}`, {
             headers: {
                 'content-type': 'application/json',
                 "Authorization": `Bearer ${access_token}`,
@@ -157,7 +159,7 @@ async function saveNote() {
     if (selected) {
         category_value = selected.value;
 
-        const response = await fetch(`${back_url}/note/`, {
+        const response = await fetch(`${backend_base_url}/note/`, {
 
             headers: {
                 "Content-Type": "application/json",
@@ -219,7 +221,7 @@ async function groupUpdateModal() {
 
 
     // 저장된 그룹 정보 서버로부터 가져오기
-    const response = await fetch(`${back_url}/user/group/`, {
+    const response = await fetch(`${backend_base_url}/user/group/`, {
         headers: {
             'content-type': 'application/json',
             'Authorization': `Bearer ${access_token}`,
