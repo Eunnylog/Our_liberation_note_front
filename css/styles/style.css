@@ -1024,3 +1024,7 @@ select {
   visibility: visible;
   transform: translate(-50%, 0)
 }
+
+#my_groups li:hover {
+  text-decoration: underline;
+}

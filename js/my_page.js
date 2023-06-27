@@ -204,12 +204,46 @@ async function loadGroupStampmap(group_name) {
 
             kakao.maps.event.addListener(marker, 'click', function () {
                 $('#stamp-modal').modal('show');
-                loadStampPhotopage(location)
+                loadGroupStampPhotopage(location,group_name)
             });
 
             markerGroups[location] = marker
         }
     })
+}
+
+async function loadGroupStampPhotopage(location, group_name) {
+
+    const response = await getMarkerStamps(location);
+
+    const title = document.getElementById("stamp-modal-title")
+    title.innerText = response[0].photo.location
+
+    $('#stamp-modal-body').empty()
+
+    const addedDiaryNames = []
+
+    response.forEach((stamp) => {
+        const diary_id = stamp.photo.diary_id
+        const diary_name = stamp.photo.diary_name
+        const image = backend_base_url + '/note' + stamp.photo.image
+        const group = stamp.photo.group_name
+
+        if (group == group_name){
+            if (!addedDiaryNames.includes(diary_name)) {
+                let diary_temp_html = ` <a href='/photo_page.html?note_id=${diary_id}' onclick="" style="text-decoration: none; color: black;">
+                                            <div class="diary-link-text" style="margin-top:10px;">${diary_name} ></div></a>
+                                        <img src="${image}" alt="Image description" style="width: 142px; height: 142px; margin-left:2px;">                                      
+                                    `
+                $('#stamp-modal-body').append(diary_temp_html)
+                addedDiaryNames.push(diary_name)
+
+            } else {
+                let diary_temp_html = `<img src=${image} alt="Image description" class="stamp-photo">`
+                $('#stamp-modal-body').append(diary_temp_html)
+            }
+        }
+    });
 }
 
 checkLogin()
