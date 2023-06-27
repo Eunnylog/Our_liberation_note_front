@@ -1,9 +1,8 @@
 // 기본 URL
 const backend_base_url = "https://api.liberation-note.com"
+// const frontend_base_url = "https://liberation-note.com"
 // const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "https://liberation-note.com"
-// const frontend_base_url = "http://127.0.0.1:5500"
-
+const frontend_base_url = "http://127.0.0.1:5500"
 
 
 let jwtToken;
@@ -741,14 +740,6 @@ function showNoEmailInfo() {
     noEmailInfo.style.display = "none";
   }
 }
-
-// const openModalButton = document.getElementById('makegroup-button');
-// if (openModalButton) {
-//   openModalButton.addEventListener('click', () => {
-//     showNoEmailInfo();
-//   });
-// }
-
 
 $(document).ready(function () {
   $('#makegroup').on('hide.bs.modal', function () {
