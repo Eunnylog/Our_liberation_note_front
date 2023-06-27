@@ -243,7 +243,7 @@ async function photo_detail(photo_id) {
                                                     <div style="display: none;">
                                                         <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" 
                                                         onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
-                                                        <button type="button" id="commentEditBtn${comment.id}" value="${photo_id}/${comment.id}" 
+                                                        <button type="button" id="commentEditBtn${comment.id}" value="${comment.id}" 
                                                         onclick="editComment(event)" class="btn btn-primary" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
                                                         <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" 
                                                         onclick="deleteComment(event)" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #485d86; border-color: #485d86;">삭제</button>
@@ -459,9 +459,11 @@ async function addComment() {
         if (response.ok) {
             console.log('코멘트 추가 성공');
             showToast('새로운 댓글이 작성되었습니다!');
-            setTimeout(function () {
-                window.location.reload();
-            }, 1000);
+            commentText.value = '';
+            await photo_detail(photo_id)
+            // setTimeout(function () {
+            //     window.location.reload();
+            // }, 1000);
 
         } else {
             let response_json = await response.json()
@@ -473,11 +475,10 @@ async function addComment() {
         console.error(error);
     }
 }
-
+//비동기화 시켜야한다. 근데 힘드네? 
 async function editComment(event) {
     var button = event.target;
-    const buttonComment_id = button.value;
-    const comment_id = buttonComment_id.split("/")[1];
+    const comment_id = button.value;
 
 
     const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
@@ -494,56 +495,66 @@ async function editComment(event) {
         return;
     }
 
+    try {
+        const response = await fetch(`${backend_base_url}/note/comment/${comment_id}`, {
+            headers: {
+                'content-type': 'application/json',
+                "Authorization": `Bearer ${access_token}`,
+            },
+            method: 'PATCH',
+            body: JSON.stringify({ comment: updatedComment })
+        });
 
-    fetch(`${backend_base_url}/note/comment/${comment_id}`, {
-        headers: {
-            'content-type': 'application/json',
-            "Authorization": `Bearer ${access_token}`,
-        },
-        method: 'PATCH',
-        body: JSON.stringify({ comment: updatedComment })
-    })
-        .then(response => response.json())
-        .then(data => {
-            showToast('댓글이 수정되었습니다!')
-            setTimeout(function () {
-                window.location.reload();
-            }, 1000);
-        })
-        .catch(error => {
-            console.error('Error', error)
-        })
+        if (response.ok) {
+            const response_json = await response.json();
+            let photo_id = response_json["photo"]
+            console.log(response_json);
+            showToast('댓글이 수정되었습니다!');
+            photo_detail(photo_id);
+        } else {
+            showToast('댓글이 수정에 실패했습니다!');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
-async function deleteComment(event) {
-    var button = event.target;
-    const buttonComment_id = button.value;
-    const comment_id = buttonComment_id.split("/")[1];
 
+async function deleteComment(event) {
+    // var button = event.target;
+    // const comment_id = button.value;
+    var button = event.target;
+    const photo_comment_id = button.value;
+    const photo_id = photo_comment_id.split("/")[0];
+    const comment_id = photo_comment_id.split("/")[1];
+
+    // console.log(comment_id)
     test = confirm("삭제 하시겠습니까?")
     if (!test) {
-        return false
+        return
     }
-
-    fetch(`${backend_base_url}/note/comment/${comment_id}`, {
-        headers: {
-            'content-type': 'application/json',
-            "Authorization": `Bearer ${access_token}`,
-        },
-        method: 'DELETE',
-    })
-        .then(response => {
-            if (response.status == 204) {
-                showToast("댓글이 삭제되었습니다");
-                window.location.reload();
-            } else {
-                showToast('댓글이 삭제에 실패했습니다.');
-            }
+    try {
+        const response = await fetch(`${backend_base_url}/note/comment/${comment_id}`, {
+            headers: {
+                'content-type': 'application/json',
+                "Authorization": `Bearer ${access_token}`,
+            },
+            method: 'DELETE',
         })
-        .catch(error => {
-            console.error("댓글 삭제 중 오류 발생", error);
-            showToast("댓글 삭제 중 오류 발생")
-        });
+        if (response.ok) {
+            // const response_json = await response.json();
+            // // let photo_id = response_json["photo"]
+            // console.log(response_json);
+            showToast('댓글이 삭제되었습니다.');
+            photo_detail(photo_id);
+
+        } else {
+            showToast('댓글이 삭제에 실패했습니다.');
+        }
+    } catch (error) {
+        console.error("댓글 삭제 중 오류 발생", error);
+        showToast("댓글 삭제 중 오류 발생")
+    }
 
 }
 
