@@ -47,7 +47,7 @@ async function showPlanPage() {
     const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            // "Authorization": `Bearer ${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'GET',
     })
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             eventInfoDiv.innerHTML = `
                 <h3 id='plan_title'>${info.event.title}</h3>
-                <h5 id='plan_category'>카테고리:${info.event.extendedProps.place_category}</h5>
+                <h5 id='plan_category'>카테고리: ${info.event.extendedProps.place_category}</h5>
                 <h5 id='plan_date'>Date: ${formattedDate}</h5>
                 <h5 id='plan_location'>Location: ${info.event.extendedProps.location}</h5>
                 <h5 id='plan_time'>Time: ${info.event.extendedProps.time}</h5>
@@ -288,6 +288,10 @@ function delete_patch_box() {
     const btnElement = document.getElementById('patch_box');
     btnElement.innerText = '수정';
     btnElement.setAttribute("onClick", `patchBox()`)
+
+    // 검색지 지우기
+    let planInfoDiv = document.getElementById('plan_info');
+    planInfoDiv.innerHTML = ''
 }
 
 async function patchPlan() {
