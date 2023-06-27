@@ -1028,3 +1028,15 @@ select {
   visibility: visible;
   transform: translate(-50%, 0)
 }
+
+#my_groups li:hover {
+  text-decoration: underline;
+}
+
+.allstamp {
+  text-decoration: none;
+}
+
+.allstamp:hover {
+  text-decoration: underline;
+}
