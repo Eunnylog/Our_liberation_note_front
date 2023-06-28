@@ -104,8 +104,7 @@
                 </div>
             </div>
             <!-- 사진 프레임 2 사진프레임 1과 동일한 사진들이 들어감 -->
-            <div class="photo-container"
-                style="width: 250px; background-color: #60749d; height: 100%; float: right;">
+            <div class="photo-container" style="width: 250px; background-color: #60749d; height: 100%; float: right;">
                 <div class="photos" style="margin-top: 30px;">
                     <!-- 첫번째 사진, input 첫번째 값이 들어감 -->
                     <div
@@ -273,7 +272,7 @@
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
                                     <input name="groupname" id="groupname" type="name" class="form-control"
-                                        placeholder="Group Name">
+                                        placeholder="Group Name" maxlength="15" oninput="checkLength(this)">
                                     <div style="display: flex;" id="group_make_box">
                                         <input name="addemail" id="usersearch" type="email" class="form-control"
                                             autocomplete="off" placeholder="Email to add" style="width: 300px;">
@@ -357,5 +356,6 @@
 <script src="/js/api.js"></script>
 <script src="/js/lifephoto_page.js"></script>
 <script src="/js/trash.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </html>
