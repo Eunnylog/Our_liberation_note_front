@@ -138,7 +138,7 @@ async function album() {
         } else {
             response_json.forEach((a) => {
                 console.log(a)
-                const image = backend_base_url + '/note' + a["image"];
+                const image = a["image"];
                 const title = a['title'];
                 const photo_id = a['id'];
 
@@ -208,7 +208,7 @@ async function photo_detail(photo_id) {
     //해당 url에 저장된 값을 수정
     const response_json = await response.json()
 
-    const image = backend_base_url + '/note' + response_json["image"];
+    const image = response_json["image"];
     const name = response_json["name"]
     const start = response_json["start"]
     const title = response_json["title"]
