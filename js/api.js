@@ -1066,6 +1066,9 @@ async function ChangePassword() {
         emailBox.classList.add("custom-class");
         message = data.message;
         break;
+      case "해당 메일로 보낸 인증 코드가 없습니다.":
+        codeBox.classList.add("custom-class");
+        message = data.message;
       case "인증 코드 유효 기간이 지났습니다.":
         codeBox.classList.add("custom-class");
         message = data.message;
