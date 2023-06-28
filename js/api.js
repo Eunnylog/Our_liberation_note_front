@@ -7,6 +7,14 @@ const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
 
+function showLoading() {
+  document.querySelector('.loading-container').style.display = 'block';
+}
+
+function hideLoading() {
+  document.querySelector('.loading-container').style.display = 'none';
+}
+
 // 회원 가입
 async function handleSignup() {
   const email = document.getElementById("email").value
@@ -153,8 +161,6 @@ $(document).ready(function () {
 
 // 로그인
 async function handleSignin(email = null, password = null) {
-  // const email = document.getElementById("login-email").value
-  // const password = document.getElementById("login-password").value
   if (!email || !password) {
     email = document.getElementById("login-email").value;
     password = document.getElementById("login-password").value;
@@ -180,7 +186,10 @@ async function handleSignin(email = null, password = null) {
     passwordBox.classList.remove("custom-class")
   }
 
-
+  if (emptyField) {
+    showToast("빈칸을 입력해주세요.")
+    return
+  }
 
   try {
     const response = await fetch(`${backend_base_url}/user/login/`, {
@@ -243,17 +252,42 @@ async function sendCode() {
     emailBox.classList.remove("custom-class")
   }
 
-  const response = await fetch(`${backend_base_url}/user/sendemail/`, {
-    headers: {
-      'content-type': 'application/json',
-    },
-    method: 'POST',
-    body: JSON.stringify({
-      "email": email,
-    })
-  })
-  showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
-  signupTimer()
+  showLoading();
+
+  // const response = await fetch(`${backend_base_url}/user/sendemail/`, {
+  //   headers: {
+  //     'content-type': 'application/json',
+  //   },
+  //   method: 'POST',
+  //   body: JSON.stringify({
+  //     "email": email,
+  //   })
+  // })
+  // showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
+  // signupTimer()
+  try {
+    const response = await fetch(`${backend_base_url}/user/sendemail/`, {
+      headers: {
+        "content-type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        email: email,
+      }),
+    });
+
+    if (response.ok) {
+      showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요");
+      signupTimer();
+    } else {
+      throw new Error("이메일 발송에 실패했습니다.");
+    }
+  } catch (error) {
+    showToast(error.message);
+  } finally {
+    hideLoading();
+  }
+
 }
 
 if (localStorage.getItem("social")) {
