@@ -221,7 +221,7 @@
               <div class="sign-in-up">
                 <form class="sign-in-form active">
                   <input name="groupname" id="update-groupname" type="name" class="form-control"
-                    placeholder="Group Name" style="color: #51565b;">
+                    placeholder="Group Name" style="color: #51565b;" maxlength="15" oninput="checkLength(this)">
                   <div style="display: flex;" id="group_make_box">
                     <input name="addemail" id="update-usersearch" type="email" class="form-control" autocomplete="off"
                       placeholder="Email to add" style="width: 300px; color: #51565b;">

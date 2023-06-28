@@ -1,5 +1,6 @@
 let access_token = localStorage.getItem('access')
 let back_url = 'https://api.liberation-note.com'
+// let back_url = 'http://127.0.0.1:8000'
 
 let group_data = [] // 그룹 정보 저장
 
@@ -507,6 +508,8 @@ async function updateGroup() {
             showToast("※ " + data.message);
         } else if (data["non_field_errors"]) {
             showToast("※ " + data["non_field_errors"])
+        } else if (data['name'][0]) {
+            showToast("※제한 글자수는 2~15자 입니다!")
         }
     }
 }

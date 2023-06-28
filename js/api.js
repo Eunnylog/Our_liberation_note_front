@@ -1,11 +1,19 @@
 // 기본 URL
 const backend_base_url = "https://api.liberation-note.com"
-const frontend_base_url = "https://liberation-note.com"
+// const frontend_base_url = "https://liberation-note.com"
 // const backend_base_url = "http://127.0.0.1:8000"
-// const frontend_base_url = "http://127.0.0.1:5500"
+const frontend_base_url = "http://127.0.0.1:5500"
 
 
 let jwtToken;
+
+function showLoading(id) {
+  document.getElementById(id).style.display = 'block';
+}
+
+function hideLoading(id) {
+  document.getElementById(id).style.display = 'none';
+}
 
 // 회원 가입
 async function handleSignup() {
@@ -84,8 +92,11 @@ async function handleSignup() {
         case "이메일이 이미 존재합니다.":
           emailBox.classList.add("custom-class");
           break;
+        case "해당 메일로 보낸 인증 코드가 없습니다.":
+          confirmcodeBox.classList.add("custom-class");
         case "인증 코드 유효 기간이 지났습니다.":
-        case "이메일 확인 코드가 유효하지 않습니다.":
+          confirmcodeBox.classList.add("custom-class");
+        case "인증 코드가 유효하지 않습니다.":
           confirmcodeBox.classList.add("custom-class");
           break;
         case "비밀번호와 비밀번호 확인이 일치하지 않습니다.":
@@ -150,8 +161,6 @@ $(document).ready(function () {
 
 // 로그인
 async function handleSignin(email = null, password = null) {
-  // const email = document.getElementById("login-email").value
-  // const password = document.getElementById("login-password").value
   if (!email || !password) {
     email = document.getElementById("login-email").value;
     password = document.getElementById("login-password").value;
@@ -177,7 +186,10 @@ async function handleSignin(email = null, password = null) {
     passwordBox.classList.remove("custom-class")
   }
 
-
+  if (emptyField) {
+    showToast("빈칸을 입력해주세요.")
+    return
+  }
 
   try {
     const response = await fetch(`${backend_base_url}/user/login/`, {
@@ -229,25 +241,47 @@ $(document).ready(function () {
 async function sendCode() {
   const email = document.getElementById("email").value
   const emailBox = document.getElementById("email")
+  const codeBox = document.getElementById("confirmcode")
 
+  codeBox.value = ""
   if (!email) {
     showToast('이메일을 입력하세요!')
     emailBox.classList.add("custom-class")
+    return
   } else {
     emailBox.classList.remove("custom-class")
   }
 
-  const response = await fetch(`${backend_base_url}/user/sendemail/`, {
-    headers: {
-      'content-type': 'application/json',
-    },
-    method: 'POST',
-    body: JSON.stringify({
-      "email": email,
-    })
-  })
-  showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
-  signupTimer()
+  var loading = document.getElementById('loading');
+
+  try {
+
+    // 로딩창 표시
+    loading.style.display = 'block';
+
+    const response = await fetch(`${backend_base_url}/user/sendemail/`, {
+      headers: {
+        "content-type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        email: email,
+      }),
+    });
+
+    if (response.ok) {
+      showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요");
+      signupTimer();
+    } else {
+      throw new Error("이메일 발송에 실패했습니다.");
+    }
+  } catch (error) {
+    showToast(error.message);
+  } finally {
+    // 로딩창 숨김
+    loading.style.display = 'none';
+  }
+
 }
 
 if (localStorage.getItem("social")) {
@@ -837,6 +871,17 @@ function DeleteMembers() {
   showNoEmailInfo();
 }
 
+// input 글자수 제한 알림
+function checkLength(input) {
+  const maxLength = input.getAttribute("maxlength");
+  if (input.value.length >= maxLength) {
+    showToast(`최대 글자수가 초과되었습니다! (${maxLength}자 이내로 작성해주세요)`);
+    input.classList.add("custom-class"); // custom-class 추가
+  } else {
+    input.classList.remove("custom-class"); // custom-class 제거 (선택사항)
+  }
+}
+
 // 그룹 생성
 async function addGroup() {
   const access_token = localStorage.getItem("access");
@@ -893,6 +938,8 @@ async function addGroup() {
       showToast("※ " + data["non_field_errors"])
     } else if (data.error) {
       showToast("※ " + data.error)
+    } else if (data['name'][0]) {
+      showToast("※제한 글자수는 2~15자 입니다!")
     }
   }
 }
@@ -959,6 +1006,9 @@ async function findPasswordTimer() {
 async function sendVerificationEmail() {
   const email = document.getElementById("sendEmail").value
   const emailBox = document.getElementById("sendEmail")
+  const codeBox = document.getElementById("confirm-code")
+
+  codeBox.value = ""
 
   if (!email) {
     showToast('이메일을 입력해주세요!')
@@ -970,17 +1020,35 @@ async function sendVerificationEmail() {
     emailBox.classList.remove("custom-class")
   }
 
-  const response = await fetch(`${backend_base_url}/user/sendemail/`, {
-    headers: {
-      'content-type': 'application/json',
-    },
-    method: 'POST',
-    body: JSON.stringify({
-      "email": email,
+  var loading = document.getElementById('loading');
+
+  try {
+
+    // 로딩창 표시
+    loading.style.display = 'block';
+
+    const response = await fetch(`${backend_base_url}/user/sendemail/`, {
+      headers: {
+        'content-type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        "email": email,
+      })
     })
-  })
-  showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
-  findPasswordTimer()
+
+    if (response.ok) {
+      showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요");
+      findPasswordTimer()
+    } else {
+      throw new Error("이메일 발송에 실패했습니다.");
+    }
+  } catch (error) {
+    showToast(error.message);
+  } finally {
+    // 로딩창 숨김
+    loading.style.display = 'none';
+  }
 }
 
 // 비밀번호 분실 새 비밀번호 발급
@@ -1057,6 +1125,9 @@ async function ChangePassword() {
         emailBox.classList.add("custom-class");
         message = data.message;
         break;
+      case "해당 메일로 보낸 인증 코드가 없습니다.":
+        codeBox.classList.add("custom-class");
+        message = data.message;
       case "인증 코드 유효 기간이 지났습니다.":
         codeBox.classList.add("custom-class");
         message = data.message;
