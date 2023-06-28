@@ -254,17 +254,6 @@ async function sendCode() {
 
   showLoading();
 
-  // const response = await fetch(`${backend_base_url}/user/sendemail/`, {
-  //   headers: {
-  //     'content-type': 'application/json',
-  //   },
-  //   method: 'POST',
-  //   body: JSON.stringify({
-  //     "email": email,
-  //   })
-  // })
-  // showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
-  // signupTimer()
   try {
     const response = await fetch(`${backend_base_url}/user/sendemail/`, {
       headers: {

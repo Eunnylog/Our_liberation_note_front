@@ -11,7 +11,6 @@ async function getTrash() {
 
     if (response.status == 200) {
         const response_json = await response.json()
-        console.log(response_json)
         return response_json
     } else {
         showToast("불러오는데 실패했습니다")
@@ -52,9 +51,9 @@ async function loadTrash(contentType) {
             $('#trash-content').append(trashImage);
 
             let temp_html2 = `<button type="button" class="btn btn-primary" 
-                                style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
-                              <button type="button" class="btn btn-primary" 
-                                style="background-color: #485d86; border-color: #485d86;">복원</button>`
+                            style="background-color:  #7689b1; border-color: #7689b1;">복원</button>
+                          <button type="button" class="btn btn-primary" 
+                            style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
             $('#trash-modal-footer').append(temp_html2)
 
@@ -65,18 +64,17 @@ async function loadTrash(contentType) {
                 const group_created_at = group.created_at
 
                 let temp_html = `<div style="margin-top:15px;">
-                                <input type="checkbox" name="trash-checkbox" id="trash-checkbox${group_id}" value="${index}" style="width:20px; height: 20px;" onclick="handleTrashCheckbox('group')">
-                                <label for="trash-checkbox${group_id}"></label>
+                                <input type="radio" name="trash-radio" value="${index}" style="width:10px" onclick="handleTrashRadio('group')">
                                 <a id='name_${index}'>${group_name} | ${group_created_at}</a>
                                 <input id='id_${index}' value="${group_id}" hidden>
-                                </div>`
+                            </div>`
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
-                                style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
-                              <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
+                            style="background-color:  #7689b1; border-color: #7689b1;">복원</button>
+                          <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
+                            style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
@@ -89,9 +87,9 @@ async function loadTrash(contentType) {
             $('#trash-content').append(trashImage);
 
             let temp_html2 = `<button type="button" class="btn btn-primary" 
-                                style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
-                              <button type="button" class="btn btn-primary" 
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+                            style="background-color:  #7689b1; border-color: #7689b1;">복원</button>
+                          <button type="button" class="btn btn-primary" 
+                            style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
             $('#trash-modal-footer').append(temp_html2)
 
@@ -108,16 +106,15 @@ async function loadTrash(contentType) {
                                 <a id='name_${index}'>${note_name}</a>
                                 <input id='id_${index}' value="${note_id}" hidden>
                                 <input id='group_${index}' value="${group}" hidden>
-                                <input type="checkbox" name="trash-checkbox${note_id}" value="${index}" style="width:10px" onclick="handleTrashCheckbox('note')">
-                                <label for="trash-checkbox${note_id}"></label>
+                                <input type="radio" name="trash-radio" value="${index}" style="width:10px" onclick="handleTrashRadio('note')">
                             </div>`
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
-                                style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
-                              <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
+                            style="background-color:  #7689b1; border-color: #7689b1;">복원</button>
+                          <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
+                            style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
@@ -130,9 +127,9 @@ async function loadTrash(contentType) {
             $('#trash-content').append(trashImage);
 
             let temp_html2 = `<button type="button" class="btn btn-primary" 
-                                style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
-                              <button type="button" class="btn btn-primary" 
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+                            style="background-color:  #7689b1; border-color: #7689b1;">복원</button>
+                          <button type="button" class="btn btn-primary" 
+                            style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
             $('#trash-modal-footer').append(temp_html2)
 
@@ -143,13 +140,12 @@ async function loadTrash(contentType) {
                 const photo_name = photo.name
                 const photo_created_at = photo.created_at
                 const photo_location = photo.location
-                const image = backend_base_url + '/note' + photo.image
+                const image = photo.image
 
                 let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:10px;">
                                     <img src="${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px;">
                                     <a id='name_${index}'>${photo_name}</a>
-                                    <input type="checkbox" name="trash-checkbox${photo_id}" value="${index}" style="width:10px" onclick="handleTrashCheckbox('photo')">
-                                    <label for="trash-checkbox${photo_id}"></label>
+                                    <input type="radio" name="trash-radio" value="${index}" style="width:10px" onclick="handleTrashRadio('photo')">
                                     <input id='id_${index}' value="${photo_id}" hidden>
                                     <input id='location_${index}' value="${photo_location}" hidden>
                                     <input id='title_${index}' value="${photo_title}" hidden>
@@ -157,10 +153,10 @@ async function loadTrash(contentType) {
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
-                                style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
-                              <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
+                            style="background-color:  #7689b1; border-color: #7689b1;">복원</button>
+                          <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
+                            style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
@@ -179,19 +175,20 @@ async function loadTrash(contentType) {
     selectedButton.classList.add("active");
 }
 
-async function handleGrouptrash(selectedGroups) {
+async function handleGrouptrash(group_id, name) {
     let token = localStorage.getItem("access")
 
-    const response = await fetch(`${backend_base_url}/note/trash`, {
+    const response = await fetch(`${backend_base_url}/note/trash/${group_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${token}`
         },
         method: 'POST',
         body: JSON.stringify({
-            "group_set": selectedGroups
+            "name": name,
         })
     })
+
     if (response.status == 202) {
         const response_json = await response.json()
         showToast(`※ [${name}] 그룹이 정상적으로 삭제되었습니다.`)
@@ -214,17 +211,18 @@ async function handleGrouptrash(selectedGroups) {
 
 }
 
-async function handleNotetrash(selectedNotes) {
+async function handleNotetrash(note_id, group, name) {
     let token = localStorage.getItem("access")
 
-    const response = await fetch(`${backend_base_url}/note/trash`, {
+    const response = await fetch(`${backend_base_url}/note/trash/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${token}`
         },
         method: 'POST',
         body: JSON.stringify({
-            "note_set": selectedNotes
+            "name": name,
+            "group": group,
         })
     })
 
@@ -244,21 +242,22 @@ async function handleNotetrash(selectedNotes) {
 
     } else {
         showToast("※실패하였습니다.")
-        console.log(photo_id)
     }
 }
 
-async function handlePhototrash(selectedPhotos) {
+async function handlePhototrash(photo_id, location, title, name) {
     let token = localStorage.getItem("access")
 
-    const response = await fetch(`${backend_base_url}/note/trash`, {
+    const response = await fetch(`${backend_base_url}/note/trash/${photo_id}`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${token}`
         },
         method: 'POST',
         body: JSON.stringify({
-            "photo_set": selectedPhotos
+            "location": location,
+            "title": title,
+            "name": name
         })
     })
     if (response.status == 202) {
@@ -279,7 +278,6 @@ async function handlePhototrash(selectedPhotos) {
 
     } else {
         showToast("※실패하였습니다.")
-        console.log(photo_id)
     }
 }
 
@@ -287,9 +285,9 @@ let selectedGroupIndex = null;
 let selectedNoteIndex = null;
 let selectedPhotoIndex = null;
 
-function handleTrashCheckbox(contentType) {
-    var selectedcheckbox = document.querySelector('input[name="trash-checkbox"]:checked');
-    let selectedIndex = selectedcheckbox.value;
+function handleTrashRadio(contentType) {
+    var selectedRadio = document.querySelector('input[name="trash-radio"]:checked');
+    let selectedIndex = selectedRadio.value;
 
     if (contentType === 'group') {
         selectedGroupIndex = selectedIndex;
@@ -305,59 +303,33 @@ function handleTrashCheckbox(contentType) {
 }
 
 function handleTrashRestore() {
-    var selectedcheckboxes = document.querySelectorAll('input[name="trash-checkbox"]:checked');
+    var selectedRadio = document.querySelector('input[name="trash-radio"]:checked');
 
-    if (selectedcheckboxes.length === 0) {
+    if (!selectedRadio) {
         showToast("※ 항목을 선택해주세요!");
         return;
     }
 
-    const selectedGroups = [];
-    const selectedNotes = [];
-    const selectedPhotos = [];
+    let selectedIndex = selectedRadio.value;
+    let selected_id = document.getElementById(`id_${selectedIndex}`).value;
+    let selected_name = document.getElementById(`name_${selectedIndex}`).innerText;
+    let name = selected_name.split('|')[0].trim();
 
-    selectedcheckboxes.forEach(selectedcheckbox => {
-        let selectedIndex = selectedcheckbox.value;
-        let selected_id = document.getElementById(`id_${selectedIndex}`).value;
-        let selected_name = document.getElementById(`name_${selectedIndex}`).innerText;
-        let name = selected_name.split('|')[0].trim();
+    if (selectedGroupIndex !== null) {
+        handleGrouptrash(selected_id, name);
+    }
 
-        if (selectedGroupIndex !== null) {
-            selectedGroups.push({
-                id: selected_id,
-                name: name
-            });
-            if(selectedGroups!== null){
-                handleGrouptrash(selectedGroups);
-            }
-        }
+    if (selectedNoteIndex !== null) {
+        const selected_group = document.getElementById(`group_${selectedIndex}`).value;
+        handleNotetrash(selected_id, selected_group, selected_name)
+    }
 
-        if (selectedNoteIndex !== null) {
-            const selected_group = document.getElementById(`group_${selectedIndex}`).value;
-            selectedNotes.push({
-                id: selected_id,
-                group: selected_group,
-                name: selected_name
-            });
-            if(selectedNotes!== null){
-                handleNotetrash(selectedNotes);
-            }
-        }
+    if (selectedPhotoIndex !== null) {
+        const selected_location = document.getElementById(`location_${selectedIndex}`).value;
+        const selected_title = document.getElementById(`title_${selectedIndex}`).value;
+        handlePhototrash(selected_id, selected_location, selected_title, selected_name)
+    }
 
-        if (selectedPhotoIndex !== null) {
-            const selected_location = document.getElementById(`location_${selectedIndex}`).value;
-            const selected_title = document.getElementById(`title_${selectedIndex}`).value;
-            selectedPhotos.push({
-                id: selected_id,
-                location: selected_location,
-                title: selected_title,
-                name: selected_name
-            });
-            if(selectedPhotos!== null){
-                handlePhototrash(selectedPhotos);
-            }
-        }
-    })
 }
 
 async function deleteGroup(group_id) {
@@ -439,14 +411,14 @@ async function deletePhoto(photo_id) {
 }
 
 function handleTrashDelete() {
-    var selectedcheckbox = document.querySelector('input[name="trash-checkbox"]:checked');
+    var selectedRadio = document.querySelector('input[name="trash-radio"]:checked');
 
-    if (!selectedcheckbox) {
+    if (!selectedRadio) {
         showToast("※ 항목을 선택해주세요!");
         return;
     }
 
-    let selectedIndex = selectedcheckbox.value;
+    let selectedIndex = selectedRadio.value;
     let selected_id = document.getElementById(`id_${selectedIndex}`).value;
 
     if (selectedGroupIndex !== null) {

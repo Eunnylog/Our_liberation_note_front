@@ -150,9 +150,12 @@ async function loadGroupStampmap(group_name) {
 
     $('#map-title').empty()
 
-    let temp_html = `<div style="font-size: 30px; float: left; background-color: #60749d; color: white; width: 680px; text-align: center;">
+    let temp_html = `<div style="display: grid; grid-template-columns: 100px 100px 100px 100px 100px 200px; background-color: #60749d; width:100%; height:40px">
+                        <div style="font-size: 30px;  color: white; width: 100%; grid-column: 4/5; text-align: center;">
                         ${group_name} STAMP
-                        <a class="allstamp" href="#" onclick="location.reload(); return false;" style="font-size: 20px; color: white;">전체보기</a>
+                        </div>                       
+                        <a class="allstamp" href="#" onclick="location.reload(); return false;" style="font-size: 20px; color: white; grid-column: 6; text-align: end; margin-right:30px; margin-top:10px">전체보기</a>
+                        
                     </div>`
 
     $('#map-title').append(temp_html)
