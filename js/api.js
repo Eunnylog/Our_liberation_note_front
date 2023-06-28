@@ -1,8 +1,8 @@
 // 기본 URL
-const backend_base_url = "https://api.liberation-note.com"
-const frontend_base_url = "https://liberation-note.com"
-// const backend_base_url = "http://127.0.0.1:8000"
-// const frontend_base_url = "http://127.0.0.1:5500"
+// const backend_base_url = "https://api.liberation-note.com"
+// const frontend_base_url = "https://liberation-note.com"
+const backend_base_url = "http://127.0.0.1:8000"
+const frontend_base_url = "http://127.0.0.1:5500"
 
 
 let jwtToken;
@@ -84,8 +84,11 @@ async function handleSignup() {
         case "이메일이 이미 존재합니다.":
           emailBox.classList.add("custom-class");
           break;
+        case "해당 메일로 보낸 인증 코드가 없습니다.":
+          confirmcodeBox.classList.add("custom-class");
         case "인증 코드 유효 기간이 지났습니다.":
-        case "이메일 확인 코드가 유효하지 않습니다.":
+          confirmcodeBox.classList.add("custom-class");
+        case "인증 코드가 유효하지 않습니다.":
           confirmcodeBox.classList.add("custom-class");
           break;
         case "비밀번호와 비밀번호 확인이 일치하지 않습니다.":
@@ -229,10 +232,13 @@ $(document).ready(function () {
 async function sendCode() {
   const email = document.getElementById("email").value
   const emailBox = document.getElementById("email")
+  const codeBox = document.getElementById("confirmcode")
 
+  codeBox.value = ""
   if (!email) {
     showToast('이메일을 입력하세요!')
     emailBox.classList.add("custom-class")
+    return
   } else {
     emailBox.classList.remove("custom-class")
   }
@@ -959,6 +965,9 @@ async function findPasswordTimer() {
 async function sendVerificationEmail() {
   const email = document.getElementById("sendEmail").value
   const emailBox = document.getElementById("sendEmail")
+  const codeBox = document.getElementById("confirm-code")
+
+  codeBox.value = ""
 
   if (!email) {
     showToast('이메일을 입력해주세요!')
