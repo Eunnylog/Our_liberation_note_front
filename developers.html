@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=1024">
     <link rel="icon" type="image/png" sizes="48x48" href="/css/favicon/android-icon-48x48.png">
     <link href="/css/styles/recipe_card.css" rek="stylesheet" type="text/css" />
     <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
@@ -32,7 +33,8 @@
 
     <!-- content start -->
     <main>
-        <article style="width: 100%; justify-content: center; min-height: 100%; padding-bottom: 200px; position: relative;">
+        <article
+            style="width: 100%; justify-content: center; min-height: 100%; padding-bottom: 200px; position: relative;">
             <!-- 전체 페이지 위치를 위한 제일 큰 그리드 -->
             <div class="content"
                 style="display: grid; grid-template-columns: 50px 350px 50px 350px 50px 350px 50px; grid-template-rows: 50px 50px 230px 50px 230px 30px; background-color: aliceblue; justify-content: center; width:fit-content; height:fit-content; margin: 40px auto;">
@@ -99,23 +101,28 @@
         <div style="display: flex; justify-content: center; padding-bottom: 30px;">
             <div style="margin-right: 20px; width: 150px;">
                 <p style="font-size: 25px;">김미영</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/kmy9810"><img src="/css/assets/github-logo.png" style="width:30px;"> kmy9810</a>
+                <a style="text-decoration: none; color:black" href="https://github.com/kmy9810"><img
+                        src="/css/assets/github-logo.png" style="width:30px;"> kmy9810</a>
             </div>
             <div style="margin-right: 20px; width: 150px;">
                 <p style="font-size: 25px;">김정은</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/Eunnylog"><img src="/css/assets/github-logo.png" style="width:30px;"> Eunnylog</a>
+                <a style="text-decoration: none; color:black" href="https://github.com/Eunnylog"><img
+                        src="/css/assets/github-logo.png" style="width:30px;"> Eunnylog</a>
             </div>
             <div style="margin-right: 20px; width: 150px;">
                 <p style="font-size: 25px;">연제건</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/Msgun7"><img src="/css/assets/github-logo.png" style="width:30px;"> Msgun7</a>
+                <a style="text-decoration: none; color:black" href="https://github.com/Msgun7"><img
+                        src="/css/assets/github-logo.png" style="width:30px;"> Msgun7</a>
             </div>
             <div style="margin-right: 20px; width: 150px;">
                 <p style="font-size: 25px;">양예린</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/yell2023"><img src="/css/assets/github-logo.png" style="width:30px;"> yell2023</a>
+                <a style="text-decoration: none; color:black" href="https://github.com/yell2023"><img
+                        src="/css/assets/github-logo.png" style="width:30px;"> yell2023</a>
             </div>
             <div style="margin-right: 20px; width: 150px;">
                 <p style="font-size: 25px;">최예지</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/choiyeji2022"><img src="/css/assets/github-logo.png" style="width:30px;"> choiyeji2022</a>
+                <a style="text-decoration: none; color:black" href="https://github.com/choiyeji2022"><img
+                        src="/css/assets/github-logo.png" style="width:30px;"> choiyeji2022</a>
             </div>
         </div>
     </footer>
@@ -215,13 +222,15 @@
         </div>
     </div>
     <!-- 그룹만들기 모달창 -->
-    <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
+    <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="su" style="color: #485d86;">
                         Make Group</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" onclick="cancleGroupMake()" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="container">
                     <div class="global-cont">
@@ -260,11 +269,12 @@
                                             overflow-y: auto; height: 250px;">
                                             <ul id="selected-email-ul" style="position: relative; right: 10px;">
                                             </ul>
+                                            <div id="no-email-info"> 이메일을 추가하지 않으면 본인만 구성원으로 등록됩니다!</div>
                                         </div>
                                     </div>
                                     <div class="sign-up" style="display: flex;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                                            onclick="document.getElementById('makegroup').style.display = 'none'"
+                                            onclick="document.getElementById('makegroup').style.display = 'none'; cancleGroupMake()"
                                             style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
                                         <button type="button" class="signup" onclick="addGroup()"
                                             style="background-color: #485d86;">Save</button>
@@ -362,5 +372,6 @@
 <script src="/js/loader.js"></script>
 <script src="/js/api.js"></script>
 <script src="/js/trash.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </html>

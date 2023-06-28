@@ -136,12 +136,13 @@ body {
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media (max-width: 768px) {
 	.gallery {
 		grid-template-columns: repeat(2, 1fr);
 		grid-template-rows: repeat(3, 1fr);
 	}
 }
+
 
 /* 필수요소 미작성시 */
 .custom-class {

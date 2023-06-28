@@ -167,6 +167,7 @@ async function album() {
 // 페이지 로드 시 앨범 표시
 window.addEventListener('DOMContentLoaded', album);
 
+
 function p_page() {
     params = new URLSearchParams(window.location.search);
     page = params.get("page");
@@ -224,7 +225,7 @@ async function photo_detail(photo_id) {
 
     let temp_html = `<div id='photo_title' style="float:left; margin-bottom:5px;">${title}</div> 
                     <div id='photo_start' style="float: right; margin-bottom:5px;">${start}</div>
-                    <img class="detail-image" src="${image}"id='photo_image'>
+                    <img class="detail-image" src="${image}"id='photo_image' style="height:500px;">
                     <div id='photo_memo' style="margin-bottom: 10px;">${memo}</div>
                     <div style="display: flex; align-items: center;">
                         <img src="/css/assets/marker.png" alt="Image" style="width: 15px; height: 20px; margin-right: 5px; margin-bottom: 10px;">
@@ -256,6 +257,7 @@ async function photo_detail(photo_id) {
                                                         onclick="editComment(event)" class="btn btn-primary" style="background-color:  #7689b1; border-color: #7689b1;">update</button>
                                                         <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" 
                                                         onclick="deleteComment(event)" class="btn btn-secondary" style="background-color: #485d86; border-color: #485d86;">delete</button>
+                                                        onclick="deleteComment(event)" class="btn btn-secondary" style="background-color: #485d86; border-color: #485d86;">삭제</button>
                                                     </div>
                                                 </div>`).join('')}
                     </div>`;

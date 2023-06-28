@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=1024">
   <link rel="icon" type="image/png" sizes="48x48" href="/css/favicon/android-icon-48x48.png">
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
   <link href="/css/styles/theme.css" rel="stylesheet" type="text/css" />
@@ -46,15 +47,17 @@
             style="background-color: #485d86; color:white; margin: 0px 10px;" onclick="groupUpdateModal()"> 그룹 수정
           </button>
           <button type="button" id="group-delete-btn" class="btn group-btn"
-            style="background-color: #7689b1; color:white;" data-bs-toggle="modal" data-bs-target="#deleteGroup"
-            onclick="deleteGroupModal()">그룹 삭제</button>
+            style="background-color: #7689b1; color:white; margin-right: 20px;" data-bs-toggle="modal"
+            data-bs-target="#deleteGroup" onclick="deleteGroupModal()">그룹 삭제</button>
         </div>
-        <div class="dropdown" style="margin-left: auto;" >
+        <div class="dropdown" style="margin-left: auto;">
           <button class="btn btn-secondary btn-sm dropdown-toggle" onclick="loadGroupMembers()"
-          style="background-color: #485D86; border-color: #485D86; color:white; margin: 0px 10px; height: 45px; border-radius: 8px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            style="background-color: #485D86; border-color: #485D86; color:white; margin: 0px 10px; height: 45px; border-radius: 8px;"
+            type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="/css/assets/members.png" alt="Stamp Image" style="width: 30px; height:30px">
           </button>
-          <ul id="members-list" class="dropdown-menu dropdown-menu-dark" style="right: 0; left: auto; background-color: #7689b1; border-color: #7689b1; color:white;">
+          <ul id="members-list" class="dropdown-menu dropdown-menu-dark"
+            style="right: 0; left: auto; background-color: #7689b1; border-color: #7689b1; color:white;">
           </ul>
         </div>
       </div>
@@ -69,32 +72,37 @@
   </main>
   <!-- content end -->
   <!-- footer start -->
-    <footer style="background-color: #fbfcfd;">
-        <div style="background-color:#60749d; width: 100%; height: 10px;"></div>
-        <p style="font-size: 30px; margin-top: 10px; text-align: center;">CONTACT</p>
-        <div style="display: flex; padding: 0px 0px 20px; justify-content: center;">
-            <div style="margin-right: 20px; width: 150px;">
-                <p style="font-size: 25px;">김미영</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/kmy9810"><img src="/css/assets/github-logo.png" style="width:30px;"> kmy9810</a>
-            </div>
-            <div style="margin-right: 20px; width: 150px;">
-                <p style="font-size: 25px;">김정은</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/Eunnylog"><img src="/css/assets/github-logo.png" style="width:30px;"> Eunnylog</a>
-            </div>
-            <div style="margin-right: 20px; width: 150px;">
-                <p style="font-size: 25px;">연제건</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/Msgun7"><img src="/css/assets/github-logo.png" style="width:30px;"> Msgun7</a>
-            </div>
-            <div style="margin-right: 20px; width: 150px;">
-                <p style="font-size: 25px;">양예린</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/yell2023"><img src="/css/assets/github-logo.png" style="width:30px;"> yell2023</a>
-            </div>
-            <div style="margin-right: 20px; width: 150px;">
-                <p style="font-size: 25px;">최예지</p>
-                <a style="text-decoration: none; color:black" href="https://github.com/choiyeji2022"><img src="/css/assets/github-logo.png" style="width:30px;"> choiyeji2022</a>
-            </div>
-        </div>
-    </footer>
+  <footer style="background-color: #fbfcfd;">
+    <div style="background-color:#60749d; width: 100%; height: 10px;"></div>
+    <p style="font-size: 30px; margin-top: 10px; text-align: center;">CONTACT</p>
+    <div style="display: flex; padding: 0px 0px 20px; justify-content: center;">
+      <div style="margin-right: 20px; width: 150px;">
+        <p style="font-size: 25px;">김미영</p>
+        <a style="text-decoration: none; color:black" href="https://github.com/kmy9810"><img
+            src="/css/assets/github-logo.png" style="width:30px;"> kmy9810</a>
+      </div>
+      <div style="margin-right: 20px; width: 150px;">
+        <p style="font-size: 25px;">김정은</p>
+        <a style="text-decoration: none; color:black" href="https://github.com/Eunnylog"><img
+            src="/css/assets/github-logo.png" style="width:30px;"> Eunnylog</a>
+      </div>
+      <div style="margin-right: 20px; width: 150px;">
+        <p style="font-size: 25px;">연제건</p>
+        <a style="text-decoration: none; color:black" href="https://github.com/Msgun7"><img
+            src="/css/assets/github-logo.png" style="width:30px;"> Msgun7</a>
+      </div>
+      <div style="margin-right: 20px; width: 150px;">
+        <p style="font-size: 25px;">양예린</p>
+        <a style="text-decoration: none; color:black" href="https://github.com/yell2023"><img
+            src="/css/assets/github-logo.png" style="width:30px;"> yell2023</a>
+      </div>
+      <div style="margin-right: 20px; width: 150px;">
+        <p style="font-size: 25px;">최예지</p>
+        <a style="text-decoration: none; color:black" href="https://github.com/choiyeji2022"><img
+            src="/css/assets/github-logo.png" style="width:30px;"> choiyeji2022</a>
+      </div>
+    </div>
+  </footer>
   <!-- footer end -->
   <!--노트 추가 모달-->
   <div class="modal fade" id="create_note" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -111,7 +119,7 @@
               <div class="sign-in-up">
                 <form class="sign-in-form active">
                   <input name="note_name" id="note_name" type="text" class="form-control" placeholder="노트 이름"
-                    style="width: 48%; float:left;">
+                    style="width: 48%; float:left; height: 52px;">
                   <select name="group_name" id="group_name" onchange="showNoteList();"
                     style="width: 48%; height: 52px; float:right; margin-bottom:10px; padding: 10px; border: 1px solid #C2C7D0; border-radius: 5px; box-sizing: border-box;">
                     <option value="-1">그룹 선택</option>
@@ -131,13 +139,15 @@
     </div>
   </div>
   <!-- 그룹만들기 모달창 -->
-  <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
+  <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true" data-bs-backdrop="static"
+    data-bs-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="su" style="color: #485d86;">
             Make Group</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" onclick="cancleGroupMake()" data-bs-dismiss="modal"
+            aria-label="Close"></button>
         </div>
         <div class="container">
           <div class="global-cont">
@@ -172,14 +182,15 @@
                     <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
                       Emails </p>
                     <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
-                                        overflow-y: auto; height: 250px;">
+                                            overflow-y: auto; height: 250px;">
                       <ul id="selected-email-ul" style="position: relative; right: 10px;">
                       </ul>
+                      <div id="no-email-info"> 이메일을 추가하지 않으면 본인만 구성원으로 등록됩니다!</div>
                     </div>
                   </div>
                   <div class="sign-up" style="display: flex;">
                     <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                      onclick="document.getElementById('makegroup').style.display = 'none'"
+                      onclick="document.getElementById('makegroup').style.display = 'none'; cancleGroupMake()"
                       style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
                     <button type="button" class="signup" onclick="addGroup()"
                       style="background-color: #485d86;">Save</button>
@@ -193,7 +204,8 @@
     </div>
   </div>
   <!-- 그룹 수정 모달창 -->
-  <div class="modal fade" id="updateGroup" tabindex="-1" aria-labelledby="su" aria-hidden="true">
+  <div class="modal fade" id="updateGroup" tabindex="-1" aria-labelledby="su" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -274,33 +286,33 @@
   <!-- 휴지통 모달 -->
   <div class="modal" id="trash" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content" style="height: 500px">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div id="trash-modal-body" class="modal-body">
-                <div id="trash-container">
-                    <!-- 토글 -->
-                    <div class="trash-toggle">
-                        <input type="checkbox" id="photo-toggle">
-                        <button id="photoButton" onclick="loadTrash('photo')">사진</button>
-                        <input type="checkbox" id="note-toggle">
-                        <button id="noteButton" onclick="loadTrash('note')">노트</button>
-                        <input type="checkbox" id="group-toggle">
-                        <button id="groupButton" onclick="loadTrash('group')">그룹</button>
-                    </div>
-                </div>
-                <form>
-                    <div id="trash-content" class="trash-content">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer" id="trash-modal-footer">
-            </div>
+      <div class="modal-content" style="height: 500px">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">🗑 휴지통</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div id="trash-modal-body" class="modal-body">
+          <div id="trash-container">
+            <!-- 토글 -->
+            <div class="trash-toggle">
+              <input type="checkbox" id="photo-toggle">
+              <button id="photoButton" onclick="loadTrash('photo')">사진</button>
+              <input type="checkbox" id="note-toggle">
+              <button id="noteButton" onclick="loadTrash('note')">노트</button>
+              <input type="checkbox" id="group-toggle">
+              <button id="groupButton" onclick="loadTrash('group')">그룹</button>
+            </div>
+          </div>
+          <form>
+            <div id="trash-content" class="trash-content">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" id="trash-modal-footer">
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
