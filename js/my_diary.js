@@ -52,6 +52,7 @@ async function getGroup() {
         await showGroupModal();
     }
     response_json.forEach((a, index) => {
+
         let id = a['id']
         let name = a['name']
         let master = a['master']
@@ -548,3 +549,66 @@ async function loadGroupMembers() {
 
     $('#members-list').append(temp_html);
 }
+
+
+function deleteNoteDiary() {
+    // note_list ID를 가진 div를 가져옴
+    var noteListDiv = document.getElementById('note_list');
+
+    // div의 모든 자식 요소를 가져옴
+    var children = noteListDiv.children;
+
+    // 각 자식 요소에 대하여 반복
+    for (var i = 0; i < children.length; i++) {
+        if (i != 0) {
+            // 이 요소에 이미 라디오 버튼이 있는지 확인함
+            var existingRadioButtonDiv = children[i].querySelector('div input[type="radio"]');
+
+            // 라디오 버튼이 이미 있다면 제거, 아니라면 추가
+            if (existingRadioButtonDiv) {
+                // 라디오 버튼이 있으면, 그 요소를 삭제함
+                existingRadioButtonDiv.parentElement.remove();
+            } else {
+                // 새로운 라디오 버튼 요소를 생성
+                var radioButton = document.createElement('input');
+
+                // 라디오 버튼의 타입을 'radio'로 설정
+                radioButton.type = 'radio';
+
+                // 라디오 버튼의 크기를 조절
+                radioButton.style.transform = "scale(1.5)";
+
+                // 라디오 버튼의 이름을 설정
+                // 이는 모든 라디오 버튼이 같은 그룹에 속하도록 하는 데 사용됨
+                radioButton.name = 'noteSelect';
+
+                // 라디오 버튼에 클릭 이벤트 핸들러를 추가
+                radioButton.onclick = function () {
+                    let checkConfirm = confirm('삭제하시겠습니까?')
+                    if (checkConfirm) {
+                        // 이 라디오 버튼이 포함된 가장 가까운 a 태그의 href 속성을 가져옴
+                        let note_id = this.closest('a').href.split('=')[1].trim();
+
+                        // 이 라디오 버튼 바로 앞의 div의 텍스트 값을 가져옴
+                        let group_name = this.parentElement.previousElementSibling.innerText.trim();
+                        let group_id = document.getElementById("select_group").value
+
+                        handleNotetrash(note_id, group_id, group_name)
+                    }
+                };
+
+                // 라디오 버튼을 가운데로 정렬하기 위한 div를 생성
+                var centerDiv = document.createElement('div');
+                centerDiv.style.textAlign = 'center';
+
+                // 라디오 버튼을 가운데 정렬 div에 추가
+                centerDiv.appendChild(radioButton);
+
+                // 가운데 정렬 div를 현재 자식 요소에 추가
+                children[i].appendChild(centerDiv);
+            }
+        }
+    }
+}
+
+
