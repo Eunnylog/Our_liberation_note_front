@@ -110,40 +110,6 @@ body>.site-body {
   box-shadow: none !important;
 }
 
-/* ul.navbar {
-  display: flex;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-ul.navbar li~li {
-  margin-left: 65px;
-}
-
-ul.navbar li {
-  font-size: 13px;
-  letter-spacing: -0.26px;
-  color: var(--navbar);
-}
-
-ul.navbar2 {
-  display: flex;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-ul.navbar2 li~li {
-  margin-left: 50px;
-}
-
-ul.navba2 li {
-  font-size: 17px;
-  letter-spacing: -0.26px;
-  color: var(--navbar);
-} */
-
 .site-body {
   width: 100%;
 }
