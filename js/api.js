@@ -7,12 +7,12 @@ const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
 
-function showLoading() {
-  document.querySelector('.loading-container').style.display = 'block';
+function showLoading(id) {
+  document.getElementById(id).style.display = 'block';
 }
 
-function hideLoading() {
-  document.querySelector('.loading-container').style.display = 'none';
+function hideLoading(id) {
+  document.getElementById(id).style.display = 'none';
 }
 
 // 회원 가입
@@ -252,9 +252,13 @@ async function sendCode() {
     emailBox.classList.remove("custom-class")
   }
 
-  showLoading();
+  var loading = document.getElementById('loading');
 
   try {
+
+    // 로딩창 표시
+    loading.style.display = 'block';
+
     const response = await fetch(`${backend_base_url}/user/sendemail/`, {
       headers: {
         "content-type": "application/json",
@@ -274,7 +278,8 @@ async function sendCode() {
   } catch (error) {
     showToast(error.message);
   } finally {
-    hideLoading();
+    // 로딩창 숨김
+    loading.style.display = 'none';
   }
 
 }
@@ -1002,17 +1007,35 @@ async function sendVerificationEmail() {
     emailBox.classList.remove("custom-class")
   }
 
-  const response = await fetch(`${backend_base_url}/user/sendemail/`, {
-    headers: {
-      'content-type': 'application/json',
-    },
-    method: 'POST',
-    body: JSON.stringify({
-      "email": email,
+  var loading = document.getElementById('pw-loading');
+
+  try {
+
+    // 로딩창 표시
+    loading.style.display = 'block';
+
+    const response = await fetch(`${backend_base_url}/user/sendemail/`, {
+      headers: {
+        'content-type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        "email": email,
+      })
     })
-  })
-  showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요")
-  findPasswordTimer()
+
+    if (response.ok) {
+      showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요");
+      findPasswordTimer()
+    } else {
+      throw new Error("이메일 발송에 실패했습니다.");
+    }
+  } catch (error) {
+    showToast(error.message);
+  } finally {
+    // 로딩창 숨김
+    loading.style.display = 'none';
+  }
 }
 
 // 비밀번호 분실 새 비밀번호 발급
