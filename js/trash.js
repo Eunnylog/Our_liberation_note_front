@@ -257,7 +257,7 @@ async function handlePhototrash(photo_id, location, title, name) {
         body: JSON.stringify({
             "location": location,
             "title": title,
-            "name" : name
+            "name": name
         })
     })
     if (response.status == 202) {
@@ -301,7 +301,7 @@ function handleTrashRadio(contentType) {
         selectedPhotoIndex = selectedIndex;
     }
 }
-trash
+
 function handleTrashRestore() {
     var selectedRadio = document.querySelector('input[name="trash-radio"]:checked');
 
