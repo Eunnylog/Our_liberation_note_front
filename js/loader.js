@@ -19,6 +19,10 @@ async function injectNavbar() {
     let nav_makegroup = document.getElementById("nav-makegroup")
     let nav_trash = document.getElementById("nav-trash")
     let intro = document.getElementById("intro")
+    // 따로 또 보여주는 네브바
+    let nav_mydiary2 = document.getElementById("nav-mydiary2")
+    let nav_mypage2 = document.getElementById("nav-mypage2")
+    let nav_makegroup2 = document.getElementById("nav-makegroup2")
 
     // 로그인 전 갈 수 없는 항목들 숨겨주기
     intro.style.display = "none"
@@ -26,6 +30,9 @@ async function injectNavbar() {
     nav_mypage.style.display = "none"
     nav_makegroup.style.display = "none"
     nav_trash.style.display = "none"
+    nav_mydiary2.style.display = "none"
+    nav_mypage2.style.display = "none"
+    nav_makegroup2.style.display = "none"
 
     // intro에 이메일을 넣어주기 위해서 payload 불러오기
     let payload = localStorage.getItem("payload")
@@ -48,6 +55,9 @@ async function injectNavbar() {
         nav_mypage.style.display = "block"
         nav_makegroup.style.display = "block"
         nav_trash.style.display = "block"
+        nav_mydiary2.style.display = "block"
+        nav_mypage2.style.display = "block"
+        nav_makegroup2.style.display = "block"
 
         // 로그아웃 만들어주기
         let navbarLeft = document.getElementById("nav-left")
