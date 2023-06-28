@@ -14,6 +14,41 @@ async function handleSignup() {
   const password2 = document.getElementById("password2").value
   const confirmcode = document.getElementById("confirmcode").value
 
+  let emailBox = document.getElementById("email");
+  let passwordBox = document.getElementById("password");
+  let password2Box = document.getElementById("password2");
+  let confirmcodeBox = document.getElementById("confirmcode");
+  let emptyField = false
+
+  if (!email) {
+    emailBox.classList.add("custom-class")
+    emptyField = true
+  } else {
+    emailBox.classList.remove("custom-class")
+  }
+
+  if (!password || !password2) {
+    passwordBox.classList.add("custom-class")
+    password2Box.classList.add("custom-class")
+    emptyField = true
+  } else {
+    passwordBox.classList.remove("custom-class")
+    password2Box.classList.remove("custom-class")
+  }
+
+  if (!confirmcode) {
+    confirmcodeBox.classList.add("custom-class")
+    emptyField = true
+  } else {
+    confirmcodeBox.classList.remove("custom-class")
+  }
+
+  if (emptyField) {
+    showToast("빈칸을 입력해주세요.")
+    return
+  }
+
+
   const response = await fetch(`${backend_base_url}/user/signup/`, {
     headers: {
       'content-type': 'application/json',
@@ -28,15 +63,39 @@ async function handleSignup() {
   })
 
   if (response.status == 201) {
-    document.getElementById("signup").querySelector('[data-bs-dismiss="modal"]').click();
-    showToast("회원가입이 완료되었습니다!")
-    window.location.replace(`${frontend_base_url}/index.html`)
-  }
-  else {
+    showToast("회원가입이 완료되었습니다!");
+    await handleSignin(email, password); // 회원가입 후 로그인 함수 호출
+  } else {
     const errorResponse = await response.json();
     console.log('error', errorResponse)
-    if (errorResponse.message) {
-      showToast("※ " + errorResponse.message);
+
+    const message = errorResponse.message;
+    if (message) {
+      showToast("※ " + message);
+
+      // 클래스 초기화
+      emailBox.classList.remove("custom-class");
+      passwordBox.classList.remove("custom-class");
+      password2Box.classList.remove("custom-class");
+      confirmcodeBox.classList.remove("custom-class");
+
+      // custom-class 추가
+      switch (message) {
+        case "이메일이 이미 존재합니다.":
+          emailBox.classList.add("custom-class");
+          break;
+        case "인증 코드 유효 기간이 지났습니다.":
+        case "이메일 확인 코드가 유효하지 않습니다.":
+          confirmcodeBox.classList.add("custom-class");
+          break;
+        case "비밀번호와 비밀번호 확인이 일치하지 않습니다.":
+          passwordBox.classList.add("custom-class");
+          password2Box.classList.add("custom-class");
+          break;
+        case "8자 이상의 영문 대/소문자, 숫자, 특수문자 조합이어야 합니다!":
+          passwordBox.classList.add("custom-class");
+          password2Box.classList.add("custom-class");
+      }
     }
   }
 }
@@ -75,10 +134,50 @@ async function signupTimer() {
   TIMER();
 }
 
+$(document).ready(function () {
+  $('#signup').on('hide.bs.modal', function () {
+    // 모달창 닫힐 때 타이머 종료
+    clearInterval(currentSignupTimer);
+    $('#signupTimer').val("")
+
+    $('#email').val("");
+    $('#password').val("");
+    $('#password2').val("");
+    $('#confirmcode').val("");
+    $('.custom-class').removeClass('custom-class');
+  });
+});
+
 // 로그인
-async function handleSignin() {
-  const email = document.getElementById("login-email").value
-  const password = document.getElementById("login-password").value
+async function handleSignin(email = null, password = null) {
+  // const email = document.getElementById("login-email").value
+  // const password = document.getElementById("login-password").value
+  if (!email || !password) {
+    email = document.getElementById("login-email").value;
+    password = document.getElementById("login-password").value;
+  }
+
+  let emailBox = document.getElementById("login-email")
+  let passwordBox = document.getElementById("login-password")
+  let emptyField = false
+
+  if (!email) {
+    showToast("아이디를 입력해주세요.")
+    emailBox.classList.add("custom-class")
+    emptyField = true
+  } else {
+    emailBox.classList.remove("custom-class")
+  }
+
+  if (!password) {
+    showToast("비밀번호를 입력해주세요.")
+    passwordBox.classList.add("custom-class")
+    emptyField = true
+  } else {
+    passwordBox.classList.remove("custom-class")
+  }
+
+
 
   try {
     const response = await fetch(`${backend_base_url}/user/login/`, {
@@ -118,13 +217,24 @@ async function handleSignin() {
   }
 }
 
+$(document).ready(function () {
+  $('#login').on('hide.bs.modal', function () {
+    $('#login-email').val("");
+    $('#login-password').val("");
+    $('.custom-class').removeClass('custom-class');
+  });
+});
+
 // 회원가입 이메일 인증코드 보내기
 async function sendCode() {
   const email = document.getElementById("email").value
+  const emailBox = document.getElementById("email")
 
   if (!email) {
     showToast('이메일을 입력하세요!')
-    return
+    emailBox.classList.add("custom-class")
+  } else {
+    emailBox.classList.remove("custom-class")
   }
 
   const response = await fetch(`${backend_base_url}/user/sendemail/`, {
@@ -495,7 +605,33 @@ async function updatePassword() {
     check_new_password: document.querySelector("#check_update_password").value,
   }
 
-  if (!updateData.check_password || !updateData.new_password) {
+  let currentPasswordBox = document.getElementById("check_password")
+  let newPasswordBox = document.getElementById("update_password")
+  let checkNewPasswordBox = document.getElementById("check_update_password")
+  let emptyField = false
+
+  if (!updateData.check_password) {
+    currentPasswordBox.classList.add("custom-class")
+    emptyField = true
+  } else {
+    currentPasswordBox.classList.remove("custom-class")
+  }
+
+  if (!updateData.new_password) {
+    newPasswordBox.classList.add("custom-class")
+    emptyField = true
+  } else {
+    newPasswordBox.classList.remove("custom-class")
+  }
+
+  if (!updateData.check_new_password) {
+    checkNewPasswordBox.classList.add("custom-class")
+    emptyField = true
+  } else {
+    checkNewPasswordBox.classList.remove("custom-class")
+  }
+
+  if (emptyField) {
     showToast("빈칸을 입력해주세요.")
     return
   }
@@ -521,6 +657,15 @@ async function updatePassword() {
   }
 
 }
+
+$(document).ready(function () {
+  $('#updatePassword').on('hide.bs.modal', function () {
+    $('#check_password').val("");
+    $('#update_password').val("");
+    $('#check_update_password').val("");
+    $('.custom-class').removeClass('custom-class');
+  });
+});
 
 // 작성 취소
 function cancel() {
@@ -584,17 +729,32 @@ async function addMember() {
     });
 }
 
+function showNoEmailInfo() {
+  const noEmailInfo = document.getElementById('no-email-info');
+
+  if ($('#selected-email-ul').children().length === 0) {
+    console.log($('#selected-email-ul').children().length)
+    noEmailInfo.style.display = "block";
+  } else {
+    console.log($('#selected-email-ul').children().length)
+    noEmailInfo.style.display = "none";
+  }
+}
+
 $(document).ready(function () {
   $('#makegroup').on('hide.bs.modal', function () {
     // 모달 창을 닫을 때 입력 값 다 지우기
     $('#usersearch').val("");
     $('#groupname').val("");
     $("#selected-email-list").empty();
+    $("#email-ul").empty();
     $('input[type=radio]').prop('checked', false);
     $('.custom-class').removeClass('custom-class');
     selectedEmails = [];
   });
 });
+
+
 
 function cancleGroupMake() {
   $('#email-list').empty()
@@ -602,7 +762,9 @@ function cancleGroupMake() {
   $('#email-list').append(temp_html2)
   $('#selected-email-list').empty()
   let temp_html = `<ul id="selected-email-ul" style="position: relative; right: 10px;">
-  </ul>`
+  </ul>
+  <div id="no-email-info"> 이메일을 추가하지 않으면 본인만 구성원으로 등록됩니다!</div>
+  `
   $('#selected-email-list').append(temp_html)
   selectedEmails = [];
 
@@ -648,6 +810,7 @@ function addMembersToGroup() {
     showToast("선택된 이메일이 없습니다.")
   }
   $('input[type=radio]').prop('checked', false);
+  showNoEmailInfo();
 }
 
 // 버튼 클릭 시 선택한 이메일 리스트에서 삭제
@@ -671,6 +834,7 @@ function DeleteMembers() {
     showToast("선택된 이메일이 없습니다.");
   }
   $('input[type=radio]').prop('checked', false);
+  showNoEmailInfo();
 }
 
 // 그룹 생성
@@ -794,10 +958,16 @@ async function findPasswordTimer() {
 // 비밀번호 재발급 인증코드 보내기
 async function sendVerificationEmail() {
   const email = document.getElementById("sendEmail").value
+  const emailBox = document.getElementById("sendEmail")
 
   if (!email) {
     showToast('이메일을 입력해주세요!')
+    emailBox.classList.add("custom-class")
     return
+  }
+
+  if (email) {
+    emailBox.classList.remove("custom-class")
   }
 
   const response = await fetch(`${backend_base_url}/user/sendemail/`, {
@@ -816,14 +986,48 @@ async function sendVerificationEmail() {
 // 비밀번호 분실 새 비밀번호 발급
 async function ChangePassword() {
 
-  const changeData = {
+  let changeData = {
     email: document.querySelector("#sendEmail").value,
     code: document.querySelector("#confirm-code").value,
     new_password: document.querySelector("#change_password").value,
     check_password: document.querySelector("#check_change_password").value,
   }
 
-  if (!changeData.code || !changeData.new_password) {
+  let emailBox = document.querySelector("#sendEmail")
+  let codeBox = document.querySelector("#confirm-code")
+  let new_password_box = document.querySelector("#change_password")
+  let check_password_box = document.querySelector("#check_change_password")
+  let emptyField = false
+
+  if (!changeData.email) {
+    emailBox.classList.add("custom-class")
+    emptyField = true
+  } else {
+    emailBox.classList.remove("custom-class")
+  }
+
+  if (!changeData.code) {
+    codeBox.classList.add("custom-class")
+    emptyField = true
+  } else {
+    codeBox.classList.remove("custom-class")
+  }
+
+  if (!changeData.new_password) {
+    new_password_box.classList.add("custom-class")
+    emptyField = true
+  } else {
+    new_password_box.classList.remove("custom-class")
+  }
+
+  if (!changeData.check_password) {
+    check_password_box.classList.add("custom-class")
+    emptyField = true
+  } else {
+    check_password_box.classList.remove("custom-class")
+  }
+
+  if (emptyField) {
     showToast("빈칸을 입력해주세요.")
     return
   }
@@ -842,11 +1046,56 @@ async function ChangePassword() {
     location.replace(`${frontend_base_url}/index.html`)
   } else {
     const data = await response.json();
-    if (data.message) {
-      showToast("※ " + data.message);
+    console.log("data", data)
+
+    // 기본 메시지 초기화
+    let message = "";
+
+    // 경우에 따라 메시지 및 custom-class 업데이트
+    switch (data.message) {
+      case "비밀번호 찾기를 위한 이메일이 일치하지 않습니다.":
+        emailBox.classList.add("custom-class");
+        message = data.message;
+        break;
+      case "인증 코드 유효 기간이 지났습니다.":
+        codeBox.classList.add("custom-class");
+        message = data.message;
+        break;
+      case "이메일 확인 코드가 유효하지 않습니다.":
+        codeBox.classList.add("custom-class");
+        message = data.message;
+        break;
+      case "비밀번호와 비밀번호 확인이 일치하지 않습니다.":
+        new_password_box.classList.add("custom-class");
+        check_password_box.classList.add("custom-class");
+        message = data.message;
+        break;
+      case "8자 이상의 영문 대/소문자, 숫자, 특수문자 조합이어야 합니다!":
+        new_password_box.classList.add("custom-class");
+        check_password_box.classList.add("custom-class");
+        message = data.message;
+        break;
+    }
+
+    if (message) {
+      showToast("※ " + message);
     }
   }
 }
+
+$(document).ready(function () {
+  $('#findPassword').on('hide.bs.modal', function () {
+    // 모달창 닫힐 때 타이머 종료
+    clearInterval(currentFindPasswordTimer);
+    $('#findPasswordTimer').val("");
+
+    $('#sendEmail').val("");
+    $('#confirm-code').val("");
+    $('#change_password').val("");
+    $('#check_change_password').val("");
+    $('.custom-class').removeClass('custom-class');
+  });
+});
 
 async function checkGroup() {
   params = new URLSearchParams(window.location.search);
