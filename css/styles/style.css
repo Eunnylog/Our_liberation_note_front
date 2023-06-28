@@ -626,7 +626,7 @@ input[type="checkbox"]:checked+label {
   display: inline-block;
   width: 20px;
   height: 20px;
-  background: #60749d;
+  color: #60749d;
 }
 
 .carousel-control-prev::before {
@@ -638,7 +638,7 @@ input[type="checkbox"]:checked+label {
 .carousel-control-next::before {
   border-right: 3px solid;
   border-top: 3px solid;
-  transform: rotate(-45deg);
+  transform: rotate(45deg);
 }
 
 .carousel-inner {
