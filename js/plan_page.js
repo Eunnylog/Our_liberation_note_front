@@ -58,8 +58,6 @@ async function showPlanPage() {
     })
 }
 
-console.log(plan_data)
-
 
 document.addEventListener('DOMContentLoaded', async function () {
     await showPlanPage();
@@ -122,7 +120,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                 if (!response.ok) {
                     info.revert();
                 }
-                console.log(response)
             });
         }
     });
@@ -533,10 +530,8 @@ async function selectEmailMember() {
     const response_json = await response.json()
     $('#member_list').empty()
     if (response.status == 200) {
-        console.log(response_json)
         emails = response_json['group_set']['members'].split(", ")
         emails.forEach((email) => {
-            console.log(email);
             let temp_html = `
                             <div>
                                 <h5 style="display: inline-block; vertical-align: middle;">${email}</h5>
@@ -578,7 +573,6 @@ async function deleteNoteModal() {
     const selected_id = params.get("note_id");
     const selected_name = localStorage.getItem('noteName')
     const selected_group = localStorage.getItem('groupId');
-    console.log("selected_group", selected_group)
 
 
     $('#modal-body').empty()

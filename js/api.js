@@ -1,8 +1,8 @@
 // 기본 URL
 const backend_base_url = "https://api.liberation-note.com"
-// const frontend_base_url = "https://liberation-note.com"
+const frontend_base_url = "https://liberation-note.com"
 // const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "http://127.0.0.1:5500"
+// const frontend_base_url = "http://127.0.0.1:5500"
 
 
 let jwtToken;
@@ -221,7 +221,6 @@ async function handleSignin(email = null, password = null) {
     }
     else {
       showToast("※이메일 혹은 비밀번호가 올바르지 않습니다!")
-      console.log(response)
     }
   }
   catch (error) {
@@ -397,9 +396,7 @@ async function googleLoginApi(decodeCode) {
     body: JSON.stringify({ "code": decodeCode }),
   })
   response_json = await response.json()
-  console.log(response_json)
 
-  console.log("response_json", response_json)
   if (response.status === 200) {
     localStorage.setItem("access", response_json.access);
     localStorage.setItem("refresh", response_json.refresh);
@@ -767,10 +764,8 @@ function showNoEmailInfo() {
   const noEmailInfo = document.getElementById('no-email-info');
 
   if ($('#selected-email-ul').children().length === 0) {
-    console.log($('#selected-email-ul').children().length)
     noEmailInfo.style.display = "block";
   } else {
-    console.log($('#selected-email-ul').children().length)
     noEmailInfo.style.display = "none";
   }
 }
@@ -931,7 +926,6 @@ async function addGroup() {
     window.location.reload()
   } else {
     const data = await response.json();
-    console.log("data", data)
     if (data.message) {
       showToast("※ " + data.message);
     } else if (data["non_field_errors"]) {
@@ -1114,7 +1108,6 @@ async function ChangePassword() {
     location.replace(`${frontend_base_url}/index.html`)
   } else {
     const data = await response.json();
-    console.log("data", data)
 
     // 기본 메시지 초기화
     let message = "";

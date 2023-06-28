@@ -108,7 +108,6 @@ async function getMarkerStamps(photo_location) {
 
     if (response.status == 200) {
         const response_json = await response.json()
-        console.log(response_json)
         return response_json
     } else {
         showToast("불러오는데 실패했습니다")
@@ -218,7 +217,7 @@ async function loadGroupStampmap(group_name) {
 
             kakao.maps.event.addListener(marker, 'click', function () {
                 $('#stamp-modal').modal('show');
-                loadGroupStampPhotopage(location,group_name)
+                loadGroupStampPhotopage(location, group_name)
             });
 
             markerGroups[location] = marker
@@ -243,7 +242,7 @@ async function loadGroupStampPhotopage(location, group_name) {
         const image = backend_base_url + '/note' + stamp.photo.image
         const group = stamp.photo.group_name
 
-        if (group == group_name){
+        if (group == group_name) {
             if (!addedDiaryNames.includes(diary_name)) {
                 let diary_temp_html = ` <a href='/photo_page.html?note_id=${diary_id}' onclick="" style="text-decoration: none; color: black;">
                                             <div class="diary-link-text" style="margin-top:10px;">${diary_name} ></div></a>
