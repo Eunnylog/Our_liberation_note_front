@@ -403,7 +403,7 @@ function addPlanList() {
 
     document.getElementById("title").value = ''
     document.getElementById("location").value = ''
-    document.getElementById("start").value = ''
+    document.getElementById("start").value = new Date().toISOString().split("T")[0];
     document.getElementById("memo").value = ''
     document.getElementById("time").value = ''
     document.getElementById("category").value = ''

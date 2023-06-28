@@ -284,6 +284,7 @@ function toggleCommentEdit(event) {
         div.style.display = div.style.display === 'none' ? 'flex' : 'none';
     } else if (user_email != null) {
         showToast("작성자만이 댓글을 수정할 수 있습니다.")
+
     }
 }
 
@@ -459,7 +460,9 @@ async function addComment() {
         if (response.ok) {
             showToast('새로운 댓글이 작성되었습니다!');
             commentText.value = '';
-            await photo_detail(photo_id)
+            setTimeout(function () {
+                photo_detail(photo_id)
+            }, 1500);
             // setTimeout(function () {
             //     window.location.reload();
             // }, 1000);
@@ -508,7 +511,9 @@ async function editComment(event) {
             const response_json = await response.json();
             let photo_id = response_json["photo"]
             showToast('댓글이 수정되었습니다!');
-            photo_detail(photo_id);
+            setTimeout(function () {
+                photo_detail(photo_id);
+            }, 1500);
         } else {
             showToast('댓글이 수정에 실패했습니다!');
         }
@@ -540,7 +545,9 @@ async function deleteComment(event) {
         })
         if (response.ok) {
             showToast('댓글이 삭제되었습니다.');
-            photo_detail(photo_id);
+            setTimeout(function () {
+                photo_detail(photo_id);
+            }, 1500);
 
         } else {
             showToast('댓글이 삭제에 실패했습니다.');
@@ -584,6 +591,7 @@ async function handleStamp(photo_id) {
     }
     else {
         showToast("※실패")
+        console.log(response)
     }
 }
 
