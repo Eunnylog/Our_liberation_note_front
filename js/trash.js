@@ -11,7 +11,6 @@ async function getTrash() {
 
     if (response.status == 200) {
         const response_json = await response.json()
-        console.log(response_json)
         return response_json
     } else {
         showToast("불러오는데 실패했습니다")
@@ -141,7 +140,7 @@ async function loadTrash(contentType) {
                 const photo_name = photo.name
                 const photo_created_at = photo.created_at
                 const photo_location = photo.location
-                const image = backend_base_url + '/note' + photo.image
+                const image = photo.image
 
                 let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:10px;">
                                     <img src="${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px;">
@@ -208,7 +207,6 @@ async function handleGrouptrash(group_id, name) {
 
     } else {
         showToast("※실패하였습니다.")
-        console.log(photo_id)
     }
 
 }
@@ -244,7 +242,6 @@ async function handleNotetrash(note_id, group, name) {
 
     } else {
         showToast("※실패하였습니다.")
-        console.log(photo_id)
     }
 }
 
@@ -260,7 +257,7 @@ async function handlePhototrash(photo_id, location, title, name) {
         body: JSON.stringify({
             "location": location,
             "title": title,
-            "name" : name
+            "name": name
         })
     })
     if (response.status == 202) {
@@ -281,7 +278,6 @@ async function handlePhototrash(photo_id, location, title, name) {
 
     } else {
         showToast("※실패하였습니다.")
-        console.log(photo_id)
     }
 }
 
