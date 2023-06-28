@@ -871,6 +871,17 @@ function DeleteMembers() {
   showNoEmailInfo();
 }
 
+// input 글자수 제한 알림
+function checkLength(input) {
+  const maxLength = input.getAttribute("maxlength");
+  if (input.value.length >= maxLength) {
+    showToast(`최대 글자수가 초과되었습니다! (${maxLength}자 이내로 작성해주세요)`);
+    input.classList.add("custom-class"); // custom-class 추가
+  } else {
+    input.classList.remove("custom-class"); // custom-class 제거 (선택사항)
+  }
+}
+
 // 그룹 생성
 async function addGroup() {
   const access_token = localStorage.getItem("access");
@@ -927,6 +938,8 @@ async function addGroup() {
       showToast("※ " + data["non_field_errors"])
     } else if (data.error) {
       showToast("※ " + data.error)
+    } else if (data['name'][0]) {
+      showToast("※제한 글자수는 2~15자 입니다!")
     }
   }
 }
@@ -1007,7 +1020,7 @@ async function sendVerificationEmail() {
     emailBox.classList.remove("custom-class")
   }
 
-  var loading = document.getElementById('pw-loading');
+  var loading = document.getElementById('loading');
 
   try {
 

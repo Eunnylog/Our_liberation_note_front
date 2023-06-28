@@ -507,6 +507,8 @@ async function updateGroup() {
             showToast("※ " + data.message);
         } else if (data["non_field_errors"]) {
             showToast("※ " + data["non_field_errors"])
+        } else if (data['name'][0]) {
+            showToast("※제한 글자수는 2~15자 입니다!")
         }
     }
 }

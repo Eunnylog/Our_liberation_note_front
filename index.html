@@ -142,11 +142,6 @@
                                             style="background-color: #7689b1; width: 200px; margin-left: 10px;">인증코드
                                             보내기</button>
                                     </div>
-                                    <!-- 이메일 전송 로딩창 -->
-                                    <div id="loading" style="display: none;">
-                                        <div class="overlay"></div>
-                                        <div class="spinner"></div>
-                                    </div>
                                     <p style="margin: 10px 0px;">
                                         <label for="Timer" style="color:#7a7f83">Expires At</label>
                                         <input id="signupTimer" type="text" value="" readonly
@@ -231,7 +226,7 @@
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
                                     <input name="groupname" id="groupname" type="name" class="form-control"
-                                        placeholder="Group Name">
+                                        placeholder="Group Name" maxlength="15" oninput="checkLength(this)">
                                     <div style="display: flex;" id="group_make_box">
                                         <input name="addemail" id="usersearch" type="email" class="form-control"
                                             autocomplete="off" placeholder="Email to add" style="width: 300px;">
@@ -436,11 +431,6 @@
                             <button type="button" class="signup btn btn-primary" onclick="sendVerificationEmail()"
                                 style="border-color: #60749d; background-color: #60749d; margin: 20px 0px; float: right;">전송</button>
                         </div>
-                        <!-- 비밀번호 변경 로딩창 -->
-                        <div id="pw-loading" style="display: none;">
-                            <div class="overlay"></div>
-                            <div class="spinner"></div>
-                        </div>
                         <p style="display: inherit; margin: 10px 0px;">
                             <label for="Timer">유효 시간</label>
                             <input id="findPasswordTimer" type="text" value="" readonly
@@ -500,6 +490,11 @@
                 </div>
             </div>
         </div>
+    </div>
+    <!-- 이메일 전송 로딩창 -->
+    <div id="loading" style="display: none;">
+        <div class="overlay"></div>
+        <div class="spinner"></div>
     </div>
 </body>
 
