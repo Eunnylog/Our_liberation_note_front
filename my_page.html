@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=1024">
   <link rel="icon" type="image/png" sizes="48x48" href="/css/favicon/android-icon-48x48.png">
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
   <link href="/css/styles/theme.css" rel="stylesheet" type="text/css" />
@@ -72,11 +73,13 @@
           id="map_box">
           <!-- 지도창 내부 작은 그리드 -->
           <div
-            style="display:grid; grid-template-columns: 100px 100px 100px 100px 100px 200px; grid-template-rows: 50px 100px 200px 100px 250px;">
-            <div id="map-title" >
-              <div
-                style="font-size: 30px; float: left; background-color: #60749d; color: white; width: 680px; text-align: center;">
-                STAMP
+            style="display:grid; grid-template-columns: 100px 100px 100px 100px 100px 180px; grid-template-rows: 50px 100px 200px 100px 250px;">
+            <div id="map-title" style="grid-column:1/7; grid-row: 1;">
+              <div style="display: grid; grid-template-columns: 100px 100px 100px 100px 100px 200px; background-color: #60749d; width:100%; height:40px">
+                <div
+                  style="font-size: 30px;  color: white; width: 100%; grid-column: 4/5; text-align: center;">
+                  STAMP
+                </div>
               </div>
             </div>
             <!-- 지도 불러와지는 부분 -->
