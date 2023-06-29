@@ -45,19 +45,23 @@
       <!-- Dropdown Structure -->
       <article class="review-detail max-content-width">
         <div style="display: flex;">
-          <button id="changeNoteBtn" class="button-hover" style="border:none; background:none;"
-            onclick="changeNoteName()">
-            <span
-              style="font-size: 40px; border-bottom: 2px solid rgb(203, 203, 203); padding-bottom: 5px; margin-right:5px"
-              id="note_title"></span>
-            <span style="font-size: 25px; vertical-align: bottom;" id="note_icon">✏️</span>
-          </button>
-          <button id="cancelButton" class="button-hover btn btn-secondary" style="display:none; margin-left:10px"
-            onclick="deleteChangeNoteName()">취소
-          </button>
-          <button id="updateButton" class="button-hover btn btn-secondary" style="display:none; margin-left:10px"
-            onclick="patchChangeNoteName()">수정
-          </button>
+          <div>
+            <button id="changeNoteBtn" class="button-hover" style="border:none; background:none;"
+              onclick="changeNoteName()">
+              <span
+                style="font-size: 40px; border-bottom: 2px solid rgb(203, 203, 203); padding-bottom: 5px; margin-right:5px"
+                id="note_title"></span>
+              <span style="font-size: 25px; vertical-align: bottom;" id="note_icon">✏️</span>
+            </button>
+            <button id="cancelButton" class="button-hover btn btn-secondary"
+              style="display:none; margin-left:10px; background-color: #485D86; border-color: #485D86; color:white; height: 45px;"
+              onclick="deleteChangeNoteName()">취소
+            </button>
+            <button id="updateButton" class="button-hover btn btn-secondary"
+              style="display:none; margin-left:10px; background-color: #485D86; border-color: #485D86; color:white; height: 45px;"
+              onclick="patchChangeNoteName()">수정
+            </button>
+          </div>
           <div class="dropdown" style="margin-left: auto; margin-top:10px;">
             <button class="btn btn-secondary btn-sm dropdown-toggle"
               style="background-color: #485D86; border-color: #485D86; color:white; margin: 0px 10px; height: 45px; border-radius: 8px;"

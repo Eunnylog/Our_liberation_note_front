@@ -667,6 +667,10 @@ async function patchChangeNoteName() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
     var title = document.getElementById('title_input').value;
+    if (title == '') {
+        showToast('수정사항을 입력해주세요!')
+        return false
+    }
     const response = await fetch(`${backend_base_url}/note/note-detail/${note_id}`, {
         headers: {
             'content-type': 'application/json',
