@@ -10,7 +10,6 @@ window.onload = function () {
 
     var aiLink = document.getElementById('goAI');
     var photoLink = document.getElementById('goPhoto');
-    var lifePhoto = document.getElementById('lifePhoto');
     var back = document.getElementById('back');
 
     aiLink.onclick = function () {
@@ -18,9 +17,6 @@ window.onload = function () {
     }
     photoLink.onclick = function () {
         location.href = '/photo_page.html?note_id=' + note_id;
-    }
-    lifePhoto.onclick = function () {
-        location.href = '/lifephoto_page.html?note_id=' + note_id;
     }
     back.onclick = function () {
         location.href = '/my_diary.html';
@@ -633,3 +629,63 @@ function planList() {
     var plan_list = document.getElementById('plan_list')
     plan_list.innerText = '일정 추가시 여기에 추가됩니다!'
 }
+
+
+let originNoteTitle;
+
+function changeNoteName() {
+    var title = document.getElementById('note_title');
+    var icon = document.getElementById('note_icon');
+    originNoteTitle = title.innerText
+    title.innerHTML = '<input style="font-size:30px;" id="title_input" type="text" value="' + originNoteTitle + '">';
+    icon.style.display = 'none';
+
+    // 취소 및 수정 버튼을 보이게 변경
+    document.getElementById('cancelButton').style.display = 'inline';
+    document.getElementById('updateButton').style.display = 'inline';
+
+    document.getElementById('changeNoteBtn').removeAttribute('onclick');
+    document.getElementById('changeNoteBtn').removeAttribute('class');
+
+}
+
+function deleteChangeNoteName() {
+    var title = document.getElementById('note_title');
+    var icon = document.getElementById('note_icon');
+    title.innerHTML = `<span style="font-size: 40px; border-bottom: 2px solid rgb(203, 203, 203); padding-bottom: 5px; margin-right:5px" id="note_title">${originNoteTitle}</span>`;
+    icon.style.display = 'inline';
+
+    // 취소 및 수정 버튼을 안보이게 변경
+    document.getElementById('cancelButton').style.display = 'none';
+    document.getElementById('updateButton').style.display = 'none';
+
+    document.getElementById('changeNoteBtn').setAttribute("onClick", `changeNoteName()`);
+    document.getElementById('changeNoteBtn').setAttribute("class", `button-hover`);
+};
+
+async function patchChangeNoteName() {
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
+    var title = document.getElementById('title_input').value;
+    const response = await fetch(`${backend_base_url}/note/note-detail/${note_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'PATCH',
+        body: JSON.stringify({
+            "name": title
+        })
+    });
+    if (response.status == 200) {
+        localStorage.setItem('noteName', title)
+        showToast("계획이 수정되었습니다!");
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
+    } else {
+        response_json = await response.json()
+        showToast(`※ ${response_json['non_field_errors']}`)
+    }
+}
+

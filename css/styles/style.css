@@ -109,6 +109,35 @@ body>.site-body {
 .navbar-toggler:focus {
   box-shadow: none !important;
 }
+.navbar-toggler {
+  border: none;
+  background: transparent;
+  outline: none;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.navbar-toggler-icon {
+  position: relative;
+  top: 0;
+  left: 0;
+  transition: none !important;
+}
+.navbar-collapse {
+    z-index: 1;
+    margin-top: 3rem;
+}
+.navbar-collapse.show {
+  margin-top: 3rem;
+}
+.nav{
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
 
 .site-body {
   width: 100%;
