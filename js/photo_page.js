@@ -259,7 +259,7 @@ async function photo_detail(photo_id) {
         <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px;">
         <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
             <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" 
-            style="background-color:  #7689b1; border-color: #7689b1; height: 37px;"><b>+</b></button>
+            style="background-color:  #7689b1; border-color: #7689b1; height: 37px;"><b>등록</b></button>
     </div>
     <hr/>
     <div>
