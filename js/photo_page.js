@@ -291,7 +291,7 @@ async function photo_detail(photo_id) {
     let temp_html3 = `<button id="patch_photo_box" type="button" class="btn btn-primary"
                             onclick="patchPhotoBox('${photo_id}')" style=" width: 10%; font-size:20px; background-color:  #7689b1; border-color: #7689b1;">수정</button>
                       <button id="photo-trash" type="button" class="btn btn-primary"
-                            onclick="handlePhototrash('${photo_id}','${location}','${title}','${name}')" style="width: 10%; font-size:20px; background-color: #485d86; border-color: #485d86;">삭제</button>`
+                            onclick="handlePhototrash('${photo_id}','${name}')" style="width: 10%; font-size:20px; background-color: #485d86; border-color: #485d86;">삭제</button>`
 
     $('#photo-detail-modal-footer').append(temp_html3)
 }

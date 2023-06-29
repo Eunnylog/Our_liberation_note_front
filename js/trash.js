@@ -249,7 +249,7 @@ async function handleGrouptrashMultiple(selectedGroups) {
     })
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 그룹이 정상적으로 삭제되었습니다.`)
+        showToast(`※ 정상적으로 삭제되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
@@ -257,7 +257,7 @@ async function handleGrouptrashMultiple(selectedGroups) {
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 그룹이 정상적으로 복원되었습니다.`)
+        showToast(`※ 정상적으로 복원되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
@@ -289,13 +289,13 @@ async function handleNotetrash(note_id) {
 
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ 노트가 정상적으로 삭제되었습니다.`)
+        showToast(`※ 정상적으로 삭제되었습니다.`)
         window.location.replace(`${frontend_base_url}/my_diary.html`)
         return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        showToast(`※ 노트가 정상적으로 복원되었습니다.`)
+        showToast(`※ 정상적으로 복원되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
@@ -322,13 +322,13 @@ async function handleNotetrashMultiple(selectedNotes) {
 
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 노트가 정상적으로 삭제되었습니다.`)
+        showToast(`※ 정상적으로 삭제되었습니다.`)
         window.location.replace(`${frontend_base_url}/my_diary.html`)
         return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 노트가 정상적으로 복원되었습니다.`)
+        showToast(`※ 정상적으로 복원되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
@@ -350,7 +350,7 @@ async function handlePhototrash(photo_id,name) {
         },
         method: 'POST',
         body: JSON.stringify({
-            "photo_set" : [
+            "photo_ids" : [
                 {
                     "id": photo_id
                 }
@@ -393,7 +393,7 @@ async function handlePhototrashMultiple(selectedPhotos) {
     })
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 사진이 정상적으로 삭제되었습니다.`)
+        showToast(`※ 정상적으로 삭제되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
@@ -401,7 +401,7 @@ async function handlePhototrashMultiple(selectedPhotos) {
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 사진이 정상적으로 복원되었습니다.`)
+        showToast(`※ 정상적으로 복원되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
