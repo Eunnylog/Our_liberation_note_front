@@ -5,7 +5,7 @@ async function loadUserprofile() {
     const email = document.getElementById("email")
     email.innerText = `${response.profile.email}님`
 
-    const groups = response.groupsƒ
+    const groups = response.groups
     const profile = response.profile
 
     let id = [];
