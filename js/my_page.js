@@ -32,7 +32,7 @@ async function loadUserprofile() {
 
     $('#group-list').empty()
 
-    let temp_html2 = `<li class="dropdown-item" onclick="location.reload(); return false;">전체보기</li>
+    let temp_html2 = `<li class="dropdown-item" onclick="location.reload(); return false;" style="cursor: pointer;">전체보기</li>
                         <hr class="dropdown-divider"/>`;
 
 

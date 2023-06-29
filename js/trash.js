@@ -33,6 +33,21 @@ if (localStorage.getItem("payload")) {
     });
 }
 
+function groupCheckbox(group_id) {
+    var checkbox = document.getElementById(`trash-checkbox${group_id}`);
+    checkbox.checked = !checkbox.checked;
+}
+
+function noteCheckbox(note_id) {
+    var checkbox = document.getElementById(`trash-checkbox${note_id}`);
+    checkbox.checked = !checkbox.checked;
+}
+
+function photoCheckbox(photo_id) {
+    var checkbox = document.getElementById(`trash-checkbox${photo_id}`);
+    checkbox.checked = !checkbox.checked;
+}
+
 async function loadTrash(contentType) {
     const response = await getTrash()
 
@@ -67,7 +82,7 @@ async function loadTrash(contentType) {
                 let temp_html = `<div style="margin-top:15px;">
                                 <input type="checkbox" name="trash-checkbox" id="trash-checkbox${group_id}" value="${index}" style="width:20px; height: 20px;" onclick="handleTrashCheckbox('group')">
                                 <label for="trash-checkbox${group_id}"></label>
-                                <span id='name_${index}'>${group_name} | ${group_created_at}</span>
+                                <span id='name_${index}' onclick="groupCheckbox('${group_id}')" style="cursor: pointer;" >${group_name} | ${group_created_at}</span>
                                 <input id='id_${index}' value="${group_id}" hidden>
                                 </div>`
 
@@ -104,7 +119,7 @@ async function loadTrash(contentType) {
                 const category = note.category
 
                 let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:15px;">
-                                <img src="/css/note_img/note_${category}.png" alt="Image description" style="width: 130px; height: 170px; margin-top:15px;">
+                                <img src="/css/note_img/note_${category}.png" alt="Image description" style="width: 130px; height: 170px; margin-top:15px; cursor: pointer;" onclick="noteCheckbox('${note_id}')">
                                 <span id='name_${index}' class="shortname2">${note_name}</span>
                                 <input id='id_${index}' value="${note_id}" hidden>
                                 <input id='group_${index}' value="${group}" hidden>
@@ -146,7 +161,7 @@ async function loadTrash(contentType) {
                 const image = photo.image
 
                 let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:10px;">
-                                    <img src="${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px;">
+                                    <img src="${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px; cursor: pointer;" onclick="photoCheckbox('${photo_id}')">
                                     <span id='name_${index}' class="shortname">${photo_name}</span>
                                     <input type="checkbox" name="trash-checkbox" id="trash-checkbox${photo_id}" value="${index}" style="width:10px" onclick="handleTrashCheckbox('photo')">
                                     <label for="trash-checkbox${photo_id}"></label>
