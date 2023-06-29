@@ -30,39 +30,38 @@
     <header class="site-header navbar">
         <!-- navbar -->
     </header>
-    <main class="site-body" style="margin-top: -50px;"
-        style="min-height: calc(100vh - 100px) !important; padding-bottom: 100px;">
-        <div id="toast"></div>
-        <button href="" style="background-color: transparent; border: transparent; float: right; position: sticky; margin-top: 70px; top: 150px;left: 0; right: 0;" data-bs-toggle="modal" data-bs-target="#carouselModal">
-            <img src="/css/assets/info_robot.png" style="z-index: 2 !important;">
-          </button>
-        <article class="review-detail max-content-width">
-            <div style="margin-bottom:30px;">
-                <h1 id="photopage_title" style="font-size:50px">Photo gallery</h1>
-            </div>
-            <hr style="margin-bottom: 30px; clear: both;">
-            <div class="clearfix" style="width:100%; margin-bottom:5px;">
-                <div id="menu_box" style="float:left;">
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"
-                        onclick="removeRedLine()" class="btn group-btn"
-                        style="background-color: #485D86; color:white; margin: 0px 10px;">사진
-                        추가</button>
+        <main class="site-body" style="margin-top: -50px; min-height: calc(100vh - 100px) !important; padding-bottom: 100px; width: 100%;">
+            <div id="toast"></div>
+            <button href="" style="background-color: transparent; border: transparent; float: right; position: sticky; top: 100px;left: 0; right: 0;" data-bs-toggle="modal" data-bs-target="#carouselModal">
+                <img src="/css/assets/info_robot.png" style="z-index: 2 !important;">
+            </button>
+            <article class="review-detail max-content-width" style="padding: 30px !important">
+                <div style="margin-bottom:30px;">
+                    <h1 id="photopage_title" style="font-size:50px">Photo gallery</h1>
                 </div>
-                <div style="float: right;">
-                    <button onclick="m_page()" type="button" class="btn group-btn"
-                        style="background-color: #7689b1; color:white; margin-left: 6px;">
-                        << </button>
-                            <button onclick="p_page()" type="button" class="btn group-btn"
-                                style="background-color: #485D86; color:white; "> >> </button>
+                <hr style="margin-bottom: 30px; clear: both;">
+                <div class="clearfix" style="width:100%; margin-bottom:5px;">
+                    <div id="menu_box" style="float:left;">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"
+                            onclick="removeRedLine()" class="btn group-btn"
+                            style="background-color: #485D86; color:white; margin: 0px 10px;">사진
+                            추가</button>
+                    </div>
+                    <div style="float: right; z-index: 1 !important; position: relative;">
+                        <button onclick="m_page()" type="button" class="btn group-btn"
+                            style="background-color: #7689b1; color:white; margin-left: 6px;">
+                            << </button>
+                                <button onclick="p_page()" type="button" class="btn group-btn"
+                                    style="background-color: #485D86; color:white;"> >> </button>
+                    </div>
                 </div>
-            </div>
-            <div id="basic-photo">
-            </div>
-            <div class="gallery" id="photo_info" style="padding-bottom: 40px; padding-top: 20px;">
-                <!-- 이미지 갤러리 아이템들이 동적으로 추가될 공간 -->
-            </div>
-        </article>
-    </main>
+                <div id="basic-photo">
+                </div>
+                <div class="gallery" id="photo_info" style="padding-bottom: 40px; padding-top: 20px;">
+                    <!-- 이미지 갤러리 아이템들이 동적으로 추가될 공간 -->
+                </div>
+            </article>
+        </main>
     <!-- footer start -->
     <footer style="background-color: #fbfcfd; bottom: 0; width: 100%;">
         <div style="background-color:#60749d; width: 100%; height: 10px;"></div>
@@ -310,50 +309,15 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content" style="height: 850px;">
                 <div class="modal-header">
-                    <h5 class="modal-title" style="color: #485d86;">Info</h5>
+                    <h5 class="modal-title" style="color: #485d86;">해방쿤의 Info!</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="height: 600px;">
                     <!-- Carousel -->
                     <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="false">
                         <div class="carousel-inner">
-                            <!-- 메인 페이지 인포 -->
-                            <div class="carousel-item active" style="padding: 5px;">
-                                <h3 style="color: #485d86;">메인페이지</h3>
-                                <img src="/css/assets/info_main.png" style="width: 100%; height: 400px; margin: auto;">
-                                <div style="font-size: 20px; margin-top: 10px;">
-                                    ① start를 누르시면 다이어리 생성 페이지로 이동합니다!<br>
-                                    ② mbti 검사하기를 누르시면 자신의 여행 mbti와 잘 맞는 mbti, 안맞는 mbti를 확인하실 수 있습니다!<br>
-                                    ③ ≡ 표시를 누르시면 메뉴를 확인하실 수 있습니다!<br>
-                                    ④ info 버튼을 클릭하시면 언제든 튜토리얼을 다시 보실 수 있습니다~
-                                </div>
-                            </div>
-                            <!-- 마이 다이어리 페이지 인포 -->
-                            <div class="carousel-item" style="padding: 5px;">
-                                <h3 style="color: #485d86;"> 마이 다이어리 페이지</h3>
-                                <img src="/css/assets/info_mydiary.png"
-                                    style="width: 100%; height:400px; margin: auto;">
-                                <div style="font-size: 20px; margin-top: 10px;">
-                                    ① 빈 노트를 누르시면 모달창이 나타나며 새로운 노트를 생성할 수 있습니다!<br>
-                                    ② 그룹을 선택해서 그룹마다 해당하는 노트를 볼 수 있습니다! <br>
-                                    ③ 원하는 노트를 누르면 그 노트의 플랜 페이지로 이동합니다!
-                                </div>
-                            </div>
-                            <!-- 플랜 페이지 인포 -->
-                            <div class="carousel-item" style="padding: 5px;">
-                                <h3 style="color: #485d86;"> 플랜 페이지</h3>
-                                <img src="/css/assets/info_plan.png" style="width: 100%; height:400px; margin: auto;">
-                                <div style="font-size: 18px; margin-top: 10px;">
-                                    ① 선택한 노트의 이름이 나타납니다~ <br>
-                                    ② 일정추가를 누르면 모달창이 나타나고 일정을 입력하면 캘린더에 추가됩니다! <br>
-                                    ③ 사진첩 가기를 누르면 사진첩페이지로 이동합니다! <br>
-                                    ④ AI랑 놀기를 누르면 등록한 일정을 토대로 최적의 경로를 알 수 있습니다~ <br>
-                                    ⑤ 계획표 전송을 누르면 그룹 멤버중 보내고 싶은 멤버들을 선택할 수 있는 모달창이 뜨고 계획이 메일로 전송됩니다!<br>
-                                    ⑥ 해방필름을 누르면 해방필름 페이지로 이동합니다!
-                                </div>
-                            </div>
                             <!-- 사진첩 페이지 인포 -->
-                            <div class="carousel-item" style="padding: 5px;">
+                            <div class="carousel-item active" style="padding: 5px;">
                                 <h3 style="color: #485d86;"> 사진첩 페이지</h3>
                                 <img src="/css/assets/info_photo.png" style="width: 100%; height:400px; margin: auto;">
                                 <div style="font-size: 18px; margin-top: 10px;">
@@ -363,43 +327,6 @@
                                     ④ 수정 버튼을 누르면 수정을 할 수 있는 모달창으로 변경됩니다!<br>
                                     ⑤ 삭제를 누르면 사진이 삭제되고 삭제되었다는 알림창이 뜹니다~ <br>
                                     ⑥ 사진 왼쪽 하단 스탬프를 누르면 스탬프에 색이 바뀌며 마이페이지에서 지도에 표시됩니다! 표시된 장소의 사진을 한번에 볼 수 있습니다!
-                                </div>
-                            </div>
-                            <!-- AI 페이지 인포 -->
-                            <div class="carousel-item" style="padding: 5px;">
-                                <h3 style="color: #485d86;"> AI 페이지(유료기능)</h3>
-                                <img src="/css/assets/info_AI.png" style="width: 100%; height:400px; margin: auto;">
-                                <div style="font-size: 20px; margin-top: 10px;">
-                                    ① 먼저 AI로 경로를 짤 날짜를 선택해주세요~ <br>
-                                    ② 원하는 항목을 선택하거나 전체 선택으로 항목을 선택해주세요! <br>
-                                    ③ 선택 후 AI 밥주기 버튼을 눌러주세요~ 밥주기 버튼을 누르면 선택한 항목들이 work 창으로 이동합니다. <br>
-                                    ④ 사용 중 모르는게 있으면 AI 사용설명서를 다시 클릭해주세요! <br>
-                                    ⑤ 버리기 버튼을 클릭하면 선택한 항목들이 다시 feed 창으로 이동합니다.<br>
-                                    ⑥ work 창에서 원하는 항목을 선택 후 AI 일하기 버튼을 클릭하면 AI가 최적의 경로를 짜줍니다!
-                                </div>
-                            </div>
-                            <!-- 해방네컷 페이지 인포 -->
-                            <div class="carousel-item" style="padding: 5px;">
-                                <h3 style="color: #485d86;"> 해방네컷 페이지</h3>
-                                <img src="/css/assets/info_lifephoto.png"
-                                    style="width: 100%; height: 400px; margin: auto;">
-                                <div style="font-size: 20px; margin-top: 10px;">
-                                    ① 해방네컷은 세로버전과 가로버전으로 이루어져 있습니다! 원하는 버전을 눌러 이용해주세요!<br>
-                                    ② 파일 선택으로 이미지를 넣고 파일 넣기를 누르면 프레임에 사진이 들어갑니다!<br>
-                                    ③ 파일을 <span style="color: red;">네 개 모두</span> 넣고 사진 넣기를 눌러주세요!! <br>
-                                    ④ 사진 다운로드를 누르시면 사진이 컴퓨터에 저장됩니다~ 페이지에는 저장되지 않으니 참고해주세요!
-                                </div>
-                            </div>
-                            <!-- 마이페이지 인포 -->
-                            <div class="carousel-item" style="padding: 5px;">
-                                <h3 style="color: #485d86;"> 마이페이지 </h3>
-                                <img src="/css/assets/info_mypage.png" style="width: 100%; height:400px; margin: auto;">
-                                <div style="font-size: 20px; margin-top: 10px;">
-                                    ① 유저의 이메일이 적혀있어 본인의 이메일을 확인할 수 있습니다!<br>
-                                    ② 소속한 그룹을 볼 수 있습니다! 본인이 그룹장 이리면 옆에 함께 표시됩니다.<br>
-                                    ③ 그룹 만들기를 누르면 그룹을 만들고 멤버들을 추가 할 수 있는 모달창이 나타납니다!<br> 네비게이션 바의 Make group으로 어디서나 그룹을
-                                    생성할 수 있습니다! <br>
-                                    ④ 사진첩에서 스탬프를 찍은 장소가 지도에 나타납니다! 스탬프를 클릭하면 모달창으로 그 장소의 사진을 볼 수 있습니다!
                                 </div>
                             </div>
                             <!-- 그룹만들기 인포 -->
