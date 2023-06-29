@@ -27,6 +27,11 @@
         transform-origin: center;
       }
     }
+
+    .button-hover:hover {
+      transform: scale(1.1);
+      transition: transform .2s;
+    }
   </style>
 </head>
 
@@ -40,8 +45,37 @@
       <!-- Dropdown Structure -->
       <article class="review-detail max-content-width">
         <div style="display: flex;">
-          <h1 id="note_title"></h1>
+          <button id="changeNoteBtn" class="button-hover" style="border:none; background:none;"
+            onclick="changeNoteName()">
+            <span
+              style="font-size: 40px; border-bottom: 2px solid rgb(203, 203, 203); padding-bottom: 5px; margin-right:5px"
+              id="note_title"></span>
+            <span style="font-size: 25px; vertical-align: bottom;" id="note_icon">✏️</span>
+          </button>
+          <button id="cancelButton" class="button-hover btn btn-secondary" style="display:none; margin-left:10px"
+            onclick="deleteChangeNoteName()">취소
+          </button>
+          <button id="updateButton" class="button-hover btn btn-secondary" style="display:none; margin-left:10px"
+            onclick="patchChangeNoteName()">수정
+          </button>
           <div class="dropdown" style="margin-left: auto; margin-top:10px;">
+            <button class="btn btn-secondary btn-sm dropdown-toggle"
+              style="background-color: #485D86; border-color: #485D86; color:white; margin: 0px 10px; height: 45px; border-radius: 8px;"
+              type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              MENU
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark"
+              style="right: 0; left: auto; background-color: #7689b1; border-color: #7689b1; color:white;">
+              <li class="dropdown-item" id="back">뒤로가기</li>
+              <li class="dropdown-item"
+                onclick="$('#save_plan_modal').modal('show'); $('#search_box').empty(); planList();">일정 추가</li>
+              <li class="dropdown-item" id="goPhoto">사진첩 가기</li>
+              <li class="dropdown-item" id="goAI">AI랑 놀기</li>
+              <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#select_email_member"
+                onclick="selectEmailMember();">계획표 전송</li>
+              <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteNote" onclick="deleteNoteModal()">
+                노트삭제</li>
+            </ul>
             <button class="btn btn-secondary btn-sm dropdown-toggle" onclick="loadGroupMembers()"
               style="background-color: #485D86; border-color: #485D86; color:white; margin: 0px 10px; height: 45px; border-radius: 8px;"
               type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -53,24 +87,6 @@
           </div>
         </div>
         <hr style="margin-bottom: 30px;">
-        <div style="margin-bottom: 30px; display:inline-block; text-align: center; width:100%; margin-bottom:50px;">
-          <button type="button" id="back" class="btn group-btn"
-            style="background-color: #485d86; color:white; margin: 0px 10px;" onclick=""> 뒤로 가기 </button>
-          <button type="button" class="btn group-btn" style="background-color: #7689b1; color:white; margin: 0px 10px;"
-            onclick="$('#save_plan_modal').modal('show'); $('#search_box').empty(); planList();"> 일정 추가
-          </button>
-          <button type="button" id="goPhoto" class="btn group-btn"
-            style="background-color: #485d86; color:white; margin: 0px 10px;" onclick=""> 사진첩 가기</button>
-          <button type="button" id="goAI" class="btn group-btn"
-            style="background-color: #7689b1; color:white; margin: 0px 10px;" onclick="">AI랑 놀기</button>
-          <button type="button" class="btn group-btn" data-bs-toggle="modal" data-bs-target="#select_email_member"
-            style="background-color: #485d86; color:white; margin: 0px 10px;" onclick="selectEmailMember();">계획표
-            전송</button>
-          <button type="button" id="lifePhoto" class="btn group-btn"
-            style="background-color: #7689b1; color:white; margin: 0px 10px;">해방필름</button>
-          <button type="button" data-bs-toggle="modal" data-bs-target="#deleteNote" onclick="deleteNoteModal()"
-            class="btn group-btn" style="background-color: #485d86; color:white; margin: 0px 10px;">노트삭제</button>
-        </div>
         <!-- 로딩창 -->
         <div id="loading" style="display: none;">
           <div class="overlay"></div>
@@ -235,31 +251,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <!-- 회원탈퇴 모달창 -->
-  <div class="modal fade" id="deleteuser" tabindex="-1" aria-labelledby="su" aria-hidden="true"
-    data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            회원탈퇴</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form>
-          <div class="modal-body">
-            <h6>※ 탈퇴하기를 누르면 계정이 영구삭제됩니다. 계속 진행하시겠습니까?</h6>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기
-            </button>
-            <button type="button" class="btn btn-primary" style="float: right" onclick="handlesUserDelete()">
-              탈퇴하기
-            </button>
-          </div>
-        </form>
       </div>
     </div>
   </div>
