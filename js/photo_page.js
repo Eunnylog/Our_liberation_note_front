@@ -196,6 +196,21 @@ function m_page() {
 // 상세페이지 모달
 async function photo_detail(photo_id) {
     //각 사진마다 photo_id를 갖고 있기에 그에 맞는 정보를 갖고올 수 있도록 받아온다.
+
+    $('#pho-edit').empty();
+    let temp_html0 = `<div class="row">
+                            <div class="col-md-7">
+                                <!-- 사진 왼쪽 부분 -->
+                                <div id="photo-d">
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <!--오른쪽에 정보와 댓글 부분 -->
+                                <div id="photo-info"></div>
+                                <!-- 정보 내용 추가 -->
+                            </div>
+                        </div>`
+    $('#pho-edit').append(temp_html0)
     $('#photo-d').empty();
     $('#photo-info').empty();
     const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
@@ -219,10 +234,10 @@ async function photo_detail(photo_id) {
     const modalTitle = document.getElementById("modal-title")
     modalTitle.innerText = `${name}`
 
-    let temp_html = `
+    let temp_html1 = `
                     <img class="detail-image" src="${image}"id='photo_image' style="height:500px;">
                     `;
-    $('#photo-d').append(temp_html)
+    $('#photo-d').append(temp_html1)
 
     let temp_html2 = `
     <div id='photo_title' style="float:left; margin-bottom:5px;">${title}</div> 
@@ -316,12 +331,21 @@ function patchPhotoBox(photo_id) {
     let imageUrl = image.src;
     var path = imageUrl.split('media/')[1];
     var decodedPath = decodeURIComponent(path);
+    let modalContainer = document.getElementById('photo-detail');
+
+    // CSS 클래스 추가/제거
+    if (!modalContainer.classList.contains('modal-tall')) {
+        modalContainer.classList.add('modal-tall');
+    } else {
+        modalContainer.classList.remove('modal-tall');
+    }
 
     $('#photo-d').empty();
+    $('#photo-info').empty();
     let temp_html = `<div class="input-group" style="flex-wrap: nowrap; ">
                         <input class="upload-name" id="p_imgbox" src="${image}" placeholder="${decodedPath}" multiple
                             accept=".jpg, .png, .jpeg" style="width: 80%; border-radius: 5px 0 0 5px; margin-bottom: 15px;">
-                        <label for="image" style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 5px 5px 0; background-color:  #485D86;">Upload</label>
+                        <label for="image" style="margin-top:0px; height:40px; font-size:15px;  width: 20%; border-radius: 0 5px 5px 0; background-color:  #485D86; display: flex; justify-content: center; align-items: center;">업로드</label>
                         <input type="file" id="image" style="display: none">
                     </div>
                     <div class="input-group-append" style="width: 100%;">
@@ -333,7 +357,7 @@ function patchPhotoBox(photo_id) {
                         <input name="title" id="p_title" value='${title}' type="text" class="form-control"
                             placeholder="목적지(지역명+상호명, 지역명+카테고리)" style="width: 80%; height:40px;">
                         <button type="button" onclick="searchLocation('2')" class="btn btn-primary"
-                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; background-color:  #485D86;">Search</button>
+                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; background-color:  #485D86;">찾기</button>
                     </div>
                     <div class="input-group-append" style="width: 100%; margin-bottom: 15px;">
                         <input name="location" id="p_location" value='${location}' type="text" class="form-control"
@@ -347,15 +371,27 @@ function patchPhotoBox(photo_id) {
                     </div>
                     <input name="p_location_x" id="p_location_x" type="text" class="form-control" hidden>
                         <input name="p_location_y" id="p_location_y" type="text" class="form-control" hidden> `;
-    $('#photo-d').append(temp_html)
+    $('#pho-edit').append(temp_html)
+
 
     $('#photo-detail-modal-footer').empty()
 
-    let temp_html2 = `<button type="button" class="btn btn-secondary delete_serarch" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">Close</button>
-                      <button id="patch_photo" value='${photo_id}' type="button" class="btn btn-primary"onclick="patchPhoto()" style="background-color:  #485D86; border-color: #485D86;">Save</button>`
+    let temp_html2 = `<button id="delete_serarch" type="button" class="btn btn-secondary delete_serarch" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">닫기</button>
+                      <button id="patch_photo" value='${photo_id}' type="button" class="btn btn-primary"onclick="patchPhoto()" style="background-color:  #485D86; border-color: #485D86;">저장</button>`
 
     $('#photo-detail-modal-footer').append(temp_html2)
+
+    // $('.delete_serarch').on('click', function () {
+    //     // 닫기 버튼 눌렀을때 수정하는 창의 내용이 사라지도록
+    //     alert("주의")
+    //     $('#pho-edit').empty();
+    //     window.location.reload()
+    // });
 }
+// function test() {
+//     window.location.reload()
+// }
+
 
 async function patchPhoto() {
     const photo_id = document.getElementById("patch_photo").value;
