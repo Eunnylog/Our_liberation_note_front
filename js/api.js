@@ -1,8 +1,8 @@
 // 기본 URL
 const backend_base_url = "https://api.liberation-note.com"
-// const frontend_base_url = "https://liberation-note.com"
+const frontend_base_url = "https://liberation-note.com"
 // const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "http://127.0.0.1:5500"
+// const frontend_base_url = "http://127.0.0.1:5500"
 
 
 let jwtToken;
@@ -498,9 +498,15 @@ function checkLogin() {
 
   if (!payload) {
     alert('로그인 또는 회원가입이 필요합니다!')
-    window.location.replace(`${frontend_base_url}/index.html`)
+    window.location.replace(`${frontend_base_url}/index.html?sign=0`)
   }
 }
+
+$(document).ready(function () {
+  if (window.location == `${frontend_base_url}/index.html?sign=0`) {
+    $('#login').modal('show');
+  }
+})
 
 // 회원탈퇴
 async function handlesUserDelete() {
