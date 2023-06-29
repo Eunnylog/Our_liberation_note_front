@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="viewport" content="width=1024">
     <link rel="icon" type="image/png" sizes="48x48" href="/css/favicon/android-icon-48x48.png">
-    <link href="/css/styles/recipe_card.css" rek="stylesheet" type="text/css" />
     <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />
     <link href="/css/styles/theme.css" rel="stylesheet" type="text/css" />
     <link href="/css/styles/login.css" rel="stylesheet" type="text/css" />
@@ -16,12 +15,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.5.1/snap.svg-min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/loader.js"></script>
+    <script src="/js/trash.js"></script>
 </head>
 
 <body>
@@ -32,12 +35,12 @@
     <!-- nav end -->
 
     <!-- content start -->
-    <main>
-        <article
-            style="width: 100%; justify-content: center; min-height: 100%; padding-bottom: 200px; position: relative;">
+    <main class="site-body" style="min-height: calc(100vh - 100px) !important; padding-bottom: 100px;">
+        <article class="review-detail max-content-width">
+            <div id="toast"></div>
             <!-- 전체 페이지 위치를 위한 제일 큰 그리드 -->
             <div class="content"
-                style="display: grid; grid-template-columns: 50px 350px 50px 350px 50px 350px 50px; grid-template-rows: 50px 50px 230px 50px 230px 30px; background-color: aliceblue; justify-content: center; width:fit-content; height:fit-content; margin: 40px auto;">
+                style="display: grid; grid-template-columns: 10px 300px 10px 300px 10px 300px 10px; grid-template-rows: 50px 50px 230px 50px 230px 30px; background-color: aliceblue; justify-content: center; width:fit-content; height:fit-content; margin: 40px auto;">
                 <!-- 페이지 제목 -->
                 <div style="margin-left: 20px; margin-top: 10px; font-size:30px; font-weight: 500; grid-row: 1;">
                     Developers
@@ -51,7 +54,7 @@
                     style="grid-column: 2; grid-row:3/4; text-align: center; flex-direction: column; margin-top: 15px; margin: auto; height: 100%;">
                     <!-- 클릭시 해당 깃허브로 이동 -->
                     <a href="https://github.com/kmy9810">
-                        <img src="/css/assets/develop_my.png" style="width: 300px; height:200px;" />
+                        <img src="/css/assets/develop_my.png" style="width: 250px; height:200px;" />
                     </a>
                 </div>
                 <!-- 페이지 개발자 2 -->
@@ -59,7 +62,7 @@
                     style="grid-column: 4; grid-row: 3/4; text-align: center; flex-direction: column; margin-top: 15px; margin: auto; height: 100%;">
                     <!-- 클릭시 해당 깃허브로 이동 -->
                     <a href="https://github.com/Eunnylog">
-                        <img src="/css/assets/develop_je.png" style="width: 300px; height:200px" />
+                        <img src="/css/assets/develop_je.png" style="width: 250px; height:200px" />
                     </a>
                 </div>
                 <!-- 페이지 게발자 3 -->
@@ -67,7 +70,7 @@
                     style="grid-column: 6; grid-row: 3/4; text-align: center; flex-direction: column; margin-top: 15px; margin: auto; height: 100%;">
                     <!-- 클릭시 해당 깃허브로 이동 -->
                     <a href="https://github.com/Msgun7">
-                        <img src="/css/assets/develop_jg.png" style="width: 300px; height:200px" />
+                        <img src="/css/assets/develop_jg.png" style="width: 250px; height:200px" />
                     </a>
                 </div>
                 <!-- 페이지 개발자 4 -->
@@ -75,7 +78,7 @@
                     style="grid-column: 2; grid-row: 5/6; text-align: center; flex-direction: column; margin-top: 15px; margin: auto; height: 100%;">
                     <!-- 클릭시 해당 깃허브로 이동 -->
                     <a href="https://github.com/yell2023">
-                        <img src="/css/assets/develop_yl.png" style="width: 300px; height:200px" />
+                        <img src="/css/assets/develop_yl.png" style="width: 250px; height:200px" />
                     </a>
                 </div>
                 <!-- 페이지 개발자 5 -->
@@ -83,19 +86,19 @@
                     style="grid-column: 4; grid-row: 5/6; text-align: center; flex-direction: column; margin-top: 15px; margin: auto; height: 100%;">
                     <!-- 클릭시 해당 깃허브로 이동 -->
                     <a href="https://github.com/choiyeji2022">
-                        <img src="/css/assets/develop_yj.png" style="width: 300px; height:200px" />
+                        <img src="/css/assets/develop_yj.png" style="width: 250px; height:200px" />
                     </a>
                 </div>
                 <!-- 오른쪽 하단 지도 아이콘 -->
                 <div style="grid-column: 6; grid-row: 5/6">
-                    <img src="/css/assets/developers_page.png" />
+                    <img src="/css/assets/developers_page.png" style="width: 300px; height:250px" />
                 </div>
             </div>
         </article>
     </main>
     <!-- content end -->
     <!-- footer start -->
-    <footer style="background-color: #fbfcfd;">
+    <footer style="background-color: #fbfcfd; position:fixed; bottom: 0; width: 100%;">
         <div style="background-color:#60749d; width: 100%; height: 10px;"></div>
         <p style="font-size: 30px; margin-top: 10px; text-align: center;">CONTACT</p>
         <div style="display: flex; justify-content: center; padding-bottom: 30px;">
@@ -238,7 +241,7 @@
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
                                     <input name="groupname" id="groupname" type="name" class="form-control"
-                                        placeholder="Group Name">
+                                        placeholder="Group Name" maxlength="15" oninput="checkLength(this)">
                                     <div style="display: flex;" id="group_make_box">
                                         <input name="addemail" id="usersearch" type="email" class="form-control"
                                             autocomplete="off" placeholder="Email to add" style="width: 300px;">
@@ -369,9 +372,5 @@
         </div>
     </div>
 </body>
-<script src="/js/loader.js"></script>
-<script src="/js/api.js"></script>
-<script src="/js/trash.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </html>

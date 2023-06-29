@@ -21,7 +21,6 @@ const headers = {
 };
 
 
-console.log(orderId, amount, paymentKey, note_id)
 
 fetch(url + `?orderId=${orderId}&paymentKey=${paymentKey}&amount=${amount}&note_id=${note_id}`, {
   method: 'GET',
@@ -32,8 +31,6 @@ fetch(url + `?orderId=${orderId}&paymentKey=${paymentKey}&amount=${amount}&note_
 
     $('#payments-info').empty();
     const suppliedAmount = data.suppliedAmount;
-    console.log(data, "테스트");
-    console.log(data.res);
     const vat = data.vat;
     const totalAmount = data.totalAmount;
     const orderName = data.orderName

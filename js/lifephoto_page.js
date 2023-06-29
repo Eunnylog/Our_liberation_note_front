@@ -1,4 +1,3 @@
-checkLogin()
 // lifephoto_page
 
 // input에 들어간 파일을 사진 넣기 버튼을 눌렀을때 넣어주는 함수
@@ -9,7 +8,6 @@ function formFile() {
   let selectFile3 = document.querySelector("#formFile3").files[0];
   let selectFile4 = document.querySelector("#formFile4").files[0];
 
-  console.log(selectFile1, selectFile2, selectFile3, selectFile4);
 
   if (selectFile1 == undefined || selectFile2 == undefined || selectFile3 == undefined || selectFile4 == undefined) {
     showToast("이미지를 네장 다 넣고 사진넣기를 눌러주세요!")
@@ -20,7 +18,6 @@ function formFile() {
     let file3 = URL.createObjectURL(selectFile3);
     let file4 = URL.createObjectURL(selectFile4);
 
-    console.log(file1, file2, file3, file4)
 
     // 정보가 담긴 파일을 지정한 장소에 넣어주기
     // 양쪽이 같은 파일을 보여주게 파일 하나를 두개 아이디에 각각 넣어줌
@@ -101,7 +98,6 @@ function saveButton() {
   let selectFile4_2 = document.getElementById("image4").src;
   imgUrl = `${frontend_base_url}/css/assets/null.png`
 
-  console.log(selectFile1_2, selectFile2_2, selectFile3, selectFile4)
 
   if (selectFile1 == imgUrl || selectFile2 == imgUrl || selectFile3 == imgUrl || selectFile4 == imgUrl) {
     if (selectFile1_2 == imgUrl || selectFile2_2 == imgUrl || selectFile3_2 == imgUrl || selectFile4_2 == imgUrl) {
@@ -142,24 +138,24 @@ function cancle() {
 }
 
 // 페이지 이동을 위한 함수
-window.onload = function () {
-  // 이전 페이지 처럼 되돌아 가기 위해 들어운 노트의 아이디를 불러옴
-  params = new URLSearchParams(window.location.search);
-  note_id = params.get("note_id");
+// window.onload = function () {
+//   // 이전 페이지 처럼 되돌아 가기 위해 들어운 노트의 아이디를 불러옴
+//   params = new URLSearchParams(window.location.search);
+//   note_id = params.get("note_id");
 
-  // 페이지 이동을 위해 각 버튼들의 필요한 id값을 불러옴
-  var aiLink = document.getElementById('goAIpage');
-  var photoLink = document.getElementById('goPhotopage');
-  var planPage = document.getElementById('goPlanpage');
+//   // 페이지 이동을 위해 각 버튼들의 필요한 id값을 불러옴
+//   var aiLink = document.getElementById('goAIpage');
+//   var photoLink = document.getElementById('goPhotopage');
+//   var planPage = document.getElementById('goPlanpage');
 
-  // 버튼을 클릭했을때 페이지 이동시켜줌
-  aiLink.onclick = function () {
-    location.href = '/ai.html?note_id=' + note_id;
-  }
-  photoLink.onclick = function () {
-    location.href = '/photo_page.html?note_id=' + note_id;
-  }
-  planPage.onclick = function () {
-    location.href = '/plan_page.html?note_id=' + note_id;
-  }
-};
+//   // 버튼을 클릭했을때 페이지 이동시켜줌
+//   aiLink.onclick = function () {
+//     location.href = '/ai.html?note_id=' + note_id;
+//   }
+//   photoLink.onclick = function () {
+//     location.href = '/photo_page.html?note_id=' + note_id;
+//   }
+//   planPage.onclick = function () {
+//     location.href = '/plan_page.html?note_id=' + note_id;
+//   }
+// };
