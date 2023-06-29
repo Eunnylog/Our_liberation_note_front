@@ -506,7 +506,7 @@ async function deleteGroup(group_ids) {
     }
 }
 
-async function deleteNote(note_id) {
+async function deleteNote(note_ids) {
     let token = localStorage.getItem("access")
     var userConfirmation = confirm("※ 확인을 누르시면 해당 노트가 영구삭제됩니다. 삭제하시겠습니까?");
 
@@ -514,12 +514,15 @@ async function deleteNote(note_id) {
         return false
     }
 
-    const response = await fetch(`${backend_base_url}/note/note-detail/${note_id}`, {
+    const response = await fetch(`${backend_base_url}/note/`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${token}`,
         },
         method: 'DELETE',
+        body: JSON.stringify({
+            "note_ids": note_ids
+        })
     });
 
     if (response.status == 204) {
@@ -532,7 +535,7 @@ async function deleteNote(note_id) {
     }
 }
 
-async function deletePhoto(photo_id) {
+async function deletePhoto(photo_ids) {
     let token = localStorage.getItem("access")
     var userConfirmation = confirm("※ 확인을 누르시면 해당 사진이 영구삭제됩니다. 삭제하시겠습니까?");
 
@@ -540,12 +543,15 @@ async function deletePhoto(photo_id) {
         return false
     }
 
-    const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
+    const response = await fetch(`${backend_base_url}/note/photo`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": `Bearer ${token}`,
         },
         method: 'DELETE',
+        body: JSON.stringify({
+            "photo_ids": photo_ids
+        })
     });
 
     if (response.status == 204) {
@@ -559,9 +565,9 @@ async function deletePhoto(photo_id) {
 }
 
 function handleTrashDelete() {
-    var selectedcheckbox = document.querySelector('input[name="trash-checkbox"]:checked');
+    var selectedcheckboxes = document.querySelectorAll('input[name="trash-checkbox"]:checked');
 
-    if (!selectedcheckbox) {
+    if (selectedcheckboxes.length === 0) {
         showToast("※ 항목을 선택해주세요!");
         return;
     }
@@ -573,33 +579,32 @@ function handleTrashDelete() {
     selectedcheckboxes.forEach(selectedcheckbox => {
         let selectedIndex = selectedcheckbox.value;
         let selected_id = document.getElementById(`id_${selectedIndex}`).value;
-        
-    if (selectedGroupIndex !== null) {
-        selectedGroups.push({
-            id: selected_id
-        })
-        if(selectedGroups!== null){
-            deleteGroup(selectedGroups);
-        }
-    }
 
-    if (selectedNoteIndex !== null) {
-        selectedNotes.push({
-            id: selected_id
-        })
-        if(selectedNotes!== null){
-            deleteNote(selectedNotes);
+        if (selectedGroupIndex !== null) {
+            selectedGroups.push({
+                id: selected_id
+            })
+            if(selectedGroups!== null){
+                deleteGroup(selectedGroups);
+            }
         }
-    }
 
-    if (selectedPhotoIndex !== null) {
-        selectedPhotos.push({
-            id: selected_id
-        })
-        if(selectedPhotos!== null){
-            deletePhoto(selectedPhotos);
+        if (selectedNoteIndex !== null) {
+            selectedNotes.push({
+                id: selected_id
+            })
+            if(selectedNotes!== null){
+                deleteNote(selectedNotes);
+            }
         }
-    }
-})
 
+        if (selectedPhotoIndex !== null) {
+            selectedPhotos.push({
+                id: selected_id
+            })
+            if(selectedPhotos!== null){
+                deletePhoto(selectedPhotos);
+            }
+        }
+    })
 }
