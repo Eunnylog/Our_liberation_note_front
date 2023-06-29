@@ -9,7 +9,6 @@ function formFile() {
   let selectFile3 = document.querySelector("#formFile3").files[0];
   let selectFile4 = document.querySelector("#formFile4").files[0];
 
-  console.log(selectFile1, selectFile2, selectFile3, selectFile4);
 
   if (selectFile1 == undefined || selectFile2 == undefined || selectFile3 == undefined || selectFile4 == undefined) {
     showToast("이미지를 네장 다 넣고 사진넣기를 눌러주세요!")
@@ -20,7 +19,6 @@ function formFile() {
     let file3 = URL.createObjectURL(selectFile3);
     let file4 = URL.createObjectURL(selectFile4);
 
-    console.log(file1, file2, file3, file4)
 
     // 정보가 담긴 파일을 지정한 장소에 넣어주기
     // 양쪽이 같은 파일을 보여주게 파일 하나를 두개 아이디에 각각 넣어줌
@@ -101,7 +99,6 @@ function saveButton() {
   let selectFile4_2 = document.getElementById("image4").src;
   imgUrl = `${frontend_base_url}/css/assets/null.png`
 
-  console.log(selectFile1_2, selectFile2_2, selectFile3, selectFile4)
 
   if (selectFile1 == imgUrl || selectFile2 == imgUrl || selectFile3 == imgUrl || selectFile4 == imgUrl) {
     if (selectFile1_2 == imgUrl || selectFile2_2 == imgUrl || selectFile3_2 == imgUrl || selectFile4_2 == imgUrl) {

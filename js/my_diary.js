@@ -10,9 +10,6 @@ const userPayload = localStorage.getItem('payload')
 const userPayloadJson = JSON.parse(userPayload)
 const userEmail = userPayloadJson.email
 
-function loadNoteCategory() {
-
-}
 window.onload = function () {
     $('#note_category').empty()
     for (let i = 1; i < 13; i++) {
@@ -46,7 +43,6 @@ async function getGroup() {
     })
     const response_json = await response.json()
 
-    console.log(response_json)
     $('#select_group').empty()
     if (response_json.length == 0) {
         showToast('그룹을 먼저 생성해 주세요!')
@@ -58,7 +54,7 @@ async function getGroup() {
         let name = a['name']
         let master = a['master']
         let members = a['members']
-        let temp_html = `<option value="${id}">${name}</option>`
+        let temp_html = `<option style="font-family: omyu_pretty;" value="${id}">${name}</option>`
         // 페이지 그룹 샐랙트
         $('#select_group').append(temp_html)
         // 모달 그룹 샐랙트
@@ -342,6 +338,9 @@ async function updateAddMember() {
     axios.get(url).then(response => {
         const emails = response.data.map(item => item.email);
 
+        if (response.data.length === 0) {
+            showToast('검색 결과가 없습니다!')
+        }
 
         var email = document.getElementById("update-email-ul");
         email.innerHTML = "";

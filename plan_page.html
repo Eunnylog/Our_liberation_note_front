@@ -279,7 +279,8 @@
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="Group Name">
+                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="Group Name"
+                    maxlength="15" oninput="checkLength(this)">
                   <div style="display: flex;" id="group_make_box">
                     <input name="addemail" id="usersearch" type="email" class="form-control" autocomplete="off"
                       placeholder="Email to add" style="width: 300px;">
@@ -382,6 +383,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
   <script src="/js/map.js"></script>
   <script src="/js/trash.js"></script>
+  <script>
+    document.getElementById("start").value = new Date().toISOString().split("T")[0];
+  </script>
 </body>
 
 </html>

@@ -52,7 +52,6 @@ async function searchLocation(box_id) {
                                 <br>
                             `
                     $('#search_box2').append(temp_html);
-                    console.log('if')
                 });
             })
             .catch(error => {
@@ -143,7 +142,6 @@ function handleRadio(box_id) {
         document.getElementById("p_title").value = name;
         document.getElementById("p_location_x").value = location_x;
         document.getElementById("p_location_y").value = location_y;
-        console.log(selected_address, name, location_x, location_y)
     }
 
 
