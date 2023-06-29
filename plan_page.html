@@ -32,6 +32,10 @@
       transform: scale(1.1);
       transition: transform .2s;
     }
+
+    .fc-event {
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -74,7 +78,7 @@
               <li class="dropdown-item"
                 onclick="$('#save_plan_modal').modal('show'); $('#search_box').empty(); planList();">일정 추가</li>
               <li class="dropdown-item" id="goPhoto">사진첩 가기</li>
-              <li class="dropdown-item" id="goAI">최적의 여행 루트</li>
+              <li class="dropdown-item" id="goAI">여행 루트 AI 🤖</li>
               <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#select_email_member"
                 onclick="selectEmailMember();">계획표 전송</li>
               <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteNote" onclick="deleteNoteModal()">
@@ -183,10 +187,9 @@
                 <form class="sign-in-form active">
                   <div id="plan_info" style="padding: 10px;; text-align:left">
                   </div>
-                  <button type="button" class="btn btn-primary" id="delete_btn" data-bs-dismiss="modal"
-                    aria-label="Close" style="float: center; width:49%; background-color: #7689b1;"
-                    onclick="delete_patch_box();">
-                    취소
+                  <button type="button" class="btn btn-primary" id="delete_btn"
+                    style="float: center; width:49%; background-color: #7689b1;" onclick="deletePlan();">
+                    삭제
                   </button>
                   <button id="patch_box" type="button" onclick="patchBox()" class="btn btn-primary"
                     style="float: center; width:49%; background-color: #485d86;">
@@ -241,7 +244,7 @@
                   <textarea name="memo" id="memo" type="textarea" class="form-control" placeholder="memo"
                     style="height:200px; min-height:200px; max-height:200px"></textarea>
                   <div id="plan_list"
-                    style="width:100%; height:200px; overflow-x: auto; margin-top: 10px; text-align:center;"
+                    style="width:100%; height:200px; overflow-x: auto; margin-top: 10px; text-align:center; display:none;"
                     class="form-control"></div>
                   <div class="button-group">
                     <button type="button" data-bs-dismiss="modal" aria-label="Close"
@@ -249,7 +252,6 @@
                     <button type="button" onclick="savePlan()" class="btn btn-primary"
                       style="width: 49%; background-color: #485d86;">저장</button>
                   </div>
-
                 </form>
               </div>
             </div>

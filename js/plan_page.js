@@ -50,6 +50,24 @@ async function showPlanPage() {
             memo: a['memo'],
             place_category: a['category'],
         };
+        switch (a['category']) {
+            case '카페':
+                dic.color = '#008080';
+                break;
+            case '음식점':
+                dic.color = '#FF8200';
+                break;
+            case '관광명소':
+                dic.color = '#BE2457';
+                break;
+            case '문화시설':
+                dic.color = '#6A5ACD';
+                break;
+            default:
+                dic.color = '#485D86';
+                break;
+        }
+
         plan_data.push(dic)
     })
 }
@@ -71,6 +89,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         dayMaxEvents: 2,
         events: plan_data,
         fixedWeekCount: false,
+
         eventClick: function (info) {
             info.jsEvent.preventDefault();
             var eventInfoDiv = document.getElementById('plan_info');
@@ -147,7 +166,7 @@ async function savePlan() {
         showToast("새로운 계획이 생성되었습니다!")
         setTimeout(function () {
             window.location.reload();
-        }, 1000);
+        }, 500);
     } else {
         showToast('문제가 발생했습니다!')
         console.log(response.error)
@@ -197,10 +216,10 @@ function patchBox() {
     let date = `${year}-${month}-${day}`;
 
 
-    let delete_btn = document.getElementById('delete_btn');
-    delete_btn.removeAttribute('data-bs-dismiss');
-    delete_btn.innerHTML = '삭제';
-    delete_btn.setAttribute("onClick", `deletePlan()`)
+    // let delete_btn = document.getElementById('delete_btn');
+    // delete_btn.removeAttribute('data-bs-dismiss');
+    // delete_btn.innerHTML = '삭제';
+    // delete_btn.setAttribute("onClick", `deletePlan()`)
 
     let patch_info = document.getElementById('patch_info');
     let patch_info_box = document.getElementById('patch_info_box');
@@ -218,12 +237,6 @@ function patchBox() {
             <h5 id='plan_time'>Time: ${time}</h5>
             <h5 id='plan_memo'>Memo: ${memo}</h5>
         `
-        let delete_btn = document.getElementById('delete_btn');
-        delete_btn.innerHTML = '취소';
-        delete_btn.setAttribute("onClick", ``)
-
-        //모달 꺼지는 속성 다시 추가
-        delete_btn.setAttribute('data-bs-dismiss', 'modal');
 
         const btnElement = document.getElementById('patch_box');
         btnElement.innerText = '수정';
@@ -268,10 +281,6 @@ function delete_patch_box() {
     patch_info_box.style.textAlign = ''
     patch_info_box.style.padding = ''
     patch_info.innerHTML = ''
-
-    let delete_btn = document.getElementById('delete_btn');
-    delete_btn.innerHTML = '취소';
-    delete_btn.setAttribute("onClick", ``)
 
     const btnElement = document.getElementById('patch_box');
     btnElement.innerText = '수정';
@@ -469,6 +478,11 @@ function deletePlanFromSet(plan, plan_set) {
 async function sendEmail() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
+
+    if (plan_data.length == 0) {
+        showToast('일정 추가 후 이용해주세요!')
+        return false
+    }
 
     let checkedEmails = [];
     $('input[type="checkbox"]:checked').each(function () {
