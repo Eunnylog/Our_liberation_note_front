@@ -63,7 +63,11 @@ async function handleSignup() {
   })
 
   if (response.status == 201) {
-    await handleSignin(email, password); // 회원가입 후 로그인 함수 호출
+    showToast("가입 완료! 그룹이 생성 되었습니다!")
+    setTimeout(async () => {
+      // 2초 후 회원가입 후 로그인 함수 호출
+      await handleSignin(email, password);
+    }, 1000);
   } else {
     const errorResponse = await response.json();
     console.log('error', errorResponse)

@@ -242,6 +242,16 @@ function updateHandleRadioClick() {
     }
 }
 
+function showUpdateEmailInfo() {
+    const searchEmailInfo = document.getElementById('update-search-email-info')
+
+    if ($("#update-email-ul").children().length === 0) {
+        searchEmailInfo.style.display = "block";
+    } else {
+        searchEmailInfo.style.display = "none";
+    }
+}
+
 // 기존 이메일을 저장할 배열
 let existingEmails = [];
 
@@ -307,7 +317,8 @@ $(document).ready(function () {
         $('#update-groupname').val("");
         $('.selected-email').empty();
         $('#update-email-ul').empty();
-        $('#email-list').empty();
+        let temp_html = `<div id="update-search-email-info"> 검색한 이메일이 이곳에 보여집니다!</div>`
+        $('#update-email-ul').append(temp_html)
         $("#update-selected-email-ul").empty(); // 선택된 그룹 멤버도 초기화
         existingEmails = []; // 기존 이메일 배열 초기화
 
@@ -356,6 +367,7 @@ async function updateAddMember() {
           `;
             email.innerHTML += temp_html;
         });
+        showUpdateEmailInfo()
     })
         .catch(error => {
             // 에러 처리
@@ -422,6 +434,13 @@ function updateAddMembersToGroup() {
 // 그룹 저장 전 선택한 이메일 리스트에서 제거하는 함수
 async function updateDeleteMembers() {
     const checkedInput = document.querySelector('input[name="checked_email_radio"]:checked');
+    const selected_email = checkedInput.previousSibling.textContent.trim();
+
+    if (userEmail == selected_email) {
+        showToast('본인은 그룹에서 제외할 수 없습니다!')
+        return
+    }
+
     if (checkedInput) {
         const selectedEmail = checkedInput.previousSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
 
