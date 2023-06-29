@@ -50,6 +50,24 @@ async function showPlanPage() {
             memo: a['memo'],
             place_category: a['category'],
         };
+        switch (a['category']) {
+            case '카페':
+                dic.color = '#008080';
+                break;
+            case '음식점':
+                dic.color = '#FF8200';
+                break;
+            case '관광명소':
+                dic.color = '#BE2457';
+                break;
+            case '문화시설':
+                dic.color = '#6A5ACD';
+                break;
+            default:
+                dic.color = '#485D86';
+                break;
+        }
+
         plan_data.push(dic)
     })
 }
@@ -71,6 +89,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         dayMaxEvents: 2,
         events: plan_data,
         fixedWeekCount: false,
+
         eventClick: function (info) {
             info.jsEvent.preventDefault();
             var eventInfoDiv = document.getElementById('plan_info');
@@ -128,12 +147,18 @@ document.addEventListener('DOMContentLoaded', async function () {
 async function savePlan() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
+    let searchButton = document.getElementById('addPlanListBtn');
 
     if (plan_set.length == 0) {
+        searchButton.classList.add('blink');
         showToast('일정을 추가해주세요!')
+        setTimeout(function () {
+            searchButton.classList.remove('blink');
+        }, 1000);
         return false
+    } else {
+        searchButton.classList.remove('blink');
     }
-
 
     const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
         headers: {
@@ -147,7 +172,7 @@ async function savePlan() {
         showToast("새로운 계획이 생성되었습니다!")
         setTimeout(function () {
             window.location.reload();
-        }, 1000);
+        }, 500);
     } else {
         showToast('문제가 발생했습니다!')
         console.log(response.error)
@@ -197,10 +222,10 @@ function patchBox() {
     let date = `${year}-${month}-${day}`;
 
 
-    let delete_btn = document.getElementById('delete_btn');
-    delete_btn.removeAttribute('data-bs-dismiss');
-    delete_btn.innerHTML = '삭제';
-    delete_btn.setAttribute("onClick", `deletePlan()`)
+    // let delete_btn = document.getElementById('delete_btn');
+    // delete_btn.removeAttribute('data-bs-dismiss');
+    // delete_btn.innerHTML = '삭제';
+    // delete_btn.setAttribute("onClick", `deletePlan()`)
 
     let patch_info = document.getElementById('patch_info');
     let patch_info_box = document.getElementById('patch_info_box');
@@ -218,12 +243,6 @@ function patchBox() {
             <h5 id='plan_time'>Time: ${time}</h5>
             <h5 id='plan_memo'>Memo: ${memo}</h5>
         `
-        let delete_btn = document.getElementById('delete_btn');
-        delete_btn.innerHTML = '취소';
-        delete_btn.setAttribute("onClick", ``)
-
-        //모달 꺼지는 속성 다시 추가
-        delete_btn.setAttribute('data-bs-dismiss', 'modal');
 
         const btnElement = document.getElementById('patch_box');
         btnElement.innerText = '수정';
@@ -268,10 +287,6 @@ function delete_patch_box() {
     patch_info_box.style.textAlign = ''
     patch_info_box.style.padding = ''
     patch_info.innerHTML = ''
-
-    let delete_btn = document.getElementById('delete_btn');
-    delete_btn.innerHTML = '취소';
-    delete_btn.setAttribute("onClick", ``)
 
     const btnElement = document.getElementById('patch_box');
     btnElement.innerText = '수정';
@@ -386,6 +401,9 @@ function addPlanList() {
     }
 
     plan_set.push(plan);
+    showToast('장바구니에 담았습니다!')
+    let plan_cnt = document.getElementById('plan-count')
+    plan_cnt.innerText = plan_set.length
 
     var plan_list = document.getElementById('plan_list')
     if (plan_list.innerText == '일정 추가시 여기에 추가됩니다!') {
@@ -393,7 +411,7 @@ function addPlanList() {
     }
 
     let temp_html = `
-                        <button onclick="deletePlanList('${plan}', event)" style="width:150px; border-radius:20px;">${title}<br>(${start})</button>
+                        <button onclick="deletePlanList('${plan}', event)" style="width:150px; border-radius:20px; background-color:#7689b1;">${title}</button>
                     `
     $('#plan_list').append(temp_html)
 
@@ -432,6 +450,16 @@ $(document).ready(function () {
 
         titleBox.classList.remove("custom-class");
         startBox.classList.remove("custom-class");
+
+        let searchButton = document.getElementById('addPlanListBtn');
+        searchButton.classList.remove('blink');
+
+        plan_set = [];
+        let plan_cnt = document.getElementById('plan-count')
+        plan_cnt.innerText = plan_set.length
+
+        var plan_list = document.getElementById('plan_list')
+        plan_list.style.display = 'none'
     });
 });
 
@@ -448,12 +476,13 @@ function deletePlanList(plan, event) {
 
         // 클릭된 버튼 삭제
         event.target.remove();
+        let plan_cnt = document.getElementById('plan-count')
+        plan_cnt.innerText = plan_set.length
     }
     var plan_list = document.getElementById('plan_list')
     if (plan_list.innerText == '') {
         plan_list.innerText = '일정 추가시 여기에 추가됩니다!'
     }
-
 }
 
 function deletePlanFromSet(plan, plan_set) {
@@ -469,6 +498,11 @@ function deletePlanFromSet(plan, plan_set) {
 async function sendEmail() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
+
+    if (plan_data.length == 0) {
+        showToast('일정 추가 후 이용해주세요!')
+        return false
+    }
 
     let checkedEmails = [];
     $('input[type="checkbox"]:checked').each(function () {
@@ -667,6 +701,10 @@ async function patchChangeNoteName() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
     var title = document.getElementById('title_input').value;
+    if (title == '') {
+        showToast('수정사항을 입력해주세요!')
+        return false
+    }
     const response = await fetch(`${backend_base_url}/note/note-detail/${note_id}`, {
         headers: {
             'content-type': 'application/json',
@@ -679,7 +717,7 @@ async function patchChangeNoteName() {
     });
     if (response.status == 200) {
         localStorage.setItem('noteName', title)
-        showToast("계획이 수정되었습니다!");
+        showToast("노트 이름이 수정되었습니다!");
         setTimeout(function () {
             window.location.reload();
         }, 1000);
@@ -689,3 +727,13 @@ async function patchChangeNoteName() {
     }
 }
 
+
+function showPlanList() {
+    let plan_list = document.getElementById('plan_list');
+    if (plan_list.style.display == 'none') {
+        plan_list.style.display = 'block';
+    } else {
+        plan_list.style.display = 'none';
+    }
+
+}
