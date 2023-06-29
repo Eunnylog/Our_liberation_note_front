@@ -5,7 +5,7 @@ async function loadUserprofile() {
     const email = document.getElementById("email")
     email.innerText = `${response.profile.email}님`
 
-    const groups = response.groups
+    const groups = response.groupsƒ
     const profile = response.profile
 
     let id = [];
@@ -248,7 +248,7 @@ async function loadGroupStampPhotopage(location, group_name) {
     response.forEach((stamp) => {
         const diary_id = stamp.photo.diary_id
         const diary_name = stamp.photo.diary_name
-        const image = backend_base_url + '/note' + stamp.photo.image
+        const image = stamp.photo.image
         const group = stamp.photo.group_name
 
         if (group == group_name) {
