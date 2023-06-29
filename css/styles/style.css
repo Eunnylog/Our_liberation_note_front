@@ -109,6 +109,7 @@ body>.site-body {
 .navbar-toggler:focus {
   box-shadow: none !important;
 }
+
 .navbar-toggler {
   border: none;
   background: transparent;
@@ -126,14 +127,17 @@ body>.site-body {
   left: 0;
   transition: none !important;
 }
+
 .navbar-collapse {
-    z-index: 1;
-    margin-top: 3rem;
+  z-index: 1;
+  margin-top: 3rem;
 }
+
 .navbar-collapse.show {
   margin-top: 3rem;
 }
-.nav{
+
+.nav {
   position: relative;
   display: flex;
   justify-content: center;
@@ -1058,4 +1062,16 @@ select {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.group-member {
+  margin-top: 40px !important;
+}
+
+.add-member {
+  transform: rotate(-90deg);
+}
+
+.delete-member {
+  transform: rotate(-90deg);
 }

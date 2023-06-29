@@ -233,15 +233,6 @@ function saveLocalNoteName(note_name, group_id) {
 
 let updatingGroupId;
 
-function updateHandleRadioClick() {
-    const selectedRadio = document.querySelector('input[name="email_radio"]:checked');
-
-    if (selectedRadio) {
-        const selectedEmail = selectedRadio.previousSibling.textContent.trim();
-        document.getElementById("update-usersearch").value = selectedEmail;
-    }
-}
-
 function showUpdateEmailInfo() {
     const searchEmailInfo = document.getElementById('update-search-email-info')
 
@@ -296,9 +287,10 @@ async function groupUpdateModal() {
 
             membersArray.forEach((member, index) => {
                 let temp_html = `
-                        <li class="selected_email" style="list-style-type: none; margin-bottom: 10px;">
+                        <li class="selected_email" style="list-style-type: none; margin-bottom: 20px; display: flex; justify-content: space-between;">
                         ${member}
-                        <input type="radio" id="selected_update_email_${index}" name="checked_email_radio" value="${index}" onclick="updateHandleRadioClick()">
+                        <input type="checkbox" id="selected_update_email_${index}" name="checked_email_radio" value="${index}">
+                        <label for="selected_update_email_${index}"></label>
                         </li>
                     `;
                 groupMembers.innerHTML += temp_html;
@@ -323,7 +315,7 @@ $(document).ready(function () {
         existingEmails = []; // 기존 이메일 배열 초기화
 
         // 라디오 버튼 체크 해제
-        $('input[type=radio]').prop('checked', false);
+        $('input[type=checkbox]').prop('checked', false);
         $('.custom-class').removeClass('custom-class');
     });
 });
@@ -359,10 +351,10 @@ async function updateAddMember() {
         // 검색 결과 처리
         emails.forEach((useremail, index) => {
             let temp_html = `
-            <li style="list-style-type: none; margin-bottom: 10px;">
+            <li style="list-style-type: none; margin-bottom: 20px; display: flex; justify-content: space-between;">
                 ${useremail}
-                <input type="radio" id="update_email_${index}" name="email_radio" value="${index}">
-              
+                <input type="checkbox" id="update_email_${index}" name="email_radio" value="${index}">
+                <label for="update_email_${index}"></label>
             </li>
           `;
             email.innerHTML += temp_html;
@@ -407,20 +399,24 @@ function updateAddMembersToGroup() {
             const selectedEmailUl = document.getElementById("update-selected-email-ul");
             const newEmailLi = document.createElement("li")
             newEmailLi.className = "selected_email"
-            newEmailLi.style = "list-style-type: none; margin-bottom: 10px;"
+            newEmailLi.style = "list-style-type: none; margin-bottom: 20px; display: flex; justify-content: space-between;"
 
             // input 태그 추가
             const newInput = document.createElement("input");
-            newInput.type = "radio"
+            newInput.type = "checkbox"
             newInput.name = "checked_email_radio"
+            newInput.id = "update" + groupIndex
 
-
+            const newLabel = document.createElement("label")
+            newLabel.htmlFor = "update" + groupIndex
             // 이메일 추가
             const textNode = document.createTextNode(" ")
             const emailText = document.createTextNode(selectedEmail)
+
             newEmailLi.appendChild(textNode)
             newEmailLi.appendChild(emailText)
             newEmailLi.appendChild(newInput)
+            newEmailLi.appendChild(newLabel)
             selectedEmailUl.appendChild(newEmailLi)
 
         } else {
@@ -428,7 +424,7 @@ function updateAddMembersToGroup() {
         }
 
     }
-    $('input[type=radio]').prop('checked', false);
+    $('input[type=checkbox]').prop('checked', false);
 }
 
 // 그룹 저장 전 선택한 이메일 리스트에서 제거하는 함수
@@ -453,7 +449,7 @@ async function updateDeleteMembers() {
     else {
         showToast("선택된 이메일이 없습니다.");
     }
-    $('input[type=radio]').prop('checked', false);
+    $('input[type=checkbox]').prop('checked', false);
 }
 
 // 그룹 수정 등록
@@ -511,7 +507,6 @@ async function updateGroup() {
     });
 
     if (!groupName) {
-
         showToast('그룹 이름을 적어주세요')
         groupNameInput.classList.add("custom-class");
         return;
