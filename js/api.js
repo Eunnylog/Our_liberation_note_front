@@ -745,6 +745,12 @@ async function addMember() {
       showToast('검색 결과가 없습니다!')
     }
 
+    // 검색 결과가 없을 경우 알림창으로 표시
+
+    if (response.data.length === 0) {
+      showToast('검색 결과가 없습니다!')
+    }
+
     var email = document.getElementById("email-ul");
     email.innerHTML = "";
 

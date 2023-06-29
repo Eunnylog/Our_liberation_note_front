@@ -338,6 +338,9 @@ async function updateAddMember() {
     axios.get(url).then(response => {
         const emails = response.data.map(item => item.email);
 
+        if (response.data.length === 0) {
+            showToast('검색 결과가 없습니다!')
+        }
 
         var email = document.getElementById("update-email-ul");
         email.innerHTML = "";

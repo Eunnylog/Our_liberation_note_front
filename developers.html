@@ -35,7 +35,7 @@
     <!-- nav end -->
 
     <!-- content start -->
-    <main class="site-body">
+    <main class="site-body" style="min-height: calc(100vh - 100px) !important; padding-bottom: 100px;">
         <article class="review-detail max-content-width">
             <div id="toast"></div>
             <!-- 전체 페이지 위치를 위한 제일 큰 그리드 -->
@@ -98,7 +98,7 @@
     </main>
     <!-- content end -->
     <!-- footer start -->
-    <footer style="background-color: #fbfcfd;">
+    <footer style="background-color: #fbfcfd; position:fixed; bottom: 0; width: 100%;">
         <div style="background-color:#60749d; width: 100%; height: 10px;"></div>
         <p style="font-size: 30px; margin-top: 10px; text-align: center;">CONTACT</p>
         <div style="display: flex; justify-content: center; padding-bottom: 30px;">
@@ -241,7 +241,7 @@
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
                                     <input name="groupname" id="groupname" type="name" class="form-control"
-                                        placeholder="Group Name">
+                                        placeholder="Group Name" maxlength="15" oninput="checkLength(this)">
                                     <div style="display: flex;" id="group_make_box">
                                         <input name="addemail" id="usersearch" type="email" class="form-control"
                                             autocomplete="off" placeholder="Email to add" style="width: 300px;">
@@ -372,6 +372,5 @@
         </div>
     </div>
 </body>
-
 
 </html>

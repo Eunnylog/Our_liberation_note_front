@@ -683,7 +683,7 @@ async function patchChangeNoteName() {
     });
     if (response.status == 200) {
         localStorage.setItem('noteName', title)
-        showToast("계획이 수정되었습니다!");
+        showToast("노트 이름이 수정되었습니다!");
         setTimeout(function () {
             window.location.reload();
         }, 1000);
