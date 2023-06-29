@@ -17,7 +17,7 @@ async function loadUserprofile() {
 
         if (!id.includes(group_id)) {
 
-            let temp_html = `<li onclick="loadGroupStampmap('${name}')" style="cursor: pointer;">${name}`
+            let temp_html = `<li>${name}`
 
             if (group.master == profile.email) {
                 temp_html += ' <span style="color: red">(captain)</span>';
@@ -29,6 +29,23 @@ async function loadUserprofile() {
             id.push(group_id)
         }
     })
+
+    $('#group-list').empty()
+
+    let temp_html2 = `<li class="dropdown-item" onclick="location.reload(); return false;" style="cursor: pointer;">전체보기</li>
+                        <hr class="dropdown-divider"/>`;
+
+
+    groups.forEach((group) => {
+        const name = group.name
+
+        temp_html2 += `<li class="dropdown-item" onclick="loadGroupStampmap('${name}')" style="cursor: pointer;" >${name}</li>`
+
+        }
+    )
+
+    $('#group-list').append(temp_html2);
+
 }
 
 async function loadStampmap() {
@@ -147,17 +164,9 @@ async function loadStampPhotopage(location) {
 
 async function loadGroupStampmap(group_name) {
 
-    $('#map-title').empty()
+    const title = document.getElementById("map-title")
+    title.innerText = `${group_name}`
 
-    let temp_html = `<div style="display: grid; grid-template-columns: 100px 100px 100px 100px 100px 200px; background-color: #60749d; width:100%; height:40px">
-                        <div style="font-size: 30px;  color: white; width: 100%; grid-column: 4/5; text-align: center;">
-                        ${group_name} STAMP
-                        </div>                       
-                        <a class="allstamp" href="#" onclick="location.reload(); return false;" style="font-size: 20px; color: white; grid-column: 6; text-align: end; margin-right:30px; margin-top:10px">전체보기</a>
-                        
-                    </div>`
-
-    $('#map-title').append(temp_html)
 
 
     var container = document.getElementById('stamp-map');

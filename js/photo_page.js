@@ -152,7 +152,7 @@ async function album() {
                 if (existPhoto.includes(photo_id)) {
                     temp_html += `<img class="exist-stamp" id="exist-stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
                 } else {
-                    temp_html += `<img class="stamp" id="stamp" src="/css/assets/stamp2.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
+                    temp_html += `<img class="stamp" id="stamp" src="/css/assets/stamp.png" alt="Stamp Image" onclick="handleStamp('${photo_id}');">`
                 }
 
                 temp_html += `</div>`;
@@ -378,7 +378,7 @@ function patchPhotoBox(photo_id) {
                     </div>
                     <input name="p_location_x" id="p_location_x" type="text" class="form-control" hidden>
                         <input name="p_location_y" id="p_location_y" type="text" class="form-control" hidden> `;
-    $('#photo-edit').append(temp_html)
+    $('#pho-edit').append(temp_html)
 
 
     $('#photo-detail-modal-footer').empty()

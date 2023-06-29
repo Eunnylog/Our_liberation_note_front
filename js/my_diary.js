@@ -617,7 +617,7 @@ function deleteNoteDiary() {
                         let group_name = this.parentElement.previousElementSibling.innerText.trim();
                         let group_id = document.getElementById("select_group").value
 
-                        handleNotetrash(note_id, group_id, group_name)
+                        handleNotetrash(note_id)
                     }
                 };
 
