@@ -31,6 +31,11 @@ async function addPhoto() {
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
 
+    if (image.files[0].size > 1 * 1024 * 1024) {
+        alert("첨부파일 사이즈는 1MB 이내로 등록이 가능합니다.");
+        return false;
+    }
+
     let nameBox = document.getElementById("name")
     let titleBox = document.getElementById("title")
     let imgBox = document.getElementById("imgbox")
@@ -197,7 +202,7 @@ function m_page() {
 async function photo_detail(photo_id) {
     //각 사진마다 photo_id를 갖고 있기에 그에 맞는 정보를 갖고올 수 있도록 받아온다.
 
-    $('#pho-edit').empty();
+    $('#photo-edit').empty();
     let temp_html0 = `<div class="row">
                             <div class="col-md-7">
                                 <!-- 사진 왼쪽 부분 -->
@@ -210,7 +215,7 @@ async function photo_detail(photo_id) {
                                 <!-- 정보 내용 추가 -->
                             </div>
                         </div>`
-    $('#pho-edit').append(temp_html0)
+    $('#photo-edit').append(temp_html0)
     $('#photo-d').empty();
     $('#photo-info').empty();
     const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
@@ -240,12 +245,14 @@ async function photo_detail(photo_id) {
     $('#photo-d').append(temp_html1)
 
     let temp_html2 = `
-    <div id='photo_title' style="float:left; margin-bottom:5px;">${title}</div> 
-    <div id='photo_start' style="float: right; margin-bottom:5px;">${start}</div>
-    <div id='photo_memo' style="margin-bottom: 10px;">${memo}</div>
-    <div style="display: flex; align-items: center;">
-        <img src="/css/assets/marker.png" alt="Image" style="width: 15px; height: 20px; margin-right: 5px; margin-bottom: 10px;">
-        <div id='photo_location' style="margin-bottom: 10px;">${location}</div>
+    <div id='photo_start' style="float: right; margin-bottom:5px; ">${start}</div>
+    <div style="display: flex; flex-direction: column;">
+        <div id='photo_memo' style="font-size:22px;margin-bottom: 10px;">${memo}</div>
+        <div id='photo_title' style="margin-bottom:5px;">${title}</div> 
+        <div style="display: flex; align-items: center;">
+            <img src="/css/assets/marker.png" alt="Image" style="width: 15px; height: 20px; margin-right: 5px; margin-bottom: 10px;">
+            <div id='photo_location' style="font-size:20px; margin-bottom: 10px;">${location}</div>
+        </div>
     </div>
     
     <div style="display: flex; align-items: center;">
@@ -282,9 +289,9 @@ async function photo_detail(photo_id) {
     $('#photo-detail-modal-footer').empty()
 
     let temp_html3 = `<button id="patch_photo_box" type="button" class="btn btn-primary"
-                            onclick="patchPhotoBox('${photo_id}')" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
+                            onclick="patchPhotoBox('${photo_id}')" style=" width: 10%; font-size:20px; background-color:  #7689b1; border-color: #7689b1;">수정</button>
                       <button id="photo-trash" type="button" class="btn btn-primary"
-                            onclick="handlePhototrash('${photo_id}','${name}')" style="background-color: #485d86; border-color: #485d86;">삭제</button>`
+                            onclick="handlePhototrash('${photo_id}','${location}','${title}','${name}')" style="width: 10%; font-size:20px; background-color: #485d86; border-color: #485d86;">삭제</button>`
 
     $('#photo-detail-modal-footer').append(temp_html3)
 }
@@ -345,7 +352,7 @@ function patchPhotoBox(photo_id) {
     let temp_html = `<div class="input-group" style="flex-wrap: nowrap; ">
                         <input class="upload-name" id="p_imgbox" src="${image}" placeholder="${decodedPath}" multiple
                             accept=".jpg, .png, .jpeg" style="width: 80%; border-radius: 5px 0 0 5px; margin-bottom: 15px;">
-                        <label for="image" style="margin-top:0px; height:40px; font-size:15px;  width: 20%; border-radius: 0 5px 5px 0; background-color:  #485D86; display: flex; justify-content: center; align-items: center;">업로드</label>
+                        <label for="image" style="margin-top:0px; height:40px; font-size:20px;  width: 20%; border-radius: 0 5px 5px 0; background-color:  #485D86; display: flex; justify-content: center; align-items: center;">업로드</label>
                         <input type="file" id="image" style="display: none">
                     </div>
                     <div class="input-group-append" style="width: 100%;">
@@ -357,7 +364,7 @@ function patchPhotoBox(photo_id) {
                         <input name="title" id="p_title" value='${title}' type="text" class="form-control"
                             placeholder="목적지(지역명+상호명, 지역명+카테고리)" style="width: 80%; height:40px;">
                         <button type="button" onclick="searchLocation('2')" class="btn btn-primary"
-                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; background-color:  #485D86;">찾기</button>
+                            style="margin-top:0px;height:40px; font-size:20px; width: 20%; border-color: #485D86; background-color:  #485D86;">찾기</button>
                     </div>
                     <div class="input-group-append" style="width: 100%; margin-bottom: 15px;">
                         <input name="location" id="p_location" value='${location}' type="text" class="form-control"
@@ -370,14 +377,14 @@ function patchPhotoBox(photo_id) {
                         style="height:50px; min-height:100px; max-height:200px; width:100%" >${memo}</textarea>
                     </div>
                     <input name="p_location_x" id="p_location_x" type="text" class="form-control" hidden>
-                        <input name="p_location_y" id="p_location_y" type="text" class="form-control" hidden>;`
+                        <input name="p_location_y" id="p_location_y" type="text" class="form-control" hidden> `;
     $('#pho-edit').append(temp_html)
 
 
     $('#photo-detail-modal-footer').empty()
 
-    let temp_html2 = `<button id="delete_serarch" type="button" class="btn btn-secondary delete_serarch" data-bs-dismiss="modal" style="background-color:  #7689b1; border-color: #7689b1;">닫기</button>
-                      <button id="patch_photo" value='${photo_id}' type="button" class="btn btn-primary"onclick="patchPhoto()" style="background-color:  #485D86; border-color: #485D86;">저장</button>`
+    let temp_html2 = `<button id="delete_serarch" type="button" class="btn btn-secondary delete_serarch" data-bs-dismiss="modal" style="width: 10%; font-size:20px; background-color:  #7689b1; border-color: #7689b1;">닫기</button>
+                      <button id="patch_photo" value='${photo_id}' type="button" class="btn btn-primary"onclick="patchPhoto()" style="width: 10%; font-size:20px; background-color:  #485D86; border-color: #485D86;">저장</button>`
 
     $('#photo-detail-modal-footer').append(temp_html2)
 
