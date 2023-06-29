@@ -446,9 +446,6 @@ function handleTrashRestore() {
                 id: selected_id,
                 name: name
             });
-            if(selectedGroups!== null){
-                handleGrouptrashMultiple(selectedGroups);
-            }
         }
 
         if (selectedNoteIndex !== null) {
@@ -458,9 +455,6 @@ function handleTrashRestore() {
                 group: selected_group,
                 name: selected_name
             });
-            if(selectedNotes!== null){
-                handleNotetrashMultiple(selectedNotes);
-            }
         }
 
         if (selectedPhotoIndex !== null) {
@@ -470,16 +464,24 @@ function handleTrashRestore() {
                 title: selected_title,
                 name: selected_name
             });
-            if(selectedPhotos!== null){
-                handlePhototrashMultiple(selectedPhotos);
-            }
         }
     })
+
+    if(selectedGroups.length > 0){
+        handleGrouptrashMultiple(selectedGroups);
+    }
+
+    if(selectedNotes.length > 0){
+        handleNotetrashMultiple(selectedNotes);
+    }
+    if(selectedPhotos.length > 0){
+        handlePhototrashMultiple(selectedPhotos);
+    }
 }
 
 async function deleteGroup(group_ids) {
     const token = localStorage.getItem('access')
-    var userConfirmation = confirm("※ 확인을 누르시면 해당 그룹이 영구삭제됩니다. 삭제하시겠습니까?");
+    var userConfirmation = confirm("※ 확인을 누르시면 영구삭제됩니다. 삭제하시겠습니까?");
 
     if (!userConfirmation) {
         return false
@@ -508,7 +510,7 @@ async function deleteGroup(group_ids) {
 
 async function deleteNote(note_ids) {
     let token = localStorage.getItem("access")
-    var userConfirmation = confirm("※ 확인을 누르시면 해당 노트가 영구삭제됩니다. 삭제하시겠습니까?");
+    var userConfirmation = confirm("※ 확인을 누르시면 영구삭제됩니다. 삭제하시겠습니까?");
 
     if (!userConfirmation) {
         return false
@@ -537,7 +539,7 @@ async function deleteNote(note_ids) {
 
 async function deletePhoto(photo_ids) {
     let token = localStorage.getItem("access")
-    var userConfirmation = confirm("※ 확인을 누르시면 해당 사진이 영구삭제됩니다. 삭제하시겠습니까?");
+    var userConfirmation = confirm("※ 확인을 누르시면 영구삭제됩니다. 삭제하시겠습니까?");
 
     if (!userConfirmation) {
         return false
@@ -584,27 +586,29 @@ function handleTrashDelete() {
             selectedGroups.push({
                 id: selected_id
             })
-            if(selectedGroups!== null){
-                deleteGroup(selectedGroups);
-            }
         }
 
         if (selectedNoteIndex !== null) {
             selectedNotes.push({
                 id: selected_id
             })
-            if(selectedNotes!== null){
-                deleteNote(selectedNotes);
-            }
         }
 
         if (selectedPhotoIndex !== null) {
             selectedPhotos.push({
                 id: selected_id
             })
-            if(selectedPhotos!== null){
-                deletePhoto(selectedPhotos);
-            }
         }
     })
+    if (selectedGroups.length > 0) {
+        deleteGroup(selectedGroups);
+    }
+
+    if (selectedNotes.length > 0) {
+        deleteNote(selectedNotes);
+    }
+
+    if (selectedPhotos.length > 0) {
+        deletePhoto(selectedPhotos);
+    }
 }

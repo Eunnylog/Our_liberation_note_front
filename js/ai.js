@@ -259,7 +259,6 @@ async function aiStart() {
       y: location_y
     };
 
-    console.log(destination)
 
     if (!location_x && !location_y) {
 
@@ -297,7 +296,6 @@ async function aiStart() {
 
     if (response.status == 200) {
       const response_json = await response.json();
-      console.log(response_json);
 
       let formatted_titles = response_json['title_list'].join(" -> ");
 

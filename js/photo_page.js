@@ -63,7 +63,7 @@ async function addPhoto() {
 
         if (response.ok) {
             const data = await response.json();
-            console.log('image 업로드 성공')
+            showToast('새로운 이미지가 추가되었습니다!')
             window.location.reload()
         } else {
             throw new Error("서버가 응답하지 않습니다.");
@@ -103,9 +103,7 @@ async function album() {
 
         const response_json = await response.json()
 
-        console.log(response_json)
         if (response_json.length == 0) {
-            console.log(page)
             if (page != 0) {
                 showToast('마지막페이지 입니다!')
                 page = page - page
@@ -137,7 +135,6 @@ async function album() {
 
         } else {
             response_json.forEach((a) => {
-                console.log(a)
                 const image = a["image"];
                 const title = a['title'];
                 const photo_id = a['id'];
@@ -217,8 +214,6 @@ async function photo_detail(photo_id) {
     const comments = response_json["comment_set"]
 
 
-    console.log(response_json)
-
     const modalTitle = document.getElementById("modal-title")
     modalTitle.innerText = `${name}`
 
@@ -289,6 +284,7 @@ function toggleCommentEdit(event) {
         div.style.display = div.style.display === 'none' ? 'flex' : 'none';
     } else if (user_email != null) {
         showToast("작성자만이 댓글을 수정할 수 있습니다.")
+
     }
 }
 
@@ -398,10 +394,6 @@ async function patchPhoto() {
         imgBox.classList.remove("custom-class");
     }
 
-    console.log(name)
-    for (const pair of formData.entries()) {
-        console.log(pair[0] + ':', pair[1]);
-    }
     try {
         const urlParams = new URLSearchParams(window.location.search);
         // const photo_id = urlParams.get('photo_id');
@@ -416,7 +408,7 @@ async function patchPhoto() {
 
         if (response.ok) {
             const data = await response.json();
-            console.log('image 업로드 성공')
+            showToast('이미지가 수정되었습니다!')
             window.location.reload()
         } else {
             throw new Error("서버가 응답하지 않습니다.");
@@ -466,10 +458,11 @@ async function addComment() {
 
 
         if (response.ok) {
-            console.log('코멘트 추가 성공');
             showToast('새로운 댓글이 작성되었습니다!');
             commentText.value = '';
-            await photo_detail(photo_id)
+            setTimeout(function () {
+                photo_detail(photo_id)
+            }, 1500);
             // setTimeout(function () {
             //     window.location.reload();
             // }, 1000);
@@ -517,9 +510,10 @@ async function editComment(event) {
         if (response.ok) {
             const response_json = await response.json();
             let photo_id = response_json["photo"]
-            console.log(response_json);
             showToast('댓글이 수정되었습니다!');
-            photo_detail(photo_id);
+            setTimeout(function () {
+                photo_detail(photo_id);
+            }, 1500);
         } else {
             showToast('댓글이 수정에 실패했습니다!');
         }
@@ -537,7 +531,6 @@ async function deleteComment(event) {
     const photo_id = photo_comment_id.split("/")[0];
     const comment_id = photo_comment_id.split("/")[1];
 
-    // console.log(comment_id)
     test = confirm("삭제 하시겠습니까?")
     if (!test) {
         return
@@ -551,11 +544,10 @@ async function deleteComment(event) {
             method: 'DELETE',
         })
         if (response.ok) {
-            // const response_json = await response.json();
-            // // let photo_id = response_json["photo"]
-            // console.log(response_json);
             showToast('댓글이 삭제되었습니다.');
-            photo_detail(photo_id);
+            setTimeout(function () {
+                photo_detail(photo_id);
+            }, 1500);
 
         } else {
             showToast('댓글이 삭제에 실패했습니다.');
@@ -599,7 +591,7 @@ async function handleStamp(photo_id) {
     }
     else {
         showToast("※실패")
-        console.log(photo_id)
+        console.log(response)
     }
 }
 
