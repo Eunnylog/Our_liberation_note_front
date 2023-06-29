@@ -31,8 +31,8 @@ async function addPhoto() {
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
 
-    if (image.files[0].size > 1 * 1024 * 1024) {
-        alert("첨부파일 사이즈는 1MB 이내로 등록이 가능합니다.");
+    if (image.files[0].size > 10 * 1024 * 1024) {
+        alert("첨부파일 사이즈는 10MB 이내로 등록이 가능합니다.");
         return false;
     }
 
@@ -291,7 +291,7 @@ async function photo_detail(photo_id) {
     let temp_html3 = `<button id="patch_photo_box" type="button" class="btn btn-primary"
                             onclick="patchPhotoBox('${photo_id}')" style=" width: 10%; font-size:20px; background-color:  #7689b1; border-color: #7689b1;">수정</button>
                       <button id="photo-trash" type="button" class="btn btn-primary"
-                            onclick="handlePhototrash('${photo_id}','${name}')" style="width: 10%; font-size:20px; background-color: #485d86; border-color: #485d86;">삭제</button>`
+                            onclick="handlePhototrash('${photo_id}', '${name}')" style="width: 10%; font-size:20px; background-color: #485d86; border-color: #485d86;">삭제</button>`
 
     $('#photo-detail-modal-footer').append(temp_html3)
 }
@@ -426,6 +426,11 @@ async function patchPhoto() {
     formData.append("memo", memo);
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
+
+    if (image.files[0].size > 10 * 1024 * 1024) {
+        alert("첨부파일 사이즈는 10MB 이내로 등록이 가능합니다.");
+        return false;
+    }
 
     let nameBox = document.getElementById("p_name")
     let titleBox = document.getElementById("p_title")
