@@ -1,4 +1,3 @@
-checkLogin()
 // lifephoto_page
 
 // input에 들어간 파일을 사진 넣기 버튼을 눌렀을때 넣어주는 함수
