@@ -36,6 +36,30 @@
     .fc-event {
       text-align: center;
     }
+
+    @keyframes blink {
+      0% {
+        opacity: 1.0;
+      }
+
+      50% {
+        opacity: 0.0;
+      }
+
+      100% {
+        opacity: 1.0;
+      }
+    }
+
+    .blink {
+      animation: blink 0.5s ease-in-out;
+      animation-iteration-count: 2;
+    }
+
+    #planCart {
+      transform: scale(1.1);
+      transition: transform 0.3s ease-in-out;
+    }
   </style>
 </head>
 
@@ -44,6 +68,9 @@
     <!-- navbar -->
   </header>
   <div id="wrapper" style="min-height: calc(100vh - 100px) !important; padding-bottom: 100px;">
+    <button href="" style="background-color: transparent; border: transparent; float: right; position: sticky; margin-top: 120px; top: 150px;left: 0; right: 0;" data-bs-toggle="modal" data-bs-target="#carouselModal">
+      <img src="/css/assets/info_robot.png" style="z-index: 2 !important;">
+    </button>
     <main class="site-body" style="margin-top: -50px;">
       <div id="toast"></div>
       <!-- Dropdown Structure -->
@@ -90,7 +117,7 @@
               <img src="/css/assets/members.png" alt="Stamp Image" style="width: 30px; height:30px">
             </button>
             <ul id="members-list" class="dropdown-menu dropdown-menu-dark"
-              style="right: 0; left: auto; background-color: #7689b1; border-color: #7689b1; color:white;">
+              style="right: 0; left: auto; background-color: #7689b1; border-color: #7689b1; --bs-dropdown-link-hover-bg: unset; --bs-dropdown-link-hover-color:unset;">
             </ul>
           </div>
         </div>
@@ -207,10 +234,21 @@
   <div class="modal fade" id="save_plan_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="margin: auto; max-width: 1000px;">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
-            일정 추가</h5>
-          <button type="button" class="btn-close delete_search" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-header" style="display: flex; justify-content: space-between;">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86; margin-left:10px;">일정 추가</h5>
+          <div style="display: flex; align-items: center;">
+            <a class="nav-link active position-relative" href="" onclick="showPlanList()" data-bs-toggle="modal"
+              data-bs-target="" id="planCart" style="z-index: 10; color:white; margin-left: -5px;">
+              <img src="/css/icons/shopping-cart.png" style="width: 30px; height: 30px;" />
+              <span id="plan-count"
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                style="z-index: 1;">
+                0
+              </span>
+            </a>
+            <button type="button" class="btn-close delete_search" data-bs-dismiss="modal" aria-label="Close"
+              style="margin-left: 15px;"></button>
+          </div>
         </div>
         <div class="container">
           <div class="global-cont">
@@ -219,7 +257,7 @@
                 <form class="sign-in-form active">
                   <div class="input-group" style="flex-wrap: nowrap;">
                     <input name="title" id="title" type="text" class="form-control" placeholder="장소명(지역명+상호명, 키워드)"
-                      style="width: 60%; height:40px;">
+                      style="width: 60%; height:40px;" onkeydown="if(event.key === 'Enter') { event.preventDefault();}">
                     <div class="input-group-append" style="width: 10%;">
                       <button type="button" onclick="searchLocation()" class="btn btn-primary"
                         style="margin-top:0px;height:40px; font-size:15px; background-color: #485d86;">검색</button>
@@ -232,8 +270,8 @@
                     <input name="location" id="location" type="text" class="form-control"
                       style="width: 48%; height:48px;" placeholder="주소(검색기능 미사용시 AI사용에 어려움이 있습니다!)">
                     <button type="button" class="btn btn-primary" onclick="addPlanList()"
-                      style="width: 20%; margin-top:0px; background-color: #485d86;"
-                      class="btn btn-primary">일정추가</button>
+                      style="width: 20%; margin-top:0px; background-color: #485d86;" class="btn btn-primary"
+                      id="addPlanListBtn">일정추가</button>
                   </div>
                   <div class="input-group" style="flex-wrap: nowrap;">
                     <input name="start" id="start" type="date" class="form-control" style="width: 48%;">
@@ -370,6 +408,50 @@
         </div>
       </div>
     </div>
+  </div>
+  <!-- info 페이지 모달 -->
+    <!-- Carousel 형식의 모달 -->
+    <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
+      <div class="modal-dialog modal-xl">
+          <div class="modal-content" style="height: 850px;">
+              <div class="modal-header">
+                  <h5 class="modal-title" style="color: #485d86;">해방쿤의 Info!</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" style="height: 600px;">
+                  <!-- Carousel -->
+                  <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="false">
+                      <div class="carousel-inner">
+                          <!-- 플랜 페이지 인포 -->
+                          <div class="carousel-item active" style="padding: 5px;">
+                              <h3 style="color: #485d86;"> 플랜 페이지</h3>
+                              <img src="/css/assets/info_plan.png" style="width: 100%; height:400px; margin: auto;">
+                              <div style="font-size: 18px; margin-top: 10px;">
+                                  ① 선택한 노트의 이름이 나타납니다~ <br>
+                                  ② 일정추가를 누르면 모달창이 나타나고 일정을 입력하면 캘린더에 추가됩니다! <br>
+                                  ③ 사진첩 가기를 누르면 사진첩페이지로 이동합니다! <br>
+                                  ④ AI랑 놀기를 누르면 등록한 일정을 토대로 최적의 경로를 알 수 있습니다~ <br>
+                                  ⑤ 계획표 전송을 누르면 그룹 멤버중 보내고 싶은 멤버들을 선택할 수 있는 모달창이 뜨고 계획이 메일로 전송됩니다!<br>
+                                  ⑥ 해방필름을 누르면 해방필름 페이지로 이동합니다!
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                          data-bs-slide="prev" style="display: none;">
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                          data-bs-slide="next" style="display: none;">
+                      </button>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                      style="background-color: #485d86;">Close</button>
+              </div>
+          </div>
+      </div>
   </div>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />

@@ -147,12 +147,18 @@ document.addEventListener('DOMContentLoaded', async function () {
 async function savePlan() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
+    let searchButton = document.getElementById('addPlanListBtn');
 
     if (plan_set.length == 0) {
+        searchButton.classList.add('blink');
         showToast('일정을 추가해주세요!')
+        setTimeout(function () {
+            searchButton.classList.remove('blink');
+        }, 1000);
         return false
+    } else {
+        searchButton.classList.remove('blink');
     }
-
 
     const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
         headers: {
@@ -395,6 +401,9 @@ function addPlanList() {
     }
 
     plan_set.push(plan);
+    showToast('장바구니에 담았습니다!')
+    let plan_cnt = document.getElementById('plan-count')
+    plan_cnt.innerText = plan_set.length
 
     var plan_list = document.getElementById('plan_list')
     if (plan_list.innerText == '일정 추가시 여기에 추가됩니다!') {
@@ -402,7 +411,7 @@ function addPlanList() {
     }
 
     let temp_html = `
-                        <button onclick="deletePlanList('${plan}', event)" style="width:150px; border-radius:20px;">${title}<br>(${start})</button>
+                        <button onclick="deletePlanList('${plan}', event)" style="width:150px; border-radius:20px; background-color:#7689b1;">${title}</button>
                     `
     $('#plan_list').append(temp_html)
 
@@ -441,6 +450,16 @@ $(document).ready(function () {
 
         titleBox.classList.remove("custom-class");
         startBox.classList.remove("custom-class");
+
+        let searchButton = document.getElementById('addPlanListBtn');
+        searchButton.classList.remove('blink');
+
+        plan_set = [];
+        let plan_cnt = document.getElementById('plan-count')
+        plan_cnt.innerText = plan_set.length
+
+        var plan_list = document.getElementById('plan_list')
+        plan_list.style.display = 'none'
     });
 });
 
@@ -457,12 +476,13 @@ function deletePlanList(plan, event) {
 
         // 클릭된 버튼 삭제
         event.target.remove();
+        let plan_cnt = document.getElementById('plan-count')
+        plan_cnt.innerText = plan_set.length
     }
     var plan_list = document.getElementById('plan_list')
     if (plan_list.innerText == '') {
         plan_list.innerText = '일정 추가시 여기에 추가됩니다!'
     }
-
 }
 
 function deletePlanFromSet(plan, plan_set) {
@@ -707,3 +727,13 @@ async function patchChangeNoteName() {
     }
 }
 
+
+function showPlanList() {
+    let plan_list = document.getElementById('plan_list');
+    if (plan_list.style.display == 'none') {
+        plan_list.style.display = 'block';
+    } else {
+        plan_list.style.display = 'none';
+    }
+
+}
