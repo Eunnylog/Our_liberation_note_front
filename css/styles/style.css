@@ -123,12 +123,13 @@ body>.site-body {
 .navbar-toggler-icon {
   position: relative;
   top: 0;
-  left: 0;
+  left: 10;
   transition: none !important;
 }
 .navbar-collapse {
     z-index: 1;
     margin-top: 3rem;
+    width: 250px;
 }
 .navbar-collapse.show {
   margin-top: 3rem;
@@ -353,10 +354,8 @@ body>.site-body {
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  min-height: calc(100vh - 100px) !important;
   background: url('https://philshot0007.files.wordpress.com/2014/03/1308835431_3.jpg');
-  width: 100vw;
-  height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
   /* animation: movebg 5s linear infinite; */
