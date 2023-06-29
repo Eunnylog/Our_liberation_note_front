@@ -129,7 +129,7 @@ async function loadStampPhotopage(location) {
     response.forEach((stamp) => {
         const diary_id = stamp.photo.diary_id
         const diary_name = stamp.photo.diary_name
-        const image = backend_base_url + '/note' + stamp.photo.image
+        const image = stamp.photo.image
 
         if (!addedDiaryNames.includes(diary_name)) {
             let diary_temp_html = ` <a href='/photo_page.html?note_id=${diary_id}' onclick="" style="text-decoration: none; color: black;">

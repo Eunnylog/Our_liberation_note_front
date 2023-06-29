@@ -266,7 +266,7 @@ async function photo_detail(photo_id) {
     let temp_html2 = `<button id="patch_photo_box" type="button" class="btn btn-primary"
                             onclick="patchPhotoBox('${photo_id}')" style="background-color:  #7689b1; border-color: #7689b1;">Update</button>
                       <button id="photo-trash" type="button" class="btn btn-primary"
-                            onclick="handlePhototrash('${photo_id}','${location}','${title}','${name}')" style="background-color: #485d86; border-color: #485d86;">Delete</button>`
+                            onclick="handlePhototrash('${photo_id}','${title}','${name}')" style="background-color: #485d86; border-color: #485d86;">Delete</button>`
 
     $('#photo-detail-modal-footer').append(temp_html2)
 }

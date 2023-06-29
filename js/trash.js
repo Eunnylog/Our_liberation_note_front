@@ -108,7 +108,7 @@ async function loadTrash(contentType) {
                                 <span id='name_${index}' class="shortname2">${note_name}</span>
                                 <input id='id_${index}' value="${note_id}" hidden>
                                 <input id='group_${index}' value="${group}" hidden>
-                                <input type="checkbox" name="trash-checkbox${note_id}" value="${index}" style="width:10px" onclick="handleTrashCheckbox('note')">
+                                <input type="checkbox" name="trash-checkbox" id="trash-checkbox${note_id}" value="${index}" style="width:10px" onclick="handleTrashCheckbox('note')">
                                 <label for="trash-checkbox${note_id}"></label>
                             </div>`
 
@@ -148,7 +148,7 @@ async function loadTrash(contentType) {
                 let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:10px;">
                                     <img src="${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px;">
                                     <span id='name_${index}' class="shortname">${photo_name}</span>
-                                    <input type="checkbox" name="trash-checkbox${photo_id}" value="${index}" style="width:10px" onclick="handleTrashCheckbox('photo')">
+                                    <input type="checkbox" name="trash-checkbox" id="trash-checkbox${photo_id}" value="${index}" style="width:10px" onclick="handleTrashCheckbox('photo')">
                                     <label for="trash-checkbox${photo_id}"></label>
                                     <input id='id_${index}' value="${photo_id}" hidden>
                                     <input id='location_${index}' value="${photo_location}" hidden>
@@ -328,7 +328,47 @@ async function handleNotetrashMultiple(selectedNotes) {
     }
 }
 
-async function handlePhototrash(selectedPhotos) {
+async function handlePhototrash(photo_id, title, name) {
+    let token = localStorage.getItem("access")
+
+    const response = await fetch(`${backend_base_url}/note/trash`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${token}`
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            "photo_set" : [
+                {
+                    "id": photo_id,
+                    "title": title,
+                    "name": name
+                }
+            ]
+        })
+    })
+    if (response.status == 202) {
+        const response_json = await response.json()
+        showToast(`※ [${name}] 사진이 정상적으로 삭제되었습니다.`)
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
+        return response_json
+
+    } else if (response.status == 200) {
+        const response_json = await response.json()
+        showToast(`※ [${name}] 사진이 정상적으로 복원되었습니다.`)
+        setTimeout(function () {
+            window.location.reload();
+        }, 1000);
+        return response_json
+
+    } else {
+        showToast("※실패하였습니다.")
+    }
+}
+
+async function handlePhototrashMultiple(selectedPhotos) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash`, {
@@ -359,7 +399,6 @@ async function handlePhototrash(selectedPhotos) {
 
     } else {
         showToast("※실패하였습니다.")
-        console.log(photo_id)
     }
 }
 
@@ -408,7 +447,7 @@ function handleTrashRestore() {
                 name: name
             });
             if(selectedGroups!== null){
-                handleGrouptrash(selectedGroups);
+                handleGrouptrashMultiple(selectedGroups);
             }
         }
 
@@ -425,22 +464,20 @@ function handleTrashRestore() {
         }
 
         if (selectedPhotoIndex !== null) {
-            const selected_location = document.getElementById(`location_${selectedIndex}`).value;
             const selected_title = document.getElementById(`title_${selectedIndex}`).value;
             selectedPhotos.push({
                 id: selected_id,
-                location: selected_location,
                 title: selected_title,
                 name: selected_name
             });
             if(selectedPhotos!== null){
-                handlePhototrash(selectedPhotos);
+                handlePhototrashMultiple(selectedPhotos);
             }
         }
     })
 }
 
-async function deleteGroup(group_id) {
+async function deleteGroup(group_ids) {
     const token = localStorage.getItem('access')
     var userConfirmation = confirm("※ 확인을 누르시면 해당 그룹이 영구삭제됩니다. 삭제하시겠습니까?");
 
@@ -448,12 +485,15 @@ async function deleteGroup(group_id) {
         return false
     }
 
-    const response = await fetch(`${backend_base_url}/user/group/${group_id}/`, {
+    const response = await fetch(`${backend_base_url}/user/group/`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': "Bearer " + token,
         },
         method: 'DELETE',
+        body: JSON.stringify({
+            "group_ids": group_ids
+        })
     })
 
     if (response.status == 204) {
@@ -526,19 +566,40 @@ function handleTrashDelete() {
         return;
     }
 
-    let selectedIndex = selectedcheckbox.value;
-    let selected_id = document.getElementById(`id_${selectedIndex}`).value;
+    const selectedGroups = [];
+    const selectedNotes = [];
+    const selectedPhotos = [];
 
+    selectedcheckboxes.forEach(selectedcheckbox => {
+        let selectedIndex = selectedcheckbox.value;
+        let selected_id = document.getElementById(`id_${selectedIndex}`).value;
+        
     if (selectedGroupIndex !== null) {
-        deleteGroup(selected_id);
+        selectedGroups.push({
+            id: selected_id
+        })
+        if(selectedGroups!== null){
+            deleteGroup(selectedGroups);
+        }
     }
 
     if (selectedNoteIndex !== null) {
-        deleteNote(selected_id)
+        selectedNotes.push({
+            id: selected_id
+        })
+        if(selectedNotes!== null){
+            deleteNote(selectedNotes);
+        }
     }
 
     if (selectedPhotoIndex !== null) {
-        deletePhoto(selected_id)
+        selectedPhotos.push({
+            id: selected_id
+        })
+        if(selectedPhotos!== null){
+            deletePhoto(selectedPhotos);
+        }
     }
+})
 
 }
