@@ -138,24 +138,24 @@ function cancle() {
 }
 
 // 페이지 이동을 위한 함수
-window.onload = function () {
-  // 이전 페이지 처럼 되돌아 가기 위해 들어운 노트의 아이디를 불러옴
-  params = new URLSearchParams(window.location.search);
-  note_id = params.get("note_id");
+// window.onload = function () {
+//   // 이전 페이지 처럼 되돌아 가기 위해 들어운 노트의 아이디를 불러옴
+//   params = new URLSearchParams(window.location.search);
+//   note_id = params.get("note_id");
 
-  // 페이지 이동을 위해 각 버튼들의 필요한 id값을 불러옴
-  var aiLink = document.getElementById('goAIpage');
-  var photoLink = document.getElementById('goPhotopage');
-  var planPage = document.getElementById('goPlanpage');
+//   // 페이지 이동을 위해 각 버튼들의 필요한 id값을 불러옴
+//   var aiLink = document.getElementById('goAIpage');
+//   var photoLink = document.getElementById('goPhotopage');
+//   var planPage = document.getElementById('goPlanpage');
 
-  // 버튼을 클릭했을때 페이지 이동시켜줌
-  aiLink.onclick = function () {
-    location.href = '/ai.html?note_id=' + note_id;
-  }
-  photoLink.onclick = function () {
-    location.href = '/photo_page.html?note_id=' + note_id;
-  }
-  planPage.onclick = function () {
-    location.href = '/plan_page.html?note_id=' + note_id;
-  }
-};
+//   // 버튼을 클릭했을때 페이지 이동시켜줌
+//   aiLink.onclick = function () {
+//     location.href = '/ai.html?note_id=' + note_id;
+//   }
+//   photoLink.onclick = function () {
+//     location.href = '/photo_page.html?note_id=' + note_id;
+//   }
+//   planPage.onclick = function () {
+//     location.href = '/plan_page.html?note_id=' + note_id;
+//   }
+// };
