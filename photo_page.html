@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=1024">
     <link rel="icon" type="image/png" sizes="48x48" href="/css/favicon/android-icon-48x48.png">
     <link href="/css/styles/login.css" rel="stylesheet" type="text/css" />
@@ -23,12 +24,14 @@
     <script src="/js/photo_page.js"></script>
     <script src="/js/trash.js"></script>
 </head>
+<!-- content="width=device-width, initial-scale=1" -->
 
 <body>
     <header class="site-header navbar">
         <!-- navbar -->
     </header>
-    <main class="site-body" style="margin-top: -50px;" style="min-height: calc(100vh - 100px) !important; padding-bottom: 100px;">
+    <main class="site-body" style="margin-top: -50px;"
+        style="min-height: calc(100vh - 100px) !important; padding-bottom: 100px;">
         <div id="toast"></div>
         <article class="review-detail max-content-width">
             <div style="margin-bottom:30px;">
@@ -124,7 +127,7 @@
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
                                         <input name="location" id="location" type="text" class="form-control"
-                                            placeholder="주소" style="height:40px;">
+                                            placeholder="주소(검색기능 미사용시 스탬프 기능의 사용이 제한됩니다.)" style="height:40px;">
                                     </div>
                                     <div id="search_box" style="width: 100%;  overflow: auto;"></div>
                                     <input name="start" id="start" type="date" class="form-control"
@@ -151,24 +154,32 @@
     </div>
     <!-- 사진상세 모달창 -->
     <div class="modal fade" id="photo-detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" style="max-width: 700px;">
-            <div class="modal-content modal" style="width: 700px;">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modal-title" style="color: #485d86;"></h5>
                     <button type="button" class="btn-close delete_search" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-                <div id="modal-body" class="modal-body">
-                    <form enctype="multipart/form-data">
-                        <div id="photo-d">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <!-- 사진 왼쪽 부분 -->
+                            <div id="photo-d">
+                            </div>
                         </div>
-                    </form>
+                        <div class="col-md-5">
+                            <!--오른쪽에 정보와 댓글 부분 -->
+                            <div id="photo-info"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer" id="photo-detail-modal-footer">
                 </div>
             </div>
         </div>
     </div>
+
 
     <!-- 현재 날짜로 기본지정 -->
     <script>

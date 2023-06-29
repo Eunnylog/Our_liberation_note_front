@@ -59,9 +59,23 @@ body {
 }
 
 .detail-image {
+	/* width: 100%;
+	height: 100%;
+	background-size: cover;
+	margin-bottom: 5px; */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	max-width: 100%;
 	width: 100%;
 	height: 100%;
-	margin-bottom: 5px;
+	max-height: 100%;
+	/* background-image: url('https://philshot0007.files.wordpress.com/2014/03/1308835431_3.jpg'); */
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+
 }
 
 .stamp {
@@ -122,6 +136,14 @@ body {
 	}
 }
 
+@media (max-width: 768px) {
+	.gallery {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+	}
+}
+
+
 /* 필수요소 미작성시 */
 .custom-class {
 	border: 2px solid red !important;
@@ -131,4 +153,4 @@ body {
 .empty-img:hover {
 	width: 200px;
 	transform: scale(1.2);
-  }
+}

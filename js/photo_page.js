@@ -164,6 +164,7 @@ async function album() {
 // 페이지 로드 시 앨범 표시
 window.addEventListener('DOMContentLoaded', album);
 
+
 function p_page() {
     params = new URLSearchParams(window.location.search);
     page = params.get("page");
@@ -196,6 +197,7 @@ function m_page() {
 async function photo_detail(photo_id) {
     //각 사진마다 photo_id를 갖고 있기에 그에 맞는 정보를 갖고올 수 있도록 받아온다.
     $('#photo-d').empty();
+    $('#photo-info').empty();
     const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
         headers: {
             'content-type': 'application/json',
@@ -217,53 +219,59 @@ async function photo_detail(photo_id) {
     const modalTitle = document.getElementById("modal-title")
     modalTitle.innerText = `${name}`
 
-    let temp_html = `<div id='photo_title' style="float:left; margin-bottom:5px;">${title}</div> 
-                    <div id='photo_start' style="float: right; margin-bottom:5px;">${start}</div>
+    let temp_html = `
                     <img class="detail-image" src="${image}"id='photo_image' style="height:500px;">
-                    <div id='photo_memo' style="margin-bottom: 10px;">${memo}</div>
-                    <div style="display: flex; align-items: center;">
-                        <img src="/css/assets/marker.png" alt="Image" style="width: 15px; height: 20px; margin-right: 5px; margin-bottom: 10px;">
-                        <div id='photo_location' style="margin-bottom: 10px;">${location}</div>
-                    </div>
-                    
-                    <div style="display: flex; align-items: center;">
-                        <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px;">
-                        <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
-                            <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" 
-                            style="background-color:  #7689b1; border-color: #7689b1; height: 37px;"><b>+</b></button>
-                    </div>
-                    <hr/>
-                    <div>
-                    <style>
-                        .comment_set div:hover {
-                            background-color: #f5f5f5;
-                        }
-                    </style>
-                    <div class="comment_set">
-                    ${comments.map(comment => `<b>${comment.user}</b>
-                                                <p style="float: right; color: gray;">${comment.created_at.split("T")[0]}</p>
-                                                <div id="comment-$comment-${comment.id}" value="${comment.user}" style="width: 100%; margin-bottom: 10px;" onclick="toggleCommentEdit(event)" >
-                                                    ${comment.comment}
-                                                    <div style="display: none;">
-                                                        <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" 
-                                                        onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
-                                                        <button type="button" id="commentEditBtn${comment.id}" value="${comment.id}" 
-                                                        onclick="editComment(event)" class="btn btn-primary" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
-                                                        <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" 
-                                                        onclick="deleteComment(event)" class="btn btn-secondary" style="background-color: #485d86; border-color: #485d86;">삭제</button>
-                                                    </div>
-                                                </div>`).join('')}
-                    </div>`;
+                    `;
     $('#photo-d').append(temp_html)
+
+    let temp_html2 = `
+    <div id='photo_title' style="float:left; margin-bottom:5px;">${title}</div> 
+    <div id='photo_start' style="float: right; margin-bottom:5px;">${start}</div>
+    <div id='photo_memo' style="margin-bottom: 10px;">${memo}</div>
+    <div style="display: flex; align-items: center;">
+        <img src="/css/assets/marker.png" alt="Image" style="width: 15px; height: 20px; margin-right: 5px; margin-bottom: 10px;">
+        <div id='photo_location' style="margin-bottom: 10px;">${location}</div>
+    </div>
+    
+    <div style="display: flex; align-items: center;">
+        <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px;">
+        <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
+            <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" 
+            style="background-color:  #7689b1; border-color: #7689b1; height: 37px;"><b>+</b></button>
+    </div>
+    <hr/>
+    <div>
+    <style>
+        .comment_set div:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+    <div class="comment_set">
+    ${comments.map(comment => `<b>${comment.user}</b>
+                                <p style="float: right; color: gray;">${comment.created_at.split("T")[0]}</p>
+                                <div id="comment-$comment-${comment.id}" value="${comment.user}" style="width: 100%; margin-bottom: 10px;" onclick="toggleCommentEdit(event)" >
+                                    ${comment.comment}
+                                    <div style="display: none;">
+                                        <input name="comment_edit" id="comment_edit${comment.id}" type="text" class="form-control" style="padding: 10px;"
+                                        onclick="event.stopPropagation()" placeholder="수정할 댓글 내용을 입력해주세요.">
+                                        <button type="button" id="commentEditBtn${comment.id}" value="${comment.id}" 
+                                        onclick="editComment(event)" class="btn btn-primary" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
+                                        <button type="button" id="commentDeleteBtn${comment.id}" value="${photo_id}/${comment.id}" 
+                                        onclick="deleteComment(event)" class="btn btn-secondary" style="background-color: #485d86; border-color: #485d86;">삭제</button>
+                                    </div>
+                                </div>`).join('')}
+    </div>
+    `;
+    $('#photo-info').append(temp_html2)
 
     $('#photo-detail-modal-footer').empty()
 
-    let temp_html2 = `<button id="patch_photo_box" type="button" class="btn btn-primary"
-                            onclick="patchPhotoBox('${photo_id}')" style="background-color:  #7689b1; border-color: #7689b1;">Update</button>
+    let temp_html3 = `<button id="patch_photo_box" type="button" class="btn btn-primary"
+                            onclick="patchPhotoBox('${photo_id}')" style="background-color:  #7689b1; border-color: #7689b1;">수정</button>
                       <button id="photo-trash" type="button" class="btn btn-primary"
-                            onclick="handlePhototrash('${photo_id}','${location}','${title}','${name}')" style="background-color: #485d86; border-color: #485d86;">Delete</button>`
+                            onclick="handlePhototrash('${photo_id}','${location}','${title}','${name}')" style="background-color: #485d86; border-color: #485d86;">삭제</button>`
 
-    $('#photo-detail-modal-footer').append(temp_html2)
+    $('#photo-detail-modal-footer').append(temp_html3)
 }
 
 
@@ -329,7 +337,7 @@ function patchPhotoBox(photo_id) {
                     </div>
                     <div class="input-group-append" style="width: 100%; margin-bottom: 15px;">
                         <input name="location" id="p_location" value='${location}' type="text" class="form-control"
-                        placeholder="주소" style=" height:40px;" placeholder="주소(미작성시 AI사용이 불가합니다!)">
+                        placeholder="주소" style=" height:40px;" placeholder="주소(검색기능 미사용시 스탬프 기능의 사용이 제한됩니다.)">
                     </div>
                     
                     <div id="search_box2" style="width: 100%;  overflow: auto; height= 30px;"></div>
@@ -478,7 +486,8 @@ async function addComment() {
         console.error(error);
     }
 }
-//비동기화 시켜야한다. 근데 힘드네? 
+
+
 async function editComment(event) {
     var button = event.target;
     const comment_id = button.value;
@@ -524,8 +533,6 @@ async function editComment(event) {
 
 
 async function deleteComment(event) {
-    // var button = event.target;
-    // const comment_id = button.value;
     var button = event.target;
     const photo_comment_id = button.value;
     const photo_id = photo_comment_id.split("/")[0];
@@ -545,9 +552,12 @@ async function deleteComment(event) {
         })
         if (response.ok) {
             showToast('댓글이 삭제되었습니다.');
+
+            photo_detail(photo_id);
             setTimeout(function () {
                 photo_detail(photo_id);
             }, 1500);
+
 
         } else {
             showToast('댓글이 삭제에 실패했습니다.');
