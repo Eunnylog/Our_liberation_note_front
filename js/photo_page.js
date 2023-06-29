@@ -223,9 +223,10 @@ async function photo_detail(photo_id) {
     const modalTitle = document.getElementById("modal-title")
     modalTitle.innerText = `${name}`
 
-    let temp_html = `<div id='photo_title' style="float:left; margin-bottom:5px;">${title}</div> 
-                    <div id='photo_start' style="float: right; margin-bottom:5px;">${start}</div>
+    let temp_html = `
                     <img class="detail-image" src="${image}"id='photo_image' style="height:500px;">
+                    <div id='photo_title' style="float:left; margin-bottom:5px;">${title}</div> 
+                    <div id='photo_start' style="float: right; margin-bottom:5px;">${start}</div>
                     <div id='photo_memo' style="margin-bottom: 10px;">${memo}</div>
                     <div style="display: flex; align-items: center;">
                         <img src="/css/assets/marker.png" alt="Image" style="width: 15px; height: 20px; margin-right: 5px; margin-bottom: 10px;">
@@ -552,6 +553,7 @@ async function deleteComment(event) {
         })
         if (response.ok) {
             showToast('댓글이 삭제되었습니다.');
+
             photo_detail(photo_id);
 
         } else {
