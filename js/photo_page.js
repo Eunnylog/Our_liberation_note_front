@@ -206,7 +206,7 @@ async function photo_detail(photo_id) {
     let temp_html0 = `<div class="row">
                             <div class="col-md-7">
                                 <!-- 사진 왼쪽 부분 -->
-                                <div id="photo-d">
+                                <div id="photo-deta">
                                 </div>
                             </div>
                             <div class="col-md-5">
@@ -216,7 +216,7 @@ async function photo_detail(photo_id) {
                             </div>
                         </div>`
     $('#photo-edit').append(temp_html0)
-    $('#photo-d').empty();
+    $('#photo-deta').empty();
     $('#photo-info').empty();
     const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
         headers: {
@@ -242,7 +242,7 @@ async function photo_detail(photo_id) {
     let temp_html1 = `
                     <img class="detail-image" src="${image}"id='photo_image' style="height:500px;">
                     `;
-    $('#photo-d').append(temp_html1)
+    $('#photo-deta').append(temp_html1)
 
     let temp_html2 = `
     <div id='photo_start' style="float: right; margin-bottom:5px; ">${start}</div>
@@ -347,7 +347,7 @@ function patchPhotoBox(photo_id) {
         modalContainer.classList.remove('modal-tall');
     }
 
-    $('#photo-d').empty();
+    $('#photo-deta').empty();
     $('#photo-info').empty();
     let temp_html = `<div class="input-group" style="flex-wrap: nowrap; ">
                         <input class="upload-name" id="p_imgbox" src="${image}" placeholder="${decodedPath}" multiple
@@ -378,7 +378,7 @@ function patchPhotoBox(photo_id) {
                     </div>
                     <input name="p_location_x" id="p_location_x" type="text" class="form-control" hidden>
                         <input name="p_location_y" id="p_location_y" type="text" class="form-control" hidden> `;
-    $('#pho-edit').append(temp_html)
+    $('#photo-edit').append(temp_html)
 
 
     $('#photo-detail-modal-footer').empty()
@@ -387,17 +387,8 @@ function patchPhotoBox(photo_id) {
                       <button id="patch_photo" value='${photo_id}' type="button" class="btn btn-primary"onclick="patchPhoto()" style="width: 10%; font-size:20px; background-color:  #485D86; border-color: #485D86;">저장</button>`
 
     $('#photo-detail-modal-footer').append(temp_html2)
-
-    // $('.delete_serarch').on('click', function () {
-    //     // 닫기 버튼 눌렀을때 수정하는 창의 내용이 사라지도록
-    //     alert("주의")
-    //     $('#pho-edit').empty();
-    //     window.location.reload()
-    // });
 }
-// function test() {
-//     window.location.reload()
-// }
+
 
 
 async function patchPhoto() {
