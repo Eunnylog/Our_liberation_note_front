@@ -427,6 +427,11 @@ async function patchPhoto() {
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
 
+    if (image.files[0].size > 10 * 1024 * 1024) {
+        alert("첨부파일 사이즈는 10MB 이내로 등록이 가능합니다.");
+        return false;
+    }
+
     let nameBox = document.getElementById("p_name")
     let titleBox = document.getElementById("p_title")
     let imgBox = document.getElementById("p_imgbox")
