@@ -1,4 +1,25 @@
 <div class="content max-width">
+  <!-- 로고 이미지 클릭시 메인 페이지로 -->
+  <a href="/index.html">
+    <img class="logo" src="/css/assets/logo1.png" alt="Logo">
+  </a>
+
+  <ul class="nav">
+    <li class="nav-item" id="nav-mypage2">
+      <a class="nav-link active" href="/my_page.html" style="color:#60749d; margin-top: 10px;">마이페이지</a>
+    </li>
+    <li class="nav-item" id="nav-mydiary2">
+      <a class="nav-link active" href="/my_diary.html"style="color:#60749d; margin-top: 10px;">다이어리</a>
+    </li>
+    <li class="nav-item" id="nav-makegroup2">
+      <a class="nav-link active" href="" data-bs-toggle="modal" data-bs-target="#makegroup"
+        id="makegroup-button" style="color:#60749d; margin-top: 10px;">그룹 만들기</a>
+    </li>
+    <li class="nav-item" id="nav-lifephoto">
+      <a class="nav-link active" href="/lifephoto_page.html"style="color:#60749d; margin-top: 10px;">해방네컷</a>
+    </li>
+  </ul>
+  
   <nav class="navbar bg-translation">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
@@ -13,29 +34,27 @@
           </li>
           <!-- 로그인 전 보이는 네비바 -->
           <li class="nav-item" id="nav-signup">
-            <a class="nav-link active" href="" data-bs-toggle="modal" data-bs-target="#signup" id="signup-button" style="color:white;">Sign
-              Up</a>
+            <a class="nav-link active" href="" data-bs-toggle="modal" data-bs-target="#signup" id="signup-button" style="color:white;">회원가입</a>
           </li>
           <li class="nav-item" id="nav-login">
-            <a class="nav-link active" href="" data-bs-toggle="modal" data-bs-target="#login" id="login-button" style="color:white;">Log
-              In</a>
+            <a class="nav-link active" href="" data-bs-toggle="modal" data-bs-target="#login" id="login-button" style="color:white;">로그인</a>
           </li>
           <!-- 로그인 후 보이는 네비바 -->
           <li class="nav-item" id="nav-mypage">
-            <a class="nav-link active" href="/my_page.html" style="color:white;">My Page</a>
+            <a class="nav-link active" href="/my_page.html" style="color:white;">마이페이지</a>
           </li>
           <li class="nav-item" id="nav-mydiary">
-            <a class="nav-link active" href="/my_diary.html"style="color:white;">My Diary</a>
+            <a class="nav-link active" href="/my_diary.html"style="color:white;">다이어리</a>
           </li>
           <li class="nav-item" id="nav-makegroup">
             <a class="nav-link active" href="" data-bs-toggle="modal" data-bs-target="#makegroup"
-              id="makegroup-button" style="color:white;">Make Group</a>
+              id="makegroup-button" style="color:white;">그룹 만들기</a>
           </li>
           <li class="nav-item" id="nav-trash">
             <a class="nav-link active position-relative" href="" onclick="loadTrash('photo')" data-bs-toggle="modal"
-              data-bs-target="#trash" id="trash-button" style="z-index: 10; width: 200px; color:white; margin-left: -5px;">
+              data-bs-target="#trash" id="trash-button" style="z-index: 10; width: 230px; color:white; margin-left: -5px;">
               <img src="/css/assets/trash2.png" style="width: 40px; height: 30px;"/>
-               Trash
+               쓰레기통
               <span id="trash-count"
                 class="position-absolute top-10 start-50 translate-middle badge rounded-pill bg-danger"
                 style="z-index: -1;">
@@ -45,26 +64,10 @@
           </li>
           <!-- 로그인 전,후 둘다 보이는 네비바 -->
           <li class="nav-item" id="nav-developers">
-            <a class="nav-link active" href="/developers.html"style="color:white;">Developers</a>
+            <a class="nav-link active" href="/developers.html"style="color:white;">개발자</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <ul class="nav">
-    <li class="nav-item" id="nav-mypage2">
-      <a class="nav-link active" href="/my_page.html" style="color:#60749d; margin-top: 10px;">My Page</a>
-    </li>
-    <li class="nav-item" id="nav-mydiary2">
-      <a class="nav-link active" href="/my_diary.html"style="color:#60749d; margin-top: 10px;">My Diary</a>
-    </li>
-    <li class="nav-item" id="nav-makegroup2">
-      <a class="nav-link active" href="" data-bs-toggle="modal" data-bs-target="#makegroup"
-        id="makegroup-button" style="color:#60749d; margin-top: 10px;">Make Group</a>
-    </li>
-  </ul>
-  <!-- 로고 이미지 클릭시 메인 페이지로 -->
-  <a href="/index.html">
-    <img class="logo" src="/css/assets/logo1.png" alt="Logo">
-  </a>
 </div>
