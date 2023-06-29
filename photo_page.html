@@ -30,38 +30,41 @@
     <header class="site-header navbar">
         <!-- navbar -->
     </header>
-        <main class="site-body" style="margin-top: -50px; min-height: calc(100vh - 100px) !important; padding-bottom: 100px; width: 100%;">
-            <div id="toast"></div>
-            <button href="" style="background-color: transparent; border: transparent; float: right; position: sticky; top: 100px;left: 0; right: 0;" data-bs-toggle="modal" data-bs-target="#carouselModal">
-                <img src="/css/assets/info_robot.png" style="z-index: 2 !important;">
-            </button>
-            <article class="review-detail max-content-width" style="padding: 30px !important">
-                <div style="margin-bottom:30px;">
-                    <h1 id="photopage_title" style="font-size:50px">Photo gallery</h1>
+    <main class="site-body"
+        style="margin-top: -50px; min-height: calc(100vh - 100px) !important; padding-bottom: 100px; width: 100%;">
+        <div id="toast"></div>
+        <button href=""
+            style="background-color: transparent; border: transparent; float: right; position: sticky; top: 100px;left: 0; right: 0;"
+            data-bs-toggle="modal" data-bs-target="#carouselModal">
+            <img src="/css/assets/info_robot.png" style="z-index: 2 !important;">
+        </button>
+        <article class="review-detail max-content-width" style="padding: 30px !important">
+            <div style="margin-bottom:30px;">
+                <h1 id="photopage_title" style="font-size:50px">Photo gallery</h1>
+            </div>
+            <hr style="margin-bottom: 30px; clear: both;">
+            <div class="clearfix" style="width:100%; margin-bottom:5px;">
+                <div id="menu_box" style="float:left;">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"
+                        onclick="removeRedLine()" class="btn group-btn"
+                        style="background-color: #485D86; color:white; margin: 0px 10px;">사진
+                        추가</button>
                 </div>
-                <hr style="margin-bottom: 30px; clear: both;">
-                <div class="clearfix" style="width:100%; margin-bottom:5px;">
-                    <div id="menu_box" style="float:left;">
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#photo" id="photo-button"
-                            onclick="removeRedLine()" class="btn group-btn"
-                            style="background-color: #485D86; color:white; margin: 0px 10px;">사진
-                            추가</button>
-                    </div>
-                    <div style="float: right; z-index: 1 !important; position: relative;">
-                        <button onclick="m_page()" type="button" class="btn group-btn"
-                            style="background-color: #7689b1; color:white; margin-left: 6px;">
-                            << </button>
-                                <button onclick="p_page()" type="button" class="btn group-btn"
-                                    style="background-color: #485D86; color:white;"> >> </button>
-                    </div>
+                <div style="float: right; z-index: 1 !important; position: relative;">
+                    <button onclick="m_page()" type="button" class="btn group-btn"
+                        style="background-color: #7689b1; color:white; margin-left: 6px;">
+                        << </button>
+                            <button onclick="p_page()" type="button" class="btn group-btn"
+                                style="background-color: #485D86; color:white;"> >> </button>
                 </div>
-                <div id="basic-photo">
-                </div>
-                <div class="gallery" id="photo_info" style="padding-bottom: 40px; padding-top: 20px;">
-                    <!-- 이미지 갤러리 아이템들이 동적으로 추가될 공간 -->
-                </div>
-            </article>
-        </main>
+            </div>
+            <div id="basic-photo">
+            </div>
+            <div class="gallery" id="photo_info" style="padding-bottom: 40px; padding-top: 20px;">
+                <!-- 이미지 갤러리 아이템들이 동적으로 추가될 공간 -->
+            </div>
+        </article>
+    </main>
     <!-- footer start -->
     <footer style="background-color: #fbfcfd; bottom: 0; width: 100%;">
         <div style="background-color:#60749d; width: 100%; height: 10px;"></div>
