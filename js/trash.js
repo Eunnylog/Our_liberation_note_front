@@ -194,7 +194,7 @@ async function loadTrash(contentType) {
     selectedButton.classList.add("active");
 }
 
-async function handleGrouptrash(group_id,name) {
+async function handleGrouptrash(group_id, name) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash`, {
@@ -204,7 +204,7 @@ async function handleGrouptrash(group_id,name) {
         },
         method: 'POST',
         body: JSON.stringify({
-            "group_ids" : [
+            "group_ids": [
                 {
                     "id": group_id
                 }
@@ -279,7 +279,7 @@ async function handleNotetrash(note_id) {
         },
         method: 'POST',
         body: JSON.stringify({
-            "note_ids" : [
+            "note_ids": [
                 {
                     "id": note_id,
                 }
@@ -340,7 +340,7 @@ async function handleNotetrashMultiple(selectedNotes) {
     }
 }
 
-async function handlePhototrash(photo_id,name) {
+async function handlePhototrash(photo_id, name) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash`, {
@@ -350,7 +350,7 @@ async function handlePhototrash(photo_id,name) {
         },
         method: 'POST',
         body: JSON.stringify({
-            "photo_set" : [
+            "photo_ids": [
                 {
                     "id": photo_id
                 }
@@ -475,14 +475,14 @@ function handleTrashRestore() {
         }
     })
 
-    if(selectedGroups.length > 0){
+    if (selectedGroups.length > 0) {
         handleGrouptrashMultiple(selectedGroups);
     }
 
-    if(selectedNotes.length > 0){
+    if (selectedNotes.length > 0) {
         handleNotetrashMultiple(selectedNotes);
     }
-    if(selectedPhotos.length > 0){
+    if (selectedPhotos.length > 0) {
         handlePhototrashMultiple(selectedPhotos);
     }
 }
