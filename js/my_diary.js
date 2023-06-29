@@ -1,6 +1,6 @@
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.liberation-note.com'
-// let back_url = 'http://127.0.0.1:8000'
+// let back_url = 'https://api.liberation-note.com'
+let back_url = 'http://127.0.0.1:8000'
 
 let group_data = [] // 그룹 정보 저장
 
@@ -295,7 +295,6 @@ async function groupUpdateModal() {
                 // 기존 이메일을 배열에 추가
                 existingEmails.push(member.trim());
             })
-
         }
     })
 }
@@ -317,6 +316,7 @@ $(document).ready(function () {
         $('.custom-class').removeClass('custom-class');
     });
 });
+
 
 
 // 멤버 이메일 검색

@@ -194,7 +194,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="su" style="color: #485d86;">
-            Make Group</h5>
+            그룹 생성</h5>
           <button type="button" class="btn-close" onclick="cancleGroupMake()" data-bs-dismiss="modal"
             aria-label="Close"></button>
         </div>
@@ -203,34 +203,39 @@
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="Group Name"
+                  <input name="groupname" id="groupname" type="name" class="form-control" placeholder="그룹 이름을 적어주세요!"
                     maxlength="15" oninput="checkLength(this)">
                   <div style="display: flex;" id="group_make_box">
                     <input name="addemail" id="usersearch" type="email" class="form-control" autocomplete="off"
-                      placeholder="Email to add" style="width: 300px;">
+                      placeholder="초대할 이메일을 검색해주세요!" style="width: 300px;">
                     <button type="button" class="signup" onclick="addMember()"
-                      style="width: 100px; background-color: #485d86; margin-left: 25px;"
-                      id="addmember-btn">Search</button>
+                      style="width: 100px; background-color: #485d86; margin-left: 25px;" id="addmember-btn">
+                      <img src="/css/group_icon/search.png" style="width: 30px;">
+                    </button>
                   </div>
                   <div style="color: #7c838c;">
-                    <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
-                      Emails </p>
+                    <div style="justify-content: left; color:#8d949e;">
+                      <img src="/css/group_icon/searching-bar.png"> 이메일 검색 결과
+                    </div>
                     <div id="email-list"
                       style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
                       <ul id="email-ul" style="position: relative; right: 10px;">
                       </ul>
+                      <div id="search-email-info"> 검색한 이메일이 이곳에 보여집니다!</div>
                     </div>
                   </div>
                   <button type="button" onclick="addMembersToGroup()"
                     style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
-                    <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
+                    <img src="/css/group_icon/down.png" style="width: 25px; margin-bottom: 8px;">
                   </button>
                   <button type="button" onclick="DeleteMembers()"
                     style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
-                      src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
+                      src="/css/group_icon/up.png" style="width: 25px; margin-bottom: 8px;"></button>
                   <div style="color: #4d6087;">
-                    <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
-                      Emails </p>
+                    <div style="justify-content: left; color:#60749d; margin-top: 20px; margin-bottom: 10px;">
+                      <img src="/css/group_icon/checked.png" style="width:20px;">
+                      추가한 이메일
+                    </div>
                     <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
                                             overflow-y: auto; height: 250px;">
                       <ul id="selected-email-ul" style="position: relative; right: 10px;">
@@ -241,9 +246,11 @@
                   <div class="sign-up" style="display: flex;">
                     <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
                       onclick="document.getElementById('makegroup').style.display = 'none'; cancleGroupMake()"
-                      style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
+                      style="margin-right: 10px; background-color: #7689b1;">
+                      <img src="/css/group_icon/return.png" style="width: 30px;" />
+                    </button>
                     <button type="button" class="signup" onclick="addGroup()"
-                      style="background-color: #485d86;">Save</button>
+                      style="background-color: #485d86;">저장</button>
                   </div>
                 </form>
               </div>

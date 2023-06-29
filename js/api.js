@@ -1,19 +1,11 @@
 // 기본 URL
-const backend_base_url = "https://api.liberation-note.com"
-const frontend_base_url = "https://liberation-note.com"
-// const backend_base_url = "http://127.0.0.1:8000"
-// const frontend_base_url = "http://127.0.0.1:5500"
+// const backend_base_url = "https://api.liberation-note.com"
+// const frontend_base_url = "https://liberation-note.com"
+const backend_base_url = "http://127.0.0.1:8000"
+const frontend_base_url = "http://127.0.0.1:5500"
 
 
 let jwtToken;
-
-function showLoading(id) {
-  document.getElementById(id).style.display = 'block';
-}
-
-function hideLoading(id) {
-  document.getElementById(id).style.display = 'none';
-}
 
 // 회원 가입
 async function handleSignup() {
@@ -71,7 +63,6 @@ async function handleSignup() {
   })
 
   if (response.status == 201) {
-    showToast("회원가입이 완료되었습니다!");
     await handleSignin(email, password); // 회원가입 후 로그인 함수 호출
   } else {
     const errorResponse = await response.json();
@@ -204,6 +195,7 @@ async function handleSignin(email = null, password = null) {
     })
 
     if (response.status == 200) {
+      showToast("로그인 완료!");
       const response_json = await response.json()
 
       // localstorage에 저장하기
@@ -352,6 +344,7 @@ async function kakaoLoginApi(code) {
   response_json = await response.json()
 
   if (response.status === 200) {
+    showToast("로그인 완료!");
     localStorage.setItem("access", response_json.access);
     localStorage.setItem("refresh", response_json.refresh);
 
@@ -398,6 +391,7 @@ async function googleLoginApi(decodeCode) {
   response_json = await response.json()
 
   if (response.status === 200) {
+    showToast("로그인 완료!");
     localStorage.setItem("access", response_json.access);
     localStorage.setItem("refresh", response_json.refresh);
 
@@ -444,6 +438,7 @@ async function naverLoginApi(Code) {
   response_json = await response.json()
 
   if (response.status === 200) {
+    showToast("로그인 완료!");
     localStorage.setItem("access", response_json.access);
     localStorage.setItem("refresh", response_json.refresh);
 
@@ -721,6 +716,16 @@ function handleRadioClick() {
   }
 }
 
+function showSearchEmailInfo() {
+  const searchEmailInfo = document.getElementById('search-email-info')
+
+  if ($("#email-ul").children().length === 0) {
+    searchEmailInfo.style.display = "block";
+  } else {
+    searchEmailInfo.style.display = "none";
+  }
+}
+
 // 멤버 추가
 async function addMember() {
   const access_token = localStorage.getItem("access")
@@ -754,8 +759,6 @@ async function addMember() {
     var email = document.getElementById("email-ul");
     email.innerHTML = "";
 
-
-
     // 검색 결과 처리
     emails.forEach((useremail, index) => {
       let temp_html = `
@@ -766,6 +769,7 @@ async function addMember() {
         `;
       email.innerHTML += temp_html;
     });
+    showSearchEmailInfo()
   })
     .catch(error => {
       // 에러 처리
@@ -800,7 +804,8 @@ $(document).ready(function () {
 
 function cancleGroupMake() {
   $('#email-list').empty()
-  let temp_html2 = `<ul id="email-ul" style="position: relative; right: 10px;"></ul>`
+  let temp_html2 = `<ul id="email-ul" style="position: relative; right: 10px;"></ul>
+  <div id="search-email-info"> 검색한 이메일이 이곳에 보여집니다!</div>`
   $('#email-list').append(temp_html2)
   $('#selected-email-list').empty()
   let temp_html = `<ul id="selected-email-ul" style="position: relative; right: 10px;">
