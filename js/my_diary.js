@@ -14,15 +14,37 @@ window.onload = function () {
     $('#note_category').empty()
     for (let i = 1; i < 13; i++) {
         let temp_html = `
-                        <div
-                            style="width: 100px; height: 170px; text-align:center; display:inline-block; margin: auto 20px 20px auto;">
-                            <img src="/css/note_img/note_${i}.png" style="width: 100px; height: 150px;"><br>
-                            <input type="radio" name="note_category" value="${i}" style="width:10px">
-                        </div>
-                    `
+            <div style="width: 100px; height: 170px; text-align:center; display:inline-block; margin: auto 20px 20px auto;">
+                <label>
+                    <img src="/css/note_img/note_${i}.png" style="width: 100px; height: 150px; transition: transform 0.3s ease-in-out;" class="img-zoom"><br>
+                    <input type="radio" name="note_category" value="${i}" style="width:20px; height:20px; transform: scale(0.7); display: none;" class="radio-button">
+                </label>
+            </div>
+        `
         $('#note_category').append(temp_html)
     }
+
+    // Add an event listener for the radio buttons
+    $('.radio-button').change(function () {
+        // First, remove all borders from images
+        $('.img-zoom').css('border', 'none');
+
+        // If this radio button is checked, add a border to its corresponding image
+        if (this.checked) {
+            $(this).siblings('.img-zoom').css('border', '3px solid red');
+        }
+    });
 };
+
+// $('#create_note').on('shown.bs.modal', function () {
+//     alert('.')
+//     $('.radio-button')(function () {
+//         // First, remove all borders from images
+//         $('.img-zoom').css('border', 'none');
+//     });
+// });
+
+
 
 async function showGroupModal() {
     $('#makegroup').modal('show');
@@ -338,6 +360,9 @@ async function updateAddMember() {
     axios.get(url).then(response => {
         const emails = response.data.map(item => item.email);
 
+        if (response.data.length === 0) {
+            showToast('검색 결과가 없습니다!')
+        }
 
         var email = document.getElementById("update-email-ul");
         email.innerHTML = "";
@@ -592,7 +617,7 @@ function deleteNoteDiary() {
                         let group_name = this.parentElement.previousElementSibling.innerText.trim();
                         let group_id = document.getElementById("select_group").value
 
-                        handleNotetrash(note_id, group_id, group_name)
+                        handleNotetrash(note_id)
                     }
                 };
 

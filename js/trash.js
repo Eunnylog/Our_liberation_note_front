@@ -194,7 +194,7 @@ async function loadTrash(contentType) {
     selectedButton.classList.add("active");
 }
 
-async function handleGrouptrash(group_id, name) {
+async function handleGrouptrash(group_id,name) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash`, {
@@ -204,10 +204,9 @@ async function handleGrouptrash(group_id, name) {
         },
         method: 'POST',
         body: JSON.stringify({
-            "group_set" : [
+            "group_ids" : [
                 {
-                    "id": group_id,
-                    "name": name
+                    "id": group_id
                 }
             ]
         })
@@ -245,7 +244,7 @@ async function handleGrouptrashMultiple(selectedGroups) {
         },
         method: 'POST',
         body: JSON.stringify({
-            "group_set": selectedGroups
+            "group_ids": selectedGroups
         })
     })
     if (response.status == 202) {
@@ -270,7 +269,7 @@ async function handleGrouptrashMultiple(selectedGroups) {
 
 }
 
-async function handleNotetrash(note_id, group, name) {
+async function handleNotetrash(note_id) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash`, {
@@ -280,11 +279,9 @@ async function handleNotetrash(note_id, group, name) {
         },
         method: 'POST',
         body: JSON.stringify({
-            "note_set" : [
+            "note_ids" : [
                 {
                     "id": note_id,
-                    "name": name,
-                    "group": group,
                 }
             ]
         })
@@ -292,13 +289,13 @@ async function handleNotetrash(note_id, group, name) {
 
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 노트가 정상적으로 삭제되었습니다.`)
+        showToast(`※ 노트가 정상적으로 삭제되었습니다.`)
         window.location.replace(`${frontend_base_url}/my_diary.html`)
         return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 노트가 정상적으로 복원되었습니다.`)
+        showToast(`※ 노트가 정상적으로 복원되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
@@ -319,7 +316,7 @@ async function handleNotetrashMultiple(selectedNotes) {
         },
         method: 'POST',
         body: JSON.stringify({
-            "note_set": selectedNotes
+            "note_ids": selectedNotes
         })
     })
 
@@ -343,7 +340,7 @@ async function handleNotetrashMultiple(selectedNotes) {
     }
 }
 
-async function handlePhototrash(photo_id, title, name) {
+async function handlePhototrash(photo_id,name) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash`, {
@@ -355,9 +352,7 @@ async function handlePhototrash(photo_id, title, name) {
         body: JSON.stringify({
             "photo_set" : [
                 {
-                    "id": photo_id,
-                    "title": title,
-                    "name": name
+                    "id": photo_id
                 }
             ]
         })
@@ -393,7 +388,7 @@ async function handlePhototrashMultiple(selectedPhotos) {
         },
         method: 'POST',
         body: JSON.stringify({
-            "photo_set": selectedPhotos
+            "photo_ids": selectedPhotos
         })
     })
     if (response.status == 202) {
@@ -467,7 +462,6 @@ function handleTrashRestore() {
             const selected_group = document.getElementById(`group_${selectedIndex}`).value;
             selectedNotes.push({
                 id: selected_id,
-                group: selected_group,
                 name: selected_name
             });
         }
@@ -476,7 +470,6 @@ function handleTrashRestore() {
             const selected_title = document.getElementById(`title_${selectedIndex}`).value;
             selectedPhotos.push({
                 id: selected_id,
-                title: selected_title,
                 name: selected_name
             });
         }

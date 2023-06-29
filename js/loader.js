@@ -47,7 +47,7 @@ async function injectNavbar() {
         let payload_parse = JSON.parse(payload)
 
         // payload에서 불러온 email값 넣어주기
-        intro.innerText = `Hello~ ${payload_parse.email.split('@')[0]} 😄`
+        intro.innerText = `안녕하세요! ${payload_parse.email.split('@')[0]}님 😄`
 
         // 로그인 전 숨겼던 항목 보여주기
         intro.style.display = "block"
@@ -68,7 +68,7 @@ async function injectNavbar() {
         let newA = document.createElement("a")
         newA.setAttribute("class", "nav-link active")
 
-        newA.innerText = "Logout"
+        newA.innerText = "로그아웃"
         newA.setAttribute("onClick", "handleLogout()")
         newA.setAttribute("href", "#")
         newA.style.color = "white"

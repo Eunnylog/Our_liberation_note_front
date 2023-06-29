@@ -498,9 +498,15 @@ function checkLogin() {
 
   if (!payload) {
     alert('로그인 또는 회원가입이 필요합니다!')
-    window.location.replace(`${frontend_base_url}/index.html`)
+    window.location.replace(`${frontend_base_url}/index.html?sign=0`)
   }
 }
+
+$(document).ready(function () {
+  if (window.location == `${frontend_base_url}/index.html?sign=0`) {
+    $('#login').modal('show');
+  }
+})
 
 // 회원탈퇴
 async function handlesUserDelete() {
@@ -742,6 +748,12 @@ async function addMember() {
     console.log(emails)
 
     if (emails.length == 0) {
+      showToast('검색 결과가 없습니다!')
+    }
+
+    // 검색 결과가 없을 경우 알림창으로 표시
+
+    if (response.data.length === 0) {
       showToast('검색 결과가 없습니다!')
     }
 

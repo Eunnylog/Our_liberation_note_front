@@ -269,7 +269,7 @@ async function aiStart() {
   });
 
   if (destinations.length != total) {
-    showToast('주소지가 정확하지 않은 곳은 제외 되었습니다!')
+    showToast('주소지가 정확하지 않은 곳은 제외 됩니다!')
   }
 
   if (destinations.length == 0 && total == destinations.length) {
