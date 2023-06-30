@@ -401,6 +401,9 @@ async function patchPhoto() {
     const memo = document.getElementById('p_memo').value;
     const location_x = document.getElementById("p_location_x").value
     const location_y = document.getElementById("p_location_y").value
+    let nameBox = document.getElementById("p_name")
+    let titleBox = document.getElementById("p_title")
+    let imgBox = document.getElementById("p_imgbox")
 
     const formData = new FormData();
 
@@ -422,11 +425,6 @@ async function patchPhoto() {
     formData.append("memo", memo);
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
-
-
-    let nameBox = document.getElementById("p_name")
-    let titleBox = document.getElementById("p_title")
-    let imgBox = document.getElementById("p_imgbox")
 
 
     if (name == '' || title == '' || imgBox.value == '') {
