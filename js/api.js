@@ -217,7 +217,7 @@ async function handleSignin(email = null, password = null) {
 
       localStorage.setItem('payload', jsonPayload)
       document.getElementById("login").querySelector('[data-bs-dismiss="modal"]').click();
-      location.reload()
+      window.location.href = '/index.html'
     }
     else {
       showToast("※이메일 혹은 비밀번호가 올바르지 않습니다!")

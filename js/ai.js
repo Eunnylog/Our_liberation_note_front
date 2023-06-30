@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+let back_url = 'https://api.liberation-note.com'
+const front_url = "https://liberation-note.com"
+// let front_url = 'http://127.0.0.1:5500'
+// let back_url = 'http://127.0.0.1:8000'
+>>>>>>> 7990aff4905b583137295ca0a74c78307413fc44
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
 
