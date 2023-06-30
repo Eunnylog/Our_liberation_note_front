@@ -150,7 +150,7 @@
   <!-- 그룹만들기 모달창 -->
   <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true" data-bs-backdrop="static"
     data-bs-keyboard="false">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="su" style="color: #485d86;">
@@ -163,7 +163,7 @@
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <div style="display: inline-block; margin: 10px 0px; width: 87% !important;">
+                  <div style="display: inline-block; margin: 10px 0px; width: 91% !important;">
                     <input name="groupname" id="groupname" type="name" class="form-control" placeholder="그룹 이름을 적어주세요!"
                       maxlength="15" oninput="checkLength(this)">
                     <div style="display: flex;" id="group_make_box">
@@ -182,7 +182,7 @@
                           <img src="/css/group_icon/searching-bar.png"> 이메일 검색 결과
                         </div>
                         <div id="email-list"
-                          style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 300px; width: 430px;">
+                          style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 300px; width: 300px;">
                           <ul id="email-ul" style="position: relative; right: 10px;">
                           </ul>
                           <div id="search-email-info"> 검색한 이메일이 이곳에 보여집니다!</div>
@@ -208,7 +208,7 @@
                           추가한 이메일
                         </div>
                         <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
-                                            overflow-y: auto; height: 300px; width: 430px">
+                                            overflow-y: auto; height: 300px; width: 300px;">
                           <ul id="selected-email-ul" style="position: relative; right: 10px;">
                           </ul>
                           <div id="no-email-info"> 이메일을 추가하지 않으면 본인만 구성원으로 등록됩니다!</div>
@@ -236,19 +236,20 @@
   <!-- 그룹 수정 모달창 -->
   <div class="modal fade" id="updateGroup" tabindex="-1" aria-labelledby="su" aria-hidden="true"
     data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="su" style="color: #485d86;">
             그룹 수정</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            onclick="cancelUpdateGroup()"></button>
         </div>
         <div class="container">
           <div class="global-cont">
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <div style="display: inline-block; margin: 10px 0px; width: 87%;">
+                  <div style="display: inline-block; margin: 10px 0px; width: 91%;">
                     <input name="groupname" id="update-groupname" type="name" class="form-control" placeholder="그룹 이름"
                       style="color: #51565b;" maxlength="15" oninput="checkLength(this)">
                     <div style="display: flex;" id="group_make_box">
@@ -267,7 +268,7 @@
                         <img src="/css/group_icon/searching-bar.png"> 이메일 검색 결과
                       </div>
                       <div id="email-list"
-                        style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 300px; width: 430px;">
+                        style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 300px; width: 300px;">
                         <ul id="update-email-ul" style="position: relative; right: 10px;">
                         </ul>
                         <div id="update-search-email-info"> 검색한 이메일이 이곳에 보여집니다!</div>
@@ -290,7 +291,7 @@
                         추가한 이메일
                       </div>
                       <div id="selected-email-list"
-                        style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 300px; width: 430px">
+                        style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 300px; width: 300px">
                         <ul id="update-selected-email-ul" style="position: relative; right: 10px;">
                         </ul>
                       </div>
@@ -299,7 +300,7 @@
                   <div>
                     <div class="sign-up" style="display: flex; justify-content: center; margin-top: 20px;">
                       <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                        onclick="document.getElementById('updateGroup').style.display = 'none'"
+                        onclick="cancelUpdateGroup();"
                         style="margin-right: 20px; background-color: #7689b1; width: 300px;">
                         <img src="/css/group_icon/return.png" style="width: 30px;" />
                       </button>
