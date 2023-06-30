@@ -8,6 +8,7 @@ window.onload = function () {
   note_id = params.get("note_id");
 
   var back = document.getElementById('back');
+  var testText = document.getElementById('testText');
 
   if (note_id != 3) {
     checkGroup()
@@ -15,11 +16,15 @@ window.onload = function () {
     back.onclick = function () {
       location.href = `/plan_page.html?note_id=${note_id}`;
     }
+    testText.style.display = 'none';
   } else {
-    showToast('여행 루트 짜주는 AI 예시 입니다!')
+    back.innerText = '메인페이지로 이동'
     back.onclick = function () {
       location.href = `/index.html`;
     }
+    setTimeout(function () {
+      showToast('여행 루트 짜주는 AI 예시 입니다!')
+    }, 1000);
   }
 };
 

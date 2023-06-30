@@ -808,3 +808,48 @@ function toggleFunction() {
         changeOnOff.style.display = 'block';
     }
 }
+
+function showAddEmailBox() {
+    let addEmailSend = document.getElementById('addEmailSend');
+    let addEmailSendBtn = document.getElementById('addEmailSendBtn');
+    let addEmailText = document.getElementById('addEmailText');
+    if (addEmailSend.style.display == 'none') {
+        addEmailSend.style.display = 'block';
+        addEmailSendBtn.style.display = 'block';
+        addEmailText.style.display = 'block';
+    } else {
+        addEmailSend.style.display = 'none';
+        addEmailSendBtn.style.display = 'none';
+        addEmailText.style.display = 'none';
+    }
+}
+
+function addEmailSendList() {
+    let email = document.getElementById('addEmailSend').value;
+    // 이미 있는 이메일인지 확인
+    let existingEmails = document.querySelectorAll('#member_list h5');
+    if (!email) {
+        showToast('이메일을 입력해주세요!')
+        return false
+    }
+    // 이메일 형식 검증
+    let re = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    if (!re.test(email)) {
+        showToast('올바른 이메일 형식이 아닙니다!');
+        return false;
+    }
+    for (let i = 0; i < existingEmails.length; i++) {
+        if (existingEmails[i].textContent === email) {
+            showToast('이미 추가된 이메일입니다.');
+            return;
+        }
+    };
+    let temp_html = `
+                        <div>
+                            <h5 style="display: inline-block; vertical-align: middle;">${email}</h5>
+                            <input type="checkbox" id="${email}">
+                            <label for="${email}" style="margin-left: 10px; vertical-align: middle;"></label>
+                        </div>
+                    `
+    $('#member_list').append(temp_html);
+}

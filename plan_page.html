@@ -181,11 +181,23 @@
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <div style="width:100%;" id="member_list">
+                  <div
+                    style="width:100%; max-height:300px; overflow: auto; border: 5px double #485d86; border-radius: 10px; margin-bottom:20px; padding:20px;"
+                    id="member_list">
                   </div>
+                  <div class="input-group" style="flex-wrap: nowrap;">
+                    <input name="addEmailSend" id="addEmailSend" type="text" class="form-control" placeholder="Email"
+                      style="width: 50%; height:40px; display:none;">
+                    <div class="input-group-append" style="width: 30%;">
+                      <button type="button" id="addEmailSendBtn" onclick="addEmailSendList()" class="btn btn-primary"
+                        style="margin-top:0px;height:40px; font-size:20px; background-color: #485d86; line-height: 40px; padding: 0; display:none;">추가</button>
+                    </div>
+                  </div>
+                  <h6 id="addEmailText" style="color: red; display:none;">모달을 나가시면 직접 추가한 이메일은 삭제됩니다!</h6>
                   <div class="sign-up" style="display: flex;">
-                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                      style="margin-right: 10px; background-color: #7689b1;">취소</button>
+                    <button type="button" class="cancle" onclick="showAddEmailBox()"
+                      style="margin-right: 10px; background-color: #485d86;">이메일
+                      추가하기</button>
                     <button type="button" class="signup" onclick="sendEmail()" style="background-color: #485d86;">이메일
                       보내기</button>
                   </div>
