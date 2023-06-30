@@ -160,8 +160,6 @@ async function showNoteList() {
         
                             `
             $('#note_list').append(temp_html);
-            // document.getElementById('move_plan_page').setAttribute("onClick", `window.location.href='/plan_page.html?note_id=${note_id}'`);
-            // document.getElementById('move_photo_page').setAttribute("onClick", `window.location.href='/photo_page.html?note_id=${note_id}'`);
         })
         showMasterButton(); // showMasterButton 함수 호출
     }
@@ -186,6 +184,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('move_photo_page').addEventListener('click', () => {
         if (currentUrl) {
             window.location.href = `/photo_page.html?note_id=${currentUrl}`;
+        }
+    });
+    document.getElementById('move_ai_page').addEventListener('click', () => {
+        if (currentUrl) {
+            window.location.href = `/ai.html?note_id=${currentUrl}`;
         }
     });
 });
