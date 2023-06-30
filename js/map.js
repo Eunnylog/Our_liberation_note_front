@@ -17,7 +17,7 @@ async function searchLocation() {
             var searchBox = document.getElementById('search_box');
             searchBox.style.display = 'block';
             searchBox.style.height = '200px';
-            searchBox.style.padding = '20px';
+            // searchBox.style.padding = '20px';
             // searchBox.style.margin = '20px auto 20px auto';
             // 검색 결과 처리
             $('#search_box').empty();
@@ -30,19 +30,26 @@ async function searchLocation() {
                 const location_y = place.y
 
                 let temp_html = `
-                                <div style="display: flex; align-items: center; justify-content: space-between; margin: 0px 0px 0px 0px">
-                                    <div style=''>
-                                        <h3 style="font-size: 15px; margin-bottom: 5px;" id='name_${index}' >${place_name} / ${place_category}</h3>
-                                        <a href="${place_url}" id='address_${index}' target="_blank" style="font-size: 15px; color: black;">${address_name}</a>
-                                    </div>
-                                    <div style="display: flex; align-items: center;">
-                                    <input type="radio" name="address_radio" value="${index}" style="width: 10px; margin-right: 10px;" onclick="handleRadio()">
-                                        <label for="${index}" style="font-size: 15px;">선택</label>
-                                    <input id='x_${index}' value="${location_x}" hidden>
-                                    <input id='y_${index}' value="${location_y}" hidden>
-                                    </div>
-                                </div>
-                                <hr>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin: 5px auto;">
+                <div>
+                    <h3 style="font-size: 20px; margin-bottom: 5px;" id='name_${index}' >${place_name} / ${place_category}</h3>
+                    <a href="${place_url}" id='address_${index}' target="_blank" style="font-size: 20px; color: black;">${address_name}</a>
+                </div>
+                <style>
+                    input[type="radio"] {
+                        transform: scale(1.5); /* 크기 조정 */
+                        margin-right: 10px;
+                    }
+                </style>
+                <div style="display: flex; margin-top:5px; align-items: center;">
+                <input type="radio" name="address_radio" value="${index}" style="width: 10px; margin-right: 10px;" onclick="handleRadio(2)">
+                    <label for="${index}" style="font-size: 25px;">선택</label>
+                <input id='x_${index}' value="${location_x}" hidden>
+                <input id='y_${index}' value="${location_y}" hidden>
+                </div>
+            </div>
+            <hr>
+                                
                             `
                 $('#search_box').append(temp_html);
             });
@@ -54,6 +61,20 @@ async function searchLocation() {
         });
 
 }
+{/* 수정전 search
+ <div style="display: flex; align-items: center; justify-content: space-between; margin: 0px 0px 0px 0px">
+    <div style=''>
+        <h3 style="font-size: 20px; margin-bottom: 5px;" id='name_${index}' >${place_name} / ${place_category}</h3>
+        <a href="${place_url}" id='address_${index}' target="_blank" style="font-size: 20px; color: black;">${address_name}</a>
+    </div>
+    <div style="display: flex; align-items: center;">
+    <input type="radio" name="address_radio" value="${index}" style="width: 10px; margin-right: 10px;" onclick="handleRadio()">
+        <label for="${index}" style="font-size: 20px;">선택</label>
+    <input id='x_${index}' value="${location_x}" hidden>
+    <input id='y_${index}' value="${location_y}" hidden>
+    </div>
+</div>
+<hr></hr> */}
 
 function handleRadio() {
     var selectedRadio = document.querySelector('input[name="address_radio"]:checked');
