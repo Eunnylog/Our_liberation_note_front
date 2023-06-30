@@ -1,8 +1,8 @@
 // 기본 URL
-// const backend_base_url = "https://api.liberation-note.com"
-// const frontend_base_url = "https://liberation-note.com"
-const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "http://127.0.0.1:5500"
+const backend_base_url = "https://api.liberation-note.com"
+const frontend_base_url = "https://liberation-note.com"
+// const backend_base_url = "http://127.0.0.1:8000"
+// const frontend_base_url = "http://127.0.0.1:5500"
 
 
 let jwtToken;
@@ -866,83 +866,6 @@ function addMembersToGroup() {
   $('input[type=checkbox]').prop('checked', false);
   showNoEmailInfo();
 }
-
-
-
-// function addMembersToGroup() {
-//   // 선택한 input 요소의 value 속성을 배열에 push
-//   const checkedInput = document.querySelector('input[name="email_radio"]:checked');
-
-//   if (checkedInput) {
-
-//     const selectedEmail = checkedInput.previousSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
-
-
-//     // 이미 추가된 이메일인지 확인
-//     const alreadyAdded = selectedEmails.includes(selectedEmail);
-
-
-//     if (!alreadyAdded) {
-//       selectedEmails.push(selectedEmail);
-
-//       // 선택된 이메일을 ul에 추가
-//       const selectedEmailUl = document.getElementById("selected-email-ul");
-//       const newEmailLi = document.createElement("li");
-//       newEmailLi.style = "list-style-type: none; margin-bottom: 20px; display: flex; justify-content: space-between;"
-
-//       // input 태그 추가
-//       const newInput = document.createElement("input");
-//       newInput.type = "checkbox";
-//       newInput.name = "checked_email_radio";
-//       newInput.id = "add" + groupIndex
-
-//       // label 태그 추가
-//       const newLabel = document.createElement("label")
-//       newLabel.htmlFor = "add" + groupIndex
-
-//       newEmailLi.appendChild(document.createTextNode(selectedEmail));
-//       selectedEmailUl.appendChild(newEmailLi);
-//       newEmailLi.appendChild(newInput);
-//       newEmailLi.appendChild(newLabel);
-
-//       groupIndex++; // 다음 인풋에 할당할 고유한 id 값 증가
-//     }
-//     else {
-//       showToast("이미 추가된 이메일입니다.");
-//     }
-
-//   } else {
-//     showToast("선택된 이메일이 없습니다.")
-//   }
-//   $('input[type=checkbox]').prop('checked', false);
-//   showNoEmailInfo();
-// }
-
-// 버튼 클릭 시 선택한 이메일 리스트에서 삭제
-// function DeleteMembers() {
-//   const checkedRadios = document.querySelectorAll('input[name="checked_email_radio"]:checked');
-
-//   if (checkedRadios.length === 0) {
-//     showToast("선택된 이메일이 없습니다.");
-//     return;
-//   }
-
-//   checkedRadios.forEach((checkedRadio) => {
-//     const selectedEmail = checkedRadio.previousSibling.textContent.trim();
-//     const emailIndex = selectedEmails.indexOf(selectedEmail); // 추가된 이메일 목록에서 인덱스 찾기
-
-//     if (emailIndex > -1) {
-//       selectedEmails.splice(emailIndex, 1); // 선택된 이메일 삭제
-//       checkedRadio.closest("li").remove();
-//     } else {
-//       showToast("선택된 이메일이 추가된 이메일 목록에 없습니다.");
-//     }
-//   });
-
-//   $('input[type=checkbox]').prop('checked', false);
-//   showNoEmailInfo();
-// }
-
 
 
 function DeleteMembers() {
