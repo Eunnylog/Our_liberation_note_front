@@ -120,31 +120,33 @@
                                             accept=".jpg, .png, .jpeg .gif" max-size="10MB"
                                             style="width: 80%; height:40px;">
                                         <label for="image"
-                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 4px 4px 0; background-color:  #485D86;">업로드</label>
+                                            style="margin-top:0px;height:40px; font-size:20px; width: 20%; border-radius: 0 4px 4px 0; background-color:  #485D86;">업로드</label>
                                         <input type="file" id="image" style="display: none" />
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
-                                        <input name="name" id="name" type="text" class="form-control"
-                                            placeholder="사진 타이틀" style="width: 100%; height:40px;">
+                                        <input name="name" id="name" type="text" style="font-size:20px;"
+                                            class="form-control" placeholder="사진 타이틀" style="width: 100%; height:40px;">
                                     </div>
                                     <div class="input-group" style="flex-wrap: nowrap;">
                                         <input name="title" id="title" type="text" class="form-control"
-                                            placeholder="목적지(지역명+상호명, 지역명+카테고리)" style="width: 80%; height:40px;">
+                                            placeholder="목적지(지역명+상호명, 지역명+카테고리)"
+                                            style="width: 100%; height:40px; font-size:20px;">
                                         <button type="button" onclick="searchLocation('1')" class="btn btn-primary"
-                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; background-color:  #485D86;">검색</button>
+                                            style="margin-top:0px; height:40px; font: size 20px; width: 20%; background-color:  #485D86;">검색</button>
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
                                         <input name="location" id="location" type="text" class="form-control"
-                                            placeholder="주소(검색기능 미사용시 스탬프 기능의 사용이 제한됩니다.)" style="height:40px;">
+                                            placeholder="주소(검색기능 미사용시 스탬프 기능의 사용이 제한됩니다.)"
+                                            style="height:40px; font-size:20px;">
                                     </div>
                                     <div id="search_box" style="width: 100%;  overflow: auto;"></div>
                                     <input name="start" id="start" type="date" class="form-control"
-                                        style="height:40px;">
+                                        style="height:40px; font-size:20px;">
                                     <input name="location_x" id="location_x" type="text" class="form-control" hidden>
                                     <input name="location_y" id="location_y" type="text" class="form-control" hidden>
                                     <textarea name="memo" id="memo" type="textarea" class="form-control"
                                         placeholder="memo"
-                                        style="height:200px; min-height:200px; max-height:200px"></textarea>
+                                        style="font-size:20px; height:200px; min-height:200px; max-height:200px; "></textarea>
                                     <div class="button-group">
                                         <button type="button" data-bs-dismiss="modal" aria-label="Close"
                                             class="btn btn-primary delete_search"

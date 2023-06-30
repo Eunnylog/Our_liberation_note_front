@@ -154,21 +154,26 @@ async function showNoteList() {
             const name = a['name']
             const note_id = a['id']
             let temp_html = `
-                                <a href="/plan_page.html?note_id=${note_id}" data-bs-toggle="modal" data-bs-target="#move_note" onclick="saveLocalNoteName('${name}','${group_id}', '${note_id}')" style='text-decoration:none; color:black;'>
-                                    <section class="cp-card content" style="background-image: url('/css/note_img/note_${category}.png');">
-                                    <div class="thumb">
-                                    </div>
+                                <a href='#' style='text-decoration:none; color:black;'>
+                                    <section class="cp-card content" href="/plan_page.html?note_id=${note_id}" onclick="event.preventDefault(); saveLocalNoteName('${name}','${group_id}', '${note_id}'); showMoveNoteModal();" style="background-image: url('/css/note_img/note_${category}.png');">
+                                        <div class="thumb"></div>
                                     </section>
                                     <div style="text-align: center;">${name}</div>
                                 </a>
+        
                             `
             $('#note_list').append(temp_html);
-            // document.getElementById('move_plan_page').setAttribute("onClick", `window.location.href='/plan_page.html?note_id=${note_id}'`);
-            // document.getElementById('move_photo_page').setAttribute("onClick", `window.location.href='/photo_page.html?note_id=${note_id}'`);
         })
         showMasterButton(); // showMasterButton 함수 호출
     }
 }
+
+function showMoveNoteModal() {
+    var myModal = new bootstrap.Modal(document.getElementById('move_note'), {})
+    myModal.show()
+}
+
+
 
 // 계획표 이동, 사진첩 이동함수
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -182,6 +187,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('move_photo_page').addEventListener('click', () => {
         if (currentUrl) {
             window.location.href = `/photo_page.html?note_id=${currentUrl}`;
+        }
+    });
+    document.getElementById('move_ai_page').addEventListener('click', () => {
+        if (currentUrl) {
+            window.location.href = `/ai.html?note_id=${currentUrl}`;
         }
     });
 });
@@ -651,13 +661,16 @@ function deleteNoteDiary() {
                         // 이 라디오 버튼이 포함된 가장 가까운 a 태그의 href 속성을 가져옴
                         let note_id = this.closest('a').href.split('=')[1].trim();
 
-                        // 이 라디오 버튼 바로 앞의 div의 텍스트 값을 가져옴
-                        let group_name = this.parentElement.previousElementSibling.innerText.trim();
-                        let group_id = document.getElementById("select_group").value
-
                         handleNotetrash(note_id)
+
+                        // 추가: 확인 버튼을 누른 후에 모달을 닫음
+                        $('#move_note').modal('hide');
+                    } else {
+                        // 취소 버튼을 누른 경우에도 모달을 닫음
+                        $('#move_note').modal('hide');
                     }
                 };
+
 
                 // 라디오 버튼을 가운데로 정렬하기 위한 div를 생성
                 var centerDiv = document.createElement('div');

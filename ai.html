@@ -36,25 +36,26 @@
     <!-- nav end -->
     <!-- content start -->
     <main class="site-body"
-        style="margin-bottom: 30px; min-height: calc(100vh - 100px) !important; padding-bottom: 100px;">
+        style="margin-top:0px; margin-bottom: 30px; min-height: calc(100vh - 100px) !important; padding-bottom: 100px;">
         <div id="toast"></div>
         <!-- 로딩창 -->
         <div id="loading" style="display: none;">
             <div class="overlay"></div>
             <div class="spinner"></div>
         </div>
-        <div class="main-header" style="margin-top: 30px; background-color: #ebf2ff;">
-            <div style="margin-top: 30px; text-align:center">
+        <div class="main-header" style="margin-top: 0px; background-color: #ebf2ff;">
+            <div style="margin-top: 10px; text-align:center">
                 <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#carouselModal"
                     id="ai_answer_btn"
-                    style="margin-bottom: 30px; background-color: #7689b1; display:none; border: #7689b1;">결과보기</button>
+                    style="margin-bottom: 10px; background-color: #7689b1; display:none; border: #7689b1;">결과보기</button>
                 <button class="btn btn-secondary" id="reload_btn" onclick="reload()"
-                    style="margin-bottom: 30px; background-color: #485d86; display:none; border: #485d86;">다시하기</button>
+                    style="margin-bottom: 10px; background-color: #485d86; display:none; border: #485d86;">다시하기</button>
                 <button type="button" id="back" class="btn group-btn"
-                    style="margin-bottom: 30px; background-color: #7689b1; border: #7689b1; color:white" onclick=""> 뒤로
+                    style="margin-bottom: 10px; background-color: #7689b1; border: #7689b1; color:white" onclick=""> 계획표
                     가기 </button>
                 <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#carouselModal1" id="ai-info"
-                    style="margin-bottom: 30px; background-color: #7689b1; border: #7689b1;">AI 사용 설명서</button>
+                    style="margin-bottom: 10px; background-color: #7689b1; border: #7689b1;">AI 사용 설명서</button>
+                <h6 id="testText" style="color: red;">테스트용 페이지입니다! 노트를 만드시면 직접 목적지를 추가하실 수 있습니다!</h6>
             </div>
             <!-- feed 창 -->
             <div class="shadow mb-5 bg-body rounded" id="feed_div"
@@ -82,7 +83,6 @@
                         <img src="/css/assets/AI.png" style="position: absolute; left: -20px;" />
                     </div>
                 </div>
-
             </div>
             <!-- work 창 -->
             <div class="shadow mb-5 bg-body rounded" id="work_div"
