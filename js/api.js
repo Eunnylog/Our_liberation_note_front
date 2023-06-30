@@ -1,8 +1,8 @@
 // 기본 URL
-const backend_base_url = "https://api.liberation-note.com"
-const frontend_base_url = "https://liberation-note.com"
-// const backend_base_url = "http://127.0.0.1:8000"
-// const frontend_base_url = "http://127.0.0.1:5500"
+// const backend_base_url = "https://api.liberation-note.com"
+// const frontend_base_url = "https://liberation-note.com"
+const backend_base_url = "http://127.0.0.1:8000"
+const frontend_base_url = "http://127.0.0.1:5500"
 
 
 let jwtToken;
@@ -88,8 +88,10 @@ async function handleSignup() {
           break;
         case "해당 메일로 보낸 인증 코드가 없습니다.":
           confirmcodeBox.classList.add("custom-class");
+          break;
         case "인증 코드 유효 기간이 지났습니다.":
           confirmcodeBox.classList.add("custom-class");
+          break;
         case "인증 코드가 유효하지 않습니다.":
           confirmcodeBox.classList.add("custom-class");
           break;
@@ -237,6 +239,9 @@ async function sendCode() {
   const emailBox = document.getElementById("email")
   const codeBox = document.getElementById("confirmcode")
 
+  emailBox.classList.remove("custom-class")
+  codeBox.classList.remove("custom-class")
+
   codeBox.value = ""
   if (!email) {
     showToast('이메일을 입력하세요!')
@@ -263,12 +268,18 @@ async function sendCode() {
       }),
     });
 
+    const data = await response.json()
+
     if (response.ok) {
       showToast("인증 코드가 발송 되었습니다! 이메일을 확인해주세요");
       signupTimer();
+    } else if (data.message) {
+      showToast(data.message)
+      emailBox.classList.add("custom-class")
     } else {
       throw new Error("이메일 발송에 실패했습니다.");
     }
+
   } catch (error) {
     showToast(error.message);
   } finally {

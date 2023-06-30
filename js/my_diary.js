@@ -1,6 +1,6 @@
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.liberation-note.com'
-// let back_url = 'http://127.0.0.1:8000'
+// let back_url = 'https://api.liberation-note.com'
+let back_url = 'http://127.0.0.1:8000'
 
 let group_data = [] // 그룹 정보 저장
 
@@ -275,7 +275,6 @@ async function groupUpdateModal() {
 
     selectedEmails = [];
 
-
     // 저장된 그룹 정보 서버로부터 가져오기
     const response = await fetch(`${backend_base_url}/user/group/`, {
         headers: {
@@ -306,6 +305,12 @@ async function groupUpdateModal() {
             groupName.value = name
 
             const membersArray = members.split(',')
+
+            // if (index === 0) {
+            //     $("#update-email-ul").empty();
+            //     let temp_html = `<div id="update-search-email-info"> 검색한 이메일이 이곳에 보여집니다!</div>`
+            //     $('#update-email-ul').append(temp_html)
+            // }
 
             membersArray.forEach((member, index) => {
                 let temp_html = `
