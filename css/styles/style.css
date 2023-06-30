@@ -657,20 +657,25 @@ input[type="checkbox"]:checked+label {
 .carousel-control-next::before {
   content: "";
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  color: #60749d;
+  width: 50px;
+  height: 50px;
+  color: #1f489a;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon{
+  color: #1f489a;
 }
 
 .carousel-control-prev::before {
-  border-right: 3px solid;
-  border-bottom: 3px solid;
+  border-right: 5px solid #1f489a;
+  border-bottom: 5px solid #1f489a;
   transform: rotate(135deg);
 }
 
 .carousel-control-next::before {
-  border-right: 3px solid;
-  border-top: 3px solid;
+  border-right: 5px solid #1f489a;
+  border-top: 5px solid #1f489a;
   transform: rotate(45deg);
 }
 

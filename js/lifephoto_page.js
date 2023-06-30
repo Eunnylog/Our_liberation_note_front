@@ -1,5 +1,102 @@
 // lifephoto_page
+// input에 들어간 파일을 사진 넣기 버튼을 눌렀을때 넣어주는 함수
+function formFile1() {
+  // input으로 들어간 파일의 주소 가져오기
+  let selectFile1 = document.querySelector("#formFile1").files[0];
 
+  if (selectFile1 == undefined) {
+    showToast("이미지를 넣고 사진넣기를 눌러주세요!")
+  } else {
+    // 받아온 정보를 파일에 넣어주기
+    let file1 = URL.createObjectURL(selectFile1);
+
+    // 정보가 담긴 파일을 지정한 장소에 넣어주기
+    // 양쪽이 같은 파일을 보여주게 파일 하나를 두개 아이디에 각각 넣어줌
+    // 파일1 
+    document.querySelector("#image1").src = file1;
+    document.querySelector("#image5").src = file1;
+    document.querySelector("#lifephoto1").src = file1;
+
+    // input 값 초기화
+    let formFile1 = document.querySelector("#formFile1")
+
+    formFile1.value = null;
+  }
+}
+// input에 들어간 파일을 사진 넣기 버튼을 눌렀을때 넣어주는 함수
+function formFile2() {
+  // input으로 들어간 파일의 주소 가져오기
+  let selectFile2 = document.querySelector("#formFile2").files[0];
+
+  if (selectFile2 == undefined) {
+    showToast("이미지를 넣고 사진넣기를 눌러주세요!")
+  } else {
+    // 받아온 정보를 파일에 넣어주기
+    let file2 = URL.createObjectURL(selectFile2);
+
+    // 정보가 담긴 파일을 지정한 장소에 넣어주기
+    // 양쪽이 같은 파일을 보여주게 파일 하나를 두개 아이디에 각각 넣어줌
+    // 파일2
+    document.querySelector("#image2").src = file2;
+    document.querySelector("#image6").src = file2;
+    document.querySelector("#lifephoto2").src = file2;
+
+    // input 값 초기화
+    let formFile2 = document.querySelector("#formFile2")
+
+    formFile2.value = null;
+  }
+}
+// input에 들어간 파일을 사진 넣기 버튼을 눌렀을때 넣어주는 함수
+function formFile3() {
+  // input으로 들어간 파일의 주소 가져오기
+  let selectFile3 = document.querySelector("#formFile3").files[0];
+
+  if (selectFile3 == undefined) {
+    showToast("이미지를 넣고 사진넣기를 눌러주세요!")
+  } else {
+    // 받아온 정보를 파일에 넣어주기
+    let file3 = URL.createObjectURL(selectFile3);
+
+
+    // 정보가 담긴 파일을 지정한 장소에 넣어주기
+    // 양쪽이 같은 파일을 보여주게 파일 하나를 두개 아이디에 각각 넣어줌
+    // 파일3
+    document.querySelector("#image3").src = file3;
+    document.querySelector("#image7").src = file3;
+    document.querySelector("#lifephoto3").src = file3;
+
+    // input 값 초기화
+    let formFile3 = document.querySelector("#formFile3")
+
+    formFile3.value = null;
+  }
+}
+// input에 들어간 파일을 사진 넣기 버튼을 눌렀을때 넣어주는 함수
+function formFile4() {
+  // input으로 들어간 파일의 주소 가져오기
+  let selectFile4 = document.querySelector("#formFile4").files[0];
+
+
+  if (selectFile4 == undefined) {
+    showToast("이미지를 넣고 사진넣기를 눌러주세요!")
+  } else {
+    // 받아온 정보를 파일에 넣어주기
+    let file4 = URL.createObjectURL(selectFile4);
+
+
+    // 정보가 담긴 파일을 지정한 장소에 넣어주기
+    // 양쪽이 같은 파일을 보여주게 파일 하나를 두개 아이디에 각각 넣어줌
+    // 파일4
+    document.querySelector("#image4").src = file4;
+    document.querySelector("#image8").src = file4;
+    document.querySelector("#lifephoto4").src = file4;
+
+    // input 값 초기화
+    let formFile4 = document.querySelector("#formFile4")
+    formFile4.value = null;
+  }
+}
 // input에 들어간 파일을 사진 넣기 버튼을 눌렀을때 넣어주는 함수
 function formFile() {
   // input으로 들어간 파일의 주소 가져오기
