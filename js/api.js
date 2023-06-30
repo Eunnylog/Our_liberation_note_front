@@ -7,14 +7,6 @@ const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
 
-function showLoading(id) {
-  document.getElementById(id).style.display = 'block';
-}
-
-function hideLoading(id) {
-  document.getElementById(id).style.display = 'none';
-}
-
 // 회원 가입
 async function handleSignup() {
   const email = document.getElementById("email").value
@@ -71,11 +63,13 @@ async function handleSignup() {
   })
 
   if (response.status == 201) {
-    showToast("회원가입이 완료되었습니다!");
-    await handleSignin(email, password); // 회원가입 후 로그인 함수 호출
+    showToast("가입 완료! 그룹이 생성 되었습니다!")
+    setTimeout(async () => {
+      // 2초 후 회원가입 후 로그인 함수 호출
+      await handleSignin(email, password);
+    }, 1000);
   } else {
     const errorResponse = await response.json();
-    console.log('error', errorResponse)
 
     const message = errorResponse.message;
     if (message) {
@@ -204,6 +198,7 @@ async function handleSignin(email = null, password = null) {
     })
 
     if (response.status == 200) {
+      showToast("로그인 완료!");
       const response_json = await response.json()
 
       // localstorage에 저장하기
@@ -314,8 +309,6 @@ if (localStorage.getItem("social")) {
       kakaoLoginApi(code); // kakaoLoginApi 함수 호출
     }
 
-  } else {
-    console.log('인가 코드가 존재하지 않습니다.');
   }
 
 }
@@ -352,6 +345,7 @@ async function kakaoLoginApi(code) {
   response_json = await response.json()
 
   if (response.status === 200) {
+    showToast("로그인 완료!");
     localStorage.setItem("access", response_json.access);
     localStorage.setItem("refresh", response_json.refresh);
 
@@ -398,6 +392,7 @@ async function googleLoginApi(decodeCode) {
   response_json = await response.json()
 
   if (response.status === 200) {
+    showToast("로그인 완료!");
     localStorage.setItem("access", response_json.access);
     localStorage.setItem("refresh", response_json.refresh);
 
@@ -444,6 +439,7 @@ async function naverLoginApi(Code) {
   response_json = await response.json()
 
   if (response.status === 200) {
+    showToast("로그인 완료!");
     localStorage.setItem("access", response_json.access);
     localStorage.setItem("refresh", response_json.refresh);
 
@@ -712,18 +708,13 @@ function cancel() {
 // 저장 전 선택한 이메일을 저장할 배열
 let selectedEmails = [];
 
-// 라디오 버튼 클릭 함수
-function handleRadioClick() {
-  let selectedRadio = document.querySelector('input[name="email_radio"]:checked')
+function showSearchEmailInfo() {
+  const searchEmailInfo = document.getElementById('search-email-info')
 
-  // 선택된 라디오 버튼이 있는 경우
-  if (selectedRadio) {
-    let selectedIndex = selectedRadio.value;
-    let selected_email = document.getElementById(`email_${selectedIndex}`).value
-
-    document.getElementById("usersearch").value = selected_email
+  if ($("#email-ul").children().length === 0) {
+    searchEmailInfo.style.display = "block";
   } else {
-    showToast("선택된 이메일이 없습니다.");
+    searchEmailInfo.style.display = "none";
   }
 }
 
@@ -745,7 +736,6 @@ async function addMember() {
 
   axios.get(url).then(response => {
     const emails = response.data.map(item => item.email);
-    console.log(emails)
 
     if (emails.length == 0) {
       showToast('검색 결과가 없습니다!')
@@ -760,18 +750,18 @@ async function addMember() {
     var email = document.getElementById("email-ul");
     email.innerHTML = "";
 
-
-
     // 검색 결과 처리
     emails.forEach((useremail, index) => {
       let temp_html = `
-          <li style="list-style-type: none; margin-bottom: 10px;">
+          <li style="list-style-type: none; margin-bottom: 20px; display: flex; justify-content: space-between;" >
             ${useremail}
-            <input type="radio" id="email_${index}" name="email_radio" value="${index}" onclick="handleRadioClick()">
+            <input type="checkbox" id="email_${index}" name="email_radio" value="${index}">
+            <label for="email_${index}"></label>
           </li>
         `;
       email.innerHTML += temp_html;
     });
+    showSearchEmailInfo()
   })
     .catch(error => {
       // 에러 처리
@@ -796,7 +786,7 @@ $(document).ready(function () {
     $('#groupname').val("");
     $("#selected-email-list").empty();
     $("#email-ul").empty();
-    $('input[type=radio]').prop('checked', false);
+    $('input[type=checkbox]').prop('checked', false);
     $('.custom-class').removeClass('custom-class');
     selectedEmails = [];
   });
@@ -806,7 +796,8 @@ $(document).ready(function () {
 
 function cancleGroupMake() {
   $('#email-list').empty()
-  let temp_html2 = `<ul id="email-ul" style="position: relative; right: 10px;"></ul>`
+  let temp_html2 = `<ul id="email-ul" style="position: relative; right: 10px;"></ul>
+  <div id="search-email-info"> 검색한 이메일이 이곳에 보여집니다!</div>`
   $('#email-list').append(temp_html2)
   $('#selected-email-list').empty()
   let temp_html = `<ul id="selected-email-ul" style="position: relative; right: 10px;">
@@ -818,6 +809,7 @@ function cancleGroupMake() {
 
 }
 
+let groupIndex = 0;
 
 // 멤버 추가 버튼 클릭 시 이메일 리스트에 추가
 function addMembersToGroup() {
@@ -839,16 +831,24 @@ function addMembersToGroup() {
       // 선택된 이메일을 ul에 추가
       const selectedEmailUl = document.getElementById("selected-email-ul");
       const newEmailLi = document.createElement("li");
-      newEmailLi.style = "list-style-type: none; margin-bottom: 10px;"
+      newEmailLi.style = "list-style-type: none; margin-bottom: 20px; display: flex; justify-content: space-between;"
 
       // input 태그 추가
       const newInput = document.createElement("input");
-      newInput.type = "radio";
+      newInput.type = "checkbox";
       newInput.name = "checked_email_radio";
+      newInput.id = "add" + groupIndex
+
+      // label 태그 추가
+      const newLabel = document.createElement("label")
+      newLabel.htmlFor = "add" + groupIndex
 
       newEmailLi.appendChild(document.createTextNode(selectedEmail));
       selectedEmailUl.appendChild(newEmailLi);
       newEmailLi.appendChild(newInput);
+      newEmailLi.appendChild(newLabel);
+
+      groupIndex++; // 다음 인풋에 할당할 고유한 id 값 증가
     }
     else {
       showToast("이미 추가된 이메일입니다.");
@@ -857,7 +857,7 @@ function addMembersToGroup() {
   } else {
     showToast("선택된 이메일이 없습니다.")
   }
-  $('input[type=radio]').prop('checked', false);
+  $('input[type=checkbox]').prop('checked', false);
   showNoEmailInfo();
 }
 
@@ -881,7 +881,7 @@ function DeleteMembers() {
   } else {
     showToast("선택된 이메일이 없습니다.");
   }
-  $('input[type=radio]').prop('checked', false);
+  $('input[type=checkbox]').prop('checked', false);
   showNoEmailInfo();
 }
 
