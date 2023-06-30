@@ -657,8 +657,8 @@ input[type="checkbox"]:checked+label {
 .carousel-control-next::before {
   content: "";
   display: inline-block;
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   color: #1f489a;
 }
 
@@ -668,14 +668,14 @@ input[type="checkbox"]:checked+label {
 }
 
 .carousel-control-prev::before {
-  border-right: 5px solid #1f489a;
-  border-bottom: 5px solid #1f489a;
+  border-right: 10px solid #1f489a;
+  border-bottom: 10px solid #1f489a;
   transform: rotate(135deg);
 }
 
 .carousel-control-next::before {
-  border-right: 5px solid #1f489a;
-  border-top: 5px solid #1f489a;
+  border-right: 10px solid #1f489a;
+  border-top: 10px solid #1f489a;
   transform: rotate(45deg);
 }
 

@@ -36,16 +36,6 @@ window.onload = function () {
     });
 };
 
-// $('#create_note').on('shown.bs.modal', function () {
-//     alert('.')
-//     $('.radio-button')(function () {
-//         // First, remove all borders from images
-//         $('.img-zoom').css('border', 'none');
-//     });
-// });
-
-
-
 async function showGroupModal() {
     $('#makegroup').modal('show');
 
@@ -291,8 +281,9 @@ let updatingGroupId;
 
 function showUpdateEmailInfo() {
     const searchEmailInfo = document.getElementById('update-search-email-info')
+    const emailList = document.getElementById('update-email-ul');
 
-    if ($("#update-email-ul").children().length === 0) {
+    if (emailList.children.length === 0) {
         searchEmailInfo.style.display = "block";
     } else {
         searchEmailInfo.style.display = "none";
@@ -308,7 +299,6 @@ async function groupUpdateModal() {
     const access_token = localStorage.getItem('access')
 
     selectedEmails = [];
-
 
     // 저장된 그룹 정보 서버로부터 가져오기
     const response = await fetch(`${backend_base_url}/user/group/`, {
@@ -345,13 +335,15 @@ async function groupUpdateModal() {
                 let temp_html = `
                         <li class="selected_email" style="list-style-type: none; margin-bottom: 20px; display: flex; justify-content: space-between;">
                         ${member}
-                        <input type="checkbox" id="selected_update_email_${index}" name="checked_email_radio" value="${index}">
-                        <label for="selected_update_email_${index}"></label>
+                        <input type="checkbox" id="update${groupIndex}" name="checked_email_radio" value="${index}">
+                        <label for="update${groupIndex}"></label>
                         </li>
                     `;
                 groupMembers.innerHTML += temp_html;
                 // 기존 이메일을 배열에 추가
                 existingEmails.push(member.trim());
+                selectedEmails.push(member.trim())
+                groupIndex++;
             })
         }
     })
@@ -364,9 +356,6 @@ $(document).ready(function () {
         $('#update-usersearch').val("");
         $('#update-groupname').val("");
         $('.selected-email').empty();
-        $('#update-email-ul').empty();
-        let temp_html = `<div id="update-search-email-info"> 검색한 이메일이 이곳에 보여집니다!</div>`
-        $('#update-email-ul').append(temp_html)
         $("#update-selected-email-ul").empty(); // 선택된 그룹 멤버도 초기화
         existingEmails = []; // 기존 이메일 배열 초기화
 
@@ -376,6 +365,14 @@ $(document).ready(function () {
     });
 });
 
+function cancelUpdateGroup() {
+    $('#email-list').empty()
+    $('#update-email-ul').empty();
+    $('#update-search-email-info').empty()
+    let temp_html = `<div id="update-search-email-info"> 검색한 이메일이 이곳에 보여집니다!</div>`
+    $('#update-email-ul').append(temp_html)
+    existingEmails = []; // 기존 이메일 배열 초기화
+}
 
 
 // 멤버 이메일 검색
@@ -425,16 +422,15 @@ async function updateAddMember() {
 
 // 멤버 추가 버튼 클릭 시 이메일 리스트에 추가
 function updateAddMembersToGroup() {
-    const checkedInput = document.querySelector('input[name="email_radio"]:checked');
+    const checkedInputs = document.querySelectorAll('input[name="email_radio"]:checked');
 
     // 선택된 이메일이 없을 경우
-    if (!checkedInput) {
+    if (checkedInputs.length === 0) {
         showToast('선택한 이메일이 없습니다!')
         return
     }
 
-    if (checkedInput) {
-
+    checkedInputs.forEach(checkedInput => {
         const selectedEmail = checkedInput.previousSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
 
         // 이미 추가된 이메일인지 확인
@@ -475,36 +471,40 @@ function updateAddMembersToGroup() {
             newEmailLi.appendChild(newLabel)
             selectedEmailUl.appendChild(newEmailLi)
 
+            groupIndex++; // 다음 인풋에 할당할 고유한 id 값 증가
         } else {
             showToast("이미 추가된 이메일입니다.");
         }
-
-    }
+    });
     $('input[type=checkbox]').prop('checked', false);
 }
 
 // 그룹 저장 전 선택한 이메일 리스트에서 제거하는 함수
 async function updateDeleteMembers() {
-    const checkedInput = document.querySelector('input[name="checked_email_radio"]:checked');
-    const selected_email = checkedInput.previousSibling.textContent.trim();
+    const checkedInputs = document.querySelectorAll('input[name="checked_email_radio"]:checked');
 
-    if (userEmail == selected_email) {
-        showToast('본인은 그룹에서 제외할 수 없습니다!')
-        return
+    if (checkedInputs.length === 0) {
+        showToast("선택된 이메일이 없습니다.");
+        return;
     }
 
-    if (checkedInput) {
-        const selectedEmail = checkedInput.previousSibling.textContent.trim(); // 선택된 이메일 텍스트 가져오기
+    checkedInputs.forEach(checkedInput => {
+        const selectedEmail = checkedInput.previousSibling.textContent.trim();
+
+        if (userEmail == selectedEmail) {
+            showToast('본인은 그룹에서 제외할 수 없습니다!');
+            return;
+        }
 
         const selectedEmailIndex = selectedEmails.indexOf(selectedEmail);
 
-        selectedEmails.splice(selectedEmailIndex, 1); // 선택된 이메일 삭제
-
-        checkedInput.parentElement.remove(); // 선택된 이메일 리스트에서 삭제
-    }
-    else {
-        showToast("선택된 이메일이 없습니다.");
-    }
+        if (selectedEmailIndex > -1) {
+            selectedEmails.splice(selectedEmailIndex, 1); // 선택된 이메일 삭제
+            checkedInput.parentElement.remove(); // 선택된 이메일 리스트에서 삭제
+        } else {
+            showToast("해당 이메일을 찾을 수 없습니다.");
+        }
+    });
     $('input[type=checkbox]').prop('checked', false);
 }
 
@@ -632,7 +632,7 @@ function deleteNoteDiary() {
 
     // 각 자식 요소에 대하여 반복
     for (var i = 0; i < children.length; i++) {
-        if (i != 0) {
+        if (i != 0 && i != 1) {
             // 이 요소에 이미 라디오 버튼이 있는지 확인함
             var existingRadioButtonDiv = children[i].querySelector('div input[type="radio"]');
 
