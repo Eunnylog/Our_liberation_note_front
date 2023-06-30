@@ -31,11 +31,6 @@ async function addPhoto() {
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
 
-    if (image.files[0].size > 10 * 1024 * 1024) {
-        alert("첨부파일 사이즈는 10MB 이내로 등록이 가능합니다.");
-        return false;
-    }
-
     let nameBox = document.getElementById("name")
     let titleBox = document.getElementById("title")
     let imgBox = document.getElementById("imgbox")
@@ -52,6 +47,11 @@ async function addPhoto() {
         nameBox.classList.remove("custom-class");
         titleBox.classList.remove("custom-class");
         imgBox.classList.remove("custom-class");
+    }
+
+    if (image.files[0].size > 10 * 1024 * 1024) {
+        alert("첨부파일 사이즈는 10MB 이내로 등록이 가능합니다.");
+        return false;
     }
 
     try {
