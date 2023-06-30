@@ -32,19 +32,16 @@ async function loadUserprofile() {
 
     $('#group-list').empty()
 
-    let temp_html2 = `<li class="dropdown-item" onclick="location.reload(); return false;" style="cursor: pointer;">전체보기</li>
-                        <hr class="dropdown-divider"/>`;
-
-
     groups.forEach((group) => {
         const name = group.name
 
-        temp_html2 += `<li class="dropdown-item" onclick="loadGroupStampmap('${name}')" style="cursor: pointer;" >${name}</li>`
+        let temp_html = `<li class="dropdown-item" onclick="loadGroupStampmap('${name}')" style="cursor: pointer;" >${name}</li>`
+
+        $('#group-list').append(temp_html);
 
         }
     )
 
-    $('#group-list').append(temp_html2);
 
 }
 
@@ -81,7 +78,7 @@ async function loadStampmap() {
 
             var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
             var markerPosition = new kakao.maps.LatLng(location_x, location_y)
-            var iwContent = '<div style="padding:5px;">' + location + '</div>'
+            var iwContent = '<div style="margin:10px; width: 98%;">' + location + '</div>'
 
             var marker = new kakao.maps.Marker({
                 position: markerPosition,
@@ -167,7 +164,12 @@ async function loadGroupStampmap(group_name) {
     const title = document.getElementById("map-title")
     title.innerText = `${group_name}`
 
+    $('#all-stamp').empty()
 
+    let temp_html = `<li class="dropdown-item" onclick="location.reload(); return false;" style="cursor: pointer;">전체보기</li>
+                    <hr class="dropdown-divider"/>`
+
+    $('#all-stamp').append(temp_html);
 
     var container = document.getElementById('stamp-map');
     var options = {
@@ -202,7 +204,7 @@ async function loadGroupStampmap(group_name) {
 
             var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
             var markerPosition = new kakao.maps.LatLng(location_x, location_y)
-            var iwContent = '<div style="padding:5px;">' + location + '</div>'
+            var iwContent = '<div style="margin:10px; width: 98%;">' + location + '</div>'
 
             var marker = new kakao.maps.Marker({
                 position: markerPosition,

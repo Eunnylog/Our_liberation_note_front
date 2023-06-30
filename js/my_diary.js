@@ -661,8 +661,11 @@ function deleteNoteDiary() {
                         // 이 라디오 버튼이 포함된 가장 가까운 a 태그의 href 속성을 가져옴
                         let note_id = this.closest('a').href.split('=')[1].trim();
 
-                        handleNotetrash(note_id)
+                        // 이 라디오 버튼 바로 앞의 div의 텍스트 값을 가져옴
+                        let note_name = this.parentElement.previousElementSibling.innerText.trim();
 
+                        handleNotetrash(note_id,note_name)
+                
                         // 추가: 확인 버튼을 누른 후에 모달을 닫음
                         $('#move_note').modal('hide');
                     } else {
