@@ -463,7 +463,7 @@ function handleTrashCheckbox(contentType) {
     }
 }
 
-async function handleTrashRestore() {
+function handleTrashRestore() {
     let selectedcheckboxes = document.querySelectorAll('input[name="trash-checkbox"]:checked');
 
     if (selectedcheckboxes.length === 0) {
@@ -505,14 +505,14 @@ async function handleTrashRestore() {
     console.log(selectedGroups)
 
     if (selectedGroups.length > 0) {
-        await handleGrouptrashMultiple(selectedGroups);
+        handleGrouptrashMultiple(selectedGroups);
     }
 
     if (selectedNotes.length > 0) {
-        await handleNotetrashMultiple(selectedNotes);
+        handleNotetrashMultiple(selectedNotes);
     }
     if (selectedPhotos.length > 0) {
-        await handlePhototrashMultiple(selectedPhotos);
+        handlePhototrashMultiple(selectedPhotos);
     }
 }
 

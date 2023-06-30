@@ -77,6 +77,19 @@ async function addPhoto() {
         showToast('이미지를 선택해주세요!');
         console.error(error);
     }
+
+}
+
+// 사진 추가 모달의 닫기 버튼을 누르면 addPhoto에 쓰던 도중인 내용 초기화
+async function addClose() {
+    document.getElementById("name").value = "";
+    document.getElementById("title").value = "";
+    document.getElementById("imgbox").value = null;
+    document.getElementById("imgbox").classList.remove("custom-class");
+    document.getElementById("location").value = "";
+    document.getElementById("memo").value = "";
+    document.getElementById("location_x").value = "";
+    document.getElementById("location_y").value = "";
 }
 
 async function album() {
