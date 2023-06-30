@@ -196,13 +196,37 @@
                     ※ 이 페이지는 사진이 저장되지 않습니다! <br>사진 다운로드를 꼭 눌러주세요! ※
                 </div>
                 <label for="formFile" class="form-label" style="margin-top: 10px;">첫번째 이미지</label>
-                <input class="form-control" type="file" id="formFile1">
+                <div style="display: flex;">
+                    <input class="form-control" type="file" id="formFile1" style="width: 70%;">
+                    <button onclick="formFile1()" id="input-button"
+                            style="margin-left: 10px; text-align: center; font-size: 18px; border: transparent; background-color: #485d86; margin-top: 20px; width: 25%; height: 100%; border-radius: 5px; color: white; display: inline-block;">
+                            사진 넣기
+                    </button>
+                </div>
                 <label for="formFile" class="form-label" style="margin-top: 10px;">두번째 이미지</label>
-                <input class="form-control" type="file" id="formFile2">
+                <div style="display: flex;">
+                    <input class="form-control" type="file" id="formFile2" style="width: 70%;">
+                    <button onclick="formFile2()" id="input-button"
+                            style="margin-left: 10px; text-align: center; font-size: 18px; border: transparent; background-color: #485d86; margin-top: 20px; width: 25%; height: 100%; border-radius: 5px; color: white; display: inline-block;">
+                            사진 넣기
+                    </button>
+                </div>
                 <label for="formFile" class="form-label" style="margin-top: 10px;">세번째 이미지</label>
-                <input class="form-control" type="file" id="formFile3">
+                <div style="display: flex;">
+                    <input class="form-control" type="file" id="formFile3" style="width: 70%;">
+                    <button onclick="formFile3()" id="input-button"
+                            style="margin-left: 10px; text-align: center; font-size: 18px; border: transparent; background-color: #485d86; margin-top: 20px; width: 25%; height: 100%; border-radius: 5px; color: white; display: inline-block;">
+                            사진 넣기
+                    </button>
+                </div>
                 <label for="formFile" class="form-label" style="margin-top: 10px;">네번째 이미지</label>
-                <input class="form-control" type="file" id="formFile4">
+                <div style="display: flex;">
+                    <input class="form-control" type="file" id="formFile4" style="width: 70%;">
+                    <button onclick="formFile4()" id="input-button"
+                            style="margin-left: 10px; text-align: center; font-size: 18px; border: transparent; background-color: #485d86; margin-top: 20px; width: 25%; height: 100%; border-radius: 5px; color: white; display: inline-block;">
+                            사진 넣기
+                    </button>
+                </div>
                 <!-- input 창 버튼들 -->
                 <div style="text-align: center;">
                     <button onclick="cancle()"
@@ -211,7 +235,7 @@
                     </button>
                     <button onclick="formFile()" id="input-button"
                         style="text-align: center; font-size: 18px; border: transparent; background-color: #485d86; margin-top: 20px; width: 100px; border-radius: 5px; color: white; display: inline-block;">
-                        사진 넣기
+                        사진 모두 넣기
                     </button>
                     <button onclick="saveButton(1)" id="save-button"
                         style="text-align: center; font-size: 18px; border: transparent; background-color: #7689b1; margin-top: 20px; width: 120px; border-radius: 5px; color: white; display: inline-block;">
