@@ -58,6 +58,7 @@ function handleSelectAll() {
   Array.from(checkboxes).forEach((checkbox) => {
     checkbox.checked = isAllSelected;
   });
+
 }
 
 async function loadTrash(contentType) {
@@ -99,13 +100,16 @@ async function loadTrash(contentType) {
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleSelectAll();">
-            전체 선택
-          </button>
-            <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
-                                style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
-                              <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+            let temp_html2 = `<div>
+                                <button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
+                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                              </div>
+                              <div>
+                                <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
+                                    style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
+                                <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
+                                    style="background-color: #485d86; border-color: #485d86;">복원</button>
+                              </div>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
@@ -143,10 +147,16 @@ async function loadTrash(contentType) {
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
-                                style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
-                              <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+            let temp_html2 = `<div>
+                                <button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
+                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
+                                    style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
+                                <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
+                                    style="background-color: #485d86; border-color: #485d86;">복원</button>
+                            </div>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
@@ -186,10 +196,16 @@ async function loadTrash(contentType) {
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
-                                style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
-                              <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+            let temp_html2 = `<div>
+                                <button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
+                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
+                                    style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
+                                <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
+                                    style="background-color: #485d86; border-color: #485d86;">복원</button>
+                            </div>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
@@ -447,8 +463,8 @@ function handleTrashCheckbox(contentType) {
     }
 }
 
-function handleTrashRestore() {
-    var selectedcheckboxes = document.querySelectorAll('input[name="trash-checkbox"]:checked');
+async function handleTrashRestore() {
+    let selectedcheckboxes = document.querySelectorAll('input[name="trash-checkbox"]:checked');
 
     if (selectedcheckboxes.length === 0) {
         showToast("※ 항목을 선택해주세요!");
@@ -473,7 +489,6 @@ function handleTrashRestore() {
         }
 
         if (selectedNoteIndex !== null) {
-            const selected_group = document.getElementById(`group_${selectedIndex}`).value;
             selectedNotes.push({
                 id: selected_id,
                 name: selected_name
@@ -481,23 +496,23 @@ function handleTrashRestore() {
         }
 
         if (selectedPhotoIndex !== null) {
-            const selected_title = document.getElementById(`title_${selectedIndex}`).value;
             selectedPhotos.push({
                 id: selected_id,
                 name: selected_name
             });
         }
     })
+    console.log(selectedGroups)
 
     if (selectedGroups.length > 0) {
-        handleGrouptrashMultiple(selectedGroups);
+        await handleGrouptrashMultiple(selectedGroups);
     }
 
     if (selectedNotes.length > 0) {
-        handleNotetrashMultiple(selectedNotes);
+        await handleNotetrashMultiple(selectedNotes);
     }
     if (selectedPhotos.length > 0) {
-        handlePhototrashMultiple(selectedPhotos);
+        await handlePhototrashMultiple(selectedPhotos);
     }
 }
 
@@ -622,6 +637,7 @@ function handleTrashDelete() {
             })
         }
     })
+    console.log(selectedGroups)
     if (selectedGroups.length > 0) {
         deleteGroup(selectedGroups);
     }

@@ -259,8 +259,8 @@ async function photo_detail(photo_id) {
     <div style="display: flex; align-items: center;">
         <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px;">
         <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
-            style="background-color:  #7689b1; font-size: 20px; border-color: #7689b1; height: 37px;  display: flex; justify-content: center; align-items: center;">등록</button>
-            style="background-color:  #7689b1; border-color: #7689b1; height: 37px;  display: flex; justify-content: center; align-items: center;"><b>등록</b></button>
+        <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" 
+        style="background-color:  #7689b1; font-size: 20px; border-color: #7689b1; height: 37px;  display: flex; justify-content: center; align-items: center;">등록</button>
     </div>
     <hr/>
     <div>
