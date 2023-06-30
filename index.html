@@ -126,7 +126,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="su" style="color: #485d86;">
-                        Sign up</h5>
+                        회원가입</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="container">
@@ -134,28 +134,28 @@
                         <div class="inner-cont">
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
-                                    <input name="email" type="email" id="email" class="form-control"
-                                        placeholder="email">
-                                    <input name="password" id="password" type="password" class="form-control"
-                                        placeholder="password">
-                                    <input name="password2" id="password2" type="password" class="form-control"
-                                        placeholder="password2">
                                     <div style="display: flex;">
-                                        <input name="confirmcode" id="confirmcode" type="confirmcode"
-                                            class="form-control" placeholder="email 인증코드" style="width: 250px;">
+                                        <input name="email" type="email" id="email" class="form-control"
+                                            placeholder="이메일" style="width: 250px;">
                                         <button type="button" class="signup" onclick="sendCode()" id="signup-email-btn"
                                             style="background-color: #7689b1; width: 200px; margin-left: 10px;">인증코드
                                             보내기</button>
                                     </div>
+                                    <input name="confirmcode" id="confirmcode" type="confirmcode" class="form-control"
+                                        placeholder="이메일 인증코드">
+                                    <input name="password" id="password" type="password" class="form-control"
+                                        placeholder="비밀번호">
+                                    <input name="password2" id="password2" type="password" class="form-control"
+                                        placeholder="비밀번호 확인">
+                                    <div class="sign-up">
+                                        <button type="button" class="signup" onclick="handleSignup()"
+                                            style="background-color: #485d86;">회원가입</button>
+                                    </div>
                                     <p style="margin: 10px 0px;">
-                                        <label for="Timer" style="color:#7a7f83">Expires At</label>
+                                        <label for="Timer" style="color:#7a7f83">유효 시간</label>
                                         <input id="signupTimer" type="text" value="" readonly
                                             style="border: double 5px; border-color: #60749d; border-radius: 10px; text-align: center; margin-top:10px;" />
                                     </p>
-                                    <div class="sign-up">
-                                        <button type="button" class="signup" onclick="handleSignup()"
-                                            style="background-color: #485d86;">Sign up</button>
-                                    </div>
                                 </form>
                                 <div class="divider">
                                     <span style="color: #7a7f83">or</span>
@@ -178,7 +178,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
-                        Log in</h5>
+                        로그인</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="container">
@@ -187,12 +187,12 @@
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
                                     <input name="email" id="login-email" type="email" class="form-control"
-                                        placeholder="email">
+                                        placeholder="이메일을 입력해주세요!">
                                     <input name="password" id="login-password" type="password" class="form-control"
-                                        placeholder="Password">
+                                        placeholder="비밀번호를 입력해주세요!">
                                     <button type="button" onclick="handleSignin()" class="btn btn-primary"
                                         style="float: center; background-color: #485d86;">
-                                        Log in
+                                        로그인
                                     </button>
                             </div>
                             </form>
@@ -217,11 +217,11 @@
     <!-- 그룹만들기 모달창 -->
     <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true"
         data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="su" style="color: #485d86;">
-                        Make Group</h5>
+                        그룹 생성</h5>
                     <button type="button" class="btn-close" onclick="cancleGroupMake()" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -230,47 +230,70 @@
                         <div class="inner-cont">
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
-                                    <input name="groupname" id="groupname" type="name" class="form-control"
-                                        placeholder="Group Name" maxlength="15" oninput="checkLength(this)">
-                                    <div style="display: flex;" id="group_make_box">
-                                        <input name="addemail" id="usersearch" type="email" class="form-control"
-                                            autocomplete="off" placeholder="Email to add" style="width: 300px;">
-                                        <button type="button" class="signup" onclick="addMember()"
-                                            style="width: 100px; background-color: #485d86; margin-left: 25px;"
-                                            id="addmember-btn">Search</button>
-                                    </div>
-                                    <div style="color: #7c838c;">
-                                        <p style="justify-content: left; color:#8d949e; margin-top: 10px;"> Searched
-                                            Emails </p>
-                                        <div id="email-list"
-                                            style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 250px;">
-                                            <ul id="email-ul" style="position: relative; right: 10px;">
-                                            </ul>
+                                    <div style="display: inline-block; margin: 10px 0px; width: 87% !important;">
+                                        <input name="groupname" id="groupname" type="name" class="form-control"
+                                            placeholder="그룹 이름을 적어주세요!" maxlength="15" oninput="checkLength(this)">
+                                        <div style="display: flex;" id="group_make_box">
+                                            <input name="addemail" id="usersearch" type="email" class="form-control"
+                                                autocomplete="off" placeholder="추가할 이메일을 검색해주세요!" style="width: 80%;">
+                                            <button type="button" class="signup" onclick="addMember()"
+                                                style="width: 200px; background-color: #485d86; margin-left: 25px;"
+                                                id="addmember-btn">
+                                                <img src="/css/group_icon/search.png" style="width: 30px;">
+                                            </button>
                                         </div>
                                     </div>
-                                    <button type="button" onclick="addMembersToGroup()"
-                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
-                                        <img src="/css/group_icon/down-arrow.png" style="width: 20px;">
-                                    </button>
-                                    <button type="button" onclick="DeleteMembers()"
-                                        style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86;"><img
-                                            src="/css/group_icon/up-arrow.png" style="width: 20px;"></button>
-                                    <div style="color: #4d6087;">
-                                        <p style="justify-content: left; color:#60749d; margin-top: 10px;"> Selected
-                                            Emails </p>
-                                        <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
-                                            overflow-y: auto; height: 250px;">
-                                            <ul id="selected-email-ul" style="position: relative; right: 10px;">
-                                            </ul>
-                                            <div id="no-email-info"> 이메일을 추가하지 않으면 본인만 구성원으로 등록됩니다!</div>
+                                    <div style="display: flex; justify-content: center; align-items: center;">
+                                        <div>
+                                            <div style="color: #7c838c;">
+                                                <div style="justify-content: left; color:#8d949e;">
+                                                    <img src="/css/group_icon/searching-bar.png"> 이메일 검색 결과
+                                                </div>
+                                                <div id="email-list"
+                                                    style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 300px; width: 430px;">
+                                                    <ul id="email-ul" style="position: relative; right: 10px;">
+                                                    </ul>
+                                                    <div id="search-email-info"> 검색한 이메일이 이곳에 보여집니다!</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="display: grid; margin-top: 30px;">
+                                            <button type="button" onclick="addMembersToGroup()"
+                                                style="width: 45px; height: 45px; margin-left: 10px; background-color: #485d86; color: white;">
+                                                <img src="/css/group_icon/down.png" class="add-member"
+                                                    style="width: 25px; margin-bottom: 8px;">
+                                            </button>
+                                            <button type="button" onclick="DeleteMembers()"
+                                                style="width: 45px; height: 45px; margin: 0px 10px; background-color: #485d86;">
+                                                <img src="/css/group_icon/up.png" class="delete-member"
+                                                    style="width: 25px; margin-bottom: 8px;">
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <div style="color: #4d6087;">
+                                                <div class="member-add"
+                                                    style="justify-content: left; color:#60749d; margin-top: 20px; margin-bottom: 10px;">
+                                                    <img src="/css/group_icon/checked.png" style="width:20px;">
+                                                    추가한 이메일
+                                                </div>
+                                                <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
+                                            overflow-y: auto; height: 300px; width: 430px">
+                                                    <ul id="selected-email-ul" style="position: relative; right: 10px;">
+                                                    </ul>
+                                                    <div id="no-email-info"> 이메일을 추가하지 않으면 본인만 구성원으로 등록됩니다!</div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="sign-up" style="display: flex;">
+                                    <div class="sign-up"
+                                        style="display: flex; justify-content: center; margin-top: 20px;">
                                         <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
                                             onclick="document.getElementById('makegroup').style.display = 'none'; cancleGroupMake()"
-                                            style="margin-right: 10px; background-color: #7689b1;">Cancel</button>
+                                            style="margin-right: 20px; background-color: #7689b1; width: 300px;">
+                                            <img src="/css/group_icon/return.png" style="width: 26px;" />
+                                        </button>
                                         <button type="button" class="signup" onclick="addGroup()"
-                                            style="background-color: #485d86;">Save</button>
+                                            style="background-color: #485d86; width: 300px; margin-left: 20px; font-size: 23px;">저장</button>
                                     </div>
                                 </form>
                             </div>
@@ -417,10 +440,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
-                        <p>Change Password</p>
+                        <div>비밀번호 변경</div>
                         <span style="font-size: 15px; color: #7a7f83;"> 이메일 인증 후 비밀번호를 새로 변경합니다. </span>
                     </h5>
-
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
