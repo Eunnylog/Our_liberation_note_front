@@ -154,7 +154,7 @@ async function showNoteList() {
             const name = a['name']
             const note_id = a['id']
             let temp_html = `
-                                <a href='#' style='text-decoration:none; color:black;'>
+                                <a href='/plan_page.html?note_id=${note_id}' style='text-decoration:none; color:black;'>
                                     <section class="cp-card content" href="/plan_page.html?note_id=${note_id}" onclick="event.preventDefault(); saveLocalNoteName('${name}','${group_id}', '${note_id}'); showMoveNoteModal();" style="background-image: url('/css/note_img/note_${category}.png');">
                                         <div class="thumb"></div>
                                     </section>
@@ -632,7 +632,7 @@ function deleteNoteDiary() {
 
     // 각 자식 요소에 대하여 반복
     for (var i = 0; i < children.length; i++) {
-        if (i != 0) {
+        if (i != 0 && i != 1) {
             // 이 요소에 이미 라디오 버튼이 있는지 확인함
             var existingRadioButtonDiv = children[i].querySelector('div input[type="radio"]');
 
