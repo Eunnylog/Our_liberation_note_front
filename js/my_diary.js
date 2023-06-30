@@ -122,6 +122,9 @@ async function showMasterButton() {
     }
 }
 
+// 현재 페이지의 URL을 저장하는 변수
+let currentUrl = '';
+
 async function showNoteList() {
     localStorage.removeItem("is_subscribe")
     const group_id = document.getElementById("select_group").value
@@ -150,9 +153,8 @@ async function showNoteList() {
             const category = a['category']
             const name = a['name']
             const note_id = a['id']
-
             let temp_html = `
-                                <a href="/plan_page.html?note_id=${note_id}" onclick="saveLocalNoteName('${name}','${group_id}')" style='text-decoration:none; color:black;'>
+                                <a href="/plan_page.html?note_id=${note_id}" data-bs-toggle="modal" data-bs-target="#move_note" onclick="saveLocalNoteName('${name}','${group_id}', '${note_id}')" style='text-decoration:none; color:black;'>
                                     <section class="cp-card content" style="background-image: url('/css/note_img/note_${category}.png');">
                                     <div class="thumb">
                                     </div>
@@ -161,10 +163,28 @@ async function showNoteList() {
                                 </a>
                             `
             $('#note_list').append(temp_html);
+            // document.getElementById('move_plan_page').setAttribute("onClick", `window.location.href='/plan_page.html?note_id=${note_id}'`);
+            // document.getElementById('move_photo_page').setAttribute("onClick", `window.location.href='/photo_page.html?note_id=${note_id}'`);
         })
         showMasterButton(); // showMasterButton 함수 호출
     }
 }
+
+// 계획표 이동, 사진첩 이동함수
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('move_plan_page').addEventListener('click', () => {
+        console.log(currentUrl);
+        if (currentUrl) {
+            window.location.href = `/plan_page.html?note_id=${currentUrl}`;
+        }
+    });
+
+    document.getElementById('move_photo_page').addEventListener('click', () => {
+        if (currentUrl) {
+            window.location.href = `/photo_page.html?note_id=${currentUrl}`;
+        }
+    });
+});
 
 
 async function saveNote() {
@@ -251,9 +271,10 @@ function removeNoteRedLine() {
     groupBox.classList.remove("custom-class")
 }
 
-function saveLocalNoteName(note_name, group_id) {
+function saveLocalNoteName(note_name, group_id, note_id) {
     localStorage.setItem('noteName', note_name);
     localStorage.setItem('groupId', group_id);
+    currentUrl = note_id;
 }
 
 let updatingGroupId;

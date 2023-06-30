@@ -657,20 +657,25 @@ input[type="checkbox"]:checked+label {
 .carousel-control-next::before {
   content: "";
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  color: #60749d;
+  width: 50px;
+  height: 50px;
+  color: #1f489a;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon{
+  color: #1f489a;
 }
 
 .carousel-control-prev::before {
-  border-right: 3px solid;
-  border-bottom: 3px solid;
+  border-right: 5px solid #1f489a;
+  border-bottom: 5px solid #1f489a;
   transform: rotate(135deg);
 }
 
 .carousel-control-next::before {
-  border-right: 3px solid;
-  border-top: 3px solid;
+  border-right: 5px solid #1f489a;
+  border-top: 5px solid #1f489a;
   transform: rotate(45deg);
 }
 
@@ -1097,4 +1102,103 @@ select {
   flex-direction: column;
   align-items: center;
   margin-right: 20px;
+}
+
+/* 일정추가 onoff */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: #6e81c5;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px #6e81c5;
+}
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.switch-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  /* 텍스트 크기 조절 */
+  transition: .4s;
+}
+
+.switch-text.off {
+  left: 7px;
+  /* 'OFF' 텍스트 위치 조절 */
+  opacity: 1;
+}
+
+.switch-text.on {
+  right: 10px;
+  /* 'ON' 텍스트 위치 조절 */
+  opacity: 0;
+}
+
+input:checked~.off {
+  opacity: 0;
+}
+
+input:checked~.on {
+  opacity: 1;
+}
+
+input:not(:checked)~.off {
+  opacity: 1;
+}
+
+input:not(:checked)~.on {
+  opacity: 0;
 }
