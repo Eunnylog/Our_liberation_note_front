@@ -148,8 +148,43 @@ async function savePlan() {
     params = new URLSearchParams(window.location.search);
     note_id = params.get("note_id");
     let searchButton = document.getElementById('addPlanListBtn');
+    let plan_header = document.getElementById('savePlanHeader');
+    let savePlanSet;
+    if (plan_header.innerHTML == '일정 추가 / 개별 등록') {
+        const title = checkCode(document.getElementById("title").value)
+        const location = checkCode(document.getElementById("location").value)
+        const start = checkCode(document.getElementById("start").value)
+        const memo = checkCode(document.getElementById("memo").value)
+        const time = checkCode(document.getElementById("time").value)
+        const category = checkCode(document.getElementById("category").value)
+        const location_x = document.getElementById("location_x").value
+        const location_y = document.getElementById("location_y").value
+        let titleBox = document.getElementById("title")
+        let startBox = document.getElementById("start")
+        if (title == '' || start == '') {
+            showToast('장소명과 날짜는 필수입니다!')
+            titleBox.classList.add("custom-class");
+            startBox.classList.add("custom-class");
+            return false
+        } else {
+            titleBox.classList.remove("custom-class");
+            startBox.classList.remove("custom-class");
+        }
+        savePlanSet = [{
+            "title": title,
+            "location": location,
+            "start": start,
+            "memo": memo,
+            "time": time,
+            "category": category,
+            "location_x": location_x,
+            "location_y": location_y,
+        }]
+    } else {
+        savePlanSet = plan_set
+    }
 
-    if (plan_set.length == 0) {
+    if (plan_set.length == 0 && plan_header.innerHTML == '일정 추가 / 다중 등록') {
         searchButton.classList.add('blink');
         showToast('일정을 추가해주세요!')
         setTimeout(function () {
@@ -160,13 +195,15 @@ async function savePlan() {
         searchButton.classList.remove('blink');
     }
 
+    console.log(savePlanSet)
+
     const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
             // "Authorization": `Bearer ${access_token}`,
         },
         method: 'POST',
-        body: JSON.stringify({ "plan_set": plan_set })
+        body: JSON.stringify({ "plan_set": savePlanSet })
     });
     if (response.status == 200) {
         showToast("새로운 계획이 생성되었습니다!")
@@ -736,4 +773,30 @@ function showPlanList() {
         plan_list.style.display = 'none';
     }
 
+}
+
+function toggleFunction() {
+    var toggleSwitch = document.getElementById('toggle-switch');
+    let planCart = document.getElementById('planCart');
+    let plan_cnt = document.getElementById('plan-count');
+    let plan_header = document.getElementById('savePlanHeader');
+    let addPlanListBtn = document.getElementById('addPlanListBtn');
+    let changeOnOff = document.getElementById('changeOnOff');
+
+    if (toggleSwitch.checked) {
+        // 이곳에 ON일 때 수행할 동작을 구현
+        planCart.style.display = 'block';
+        plan_cnt.style.display = 'block';
+        plan_header.innerText = '일정 추가 / 다중 등록';
+        addPlanListBtn.style.display = 'block';
+        changeOnOff.style.display = 'none';
+
+    } else {
+        // 이곳에 OFF일 때 수행할 동작을 구현
+        planCart.style.display = 'none';
+        plan_cnt.style.display = 'none';
+        plan_header.innerText = '일정 추가 / 개별 등록'
+        addPlanListBtn.style.display = 'none';
+        changeOnOff.style.display = 'block';
+    }
 }

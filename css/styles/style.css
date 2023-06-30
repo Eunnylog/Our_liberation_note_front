@@ -109,6 +109,7 @@ body>.site-body {
 .navbar-toggler:focus {
   box-shadow: none !important;
 }
+
 .navbar-toggler {
   border: none;
   background: transparent;
@@ -126,15 +127,18 @@ body>.site-body {
   left: 10;
   transition: none !important;
 }
+
 .navbar-collapse {
-    z-index: 1;
-    margin-top: 3rem;
-    width: 250px;
+  z-index: 1;
+  margin-top: 3rem;
+  width: 250px;
 }
+
 .navbar-collapse.show {
   margin-top: 3rem;
 }
-.nav{
+
+.nav {
   position: relative;
   display: flex;
   justify-content: center;
@@ -1055,7 +1059,19 @@ select {
   }
 }
 
-.shortname{
+.group-member {
+  margin-top: 40px !important;
+}
+
+.add-member {
+  transform: rotate(-90deg);
+}
+
+.delete-member {
+  transform: rotate(-90deg);
+}
+
+.shortname {
   width: 135px;
   white-space: nowrap;
   overflow: hidden;
@@ -1063,7 +1079,7 @@ select {
   text-align: center;
 }
 
-.shortname2{
+.shortname2 {
   width: 130px;
   white-space: nowrap;
   overflow: hidden;
