@@ -243,7 +243,8 @@
         <div class="modal-header">
           <h5 class="modal-title" id="su" style="color: #485d86;">
             그룹 수정</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            onclick="cancelUpdateGroup()"></button>
         </div>
         <div class="container">
           <div class="global-cont">
@@ -301,7 +302,7 @@
                   <div>
                     <div class="sign-up" style="display: flex; justify-content: center; margin-top: 20px;">
                       <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                        onclick="document.getElementById('updateGroup').style.display = 'none'"
+                        onclick="cancelUpdateGroup();"
                         style="margin-right: 20px; background-color: #7689b1; width: 300px;">
                         <img src="/css/group_icon/return.png" style="width: 30px;" />
                       </button>
