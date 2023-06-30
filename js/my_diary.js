@@ -139,8 +139,11 @@ async function showNoteList() {
         const response_json = await response.json()
         $('#note_list').empty()
         let temp_html2 = `
+                            <a class="cp-card content" href="/" data-bs-toggle="modal" data-bs-target="#carouselModal" style="background-color: #ebf2ff;">
+                                <img src="/css/assets/info_robot.png" style="margin:10%">
+                            </a>
                             <a href="/" data-bs-toggle="modal" data-bs-target="#create_note">
-                                <section class="cp-card content" style="background-color: #d9e2f6; text-align:center;">
+                                <section class="cp-card content" style="background-color: #ebf2ff; text-align:center;">
                                 <img src="/css/assets/plus.png" style="justify-content: center; width:60%; height:100%; margin-top:5%;">
                                 </section>
                             </a>
@@ -151,7 +154,7 @@ async function showNoteList() {
             const name = a['name']
             const note_id = a['id']
             let temp_html = `
-                                <a href='#' style='text-decoration:none; color:black;'>
+                                <a href='/plan_page.html?note_id=${note_id}' style='text-decoration:none; color:black;'>
                                     <section class="cp-card content" href="/plan_page.html?note_id=${note_id}" onclick="event.preventDefault(); saveLocalNoteName('${name}','${group_id}', '${note_id}'); showMoveNoteModal();" style="background-image: url('/css/note_img/note_${category}.png');">
                                         <div class="thumb"></div>
                                     </section>
