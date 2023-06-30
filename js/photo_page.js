@@ -36,7 +36,7 @@ async function addPhoto() {
     let imgBox = document.getElementById("imgbox")
 
 
-    if (name == '' || title == '' || imgBox == '') {
+    if (name == '' || title == '' || imgBox.value == '') {
         showToast('필수요소를 모두 입력해주세요!')
         nameBox.classList.add("custom-class");
         titleBox.classList.add("custom-class");
@@ -401,6 +401,9 @@ async function patchPhoto() {
     const memo = document.getElementById('p_memo').value;
     const location_x = document.getElementById("p_location_x").value
     const location_y = document.getElementById("p_location_y").value
+    let nameBox = document.getElementById("p_name")
+    let titleBox = document.getElementById("p_title")
+    let imgBox = document.getElementById("p_imgbox")
 
     const formData = new FormData();
 
@@ -418,17 +421,7 @@ async function patchPhoto() {
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
 
-    if (image.files[0].size > 10 * 1024 * 1024) {
-        alert("첨부파일 사이즈는 10MB 이내로 등록이 가능합니다.");
-        return false;
-    }
-
-    let nameBox = document.getElementById("p_name")
-    let titleBox = document.getElementById("p_title")
-    let imgBox = document.getElementById("p_imgbox")
-
-
-    if (name == '' || title == '' || imgBox == '') {
+    if (name == '' || title == '' || imgBox.value == '') {
         showToast('필수요소를 모두 입력해주세요!')
         nameBox.classList.add("custom-class");
         titleBox.classList.add("custom-class");
@@ -440,6 +433,16 @@ async function patchPhoto() {
         titleBox.classList.remove("custom-class");
         imgBox.classList.remove("custom-class");
     }
+
+    if (image.files[0].size > 10 * 1024 * 1024) {
+        alert("첨부파일 사이즈는 10MB 이내로 등록이 가능합니다.");
+        return false;
+    }
+
+
+
+
+
 
     try {
         const urlParams = new URLSearchParams(window.location.search);

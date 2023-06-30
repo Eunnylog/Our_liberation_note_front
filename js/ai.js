@@ -9,12 +9,17 @@ window.onload = function () {
 
   var back = document.getElementById('back');
 
-  back.onclick = function () {
-    location.href = `/plan_page.html?note_id=${note_id}`;
-  }
   if (note_id != 3) {
     checkGroup()
     checkLogin()
+    back.onclick = function () {
+      location.href = `/plan_page.html?note_id=${note_id}`;
+    }
+  } else {
+    showToast('여행 루트 짜주는 AI 예시 입니다!')
+    back.onclick = function () {
+      location.href = `/index.html`;
+    }
   }
 };
 
