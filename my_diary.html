@@ -152,7 +152,7 @@
   <!-- 그룹만들기 모달창 -->
   <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true" data-bs-backdrop="static"
     data-bs-keyboard="false">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="su" style="color: #485d86;">
@@ -165,7 +165,7 @@
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <div style="display: inline-block; margin: 10px 0px; width: 87% !important;">
+                  <div style="display: inline-block; margin: 10px 0px; width: 91% !important;">
                     <input name="groupname" id="groupname" type="name" class="form-control" placeholder="그룹 이름을 적어주세요!"
                       maxlength="15" oninput="checkLength(this)">
                     <div style="display: flex;" id="group_make_box">
@@ -184,7 +184,7 @@
                           <img src="/css/group_icon/searching-bar.png"> 이메일 검색 결과
                         </div>
                         <div id="email-list"
-                          style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 300px; width: 430px;">
+                          style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 300px; width: 300px;">
                           <ul id="email-ul" style="position: relative; right: 10px;">
                           </ul>
                           <div id="search-email-info"> 검색한 이메일이 이곳에 보여집니다!</div>
@@ -210,7 +210,7 @@
                           추가한 이메일
                         </div>
                         <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
-                                            overflow-y: auto; height: 300px; width: 430px">
+                                            overflow-y: auto; height: 300px; width: 300px;">
                           <ul id="selected-email-ul" style="position: relative; right: 10px;">
                           </ul>
                           <div id="no-email-info"> 이메일을 추가하지 않으면 본인만 구성원으로 등록됩니다!</div>
@@ -414,6 +414,36 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
             style="background-color: #485d86;">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--노트 이동 모달-->
+  <div class="modal fade" id="move_note" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="margin: auto; max-width: 900px;">
+      <div class="modal-content" style="width:100%">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: #485d86;">
+            이동하기</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="container">
+          <div class="global-cont">
+            <div class="inner-cont">
+              <div class="sign-in-up">
+                <form class="sign-in-form active">
+                  <div>
+                    <button type="button" class="signup" id="move_plan_page"
+                      style="background-color: #485d86; width: 50%; margin-left: 20px; font-size: 23px;">계획표으로
+                      이동</button>
+                    <button type="button" class="signup" id="move_photo_page"
+                      style="background-color: #485d86; width: 50%; margin-left: 20px; font-size: 23px;">사진첩으로
+                      이동</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

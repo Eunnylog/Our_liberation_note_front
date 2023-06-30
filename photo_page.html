@@ -118,7 +118,7 @@
                                             accept=".jpg, .png, .jpeg .gif" max-size="10MB"
                                             style="width: 80%; height:40px;">
                                         <label for="image"
-                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 4px 4px 0; background-color:  #485D86;">Upload</label>
+                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 4px 4px 0; background-color:  #485D86;">업로드</label>
                                         <input type="file" id="image" style="display: none" />
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
@@ -129,7 +129,7 @@
                                         <input name="title" id="title" type="text" class="form-control"
                                             placeholder="목적지(지역명+상호명, 지역명+카테고리)" style="width: 80%; height:40px;">
                                         <button type="button" onclick="searchLocation('1')" class="btn btn-primary"
-                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; background-color:  #485D86;">Search</button>
+                                            style="margin-top:0px;height:40px; font-size:15px; width: 20%; background-color:  #485D86;">검색</button>
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
                                         <input name="location" id="location" type="text" class="form-control"
@@ -146,9 +146,9 @@
                                     <div class="button-group">
                                         <button type="button" data-bs-dismiss="modal" aria-label="Close"
                                             class="btn btn-primary delete_search"
-                                            style="width: 49%; background-color:  #7689b1; border-color: #7689b1;">Close</button>
+                                            style="width: 49%; background-color:  #7689b1; border-color: #7689b1;">닫기</button>
                                         <button type="button" onclick="addPhoto()" class="btn btn-primary"
-                                            style="width: 49%; background-color:  #485D86; border-color: #485D86;">Save</button>
+                                            style="width: 49%; background-color:  #485D86; border-color: #485D86;">저장</button>
                                     </div>
                                 </form>
                             </div>
@@ -194,7 +194,7 @@
     <!-- 그룹만들기 모달창 -->
     <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true"
         data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="su" style="color: #485d86;">
@@ -207,7 +207,7 @@
                         <div class="inner-cont">
                             <div class="sign-in-up">
                                 <form class="sign-in-form active">
-                                    <div style="display: inline-block; margin: 10px 0px; width: 87% !important;">
+                                    <div style="display: inline-block; margin: 10px 0px; width: 91% !important;">
                                         <input name="groupname" id="groupname" type="name" class="form-control"
                                             placeholder="그룹 이름을 적어주세요!" maxlength="15" oninput="checkLength(this)">
                                         <div style="display: flex;" id="group_make_box">
@@ -227,7 +227,7 @@
                                                     <img src="/css/group_icon/searching-bar.png"> 이메일 검색 결과
                                                 </div>
                                                 <div id="email-list"
-                                                    style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 300px; width: 430px;">
+                                                    style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 300px; width: 300px;">
                                                     <ul id="email-ul" style="position: relative; right: 10px;">
                                                     </ul>
                                                     <div id="search-email-info"> 검색한 이메일이 이곳에 보여집니다!</div>
@@ -254,7 +254,7 @@
                                                     추가한 이메일
                                                 </div>
                                                 <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
-                                            overflow-y: auto; height: 300px; width: 430px">
+                                            overflow-y: auto; height: 300px; width: 300px;">
                                                     <ul id="selected-email-ul" style="position: relative; right: 10px;">
                                                     </ul>
                                                     <div id="no-email-info"> 이메일을 추가하지 않으면 본인만 구성원으로 등록됩니다!</div>

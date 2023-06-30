@@ -5,8 +5,7 @@ let back_url = 'http://127.0.0.1:8000'
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
 
-checkGroup()
-checkLogin()
+
 
 window.onload = function () {
   params = new URLSearchParams(window.location.search);
@@ -14,25 +13,37 @@ window.onload = function () {
 
   var back = document.getElementById('back');
 
-  back.onclick = function () {
-    location.href = `/plan_page.html?note_id=${note_id}`;
+  if (note_id != 3) {
+    checkGroup()
+    checkLogin()
+    back.onclick = function () {
+      location.href = `/plan_page.html?note_id=${note_id}`;
+    }
+  } else {
+    showToast('여행 루트 짜주는 AI 예시 입니다!')
+    back.onclick = function () {
+      location.href = `/index.html`;
+    }
   }
 };
 
 function aiSubscribeCheck() {
+  params = new URLSearchParams(window.location.search);
+  note_id = params.get("note_id");
 
   const is_subscribe = localStorage.getItem("is_subscribe")
-
-  if (is_subscribe == 'true') {
-    return true
-  }
-  else {
-    var userConfirmation = confirm("구독권 결제가 필요합니다! 결제창으로 이동할까요?");
-
-    if (!userConfirmation) {
-      return false
+  if (note_id != 3) {
+    if (is_subscribe == 'true') {
+      return true
     }
-    window.location.replace(`${frontend_base_url}/window.html`)
+    else {
+      var userConfirmation = confirm("구독권 결제가 필요합니다! 결제창으로 이동할까요?");
+
+      if (!userConfirmation) {
+        return false
+      }
+      window.location.replace(`${frontend_base_url}/window.html`)
+    }
   }
 }
 
@@ -236,8 +247,10 @@ function updateCheckAllStatus() {
 
 async function aiStart() {
   let is_subscribe = aiSubscribeCheck();
+  params = new URLSearchParams(window.location.search);
+  note_id = params.get("note_id");
 
-  if (!is_subscribe) {
+  if (!is_subscribe && note_id != 3) {
     return false;
   }
 
