@@ -614,10 +614,9 @@ function deleteNoteDiary() {
                         let note_id = this.closest('a').href.split('=')[1].trim();
 
                         // 이 라디오 버튼 바로 앞의 div의 텍스트 값을 가져옴
-                        let group_name = this.parentElement.previousElementSibling.innerText.trim();
-                        let group_id = document.getElementById("select_group").value
+                        let note_name = this.parentElement.previousElementSibling.innerText.trim();
 
-                        handleNotetrash(note_id)
+                        handleNotetrash(note_id,note_name)
                     }
                 };
 

@@ -214,7 +214,7 @@ async function handleGrouptrash(group_id, name) {
 
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 그룹이 정상적으로 삭제되었습니다.`)
+        showToast(`※ [${name}] 그룹이 휴지통으로 이동하였습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
@@ -269,7 +269,7 @@ async function handleGrouptrashMultiple(selectedGroups) {
 
 }
 
-async function handleNotetrash(note_id) {
+async function handleNotetrash(note_id,name) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash`, {
@@ -289,7 +289,7 @@ async function handleNotetrash(note_id) {
 
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ 정상적으로 삭제되었습니다.`)
+        showToast(`※ [${name}] 노트가 휴지통으로 이동하였습니다.`)
         window.location.replace(`${frontend_base_url}/my_diary.html`)
         return response_json
 
@@ -359,7 +359,7 @@ async function handlePhototrash(photo_id, name) {
     })
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 사진이 정상적으로 삭제되었습니다.`)
+        showToast(`※ [${name}] 사진이 휴지통으로 이동하였습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);

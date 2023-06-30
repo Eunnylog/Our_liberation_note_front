@@ -239,10 +239,12 @@ async function photo_detail(photo_id) {
     const modalTitle = document.getElementById("modal-title")
     modalTitle.innerText = `${name}`
 
+
+   
     let temp_html1 = `
                     <img class="detail-image" src="${image}"id='photo_image' style="height:500px;">
                     `;
-    $('#photo-d').append(temp_html1)
+    $('#photo-deta').append(temp_html1)
 
     let temp_html2 = `
     <div id='photo_start' style="float: right; margin-bottom:5px; ">${start}</div>
