@@ -28,9 +28,8 @@
       }
     }
 
-    .fc-direction-ltr .fc-button-group>.fc-button.fc-일정추가-button {
-      margin-left: 10px;
-      border-radius: 10px;
+    .fc-direction-ltr .fc-button-group>.fc-button.fc--button {
+      display: none;
     }
 
     .button-hover:hover {
@@ -329,7 +328,7 @@
   <!-- 그룹만들기 모달창 -->
   <div class="modal fade" id="makegroup" tabindex="-1" aria-labelledby="su" aria-hidden="true" data-bs-backdrop="static"
     data-bs-keyboard="false">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="su" style="color: #485d86;">
@@ -342,7 +341,7 @@
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <div style="display: inline-block; margin: 10px 0px; width: 87% !important;">
+                  <div style="display: inline-block; margin: 10px 0px; width: 91% !important;">
                     <input name="groupname" id="groupname" type="name" class="form-control" placeholder="그룹 이름을 적어주세요!"
                       maxlength="15" oninput="checkLength(this)">
                     <div style="display: flex;" id="group_make_box">
@@ -361,7 +360,7 @@
                           <img src="/css/group_icon/searching-bar.png"> 이메일 검색 결과
                         </div>
                         <div id="email-list"
-                          style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 300px; width: 430px;">
+                          style="border: 5px double #8d949e; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; overflow-y: auto; height: 300px; width: 300px;">
                           <ul id="email-ul" style="position: relative; right: 10px;">
                           </ul>
                           <div id="search-email-info"> 검색한 이메일이 이곳에 보여집니다!</div>
@@ -387,7 +386,7 @@
                           추가한 이메일
                         </div>
                         <div id="selected-email-list" style="border: 5px double #60749d; border-radius: 10px; padding: 10px 0px; margin-bottom: 10px; 
-                                            overflow-y: auto; height: 300px; width: 430px">
+                                            overflow-y: auto; height: 300px; width: 300px;">
                           <ul id="selected-email-ul" style="position: relative; right: 10px;">
                           </ul>
                           <div id="no-email-info"> 이메일을 추가하지 않으면 본인만 구성원으로 등록됩니다!</div>
@@ -458,40 +457,49 @@
     </div>
   </div>
   <!-- info 페이지 모달 -->
-    <!-- Carousel 형식의 모달 -->
-    <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
-      <div class="modal-dialog modal-xl">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" style="color: #485d86;">Info</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <!-- Carousel 형식의 모달 -->
+  <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" style="color: #485d86;">Info</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Carousel -->
+          <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="false">
+            <div class="carousel-inner">
+              <!-- 플랜 페이지 인포 -->
+              <div class="carousel-item active" style="padding: 5px;">
+                <h3 style="color: #485d86;"> 플랜 페이지</h3>
+                <img src="/css/assets/info_plan.png" style="width: 100%; height:400px; margin: auto;">
+                <div style="font-size: 18px; margin-top: 10px;">
+                  ① 선택한 <span style="background-color: #FFE440;">노트의 이름</span>이 상단에 표시되고 <span
+                    style="background-color: #FFE440;">연필모양</span>을 누르시면 노트 <span style="background-color: #FFE440;">이름을
+                    변경</span>하실 수 있습니다! <br>
+                  ② <span style="background-color: #FFE440;">일정추가</span>를 누르면 모달창이 나타나고 일정을 입력하면 <span
+                    style="background-color: #FFE440;">캘린더에 추가</span>됩니다! 알정은<span style="background-color: #FFE440;">
+                    다중 또는 개별</span>로 등록하실수 있습니다! <br>
+                  ③ <span style="background-color: #FFE440;">추가된 일정 블록</span>은 <span
+                    style="background-color: #FFE440; color:red">드래그로 다른 날짜로 이동</span>하실 수 있습니다!<br>
+                  ④ 상단의 <span style="background-color: #FFE440;">메뉴</span>를 누르시면 <span
+                    style="background-color: #FFE440;">더욱 다양한 기능을 사용</span> 하실 수 있습니다!<br>
+                  ⑤ <span style="background-color: #FFE440;"> 사진첩 가기와 여행루트 AI </span>를 누르면 <span
+                    style="background-color: #FFE440;">해당 페이지로 이동</span>하실 수 있습니다~ <br>
+                  ⑥ <span style="background-color: #FFE440;">계획표 전송</span>을 누르면 <span
+                    style="background-color: #FFE440;">그룹 멤버중 일정을 보내고 싶은 멤버들을 선택</span>할 수 있는 모달창이 뜨고 <span
+                    style="background-color: #FFE440;">계획이 메일로 전송</span>됩니다!<br>
+                </div>
               </div>
-              <div class="modal-body">
-                  <!-- Carousel -->
-                  <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="false">
-                      <div class="carousel-inner">
-                          <!-- 플랜 페이지 인포 -->
-                          <div class="carousel-item active" style="padding: 5px;">
-                              <h3 style="color: #485d86;"> 플랜 페이지</h3>
-                              <img src="/css/assets/info_plan.png" style="width: 100%; height:400px; margin: auto;">
-                              <div style="font-size: 18px; margin-top: 10px;">
-                                  ① 선택한 <span style="background-color: #FFE440;">노트의 이름</span>이 상단에 표시되고 <span style="background-color: #FFE440;">연필모양</span>을 누르시면 노트 <span style="background-color: #FFE440;">이름을 변경</span>하실 수 있습니다! <br>
-                                  ② <span style="background-color: #FFE440;">일정추가</span>를 누르면 모달창이 나타나고 일정을 입력하면 <span style="background-color: #FFE440;">캘린더에 추가</span>됩니다! 알정은<span style="background-color: #FFE440;"> 다중 또는 개별</span>로 등록하실수 있습니다! <br>
-                                  ③ <span style="background-color: #FFE440;">추가된 일정 블록</span>은 <span style="background-color: #FFE440; color:red">드래그로 다른 날짜로 이동</span>하실 수 있습니다!<br>
-                                  ④ 상단의 <span style="background-color: #FFE440;">메뉴</span>를 누르시면 <span style="background-color: #FFE440;">더욱 다양한 기능을 사용</span> 하실 수 있습니다!<br>
-                                  ⑤ <span style="background-color: #FFE440;"> 사진첩 가기와 여행루트 AI </span>를 누르면 <span style="background-color: #FFE440;">해당 페이지로 이동</span>하실 수 있습니다~ <br>
-                                  ⑥ <span style="background-color: #FFE440;">계획표 전송</span>을 누르면  <span style="background-color: #FFE440;">그룹 멤버중 일정을 보내고 싶은 멤버들을 선택</span>할 수 있는 모달창이 뜨고 <span style="background-color: #FFE440;">계획이 메일로 전송</span>됩니다!<br>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                      style="background-color: #485d86;">Close</button>
-              </div>
+            </div>
           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            style="background-color: #485d86;">Close</button>
+        </div>
       </div>
+    </div>
   </div>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
   <link href="/css/styles/style.css" rel="stylesheet" type="text/css" />

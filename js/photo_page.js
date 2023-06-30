@@ -13,10 +13,10 @@ window.addEventListener('load', function () {
 // 사진 추가하기
 async function addPhoto() {
     const image = document.getElementById("image");
-    const name = document.getElementById("name").value;
-    const title = document.getElementById("title").value;
+    const name = checkCode(document.getElementById("name").value)
+    const title = checkCode(document.getElementById("title").value)
     const start = document.getElementById("start").value;
-    const location = document.getElementById("location").value;
+    const location = checkCode(document.getElementById("location").value)
     const memo = document.getElementById("memo").value.trim() || '';
     let location_x = document.getElementById("location_x").value
     let location_y = document.getElementById("location_y").value
@@ -344,11 +344,11 @@ function patchPhotoBox(photo_id) {
     // // 수정 창으로 변경합니다.
     // let photo_detail = document.getElementById('photo-d');
     let image = document.getElementById('photo_image');
-    let name = document.getElementById('modal-title').innerHTML;
+    let name = checkCode(document.getElementById('modal-title').innerHTML)
     let start = document.getElementById('photo_start').innerHTML;
-    let title = document.getElementById('photo_title').innerHTML;
-    let location = document.getElementById('photo_location').innerHTML;
-    let memo = document.getElementById('photo_memo').innerHTML;
+    let title = checkCode(document.getElementById('photo_title').innerHTML)
+    let location = checkCode(document.getElementById('photo_location').innerHTML)
+    let memo = checkCode(document.getElementById('photo_memo').innerHTML)
     let imageUrl = image.src;
     var path = imageUrl.split('media/')[1];
     var decodedPath = decodeURIComponent(path);
@@ -407,12 +407,12 @@ function patchPhotoBox(photo_id) {
 
 async function patchPhoto() {
     const photo_id = document.getElementById("patch_photo").value;
-    const image = document.getElementById("image");
-    const name = document.getElementById('p_name').value;
-    const title = document.getElementById('p_title').value;
+    const image = checkCode(document.getElementById("image"))
+    const name = checkCode(document.getElementById('p_name').value)
+    const title = checkCode(document.getElementById('p_title').value)
     const start = document.getElementById('p_start').value;
-    const location = document.getElementById('p_location').value;
-    const memo = document.getElementById('p_memo').value;
+    const location = checkCode(document.getElementById('p_location').value)
+    const memo = checkCode(document.getElementById('p_memo').value)
     const location_x = document.getElementById("p_location_x").value
     const location_y = document.getElementById("p_location_y").value
     let nameBox = document.getElementById("p_name")
@@ -489,7 +489,7 @@ $(document).ready(function () {
 // 코멘트 추가 back과 연결
 async function addComment() {
     const photo_id = document.getElementById("commentBtn").value;
-    const commentText = document.getElementById("comment").value;
+    const commentText = checkCode(document.getElementById("comment").value)
     const commentbox = document.getElementById("comment");
 
     if (!commentText) {
@@ -541,7 +541,7 @@ async function editComment(event) {
     var button = event.target;
     const comment_id = button.value;
 
-    const updatedComment = document.getElementById(`comment_edit${comment_id}`).value;
+    const updatedComment = checkCode(document.getElementById(`comment_edit${comment_id}`).value)
     const updatedCommentBox = document.getElementById(`comment_edit${comment_id}`)
 
     if (!updatedComment) {
