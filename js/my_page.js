@@ -32,19 +32,16 @@ async function loadUserprofile() {
 
     $('#group-list').empty()
 
-    let temp_html2 = `<li class="dropdown-item" onclick="location.reload(); return false;" style="cursor: pointer;">전체보기</li>
-                        <hr class="dropdown-divider"/>`;
-
-
     groups.forEach((group) => {
         const name = group.name
 
-        temp_html2 += `<li class="dropdown-item" onclick="loadGroupStampmap('${name}')" style="cursor: pointer;" >${name}</li>`
+        let temp_html = `<li class="dropdown-item" onclick="loadGroupStampmap('${name}')" style="cursor: pointer;" >${name}</li>`
+
+        $('#group-list').append(temp_html);
 
         }
     )
 
-    $('#group-list').append(temp_html2);
 
 }
 
@@ -167,7 +164,12 @@ async function loadGroupStampmap(group_name) {
     const title = document.getElementById("map-title")
     title.innerText = `${group_name}`
 
+    $('#all-stamp').empty()
 
+    let temp_html = `<li class="dropdown-item" onclick="location.reload(); return false;" style="cursor: pointer;">전체보기</li>
+                    <hr class="dropdown-divider"/>`
+
+    $('#all-stamp').append(temp_html);
 
     var container = document.getElementById('stamp-map');
     var options = {
