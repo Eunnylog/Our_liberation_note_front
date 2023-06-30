@@ -403,7 +403,6 @@ async function patchPhoto() {
     const location_y = document.getElementById("p_location_y").value
     let nameBox = document.getElementById("p_name")
     let titleBox = document.getElementById("p_title")
-    let imgBox = document.getElementById("p_imgbox")
 
     const formData = new FormData();
 
@@ -427,17 +426,15 @@ async function patchPhoto() {
     formData.append("location_y", location_y);
 
 
-    if (name == '' || title == '' || imgBox.value == '') {
+    if (name == '' || title == '') {
         showToast('필수요소를 모두 입력해주세요!')
         nameBox.classList.add("custom-class");
         titleBox.classList.add("custom-class");
-        imgBox.classList.add("custom-class");
 
         return false
     } else {
         nameBox.classList.remove("custom-class");
         titleBox.classList.remove("custom-class");
-        imgBox.classList.remove("custom-class");
     }
 
     try {
