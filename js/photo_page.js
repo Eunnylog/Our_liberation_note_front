@@ -259,7 +259,7 @@ async function photo_detail(photo_id) {
         <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px;">
         <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
             <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" 
-            style="background-color:  #7689b1; border-color: #7689b1; height: 37px;  display: flex; justify-content: center; align-items: center;"><b>등록</b></button>
+            style="background-color:  #7689b1; font-size: 20px; border-color: #7689b1; height: 37px;  display: flex; justify-content: center; align-items: center;">등록</button>
     </div>
     <hr/>
     <div>
@@ -403,7 +403,6 @@ async function patchPhoto() {
     const location_y = document.getElementById("p_location_y").value
     let nameBox = document.getElementById("p_name")
     let titleBox = document.getElementById("p_title")
-    let imgBox = document.getElementById("p_imgbox")
 
     const formData = new FormData();
 
@@ -412,6 +411,11 @@ async function patchPhoto() {
     // 새로운 이미지가 선택되었을 경우에만 새로운 이미지를 추가합니다.
     if (image.files.length > 0) {
         formData.append("image", image.files[0]);
+
+        if (image.files[0].size > 10 * 1024 * 1024) {
+            alert("첨부파일 사이즈는 10MB 이내로 등록이 가능합니다.");
+            return false;
+        }
     }
     formData.append("name", name);
     formData.append("title", title);
@@ -421,28 +425,17 @@ async function patchPhoto() {
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
 
-    if (name == '' || title == '' || imgBox.value == '') {
+
+    if (name == '' || title == '') {
         showToast('필수요소를 모두 입력해주세요!')
         nameBox.classList.add("custom-class");
         titleBox.classList.add("custom-class");
-        imgBox.classList.add("custom-class");
 
         return false
     } else {
         nameBox.classList.remove("custom-class");
         titleBox.classList.remove("custom-class");
-        imgBox.classList.remove("custom-class");
     }
-
-    if (image.files[0].size > 10 * 1024 * 1024) {
-        alert("첨부파일 사이즈는 10MB 이내로 등록이 가능합니다.");
-        return false;
-    }
-
-
-
-
-
 
     try {
         const urlParams = new URLSearchParams(window.location.search);
