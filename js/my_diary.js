@@ -147,7 +147,7 @@ async function showNoteList() {
             const category = a['category']
             const name = a['name']
             const note_id = a['id']
-
+            // data-bs-toggle="modal" data-bs-target="#deleteGroup"
             let temp_html = `
                                 <a href="/plan_page.html?note_id=${note_id}" onclick="saveLocalNoteName('${name}','${group_id}')" style='text-decoration:none; color:black;'>
                                     <section class="cp-card content" style="background-image: url('/css/note_img/note_${category}.png');">
