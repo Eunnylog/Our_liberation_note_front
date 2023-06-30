@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=1024">
     <link rel="icon" type="image/png" sizes="48x48" href="/css/favicon/android-icon-48x48.png">
     <link href="/css/styles/login.css" rel="stylesheet" type="text/css" />
@@ -23,15 +24,21 @@
     <script src="/js/photo_page.js"></script>
     <script src="/js/trash.js"></script>
 </head>
+<!-- content="width=device-width, initial-scale=1" -->
 
 <body>
     <header class="site-header navbar">
         <!-- navbar -->
     </header>
-    <main class="site-body" style="margin-top: -50px;"
-        style="min-height: calc(100vh - 100px) !important; padding-bottom: 100px;">
+    <main class="site-body"
+        style="margin-top: -50px; min-height: calc(100vh - 100px) !important; padding-bottom: 100px; width: 100%;">
         <div id="toast"></div>
-        <article class="review-detail max-content-width">
+        <button href=""
+            style="background-color: transparent; border: transparent; float: right; position: sticky; top: 100px;left: 0; right: 0;"
+            data-bs-toggle="modal" data-bs-target="#carouselModal">
+            <img src="/css/assets/info_robot.png" style="z-index: 2 !important;">
+        </button>
+        <article class="review-detail max-content-width" style="padding: 30px !important">
             <div style="margin-bottom:30px;">
                 <h1 id="photopage_title" style="font-size:50px">Photo gallery</h1>
             </div>
@@ -43,12 +50,12 @@
                         style="background-color: #485D86; color:white; margin: 0px 10px;">사진
                         추가</button>
                 </div>
-                <div style="float: right;">
+                <div style="float: right; z-index: 1 !important; position: relative;">
                     <button onclick="m_page()" type="button" class="btn group-btn"
                         style="background-color: #7689b1; color:white; margin-left: 6px;">
                         << </button>
                             <button onclick="p_page()" type="button" class="btn group-btn"
-                                style="background-color: #485D86; color:white; "> >> </button>
+                                style="background-color: #485D86; color:white;"> >> </button>
                 </div>
             </div>
             <div id="basic-photo">
@@ -59,7 +66,7 @@
         </article>
     </main>
     <!-- footer start -->
-    <footer style="background-color: #fbfcfd; position:fixed; bottom: 0; width: 100%;">
+    <footer style="background-color: #fbfcfd; bottom: 0; width: 100%;">
         <div style="background-color:#60749d; width: 100%; height: 10px;"></div>
         <p style="font-size: 30px; margin-top: 10px; text-align: center;">CONTACT</p>
         <div style="display: flex; padding: 0px 0px 20px; justify-content: center;">
@@ -108,7 +115,8 @@
                                 <form class="sign-in-form active">
                                     <div class="input-group" style="flex-wrap: nowrap;">
                                         <input class="upload-name" id="imgbox" placeholder="이미지를 넣어주세요." multiple
-                                            accept=".jpg, .png, .jpeg" style="width: 80%; height:40px;">
+                                            accept=".jpg, .png, .jpeg .gif" max-size="10MB"
+                                            style="width: 80%; height:40px;">
                                         <label for="image"
                                             style="margin-top:0px;height:40px; font-size:15px; width: 20%; border-radius: 0 4px 4px 0; background-color:  #485D86;">Upload</label>
                                         <input type="file" id="image" style="display: none" />
@@ -125,7 +133,7 @@
                                     </div>
                                     <div class="input-group-append" style="width: 100%;">
                                         <input name="location" id="location" type="text" class="form-control"
-                                            placeholder="주소" style="height:40px;">
+                                            placeholder="주소(검색기능 미사용시 스탬프 기능의 사용이 제한됩니다.)" style="height:40px;">
                                     </div>
                                     <div id="search_box" style="width: 100%;  overflow: auto;"></div>
                                     <input name="start" id="start" type="date" class="form-control"
@@ -152,18 +160,26 @@
     </div>
     <!-- 사진상세 모달창 -->
     <div class="modal fade" id="photo-detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" style="max-width: 700px;">
-            <div class="modal-content modal" style="width: 700px;">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title" style="color: #485d86;"></h5>
+                    <h5 class="modal-title" id="modal-title" style="color: #485d86; font-size: 30px;"></h5>
                     <button type="button" class="btn-close delete_search" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-                <div id="modal-body" class="modal-body">
-                    <form enctype="multipart/form-data">
-                        <div id="photo-d">
+                <div class="modal-body" id="photo-edit">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <!-- 사진 왼쪽 부분 -->
+                            <div id="photo-deta">
+                            </div>
                         </div>
-                    </form>
+                        <div class="col-md-5">
+                            <!--오른쪽에 정보와 댓글 부분 -->
+                            <div id="photo-info"></div>
+                            <!-- 정보 내용 추가 -->
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer" id="photo-detail-modal-footer">
                 </div>
@@ -290,6 +306,65 @@
                     </form>
                 </div>
                 <div class="modal-footer" id="trash-modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- info 페이지 모달 -->
+    <!-- Carousel 형식의 모달 -->
+    <div class="modal fade" id="carouselModal" tabindex="-1" aria-hidden="true" data-bs-interval="false">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content" style="height: 850px;">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color: #485d86;">해방쿤의 Info!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="height: 600px;">
+                    <!-- Carousel -->
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="false">
+                        <div class="carousel-inner">
+                            <!-- 사진첩 페이지 인포 -->
+                            <div class="carousel-item active" style="padding: 5px;">
+                                <h3 style="color: #485d86;"> 사진첩 페이지</h3>
+                                <img src="/css/assets/info_photo.png" style="width: 100%; height:400px; margin: auto;">
+                                <div style="font-size: 18px; margin-top: 10px;">
+                                    ① 포토페이지에 들어가면 노트 이름이 상단에 뜹니다!<br>
+                                    ② 사진 추가를 누르면 모달창이 열리고 내용을 작성하면 사진을 추가할 수 있습니다.<br>
+                                    ③ 사진을 누르면 사진 상세를 볼 수 있는 모달창이 뜨고, 상세페이지에서 댓글 수정, 삭제를 할 수 있습니다!<br>
+                                    ④ 수정 버튼을 누르면 수정을 할 수 있는 모달창으로 변경됩니다!<br>
+                                    ⑤ 삭제를 누르면 사진이 삭제되고 삭제되었다는 알림창이 뜹니다~ <br>
+                                    ⑥ 사진 왼쪽 하단 스탬프를 누르면 스탬프에 색이 바뀌며 마이페이지에서 지도에 표시됩니다! 표시된 장소의 사진을 한번에 볼 수 있습니다!
+                                </div>
+                            </div>
+                            <!-- 그룹만들기 인포 -->
+                            <div class="carousel-item" style="padding: 5px;">
+                                <h3 style="color: #485d86;"> 그룹만들기 </h3>
+                                <img src="/css/assets/info_makegroup.png"
+                                    style="width: 100%; height:400px; margin: auto;">
+                                <div style="font-size: 18px; margin-top: 10px;">
+                                    ① 그룹을 생성하는 모달창은 모든 페이지에서 가능합니다! 상단 네비게이션 바를 확인해 주세요~ <br>
+                                    ② 모달창이 열리면 먼저 생성할 그룹의 이름을 적어주세요<br>
+                                    ③ 다음으로 추가하고 싶은 멤버의 이메일을 입력해주세요!<br>
+                                    ④ 입력후 search를 누르면 아래의 박스에 검색한 이메일들이 나타납니다!<br>
+                                    ⑤ 검색한 이메일을 선택후 아래의 아래 버튼을 클릭하면 이메일이 아래 상자에 나타납니다! 선택한 멤버를 빼고 싶으시면 다시 아래 박스에서 선택후 위로
+                                    버튼을 눌러주세요!<br>
+                                    ⑥ 원하는 멤버들이 다 선택 되었다면 save를 눌러 그룹을 저장해주세요~ 생성한 그룹은 마이페이지에서 확인 가능합니다!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="prev">
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="next">
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        style="background-color: #485d86;">Close</button>
                 </div>
             </div>
         </div>

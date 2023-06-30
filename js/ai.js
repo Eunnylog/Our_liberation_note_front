@@ -1,6 +1,6 @@
 let back_url = 'https://api.liberation-note.com'
-// const front_url = "https://liberation-note.com"
-let front_url = 'http://127.0.0.1:5500'
+const front_url = "https://liberation-note.com"
+// let front_url = 'http://127.0.0.1:5500'
 // let back_url = 'http://127.0.0.1:8000'
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
@@ -269,7 +269,7 @@ async function aiStart() {
   });
 
   if (destinations.length != total) {
-    showToast('주소지가 정확하지 않은 곳은 제외 되었습니다!')
+    showToast('주소지가 정확하지 않은 곳은 제외 됩니다!')
   }
 
   if (destinations.length == 0 && total == destinations.length) {
