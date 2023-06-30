@@ -81,7 +81,15 @@ document.addEventListener('DOMContentLoaded', async function () {
     var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
             center: 'title',
-            left: 'prevYear,nextYear'
+            left: 'prevYear,nextYear, 일정추가'
+        },
+        customButtons: {
+            일정추가: {
+                text: '일정추가',
+                click: function () {
+                    $('#save_plan_modal').modal('show'); $('#search_box').empty(); planList();
+                }
+            }
         },
         locale: 'ko',
         initialView: 'dayGridMonth',
