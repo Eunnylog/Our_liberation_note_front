@@ -632,7 +632,7 @@ function deleteNoteDiary() {
 
     // 각 자식 요소에 대하여 반복
     for (var i = 0; i < children.length; i++) {
-        if (i != 0) {
+        if (i != 0 && i != 1) {
             // 이 요소에 이미 라디오 버튼이 있는지 확인함
             var existingRadioButtonDiv = children[i].querySelector('div input[type="radio"]');
 
