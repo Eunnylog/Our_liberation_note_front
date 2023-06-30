@@ -63,6 +63,9 @@ async function showPlanPage() {
             case '문화시설':
                 dic.color = '#6A5ACD';
                 break;
+            case '숙박':
+                dic.color = '#505050';
+                break;
             default:
                 dic.color = '#485D86';
                 break;
@@ -81,15 +84,18 @@ document.addEventListener('DOMContentLoaded', async function () {
     var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
             center: 'title',
-            left: 'prevYear,nextYear, 일정추가'
+            left: 'prevYear,nextYear,일정추가'
         },
         customButtons: {
             일정추가: {
                 text: '일정추가',
                 click: function () {
                     $('#save_plan_modal').modal('show'); $('#search_box').empty(); planList();
-                }
+                },
             }
+        },
+        headerToolbar: {
+            left: 'prevYear,nextYear,일정추가'
         },
         locale: 'ko',
         initialView: 'dayGridMonth',
@@ -163,7 +169,7 @@ async function savePlan() {
         const location = checkCode(document.getElementById("location").value)
         const start = checkCode(document.getElementById("start").value)
         const memo = checkCode(document.getElementById("memo").value)
-        const time = checkCode(document.getElementById("time").value)
+        const time = document.getElementById("time").value
         const category = checkCode(document.getElementById("category").value)
         const location_x = document.getElementById("location_x").value
         const location_y = document.getElementById("location_y").value
@@ -255,7 +261,10 @@ function patchBox() {
     let planInfoDiv = document.getElementById('plan_info');
     let title = document.getElementById('plan_title').innerHTML;
     let location = document.getElementById('plan_location').innerHTML.split(':')[1].trim();
-    let time = document.getElementById('plan_time').innerHTML.split(':')[1].trim();
+    let time = document.getElementById('plan_time').innerHTML;
+    let hours = time.split(':')[1].trim(); // 시간을 가져옴
+    let minutes = time.split(':')[2].trim(); // 분을 가져옴
+    let formattedTime = `${hours}:${minutes}`; // "18:30" 형태로 만듦
     let memo = document.getElementById('plan_memo').innerHTML.split(':')[1].trim();
     let category = document.getElementById('plan_category').innerHTML.split(':')[1].trim();
     // date 포멧팅
@@ -265,13 +274,7 @@ function patchBox() {
     let month = dateParts[1].length === 1 ? '0' + dateParts[1] : dateParts[1];
     let day = dateParts[2].length === 1 ? '0' + dateParts[2] : dateParts[2];
     let date = `${year}-${month}-${day}`;
-
-
-    // let delete_btn = document.getElementById('delete_btn');
-    // delete_btn.removeAttribute('data-bs-dismiss');
-    // delete_btn.innerHTML = '삭제';
-    // delete_btn.setAttribute("onClick", `deletePlan()`)
-
+    console.log(formattedTime)
     let patch_info = document.getElementById('patch_info');
     let patch_info_box = document.getElementById('patch_info_box');
     patch_info_box.style.display = 'block'
@@ -314,7 +317,7 @@ function patchBox() {
                             <input name="location" id="location" value='${location}' type="text" class="form-control"
                                 placeholder="주소(미작성시 AI사용이 불가합니다!)">
                             <input name="start" id="start" value='${date}' type="date" class="form-control">
-                            <input name="time" id="time" value='${time}' type="text" class="form-control" placeholder="시간">
+                            <input name="time" id="time" value='${formattedTime}' type="time" class="form-control" placeholder="시간">
                             <textarea name="memo" id="memo" value='${memo}'  type="textarea" class="form-control" placeholder="memo"
                                 style="height:200px; min-height:200px; max-height:200px">${memo}</textarea>
     `;
@@ -349,7 +352,7 @@ async function patchPlan() {
     plan_id = checkCode(document.getElementById('plan_modal_id').innerHTML);
     let title = checkCode(document.getElementById('title').value);
     let location = checkCode(document.getElementById('location').value);
-    let time = checkCode(document.getElementById('time').value);
+    let time = document.getElementById('time').value;
     let memo = checkCode(document.getElementById('memo').value);
     let start = checkCode(document.getElementById('start').value);
     let category = checkCode(document.getElementById('category').value);
@@ -405,7 +408,7 @@ function addPlanList() {
     const location = checkCode(document.getElementById("location").value)
     const start = checkCode(document.getElementById("start").value)
     const memo = checkCode(document.getElementById("memo").value)
-    const time = checkCode(document.getElementById("time").value)
+    const time = document.getElementById("time").value
     const category = checkCode(document.getElementById("category").value)
     const location_x = document.getElementById("location_x").value
     const location_y = document.getElementById("location_y").value
@@ -807,4 +810,49 @@ function toggleFunction() {
         addPlanListBtn.style.display = 'none';
         changeOnOff.style.display = 'block';
     }
+}
+
+function showAddEmailBox() {
+    let addEmailSend = document.getElementById('addEmailSend');
+    let addEmailSendBtn = document.getElementById('addEmailSendBtn');
+    let addEmailText = document.getElementById('addEmailText');
+    if (addEmailSend.style.display == 'none') {
+        addEmailSend.style.display = 'block';
+        addEmailSendBtn.style.display = 'block';
+        addEmailText.style.display = 'block';
+    } else {
+        addEmailSend.style.display = 'none';
+        addEmailSendBtn.style.display = 'none';
+        addEmailText.style.display = 'none';
+    }
+}
+
+function addEmailSendList() {
+    let email = document.getElementById('addEmailSend').value;
+    // 이미 있는 이메일인지 확인
+    let existingEmails = document.querySelectorAll('#member_list h5');
+    if (!email) {
+        showToast('이메일을 입력해주세요!')
+        return false
+    }
+    // 이메일 형식 검증
+    let re = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    if (!re.test(email)) {
+        showToast('올바른 이메일 형식이 아닙니다!');
+        return false;
+    }
+    for (let i = 0; i < existingEmails.length; i++) {
+        if (existingEmails[i].textContent === email) {
+            showToast('이미 추가된 이메일입니다.');
+            return;
+        }
+    };
+    let temp_html = `
+                        <div>
+                            <h5 style="display: inline-block; vertical-align: middle;">${email}</h5>
+                            <input type="checkbox" id="${email}">
+                            <label for="${email}" style="margin-left: 10px; vertical-align: middle;"></label>
+                        </div>
+                    `
+    $('#member_list').append(temp_html);
 }
