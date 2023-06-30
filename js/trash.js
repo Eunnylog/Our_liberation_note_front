@@ -33,20 +33,20 @@ if (localStorage.getItem("payload")) {
     });
 }
 
-function groupCheckbox(group_id) {
-    var checkbox = document.getElementById(`trash-checkbox${group_id}`);
-    checkbox.checked = !checkbox.checked;
-}
+// function groupCheckbox(group_id) {
+//     var checkbox = document.getElementById(`trash-checkbox${group_id}`);
+//     checkbox.checked = !checkbox.checked;
+// }
 
-function noteCheckbox(note_id) {
-    var checkbox = document.getElementById(`trash-checkbox${note_id}`);
-    checkbox.checked = !checkbox.checked;
-}
+// function noteCheckbox(note_id) {
+//     var checkbox = document.getElementById(`trash-checkbox${note_id}`);
+//     checkbox.checked = !checkbox.checked;
+// }
 
-function photoCheckbox(photo_id) {
-    var checkbox = document.getElementById(`trash-checkbox${photo_id}`);
-    checkbox.checked = !checkbox.checked;
-}
+// function photoCheckbox(photo_id) {
+//     var checkbox = document.getElementById(`trash-checkbox${photo_id}`);
+//     checkbox.checked = !checkbox.checked;
+// }
 
 let isAllSelected = false;
 
@@ -100,10 +100,7 @@ async function loadTrash(contentType) {
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<div>
-                                <button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
-                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
-                              </div>
+            let temp_html2 = `
                               <div>
                                 <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
                                     style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
@@ -147,10 +144,7 @@ async function loadTrash(contentType) {
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<div>
-                                <button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
-                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
-                            </div>
+            let temp_html2 = `
                             <div>
                                 <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
                                     style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
@@ -196,10 +190,7 @@ async function loadTrash(contentType) {
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<div>
-                                <button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
-                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
-                            </div>
+            let temp_html2 = `
                             <div>
                                 <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
                                     style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
@@ -211,15 +202,12 @@ async function loadTrash(contentType) {
         }
     }
 
-    // 모든 버튼 요소 가져오기
     const buttons = document.querySelectorAll(".trash-toggle button");
 
-    // 모든 버튼의 색상 초기화
     buttons.forEach(button => {
         button.classList.remove("active");
     });
 
-    // 선택한 버튼의 색상 변경
     const selectedButton = document.getElementById(contentType + "Button");
     selectedButton.classList.add("active");
 }
@@ -502,7 +490,6 @@ function handleTrashRestore() {
             });
         }
     })
-    console.log(selectedGroups)
 
     if (selectedGroups.length > 0) {
         handleGrouptrashMultiple(selectedGroups);
@@ -637,7 +624,7 @@ function handleTrashDelete() {
             })
         }
     })
-    console.log(selectedGroups)
+
     if (selectedGroups.length > 0) {
         deleteGroup(selectedGroups);
     }
