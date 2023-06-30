@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     var calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
             center: 'title',
-            left: 'prevYear,nextYear,일정추가'
+            left: 'prevYear,nextYear, 일정추가'
         },
         customButtons: {
             일정추가: {
@@ -94,9 +94,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 },
             }
         },
-        headerToolbar: {
-            left: 'prevYear,nextYear,일정추가'
-        },
+
         locale: 'ko',
         initialView: 'dayGridMonth',
         editable: true,
