@@ -31,9 +31,10 @@ async function searchLocation() {
 
                 let temp_html = `
                 <div style="display: flex; align-items: center; justify-content: space-between; margin: 5px auto;">
-                <div>
+                <div style=padding:20px;>
                     <h3 style="font-size: 20px; margin-bottom: 5px;" id='name_${index}' >${place_name} / ${place_category}</h3>
-                    <a href="${place_url}" id='address_${index}' target="_blank" style="font-size: 20px; color: black;">${address_name}</a>
+                    <h3 style="font-size: 20px; margin-bottom: 5px;" id='address_${index}' >${address_name}</h3>
+                    <a href="${place_url}"  target="_blank" style="font-size: 20px; color: black;">지도에서 보기(click!)</a>
                 </div>
                 <style>
                     input[type="radio"] {
@@ -43,7 +44,7 @@ async function searchLocation() {
                 </style>
                 <div style="display: flex; margin-top:5px; align-items: center;">
                 <input type="radio" name="address_radio" value="${index}" style="width: 10px; margin-right: 10px;" onclick="handleRadio(2)">
-                    <label for="${index}" style="font-size: 25px;">선택</label>
+                    <label for="${index}" style="font-size: 25px; margin-right:10px;">선택</label>
                 <input id='x_${index}' value="${location_x}" hidden>
                 <input id='y_${index}' value="${location_y}" hidden>
                 </div>

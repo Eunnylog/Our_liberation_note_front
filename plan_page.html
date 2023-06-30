@@ -28,6 +28,11 @@
       }
     }
 
+    .fc-direction-ltr .fc-button-group>.fc-button.fc-일정추가-button {
+      margin-left: 10px;
+      border-radius: 10px;
+    }
+
     .button-hover:hover {
       transform: scale(1.1);
       transition: transform .2s;
@@ -104,15 +109,15 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-dark"
               style="right: 0; left: auto; background-color: #7689b1; border-color: #7689b1; color:white;">
-              <li class="dropdown-item" id="back">뒤로가기</li>
+              <li class="dropdown-item" id="back">🔙 뒤로가기</li>
               <li class="dropdown-item"
-                onclick="$('#save_plan_modal').modal('show'); $('#search_box').empty(); planList();">일정 추가</li>
-              <li class="dropdown-item" id="goPhoto">사진첩 가기</li>
-              <li class="dropdown-item" id="goAI">여행 루트 AI 🤖</li>
+                onclick="$('#save_plan_modal').modal('show'); $('#search_box').empty(); planList();">🛍️ 일정 추가</li>
+              <li class="dropdown-item" id="goAI">🤖 여행 루트 AI</li>
               <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#select_email_member"
-                onclick="selectEmailMember();">계획표 전송</li>
+                onclick="selectEmailMember();">💌 계획표 전송</li>
+              <li class="dropdown-item" id="goPhoto">📷 사진첩 가기</li>
               <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteNote" onclick="deleteNoteModal()">
-                노트삭제</li>
+                ⚠️ 노트삭제</li>
             </ul>
             <button class="btn btn-secondary btn-sm dropdown-toggle" onclick="loadGroupMembers()"
               style="background-color: #485D86; border-color: #485D86; color:white; margin: 0px 10px; height: 45px; border-radius: 8px;"
@@ -298,7 +303,7 @@
                   </div>
                   <div class="input-group" style="flex-wrap: nowrap;">
                     <input name="start" id="start" type="date" class="form-control" style="width: 48%;">
-                    <input name="time" id="time" type="text" class="form-control" placeholder="시간" style="width: 48%;">
+                    <input name="time" id="time" type="time" class="form-control" placeholder="시간" style="width: 48%;">
                     <input name="location_x" id="location_x" type="text" class="form-control" hidden>
                     <input name="location_y" id="location_y" type="text" class="form-control" hidden>
                   </div>
