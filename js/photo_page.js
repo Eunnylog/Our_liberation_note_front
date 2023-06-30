@@ -36,7 +36,7 @@ async function addPhoto() {
     let imgBox = document.getElementById("imgbox")
 
 
-    if (name == '' || title == '' || imgBox == '') {
+    if (name == '' || title == '' || imgBox.value == '') {
         showToast('필수요소를 모두 입력해주세요!')
         nameBox.classList.add("custom-class");
         titleBox.classList.add("custom-class");
@@ -240,7 +240,6 @@ async function photo_detail(photo_id) {
     modalTitle.innerText = `${name}`
 
 
-   
     let temp_html1 = `
                     <img class="detail-image" src="${image}"id='photo_image' style="height:500px;">
                     `;
@@ -260,8 +259,8 @@ async function photo_detail(photo_id) {
     <div style="display: flex; align-items: center;">
         <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px;">
         <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
-            <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" 
-            style="background-color:  #7689b1; border-color: #7689b1; height: 37px;  display: flex; justify-content: center; align-items: center; font-size:20px;">등록</button>
+            style="background-color:  #7689b1; font-size: 20px; border-color: #7689b1; height: 37px;  display: flex; justify-content: center; align-items: center;">등록</button>
+            style="background-color:  #7689b1; border-color: #7689b1; height: 37px;  display: flex; justify-content: center; align-items: center;"><b>등록</b></button>
     </div>
     <hr/>
     <div>
@@ -359,24 +358,24 @@ function patchPhotoBox(photo_id) {
                     </div>
                     <div class="input-group-append" style="width: 100%;">
                         <input name="name" id="p_name" type="text" value='${name}' class="form-control"
-                            placeholder="사진 타이틀" style="width: 100%; height:40px; margin-bottom: 15px;">
-                        <input name="start" id="p_start" type="date" value='${start}' class="form-control" style="margin-bottom: 15px;">
+                            placeholder="사진 타이틀" style="font-size:20px; width: 100%; height:40px; margin-bottom: 15px;">
+                        <input name="start" id="p_start" type="date" value='${start}' class="form-control" style="margin-bottom: 15px; font-size:20px;">
                     </div>
                     <div class="input-group" style="flex-wrap: nowrap; margin-bottom: 15px;">
                         <input name="title" id="p_title" value='${title}' type="text" class="form-control"
-                            placeholder="목적지(지역명+상호명, 지역명+카테고리)" style="width: 80%; height:40px;">
+                            placeholder="목적지(지역명+상호명, 지역명+카테고리)" style="font-size:20px; width: 80%; height:40px;">
                         <button type="button" onclick="searchLocation('2')" class="btn btn-primary"
                             style="margin-top:0px;height:40px; font-size:20px; width: 20%; border-color: #485D86; background-color:  #485D86;">찾기</button>
                     </div>
                     <div class="input-group-append" style="width: 100%; margin-bottom: 15px;">
                         <input name="location" id="p_location" value='${location}' type="text" class="form-control"
-                        placeholder="주소" style=" height:40px;" placeholder="주소(검색기능 미사용시 스탬프 기능의 사용이 제한됩니다.)">
+                        placeholder="주소" style="font-size:20px; height:40px;" placeholder="주소(검색기능 미사용시 스탬프 기능의 사용이 제한됩니다.)">
                     </div>
                     
                     <div id="search_box2" style="width: 100%;  overflow: auto; height= 30px;"></div>
                     <div class="input-group" style="flex-wrap: nowrap;">
                         <textarea name="memo" id="p_memo" type="textarea" class="form-control" placeholder="memo"
-                        style="height:50px; min-height:100px; max-height:200px; width:100%" >${memo}</textarea>
+                        style="height:50px; min-height:100px; max-height:200px; width:100%; font-size:20px;" >${memo}</textarea>
                     </div>
                     <input name="p_location_x" id="p_location_x" type="text" class="form-control" hidden>
                         <input name="p_location_y" id="p_location_y" type="text" class="form-control" hidden> `;
@@ -403,6 +402,8 @@ async function patchPhoto() {
     const memo = document.getElementById('p_memo').value;
     const location_x = document.getElementById("p_location_x").value
     const location_y = document.getElementById("p_location_y").value
+    let nameBox = document.getElementById("p_name")
+    let titleBox = document.getElementById("p_title")
 
     const formData = new FormData();
 
@@ -411,6 +412,11 @@ async function patchPhoto() {
     // 새로운 이미지가 선택되었을 경우에만 새로운 이미지를 추가합니다.
     if (image.files.length > 0) {
         formData.append("image", image.files[0]);
+
+        if (image.files[0].size > 10 * 1024 * 1024) {
+            alert("첨부파일 사이즈는 10MB 이내로 등록이 가능합니다.");
+            return false;
+        }
     }
     formData.append("name", name);
     formData.append("title", title);
@@ -420,27 +426,16 @@ async function patchPhoto() {
     formData.append("location_x", location_x);
     formData.append("location_y", location_y);
 
-    if (image.files[0].size > 10 * 1024 * 1024) {
-        alert("첨부파일 사이즈는 10MB 이내로 등록이 가능합니다.");
-        return false;
-    }
 
-    let nameBox = document.getElementById("p_name")
-    let titleBox = document.getElementById("p_title")
-    let imgBox = document.getElementById("p_imgbox")
-
-
-    if (name == '' || title == '' || imgBox == '') {
+    if (name == '' || title == '') {
         showToast('필수요소를 모두 입력해주세요!')
         nameBox.classList.add("custom-class");
         titleBox.classList.add("custom-class");
-        imgBox.classList.add("custom-class");
 
         return false
     } else {
         nameBox.classList.remove("custom-class");
         titleBox.classList.remove("custom-class");
-        imgBox.classList.remove("custom-class");
     }
 
     try {

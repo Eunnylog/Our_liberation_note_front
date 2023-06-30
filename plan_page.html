@@ -60,103 +60,6 @@
       transform: scale(1.1);
       transition: transform 0.3s ease-in-out;
     }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
-
-    input:checked+.slider {
-      background-color: #6e81c5;
-    }
-
-    input:focus+.slider {
-      box-shadow: 0 0 1px #6e81c5;
-    }
-
-    input:checked+.slider:before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
-    }
-
-    /* Rounded sliders */
-    .slider.round {
-      border-radius: 34px;
-    }
-
-    .slider.round:before {
-      border-radius: 50%;
-    }
-
-    .switch-text {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 10px;
-      /* 텍스트 크기 조절 */
-      transition: .4s;
-    }
-
-    .switch-text.off {
-      left: 7px;
-      /* 'OFF' 텍스트 위치 조절 */
-      opacity: 1;
-    }
-
-    .switch-text.on {
-      right: 10px;
-      /* 'ON' 텍스트 위치 조절 */
-      opacity: 0;
-    }
-
-    input:checked~.off {
-      opacity: 0;
-    }
-
-    input:checked~.on {
-      opacity: 1;
-    }
-
-    input:not(:checked)~.off {
-      opacity: 1;
-    }
-
-    input:not(:checked)~.on {
-      opacity: 0;
-    }
   </style>
 </head>
 
@@ -192,7 +95,8 @@
               onclick="patchChangeNoteName()">수정
             </button>
           </div>
-          <div class="dropdown" style="margin-left: auto; margin-top:10px;">
+          <div class="dropdown" style="display: flex; align-items: center; margin-left: auto; margin-top:10px;">
+            <h6 style="margin-right: 10px;">다양한 기능을 보고 싶다면? 👉🏻</h6>
             <button class="btn btn-secondary btn-sm dropdown-toggle"
               style="background-color: #485D86; border-color: #485D86; color:white; margin: 0px 10px; height: 45px; border-radius: 8px;"
               type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -277,11 +181,23 @@
             <div class="inner-cont">
               <div class="sign-in-up">
                 <form class="sign-in-form active">
-                  <div style="width:100%;" id="member_list">
+                  <div
+                    style="width:100%; max-height:300px; overflow: auto; border: 5px double #485d86; border-radius: 10px; margin-bottom:20px; padding:20px;"
+                    id="member_list">
                   </div>
+                  <div class="input-group" style="flex-wrap: nowrap;">
+                    <input name="addEmailSend" id="addEmailSend" type="text" class="form-control" placeholder="Email"
+                      style="width: 50%; height:40px; display:none;">
+                    <div class="input-group-append" style="width: 30%;">
+                      <button type="button" id="addEmailSendBtn" onclick="addEmailSendList()" class="btn btn-primary"
+                        style="margin-top:0px;height:40px; font-size:20px; background-color: #485d86; line-height: 40px; padding: 0; display:none;">추가</button>
+                    </div>
+                  </div>
+                  <h6 id="addEmailText" style="color: red; display:none;">모달을 나가시면 직접 추가한 이메일은 삭제됩니다!</h6>
                   <div class="sign-up" style="display: flex;">
-                    <button type="button" class="cancle" data-bs-dismiss="modal" aria-label="Close"
-                      style="margin-right: 10px; background-color: #7689b1;">취소</button>
+                    <button type="button" class="cancle" onclick="showAddEmailBox()"
+                      style="margin-right: 10px; background-color: #485d86;">이메일
+                      추가하기</button>
                     <button type="button" class="signup" onclick="sendEmail()" style="background-color: #485d86;">이메일
                       보내기</button>
                   </div>

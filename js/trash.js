@@ -48,6 +48,18 @@ function photoCheckbox(photo_id) {
     checkbox.checked = !checkbox.checked;
 }
 
+let isAllSelected = false;
+
+function handleSelectAll() {
+  isAllSelected = !isAllSelected;
+
+  const checkboxes = document.getElementsByName('trash-checkbox');
+  
+  Array.from(checkboxes).forEach((checkbox) => {
+    checkbox.checked = isAllSelected;
+  });
+}
+
 async function loadTrash(contentType) {
     const response = await getTrash()
 
@@ -57,7 +69,6 @@ async function loadTrash(contentType) {
 
     $('#trash-content').empty()
     $('#trash-modal-footer').empty()
-
 
     if (contentType === 'group') {
         if (groups.length === 0) {
@@ -88,7 +99,10 @@ async function loadTrash(contentType) {
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
+            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleSelectAll();">
+            전체 선택
+          </button>
+            <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
                                 style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
                               <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
                                style="background-color: #485d86; border-color: #485d86;">복원</button>`
