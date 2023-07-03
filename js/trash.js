@@ -78,15 +78,13 @@ async function loadTrash(contentType) {
             </div>`;
             $('#trash-content').append(trashImage);
 
-            let temp_html2 = `
-            <div>
-            <button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
-            style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
-        </div>
+            let temp_html2 = `<div><button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
+                                    style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                             </div>
                               <div><button type="button" class="btn btn-primary" 
                                 style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
                               <button type="button" class="btn btn-primary" 
-                                style="background-color: #485d86; border-color: #485d86;">복원</button>`
+                                style="background-color: #485d86; border-color: #485d86;">복원</button></div>`
 
             $('#trash-modal-footer').append(temp_html2)
 
@@ -106,9 +104,9 @@ async function loadTrash(contentType) {
                 $('#trash-content').append(temp_html)
             });
             let temp_html2 = `<div>
-            <button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
-            style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
-        </div>
+                                <button type="button" class="btn btn-primary" onclick="handleSelectAll(); handleTrashCheckbox('group');" 
+                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                              </div>
                               <div>
                                 <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
                                     style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
@@ -126,15 +124,15 @@ async function loadTrash(contentType) {
             </div>`;
             $('#trash-content').append(trashImage);
 
-            let temp_html2 = `<div>
-            <button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
-            style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
-        </div>
+            let temp_html2 = `<div><button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
+                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                              </div>
                               <div>
-            <button type="button" class="btn btn-primary" 
+                                <button type="button" class="btn btn-primary" 
                                 style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
                               <button type="button" class="btn btn-primary" 
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+                               style="background-color: #485d86; border-color: #485d86;">복원</button>
+                              </div>`
 
             $('#trash-modal-footer').append(temp_html2)
 
@@ -157,17 +155,15 @@ async function loadTrash(contentType) {
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<div>
-            <button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
-            style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
-        </div>
+            let temp_html2 = `<div><button type="button" class="btn btn-primary" onclick="handleSelectAll(); handleTrashCheckbox('note');" 
+                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                              </div>
                               <div>
-                            <div>
                                 <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
                                     style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
                                 <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
                                     style="background-color: #485d86; border-color: #485d86;">복원</button>
-                            </div>`
+                              </div>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
@@ -179,15 +175,15 @@ async function loadTrash(contentType) {
             </div>`;
             $('#trash-content').append(trashImage);
 
-            let temp_html2 = `<div>
-            <button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
-            style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
-        </div>
+            let temp_html2 = `<div><button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
+                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                              </div>
                               <div>
                               <button type="button" class="btn btn-primary" 
                                 style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
                               <button type="button" class="btn btn-primary" 
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+                               style="background-color: #485d86; border-color: #485d86;">복원</button>
+                              </div>`
 
             $('#trash-modal-footer').append(temp_html2)
 
@@ -212,17 +208,15 @@ async function loadTrash(contentType) {
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<div>
-            <button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
-            style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
-        </div>
+            let temp_html2 = `<div><button type="button" class="btn btn-primary" onclick="handleSelectAll(); handleTrashCheckbox('photo');" 
+                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                              </div>
                               <div>
-                            <div>
                                 <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
                                     style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
                                 <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
                                     style="background-color: #485d86; border-color: #485d86;">복원</button>
-                            </div>`
+                              </div>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
