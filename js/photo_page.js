@@ -407,7 +407,7 @@ function patchPhotoBox(photo_id) {
 
 async function patchPhoto() {
     const photo_id = document.getElementById("patch_photo").value;
-    const image = checkCode(document.getElementById("image"))
+    const image = document.getElementById("image")
     const name = checkCode(document.getElementById('p_name').value)
     const title = checkCode(document.getElementById('p_title').value)
     const start = document.getElementById('p_start').value;
