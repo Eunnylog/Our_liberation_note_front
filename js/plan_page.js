@@ -662,7 +662,7 @@ async function deleteNoteModal() {
                         style="background-color: #7689b1; border-color: #7689b1; color:white;">Close</button>
                       <button type="button" class="btn"
                         style="background-color: #485d86; border-color: #485d86; color:white; margin: 0px 10px;"
-                        onclick="handleNotetrash('${selected_id}','${selected_group}','${selected_name}')">Delete</button>`
+                        onclick="handleNotetrash('${selected_id}','${selected_name}')">Delete</button>`
 
     $('#modal-footer').append(temp_html2)
 }

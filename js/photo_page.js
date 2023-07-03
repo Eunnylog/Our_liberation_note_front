@@ -252,6 +252,7 @@ async function photo_detail(photo_id) {
     const modalTitle = document.getElementById("modal-title")
     modalTitle.innerText = `${name}`
 
+
     let temp_html1 = `
                     <img class="detail-image" src="${image}"id='photo_image' style="height:500px;">
                     `;
@@ -271,8 +272,8 @@ async function photo_detail(photo_id) {
     <div style="display: flex; align-items: center;">
         <img src="/css/assets/comment.png" alt="Image" style="width: 30px; height: 30px; margin-right: 5px;">
         <input name="comment" id="comment" type="textarea" class="form-control" placeholder="comment">
-            <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" 
-            style="background-color:  #7689b1; font-size: 20px; border-color: #7689b1; height: 37px;  display: flex; justify-content: center; align-items: center;">등록</button>
+        <button type="button" id="commentBtn" value="${photo_id}" onclick="addComment()" class="btn btn-secondary" 
+        style="background-color:  #7689b1; font-size: 20px; border-color: #7689b1; height: 37px;  display: flex; justify-content: center; align-items: center;">등록</button>
     </div>
     <hr/>
     <div>
