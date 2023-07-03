@@ -122,7 +122,7 @@ async function searchLocation(box_id) {
             .catch(error => {
                 // 에러 처리
                 console.error(error);
-                showToast('문제가 발생했습니다!')
+                showToast('장소를 입력해주세요!')
             });
 
     }
