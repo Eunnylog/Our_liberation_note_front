@@ -261,13 +261,13 @@ function patchBox() {
     let location = document.getElementById('plan_location').innerHTML.split(':')[1].trim();
     let time = document.getElementById('plan_time').innerHTML;
     let hours = time.split(':')[1].trim(); // 시간을 가져옴
-    let minutes ; // 분을 가져옴
-    let formattedTime='' ; // "18:30" 형태로 만듦
-    if (time.split(':')[1] != ''){
+    let minutes; // 분을 가져옴
+    let formattedTime = ''; // "18:30" 형태로 만듦
+    if (time.split(':')[1].trim() != '') {
         minutes = time.split(':')[2].trim(); // 분을 가져옴
         formattedTime = `${hours}:${minutes}`; // "18:30" 형태로 만듦
     }
-    
+
     let memo = document.getElementById('plan_memo').innerHTML.split(':')[1].trim();
     let category = document.getElementById('plan_category').innerHTML.split(':')[1].trim();
     // date 포멧팅
