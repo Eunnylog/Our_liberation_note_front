@@ -495,6 +495,11 @@ function handleLogout() {
     localStorage.removeItem("is_subscribe")
     localStorage.removeItem("noteName")
     localStorage.removeItem("trashCount")
+    localStorage.removeItem("token")
+    localStorage.removeItem("note_id")
+    localStorage.removeItem("groupId")
+    localStorage.removeItem("page")
+    localStorage.removeItem("@tosspayments/client-id")
     window.location.replace(`${frontend_base_url}/index.html`)
   }
 
@@ -514,6 +519,36 @@ $(document).ready(function () {
     $('#login').modal('show');
   }
 })
+
+// 액세스 토큰 만료 체크
+function isTokenExpired() {
+  const accessToken = localStorage.getItem("access");
+  if (!accessToken) return true;
+
+  const base64Url = accessToken.split(".")[1];
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  const jsonPayload = JSON.parse(
+    decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    )
+  );
+
+  const now = Math.floor(new Date().valueOf() / 1000);
+  return jsonPayload.exp && jsonPayload.exp < now;
+}
+
+// 액세스 토큰 만료 확인 후 로그아웃
+function checkExpirationAndLogout() {
+  if (isTokenExpired()) {
+    handleLogout();
+  }
+}
+
 
 // 회원탈퇴
 async function handlesUserDelete() {

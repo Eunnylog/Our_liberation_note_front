@@ -80,13 +80,18 @@ async function injectNavbar() {
 }
 $(document).ready(function () {
     $(document).click(function (event) {
-    let backgroundclick = $(event.target);
-    let shownav = $(".navbar-collapse").hasClass("show");
-    if (shownav === true && !backgroundclick.hasClass("navbar-toggler")) {
-    $(".navbar-toggler").click();
-    }
+        let backgroundclick = $(event.target);
+        let shownav = $(".navbar-collapse").hasClass("show");
+        if (shownav === true && !backgroundclick.hasClass("navbar-toggler")) {
+            $(".navbar-toggler").click();
+        }
     });
-    });
-    
+});
+
 
 injectNavbar();
+
+
+window.onload = function () {
+    setInterval(checkExpirationAndLogout, 60000); // 60초마다 checkExpirationAndLogout 함수 호출
+};
