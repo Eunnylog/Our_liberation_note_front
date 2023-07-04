@@ -48,6 +48,19 @@ function photoCheckbox(photo_id) {
     checkbox.checked = !checkbox.checked;
 }
 
+let isAllSelected = false;
+
+function handleSelectAll() {
+  isAllSelected = !isAllSelected;
+
+  const checkboxes = document.getElementsByName('trash-checkbox');
+  
+  Array.from(checkboxes).forEach((checkbox) => {
+    checkbox.checked = isAllSelected;
+  });
+
+}
+
 async function loadTrash(contentType) {
     const response = await getTrash()
 
@@ -58,7 +71,6 @@ async function loadTrash(contentType) {
     $('#trash-content').empty()
     $('#trash-modal-footer').empty()
 
-
     if (contentType === 'group') {
         if (groups.length === 0) {
             let trashImage = `<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
@@ -66,10 +78,13 @@ async function loadTrash(contentType) {
             </div>`;
             $('#trash-content').append(trashImage);
 
-            let temp_html2 = `<button type="button" class="btn btn-primary" 
+            let temp_html2 = `<div><button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
+                                    style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                             </div>
+                              <div><button type="button" class="btn btn-primary" 
                                 style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
                               <button type="button" class="btn btn-primary" 
-                                style="background-color: #485d86; border-color: #485d86;">복원</button>`
+                                style="background-color: #485d86; border-color: #485d86;">복원</button></div>`
 
             $('#trash-modal-footer').append(temp_html2)
 
@@ -82,16 +97,22 @@ async function loadTrash(contentType) {
                 let temp_html = `<div style="margin-top:15px;">
                                 <input type="checkbox" name="trash-checkbox" id="trash-checkbox${group_id}" value="${index}" style="width:20px; height: 20px;" onclick="handleTrashCheckbox('group')">
                                 <label for="trash-checkbox${group_id}"></label>
-                                <span id='name_${index}' onclick="groupCheckbox('${group_id}')" style="cursor: pointer;" >${group_name} | ${group_created_at}</span>
+                                <span id='name_${index}' onclick="groupCheckbox('${group_id}'); handleTrashCheckbox('group');" style="cursor: pointer;" >${group_name} | ${group_created_at}</span>
                                 <input id='id_${index}' value="${group_id}" hidden>
                                 </div>`
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
-                                style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
-                              <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+            let temp_html2 = `<div>
+                                <button type="button" class="btn btn-primary" onclick="handleSelectAll(); handleTrashCheckbox('group');" 
+                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                              </div>
+                              <div>
+                                <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
+                                    style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
+                                <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
+                                    style="background-color: #485d86; border-color: #485d86;">복원</button>
+                              </div>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
@@ -103,10 +124,15 @@ async function loadTrash(contentType) {
             </div>`;
             $('#trash-content').append(trashImage);
 
-            let temp_html2 = `<button type="button" class="btn btn-primary" 
+            let temp_html2 = `<div><button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
+                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                              </div>
+                              <div>
+                                <button type="button" class="btn btn-primary" 
                                 style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
                               <button type="button" class="btn btn-primary" 
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+                               style="background-color: #485d86; border-color: #485d86;">복원</button>
+                              </div>`
 
             $('#trash-modal-footer').append(temp_html2)
 
@@ -119,7 +145,7 @@ async function loadTrash(contentType) {
                 const category = note.category
 
                 let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:15px;">
-                                <img src="/css/note_img/note_${category}.png" alt="Image description" style="width: 130px; height: 170px; margin-top:15px; cursor: pointer;" onclick="noteCheckbox('${note_id}')">
+                                <img src="/css/note_img/note_${category}.png" alt="Image description" style="width: 130px; height: 170px; margin-top:15px; cursor: pointer;" onclick="noteCheckbox('${note_id}'); handleTrashCheckbox('note');">
                                 <span id='name_${index}' class="shortname2">${note_name}</span>
                                 <input id='id_${index}' value="${note_id}" hidden>
                                 <input id='group_${index}' value="${group}" hidden>
@@ -129,10 +155,15 @@ async function loadTrash(contentType) {
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
-                                style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
-                              <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+            let temp_html2 = `<div><button type="button" class="btn btn-primary" onclick="handleSelectAll(); handleTrashCheckbox('note');" 
+                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                              </div>
+                              <div>
+                                <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
+                                    style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
+                                <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
+                                    style="background-color: #485d86; border-color: #485d86;">복원</button>
+                              </div>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
@@ -144,10 +175,15 @@ async function loadTrash(contentType) {
             </div>`;
             $('#trash-content').append(trashImage);
 
-            let temp_html2 = `<button type="button" class="btn btn-primary" 
+            let temp_html2 = `<div><button type="button" class="btn btn-primary" onclick="handleSelectAll();" 
+                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                              </div>
+                              <div>
+                              <button type="button" class="btn btn-primary" 
                                 style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
                               <button type="button" class="btn btn-primary" 
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+                               style="background-color: #485d86; border-color: #485d86;">복원</button>
+                              </div>`
 
             $('#trash-modal-footer').append(temp_html2)
 
@@ -161,7 +197,7 @@ async function loadTrash(contentType) {
                 const image = photo.image
 
                 let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:10px;">
-                                    <img src="${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px; cursor: pointer;" onclick="photoCheckbox('${photo_id}')">
+                                    <img src="${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px; cursor: pointer;" onclick="photoCheckbox('${photo_id}'); handleTrashCheckbox('photo');">
                                     <span id='name_${index}' class="shortname">${photo_name}</span>
                                     <input type="checkbox" name="trash-checkbox" id="trash-checkbox${photo_id}" value="${index}" style="width:10px" onclick="handleTrashCheckbox('photo')">
                                     <label for="trash-checkbox${photo_id}"></label>
@@ -172,24 +208,26 @@ async function loadTrash(contentType) {
 
                 $('#trash-content').append(temp_html)
             });
-            let temp_html2 = `<button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
-                                style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
-                              <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
-                               style="background-color: #485d86; border-color: #485d86;">복원</button>`
+            let temp_html2 = `<div><button type="button" class="btn btn-primary" onclick="handleSelectAll(); handleTrashCheckbox('photo');" 
+                                style="background-color: #7689b1; border-color: #7689b1;" >전체 선택</button>
+                              </div>
+                              <div>
+                                <button type="button" class="btn btn-primary" onclick="handleTrashDelete()"
+                                    style="background-color: #7689b1; border-color: #7689b1;">삭제</button>
+                                <button type="button" class="btn btn-primary" onclick="handleTrashRestore()"
+                                    style="background-color: #485d86; border-color: #485d86;">복원</button>
+                              </div>`
 
             $('#trash-modal-footer').append(temp_html2)
         }
     }
 
-    // 모든 버튼 요소 가져오기
     const buttons = document.querySelectorAll(".trash-toggle button");
 
-    // 모든 버튼의 색상 초기화
     buttons.forEach(button => {
         button.classList.remove("active");
     });
 
-    // 선택한 버튼의 색상 변경
     const selectedButton = document.getElementById(contentType + "Button");
     selectedButton.classList.add("active");
 }
@@ -214,7 +252,7 @@ async function handleGrouptrash(group_id, name) {
 
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 그룹이 정상적으로 삭제되었습니다.`)
+        showToast(`※ [${name}] 그룹이 휴지통으로 이동하였습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
@@ -269,7 +307,7 @@ async function handleGrouptrashMultiple(selectedGroups) {
 
 }
 
-async function handleNotetrash(note_id) {
+async function handleNotetrash(note_id,name) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash`, {
@@ -289,7 +327,7 @@ async function handleNotetrash(note_id) {
 
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ 정상적으로 삭제되었습니다.`)
+        showToast(`※ [${name}] 노트가 휴지통으로 이동하였습니다.`)
         window.location.replace(`${frontend_base_url}/my_diary.html`)
         return response_json
 
@@ -359,7 +397,7 @@ async function handlePhototrash(photo_id, name) {
     })
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 사진이 정상적으로 삭제되었습니다.`)
+        showToast(`※ [${name}] 사진이 휴지통으로 이동하였습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
@@ -434,7 +472,7 @@ function handleTrashCheckbox(contentType) {
 }
 
 function handleTrashRestore() {
-    var selectedcheckboxes = document.querySelectorAll('input[name="trash-checkbox"]:checked');
+    let selectedcheckboxes = document.querySelectorAll('input[name="trash-checkbox"]:checked');
 
     if (selectedcheckboxes.length === 0) {
         showToast("※ 항목을 선택해주세요!");
@@ -459,7 +497,6 @@ function handleTrashRestore() {
         }
 
         if (selectedNoteIndex !== null) {
-            const selected_group = document.getElementById(`group_${selectedIndex}`).value;
             selectedNotes.push({
                 id: selected_id,
                 name: selected_name
@@ -467,7 +504,6 @@ function handleTrashRestore() {
         }
 
         if (selectedPhotoIndex !== null) {
-            const selected_title = document.getElementById(`title_${selectedIndex}`).value;
             selectedPhotos.push({
                 id: selected_id,
                 name: selected_name
@@ -608,6 +644,7 @@ function handleTrashDelete() {
             })
         }
     })
+
     if (selectedGroups.length > 0) {
         deleteGroup(selectedGroups);
     }

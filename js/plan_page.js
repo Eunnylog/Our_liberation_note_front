@@ -261,8 +261,13 @@ function patchBox() {
     let location = document.getElementById('plan_location').innerHTML.split(':')[1].trim();
     let time = document.getElementById('plan_time').innerHTML;
     let hours = time.split(':')[1].trim(); // 시간을 가져옴
-    let minutes = time.split(':')[2].trim(); // 분을 가져옴
-    let formattedTime = `${hours}:${minutes}`; // "18:30" 형태로 만듦
+    let minutes; // 분을 가져옴
+    let formattedTime = ''; // "18:30" 형태로 만듦
+    if (time.split(':')[1].trim() != '') {
+        minutes = time.split(':')[2].trim(); // 분을 가져옴
+        formattedTime = `${hours}:${minutes}`; // "18:30" 형태로 만듦
+    }
+
     let memo = document.getElementById('plan_memo').innerHTML.split(':')[1].trim();
     let category = document.getElementById('plan_category').innerHTML.split(':')[1].trim();
     // date 포멧팅
@@ -662,7 +667,7 @@ async function deleteNoteModal() {
                         style="background-color: #7689b1; border-color: #7689b1; color:white;">Close</button>
                       <button type="button" class="btn"
                         style="background-color: #485d86; border-color: #485d86; color:white; margin: 0px 10px;"
-                        onclick="handleNotetrash('${selected_id}','${selected_group}','${selected_name}')">Delete</button>`
+                        onclick="handleNotetrash('${selected_id}','${selected_name}')">Delete</button>`
 
     $('#modal-footer').append(temp_html2)
 }

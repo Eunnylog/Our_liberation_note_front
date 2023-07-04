@@ -5,7 +5,12 @@ let back_url = 'http://127.0.0.1:8000'
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
 
-
+function saveNoteID() {
+  params = new URLSearchParams(window.location.search);
+  const note_id = params.get("note_id");
+  localStorage.setItem('note_id', note_id)
+}
+saveNoteID()
 
 window.onload = function () {
   params = new URLSearchParams(window.location.search);
