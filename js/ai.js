@@ -5,7 +5,12 @@ const front_url = "https://liberation-note.com"
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
 
-
+function saveNoteID() {
+  params = new URLSearchParams(window.location.search);
+  const note_id = params.get("note_id");
+  localStorage.setItem('note_id', note_id)
+}
+saveNoteID()
 
 window.onload = function () {
   params = new URLSearchParams(window.location.search);
