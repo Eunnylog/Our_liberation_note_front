@@ -1,6 +1,6 @@
 let access_token = localStorage.getItem('access')
-// let back_url = 'https://api.liberation-note.com'
-let back_url = 'http://127.0.0.1:8000'
+let back_url = 'https://api.liberation-note.com'
+// let back_url = 'http://127.0.0.1:8000'
 
 let group_data = [] // 그룹 정보 저장
 
@@ -664,8 +664,8 @@ function deleteNoteDiary() {
                         // 이 라디오 버튼 바로 앞의 div의 텍스트 값을 가져옴
                         let note_name = this.parentElement.previousElementSibling.innerText.trim();
 
-                        handleNotetrash(note_id,note_name)
-                
+                        handleNotetrash(note_id, note_name)
+
                         // 추가: 확인 버튼을 누른 후에 모달을 닫음
                         $('#move_note').modal('hide');
                     } else {
