@@ -371,8 +371,8 @@ async function kakaoLoginApi(code) {
     );
     localStorage.setItem("payload", jsonPayload);
     window.location.href = frontend_base_url
-  } else if (response_json.error) {
-    showToast(response_json.error)
+  } else if (response_json.status == 400) {
+    showToast(response_json['error'])
   } else {
     showToast(response_json['error'])
     window.location.href = frontend_base_url
@@ -420,8 +420,8 @@ async function googleLoginApi(decodeCode) {
     );
     localStorage.setItem("payload", jsonPayload);
     window.location.href = frontend_base_url
-  } else if (response_json.error) {
-    showToast(response_json.error)
+  } else if (response_json.status == 400) {
+    showToast(response_json['error'])
   } else {
     showToast(response_json['error'])
     window.history.back()
@@ -469,8 +469,8 @@ async function naverLoginApi(Code) {
     );
     localStorage.setItem("payload", jsonPayload);
     window.location.href = frontend_base_url
-  } else if (response_json.error) {
-    showToast(response_json.error)
+  } else if (response_json.status == 400) {
+    showToast(response_json['error'])
   } else {
     showToast(response_json['error'])
     window.history.back()
