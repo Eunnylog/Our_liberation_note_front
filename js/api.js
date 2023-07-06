@@ -1,8 +1,8 @@
 // 기본 URL
-const backend_base_url = "https://api.liberation-note.com"
-const frontend_base_url = "https://liberation-note.com"
-// const backend_base_url = "http://127.0.0.1:8000"
-// const frontend_base_url = "http://127.0.0.1:5500"
+// const backend_base_url = "https://api.liberation-note.com"
+// const frontend_base_url = "https://liberation-note.com"
+const backend_base_url = "http://127.0.0.1:8000"
+const frontend_base_url = "http://127.0.0.1:5500"
 
 
 let jwtToken;
@@ -371,6 +371,8 @@ async function kakaoLoginApi(code) {
     );
     localStorage.setItem("payload", jsonPayload);
     window.location.href = frontend_base_url
+  } else if (response_json.data) {
+    showToast(response_json.data)
   } else {
     showToast(response_json['error'])
     window.location.href = frontend_base_url
@@ -418,6 +420,8 @@ async function googleLoginApi(decodeCode) {
     );
     localStorage.setItem("payload", jsonPayload);
     window.location.href = frontend_base_url
+  } else if (response_json.data) {
+    showToast(response_json.data)
   } else {
     showToast(response_json['error'])
     window.history.back()
@@ -465,6 +469,8 @@ async function naverLoginApi(Code) {
     );
     localStorage.setItem("payload", jsonPayload);
     window.location.href = frontend_base_url
+  } else if (response_json.data) {
+    showToast(response_json.data)
   } else {
     showToast(response_json['error'])
     window.history.back()
