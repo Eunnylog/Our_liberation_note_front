@@ -90,8 +90,3 @@ $(document).ready(function () {
 
 
 injectNavbar();
-
-
-window.onload = function () {
-    setInterval(checkExpirationAndLogout, 60000); // 60초마다 checkExpirationAndLogout 함수 호출
-};
