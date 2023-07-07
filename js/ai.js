@@ -11,6 +11,26 @@ function saveNoteID() {
 }
 saveNoteID()
 
+async function savePayIsSubscribe() {
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
+    const response = await fetch(`${backend_base_url}/payments/subscription/${note_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'GET',
+    });
+    if (response.status == 200) {
+        localStorage.setItem("is_subscribe", true);
+    } else {
+        localStorage.setItem("is_subscribe", false);
+    }
+
+}
+
+savePayIsSubscribe()
+
 window.onload = function () {
   params = new URLSearchParams(window.location.search);
   note_id = params.get("note_id");
