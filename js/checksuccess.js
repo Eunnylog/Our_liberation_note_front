@@ -53,12 +53,7 @@ fetch(url + `?orderId=${orderId}&paymentKey=${paymentKey}&amount=${amount}&note_
     $('#payments-info').append(temp_html)
 
     localStorage.setItem("is_subscribe", "true")
-    showToast('로그인을 다시 해주세요! 3초 후에 메인페이지로 이동합니다')
-    localStorage.removeItem("access")
-    localStorage.removeItem("refresh")
-    localStorage.removeItem("payload")
-    localStorage.removeItem("is_subscribe")
-    document.cookie = "jwt_token=; expires=Thu, 01 Jan 2023 00:00:01 UTC; path=/;";  // 쿠키 삭제
+    showToast('3초 후에 메인페이지로 이동합니다')
     setTimeout(function () {
       window.location.replace(`${frontend_base_url}/index.html`)
     }, 3000);
