@@ -354,7 +354,7 @@ async function aiStart() {
       $('#info_box').append(temp_html1);
 
       let x_y_list = response_json['x_y_list'];
-
+      console.log(response_json)
       response_json['title_list'].forEach((a, idx) => {
         const answer = response_json['answer'][idx];
         const crawling = response_json['crawling'][idx];
