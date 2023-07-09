@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    // "Authorization": `Bearer ${access_token}`,
+                    "Authorization": `Bearer ${access_token}`,
                 },
                 body: JSON.stringify({
                     start: newDate,
@@ -212,7 +212,7 @@ async function savePlan() {
     const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
         headers: {
             'content-type': 'application/json',
-            // "Authorization": `Bearer ${access_token}`,
+            "Authorization": `Bearer ${access_token}`,
         },
         method: 'POST',
         body: JSON.stringify({ "plan_set": savePlanSet })
@@ -574,7 +574,7 @@ async function sendEmail() {
         const response = await fetch(`${backend_base_url}/note/email/${note_id}`, {
             headers: {
                 'content-type': 'application/json',
-                // "Authorization": `Bearer ${access_token}`,
+                "Authorization": `Bearer ${access_token}`,
             },
             method: 'POST',
             body: JSON.stringify({
