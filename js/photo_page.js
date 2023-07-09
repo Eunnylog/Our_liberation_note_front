@@ -114,7 +114,7 @@ async function album() {
             // const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
             headers: {
                 'content-type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `Bearer ${access_token}`
             },
             method: 'GET',
         })
