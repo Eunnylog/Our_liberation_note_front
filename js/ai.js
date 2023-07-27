@@ -82,7 +82,7 @@ async function showStartSelect() {
   const response = await fetch(`${backend_base_url}/note/plan/${note_id}`, {
     headers: {
       'content-type': 'application/json',
-      // "Authorization": `${access_token}`,
+      "Authorization": `Bearer ${access_token}`,
     },
     method: 'GET',
   })
