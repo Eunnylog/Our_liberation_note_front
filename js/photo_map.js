@@ -104,7 +104,7 @@ async function searchLocation(box_id) {
                                         }
                                     </style>
                                     <div style="display: flex; margin-top:5px; align-items: center;">
-                                    <input type="radio" name="address_radio" value="${index}" style="width: 10px; margin-right: 10px;" onclick="handleRadio(2)">
+                                    <input type="radio" name="address_radio" value="${index}" style="width: 10px; margin-right: 10px;" onclick="handleRadio(1)">
                                         <label for="${index}" style="font-size: 25px;">선택</label>
                                     <input id='x_${index}' value="${location_x}" hidden>
                                     <input id='y_${index}' value="${location_y}" hidden>

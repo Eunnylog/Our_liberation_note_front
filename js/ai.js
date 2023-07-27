@@ -1,7 +1,6 @@
 let back_url = 'https://api.happilyharu.com'
 const front_url = "https://liberation-note.com"
-// let front_url = 'http://127.0.0.1:5500'
-// let back_url = 'http://127.0.0.1:8000'
+
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
 
@@ -11,6 +10,26 @@ function saveNoteID() {
   localStorage.setItem('note_id', note_id)
 }
 saveNoteID()
+
+async function savePayIsSubscribe() {
+    params = new URLSearchParams(window.location.search);
+    note_id = params.get("note_id");
+    const response = await fetch(`${backend_base_url}/payments/subscription/${note_id}`, {
+        headers: {
+            'content-type': 'application/json',
+            "Authorization": `Bearer ${access_token}`,
+        },
+        method: 'GET',
+    });
+    if (response.status == 200) {
+        localStorage.setItem("is_subscribe", true);
+    } else {
+        localStorage.setItem("is_subscribe", false);
+    }
+
+}
+
+savePayIsSubscribe()
 
 window.onload = function () {
   params = new URLSearchParams(window.location.search);
@@ -335,7 +354,7 @@ async function aiStart() {
       $('#info_box').append(temp_html1);
 
       let x_y_list = response_json['x_y_list'];
-
+      console.log(response_json)
       response_json['title_list'].forEach((a, idx) => {
         const answer = response_json['answer'][idx];
         const crawling = response_json['crawling'][idx];

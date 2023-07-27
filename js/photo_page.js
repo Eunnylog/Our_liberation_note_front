@@ -114,7 +114,7 @@ async function album() {
             // const response = await fetch(`${backend_base_url}/note/photo/${note_id}`, {
             headers: {
                 'content-type': 'application/json',
-                // 'Authorization': `Bearer ${accessToken}`
+                'Authorization': `Bearer ${access_token}`
             },
             method: 'GET',
         })
@@ -234,6 +234,7 @@ async function photo_detail(photo_id) {
     const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
         headers: {
             'content-type': 'application/json',
+            'Authorization': `Bearer ${access_token}`,
         },
         method: 'GET',
     })
@@ -457,7 +458,7 @@ async function patchPhoto() {
 
         const response = await fetch(`${backend_base_url}/note/photo-detail/${photo_id}`, {
             headers: {
-                // "Authorization": `Bearer ${access_token}`,
+                "Authorization": `Bearer ${access_token}`,
             },
             method: 'PATCH',
             body: formData

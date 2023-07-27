@@ -1,9 +1,6 @@
 // 기본 URL
 const backend_base_url = "https://api.happilyharu.com"
 const frontend_base_url = "https://liberation-note.com"
-// const backend_base_url = "http://127.0.0.1:8000"
-// const frontend_base_url = "http://127.0.0.1:5500"
-
 
 let jwtToken;
 
@@ -371,8 +368,8 @@ async function kakaoLoginApi(code) {
     );
     localStorage.setItem("payload", jsonPayload);
     window.location.href = frontend_base_url
-  } else if (response_json.error) {
-    showToast(response_json.error)
+  } else if (response_json.status == 400) {
+    showToast(response_json['error'])
   } else {
     showToast(response_json['error'])
     window.location.href = frontend_base_url
@@ -420,8 +417,8 @@ async function googleLoginApi(decodeCode) {
     );
     localStorage.setItem("payload", jsonPayload);
     window.location.href = frontend_base_url
-  } else if (response_json.error) {
-    showToast(response_json.error)
+  } else if (response_json.status == 400) {
+    showToast(response_json['error'])
   } else {
     showToast(response_json['error'])
     window.history.back()
@@ -469,8 +466,8 @@ async function naverLoginApi(Code) {
     );
     localStorage.setItem("payload", jsonPayload);
     window.location.href = frontend_base_url
-  } else if (response_json.error) {
-    showToast(response_json.error)
+  } else if (response_json.status == 400) {
+    showToast(response_json['error'])
   } else {
     showToast(response_json['error'])
     window.history.back()
@@ -525,36 +522,6 @@ $(document).ready(function () {
     $('#login').modal('show');
   }
 })
-
-// 액세스 토큰 만료 체크
-function isTokenExpired() {
-  const accessToken = localStorage.getItem("access");
-  if (!accessToken) return true;
-
-  const base64Url = accessToken.split(".")[1];
-  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-  const jsonPayload = JSON.parse(
-    decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map(function (c) {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join("")
-    )
-  );
-
-  const now = Math.floor(new Date().valueOf() / 1000);
-  return jsonPayload.exp && jsonPayload.exp < now;
-}
-
-// 액세스 토큰 만료 확인 후 로그아웃
-function checkExpirationAndLogout() {
-  if (isTokenExpired()) {
-    handleLogout();
-  }
-}
-
 
 // 회원탈퇴
 async function handlesUserDelete() {
@@ -989,7 +956,9 @@ async function addGroup() {
 
   if (response.status == 201) {
     showToast("그룹이 저장되었습니다.");
-    window.location.reload()
+    setTimeout(function () {
+      window.location.href = '/my_diary.html'
+    }, 1000);
   } else {
     const data = await response.json();
     if (data.message) {
