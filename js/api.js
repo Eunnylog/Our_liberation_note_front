@@ -1,5 +1,5 @@
 // 기본 URL
-const backend_base_url = "https://api.liberation-note.com"
+const backend_base_url = "https://api.happilyharu.com"
 const frontend_base_url = "https://liberation-note.com"
 
 let jwtToken;

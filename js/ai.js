@@ -1,4 +1,4 @@
-let back_url = 'https://api.liberation-note.com'
+let back_url = 'https://api.happilyharu.com'
 const front_url = "https://liberation-note.com"
 
 let access_token = localStorage.getItem('access')
