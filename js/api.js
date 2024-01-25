@@ -1,6 +1,6 @@
 // 기본 URL
-const backend_base_url = "https://api.happilyharu.com"
-const frontend_base_url = "https://liberation-note.com"
+const backend_base_url = "http://127.0.0.1:8000"
+const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
 
@@ -54,7 +54,7 @@ async function handleSignup() {
     body: JSON.stringify({
       "email": email,
       "password": password,
-      "password2": password2,
+      "repassword": password2,
       "code": confirmcode
     })
   })
@@ -67,10 +67,18 @@ async function handleSignup() {
     }, 1000);
   } else {
     const errorResponse = await response.json();
+    console.log(errorResponse)
 
-    const message = errorResponse.message;
-    if (message) {
-      showToast("※ " + message);
+    let errorMessage = ""
+
+    for (let key in errorMessage) {
+      errorMessage = errorResponse[key][0]
+      console.log(errorMessage)
+    }
+
+    // const message = errorResponse.message;
+    if (errorMessage) {
+      showToast("※ " + errorMessage);
 
       // 클래스 초기화
       emailBox.classList.remove("custom-class");
@@ -255,7 +263,7 @@ async function sendCode() {
     // 로딩창 표시
     loading.style.display = 'block';
 
-    const response = await fetch(`${backend_base_url}/user/sendemail/`, {
+    const response = await fetch(`${backend_base_url}/user/send-email/`, {
       headers: {
         "content-type": "application/json",
       },
@@ -652,7 +660,7 @@ async function updatePassword() {
   const access_token = localStorage.getItem("access")
 
   const updateData = {
-    check_password: document.querySelector("#check_password").value,
+    current_password: document.querySelector("#check_password").value,
     new_password: document.querySelector("#update_password").value,
     check_new_password: document.querySelector("#check_update_password").value,
   }
@@ -662,7 +670,7 @@ async function updatePassword() {
   let checkNewPasswordBox = document.getElementById("check_update_password")
   let emptyField = false
 
-  if (!updateData.check_password) {
+  if (!updateData.current_password) {
     currentPasswordBox.classList.add("custom-class")
     emptyField = true
   } else {
@@ -698,6 +706,7 @@ async function updatePassword() {
   }
   )
   const data = await response.json()
+  console.log(data)
   if (response.status == 200) {
     showToast("회원정보 수정 완료!! 다시 로그인을 진행해 주세요!")
     localStorage.removeItem("access")
@@ -705,7 +714,11 @@ async function updatePassword() {
     localStorage.removeItem("payload")
     location.replace(`${frontend_base_url}/index.html`)
   } else {
-    showToast(data["message"])
+    if (data["non_field_errors"]) {
+      showToast("※ " + data["non_field_errors"])
+    } else {
+      showToast("※ " + data)
+    }
   }
 
 }
@@ -751,7 +764,7 @@ async function addMember() {
     return
   }
 
-  const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
+  const url = `${backend_base_url}/user/user-list?usersearch=${membersEmail}`
 
   axios.get(url).then(response => {
     const emails = response.data.map(item => item.email);
@@ -932,7 +945,7 @@ async function addGroup() {
   // 멤버 이메일을 반복하면서 각각 서버로 전송하여 멤버 객체를 받아옴
   for (const memberEmail of membersEmails) {
     // 특수문자가 올바르게 전송되도록 보장하기 위해 인코딩한 후 쿼리 매개변수로 전달
-    const membersResponse = await fetch(`${backend_base_url}/user/userlist?usersearch=${encodeURIComponent(memberEmail)}`);
+    const membersResponse = await fetch(`${backend_base_url}/user/user-list?usersearch=${encodeURIComponent(memberEmail)}`);
     const membersData = await membersResponse.json();
 
     // 해당 멤버의 id를 리스트에 추가
@@ -960,15 +973,17 @@ async function addGroup() {
       window.location.href = '/my_diary.html'
     }, 1000);
   } else {
-    const data = await response.json();
-    if (data.message) {
-      showToast("※ " + data.message);
-    } else if (data["non_field_errors"]) {
-      showToast("※ " + data["non_field_errors"])
-    } else if (data.error) {
-      showToast("※ " + data.error)
-    } else if (data['name'][0]) {
-      showToast("※제한 글자수는 2~15자 입니다!")
+    const errorResponse = await response.json();
+    groupNameInput.classList.remove("custom-class");
+    console.log(errorResponse)
+    console.log(errorResponse["non_field_errors"])
+
+    if (errorResponse["non_field_errors"]) {
+      showToast("※ " + errorResponse["non_field_errors"])
+      groupNameInput.classList.add("custom-class");
+    } else {
+      showToast("※ " + errorResponse);
+      groupNameInput.classList.add("custom-class");
     }
   }
 }
@@ -1056,7 +1071,7 @@ async function sendVerificationEmail() {
     // 로딩창 표시
     loading.style.display = 'block';
 
-    const response = await fetch(`${backend_base_url}/user/sendemail/`, {
+    const response = await fetch(`${backend_base_url}/user/send-email/`, {
       headers: {
         'content-type': 'application/json',
       },
@@ -1129,7 +1144,7 @@ async function ChangePassword() {
     return
   }
 
-  const response = await fetch(`${backend_base_url}/user/changepassword/`, {
+  const response = await fetch(`${backend_base_url}/user/change-password/`, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -1144,40 +1159,13 @@ async function ChangePassword() {
   } else {
     const data = await response.json();
 
-    // 기본 메시지 초기화
-    let message = "";
+    console.log("1", data)
+    console.log("2", data["non_field_errors"])
 
-    // 경우에 따라 메시지 및 custom-class 업데이트
-    switch (data.message) {
-      case "비밀번호 찾기를 위한 이메일이 일치하지 않습니다.":
-        emailBox.classList.add("custom-class");
-        message = data.message;
-        break;
-      case "해당 메일로 보낸 인증 코드가 없습니다.":
-        codeBox.classList.add("custom-class");
-        message = data.message;
-      case "인증 코드 유효 기간이 지났습니다.":
-        codeBox.classList.add("custom-class");
-        message = data.message;
-        break;
-      case "이메일 확인 코드가 유효하지 않습니다.":
-        codeBox.classList.add("custom-class");
-        message = data.message;
-        break;
-      case "비밀번호와 비밀번호 확인이 일치하지 않습니다.":
-        new_password_box.classList.add("custom-class");
-        check_password_box.classList.add("custom-class");
-        message = data.message;
-        break;
-      case "8자 이상의 영문 대/소문자, 숫자, 특수문자 조합이어야 합니다!":
-        new_password_box.classList.add("custom-class");
-        check_password_box.classList.add("custom-class");
-        message = data.message;
-        break;
-    }
-
-    if (message) {
-      showToast("※ " + message);
+    if (data["non_field_errors"]) {
+      showToast("※ " + data["non_field_errors"]);
+    } else {
+      showToast("※ " + data)
     }
   }
 }

@@ -1,6 +1,5 @@
 let access_token = localStorage.getItem('access')
-let back_url = 'https://api.happilyharu.com'
-// let back_url = 'http://127.0.0.1:8000'
+let back_url = 'http://127.0.0.1:8000'
 
 
 let group_data = [] // 그룹 정보 저장
@@ -390,7 +389,7 @@ async function updateAddMember() {
         membersEmailInput.classList.add("custom-class")
         return
     }
-    const url = `${backend_base_url}/user/userlist?usersearch=${membersEmail}`
+    const url = `${backend_base_url}/user/user-list?usersearch=${membersEmail}`
 
     axios.get(url).then(response => {
         const emails = response.data.map(item => item.email);
@@ -536,7 +535,7 @@ async function updateGroup() {
     // 멤버 이메일을 반복하면서 각각 서버로 전송하여 멤버 객체를 받아옴
     for (const memberEmail of membersEmails) {
         // 특수문자가 올바르게 전송되도록 보장하기 위해 인코딩한 후 쿼리 매개변수로 전달한다
-        const membersResponse = await fetch(`${backend_base_url}/user/userlist?usersearch=${encodeURIComponent(memberEmail)}`);
+        const membersResponse = await fetch(`${backend_base_url}/user/user-list?usersearch=${encodeURIComponent(memberEmail)}`);
         const membersData = await membersResponse.json();
         // 해당 멤버의 id를 리스트에 추가
         const memberId = membersData[0].id;

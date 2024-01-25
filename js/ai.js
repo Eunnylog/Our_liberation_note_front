@@ -1,5 +1,5 @@
-let back_url = 'https://api.happilyharu.com'
-const front_url = "https://liberation-note.com"
+let back_url = 'http://127.0.0.1:8000'
+const front_url = "http://127.0.0.1:5500"
 
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
@@ -12,20 +12,20 @@ function saveNoteID() {
 saveNoteID()
 
 async function savePayIsSubscribe() {
-    params = new URLSearchParams(window.location.search);
-    note_id = params.get("note_id");
-    const response = await fetch(`${backend_base_url}/payments/subscription/${note_id}`, {
-        headers: {
-            'content-type': 'application/json',
-            "Authorization": `Bearer ${access_token}`,
-        },
-        method: 'GET',
-    });
-    if (response.status == 200) {
-        localStorage.setItem("is_subscribe", true);
-    } else {
-        localStorage.setItem("is_subscribe", false);
-    }
+  params = new URLSearchParams(window.location.search);
+  note_id = params.get("note_id");
+  const response = await fetch(`${backend_base_url}/payments/subscription/${note_id}`, {
+    headers: {
+      'content-type': 'application/json',
+      "Authorization": `Bearer ${access_token}`,
+    },
+    method: 'GET',
+  });
+  if (response.status == 200) {
+    localStorage.setItem("is_subscribe", true);
+  } else {
+    localStorage.setItem("is_subscribe", false);
+  }
 
 }
 
