@@ -309,7 +309,6 @@ async function groupUpdateModal() {
         method: 'GET',
     })
     const response_json = await response.json()
-
     $('#update-usersearch').val("")
 
     const selectedIndex = document.getElementById('select_group').value
@@ -329,7 +328,8 @@ async function groupUpdateModal() {
 
             groupName.value = name
 
-            const membersArray = members.split(',')
+            // const membersArray = members.split(',')
+            const membersArray = Array.isArray(members) ? members : members.split(',');
 
             membersArray.forEach((member, index) => {
                 let temp_html = `
@@ -573,12 +573,16 @@ async function updateGroup() {
         window.location.reload()
     } else {
         const data = await response.json();
+        groupNameInput.classList.remove("custom-class");
         if (data.message) {
             showToast("※ " + data.message);
+            groupNameInput.classList.add("custom-class");
         } else if (data["non_field_errors"]) {
             showToast("※ " + data["non_field_errors"])
+            groupNameInput.classList.add("custom-class");
         } else if (data['name'][0]) {
             showToast("※제한 글자수는 2~15자 입니다!")
+            groupNameInput.classList.add("custom-class");
         }
     }
 }
@@ -606,7 +610,8 @@ async function deleteGroupModal() {
 async function loadGroupMembers() {
 
     const selectedGroup = group_data.find(group => group.id == $('#select_group').val());
-    const membersArray = selectedGroup.members.split(',');
+    const membersArray = Array.isArray(selectedGroup.members) ? selectedGroup.members : typeof selectedGroup.members === 'string' ? selectedGroup.members.split(',') : [];
+
     const filteredMembers = membersArray.filter(member => member.trim() !== selectedGroup.master);
 
     $('#members-list').empty()
