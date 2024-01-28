@@ -120,6 +120,7 @@ async function album() {
         })
 
         const response_json = await response.json()
+        console.log("사진리스트", response_json)
 
         if (response_json.length == 0) {
             if (page != 0) {
@@ -159,7 +160,7 @@ async function album() {
 
                 let temp_html = `<div class="gallery-item">
                             <a class="gallery-image" href="" onclick="photo_detail('${photo_id}')" data-bs-toggle="modal" data-bs-target="#photo-detail">
-                                <img class="gallery-image" src="${image}" alt="${title}">
+                                <img class="gallery-image" src="${backend_base_url}${image}" alt="${title}">
                             </a> `
 
                 if (existPhoto.includes(photo_id)) {
@@ -255,7 +256,7 @@ async function photo_detail(photo_id) {
 
 
     let temp_html1 = `
-                    <img class="detail-image" src="${image}"id='photo_image' style="height:500px;">
+                    <img class="detail-image" src="${backend_base_url}${image}"id='photo_image' style="height:500px;">
                     `;
     $('#photo-deta').append(temp_html1)
 
