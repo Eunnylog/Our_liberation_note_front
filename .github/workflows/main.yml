@@ -29,13 +29,3 @@ jobs:
           DISTRIBUTION: ${{ secrets.DISTRIBUTION_ID }}
           PATHS: '/*'
         continue-on-error: true
-
-      - name: Slack - Send Msg
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          fields: workflow,job,commit,repo,author,took,ref
-          author_name: miyeong
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.Slack_URL }}
-        if: always()

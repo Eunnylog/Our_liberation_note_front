@@ -1,5 +1,5 @@
 let back_url = 'http://127.0.0.1:8000'
-const front_url = "http://127.0.0.1:5500"
+const front_url = "https://liberationnote.shop/"
 
 let access_token = localStorage.getItem('access')
 let ai_feed_li = [];
