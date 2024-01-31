@@ -16,13 +16,7 @@ jobs:
       - name: Checkout source code.
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build frontend
-        run: npm run build
-
-      - name: Deploy to S3 bucket
+      - name: Upload binary to S3 bucket
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --include '*' --exclude '.git*/*' --exclude '.git*'
