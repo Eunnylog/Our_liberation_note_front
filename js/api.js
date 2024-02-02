@@ -1,6 +1,9 @@
 // 기본 URL
-const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "https://liberationnote.shop/"
+// const backend_base_url = "https://api.liberationnote.shop"
+// const frontend_base_url = "https://liberationnote.shop"
+
+let backend_base_url = 'http://127.0.0.1:8000'
+const frontend_base_url = "http://127.0.0.1:5500"
 
 let jwtToken;
 
@@ -483,37 +486,41 @@ async function naverLoginApi(Code) {
 }
 
 // 로그아웃
-function handleLogout() {
-  const payload = localStorage.getItem("payload");
-  const cookies = document.cookie.split(';');
+async function handleLogout() {
+  let refresh_token = localStorage.getItem("refresh")
+  let access_token = localStorage.getItem("access")
+  let payload = JSON.parse(localStorage.getItem("payload"))
 
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    const [name, value] = cookie.split('=');
+  let now = Math.floor(new Date().getTime() / 1000)
 
-    if (name === "jwt_token") {
-      jwtToken = value;
-      break;
+  // 토큰 만료확인
+  if (payload && payload.exp && now >= payload.exp) {
+    showToast("로그아웃 완료!");
+    localStorage.clear();
+    window.location.replace(`${frontend_base_url}/index.html`);
+  } else {
+    const response = await fetch(`${backend_base_url}/user/logout/`, {
+      headers: {
+        "content-type": "application/json",
+        'Authorization': `Bearer ${access_token}`
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        "refresh_token": refresh_token,
+      }),
+    })
+
+    if (response.status === 205) {
+      showToast("로그아웃 완료!");
+      localStorage.clear()
+
+      setTimeout(function () {
+        window.location.replace(`${frontend_base_url}/index.html`)
+      }, 1000)
+    } else {
+      console.log("에러")
     }
   }
-
-  if (jwtToken || payload) {
-    localStorage.removeItem("access")
-    localStorage.removeItem("refresh")
-    localStorage.removeItem("payload")
-    localStorage.removeItem("code")
-    localStorage.removeItem("state")
-    localStorage.removeItem("is_subscribe")
-    localStorage.removeItem("noteName")
-    localStorage.removeItem("trashCount")
-    localStorage.removeItem("token")
-    localStorage.removeItem("note_id")
-    localStorage.removeItem("groupId")
-    localStorage.removeItem("page")
-    localStorage.removeItem("@tosspayments/client-id")
-    window.location.replace(`${frontend_base_url}/index.html`)
-  }
-
 }
 
 function checkLogin() {
