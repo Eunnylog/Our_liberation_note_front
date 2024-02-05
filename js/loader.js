@@ -90,3 +90,29 @@ $(document).ready(function () {
 
 
 injectNavbar();
+
+
+function getAccessTokenExp() {
+    const access_token = localStorage.getItem("access")
+
+    if (access_token) {
+        const access_exp = JSON.parse(localStorage.getItem("payload")).exp
+        return access_exp
+    }
+}
+
+function checkAccessTokeExp() {
+    const lifetime = getAccessTokenExp()
+    const currentTime = Math.floor(Date.now() / 1000)
+
+    if (lifetime && lifetime < currentTime) {
+        handleLogout()
+    }
+}
+
+// 주기적으로 액세스 토큰 유효기간 체크
+setInterval(checkAccessTokeExp, 3 * 60 * 1000)
+
+window.onload = function () {
+    checkAccessTokeExp()
+}

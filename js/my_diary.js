@@ -570,8 +570,10 @@ async function updateGroup() {
     }
 
     if (response.status == 200) {
+        setTimeout(function () {
+            window.location.reload()
+        }, 1000);
         showToast("그룹이 수정되었습니다.")
-        window.location.reload()
     } else {
         const data = await response.json();
         groupNameInput.classList.remove("custom-class");

@@ -11,7 +11,6 @@ async function getTrash() {
 
     if (response.status == 200) {
         const response_json = await response.json()
-        console.log(response_json)
         return response_json
     } else {
         showToast("불러오는데 실패했습니다")
@@ -51,13 +50,13 @@ function photoCheckbox(photo_id) {
 let isAllSelected = false;
 
 function handleSelectAll() {
-  isAllSelected = !isAllSelected;
+    isAllSelected = !isAllSelected;
 
-  const checkboxes = document.getElementsByName('trash-checkbox');
-  
-  Array.from(checkboxes).forEach((checkbox) => {
-    checkbox.checked = isAllSelected;
-  });
+    const checkboxes = document.getElementsByName('trash-checkbox');
+
+    Array.from(checkboxes).forEach((checkbox) => {
+        checkbox.checked = isAllSelected;
+    });
 
 }
 
@@ -252,18 +251,18 @@ async function handleGrouptrash(group_id, name) {
 
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 그룹이 휴지통으로 이동하였습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
+        showToast(`※ [${name}] 그룹이 휴지통으로 이동하였습니다.`)
         return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 그룹이 정상적으로 복원되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
+        showToast(`※ [${name}] 그룹이 정상적으로 복원되었습니다.`)
         return response_json
 
     } else {
@@ -287,18 +286,18 @@ async function handleGrouptrashMultiple(selectedGroups) {
     })
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ 정상적으로 삭제되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
+        showToast(`※ 정상적으로 삭제되었습니다.`)
         return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        showToast(`※ 정상적으로 복원되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
+        showToast(`※ 정상적으로 복원되었습니다.`)
         return response_json
 
     } else {
@@ -307,7 +306,7 @@ async function handleGrouptrashMultiple(selectedGroups) {
 
 }
 
-async function handleNotetrash(note_id,name) {
+async function handleNotetrash(note_id, name) {
     let token = localStorage.getItem("access")
 
     const response = await fetch(`${backend_base_url}/note/trash`, {
@@ -327,16 +326,18 @@ async function handleNotetrash(note_id,name) {
 
     if (response.status == 202) {
         const response_json = await response.json()
+        setTimeout(function () {
+            window.location.replace(`${frontend_base_url}/my_diary.html`)
+        }, 1000);
         showToast(`※ [${name}] 노트가 휴지통으로 이동하였습니다.`)
-        window.location.replace(`${frontend_base_url}/my_diary.html`)
         return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        showToast(`※ 정상적으로 복원되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
+        showToast(`※ 정상적으로 복원되었습니다.`)
         return response_json
 
     } else {
@@ -360,16 +361,18 @@ async function handleNotetrashMultiple(selectedNotes) {
 
     if (response.status == 202) {
         const response_json = await response.json()
+        setTimeout(function () {
+            window.location.replace(`${frontend_base_url}/my_diary.html`)
+        }, 1000);
         showToast(`※ 정상적으로 삭제되었습니다.`)
-        window.location.replace(`${frontend_base_url}/my_diary.html`)
         return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        showToast(`※ 정상적으로 복원되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
+        showToast(`※ 정상적으로 복원되었습니다.`)
         return response_json
 
     } else {
@@ -388,7 +391,7 @@ async function handlePhototrash(photo_id, name) {
         },
         method: 'POST',
         body: JSON.stringify({
-            "photo_ids" : [
+            "photo_ids": [
                 {
                     "id": photo_id
                 }
@@ -397,18 +400,18 @@ async function handlePhototrash(photo_id, name) {
     })
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 사진이 휴지통으로 이동하였습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
+        showToast(`※ [${name}] 사진이 휴지통으로 이동하였습니다.`)
         return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        showToast(`※ [${name}] 사진이 정상적으로 복원되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
+        showToast(`※ [${name}] 사진이 정상적으로 복원되었습니다.`)
         return response_json
 
     } else {
@@ -431,18 +434,18 @@ async function handlePhototrashMultiple(selectedPhotos) {
     })
     if (response.status == 202) {
         const response_json = await response.json()
-        showToast(`※ 정상적으로 삭제되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
+        showToast(`※ 정상적으로 삭제되었습니다.`)
         return response_json
 
     } else if (response.status == 200) {
         const response_json = await response.json()
-        showToast(`※ 정상적으로 복원되었습니다.`)
         setTimeout(function () {
             window.location.reload();
         }, 1000);
+        showToast(`※ 정상적으로 복원되었습니다.`)
         return response_json
 
     } else {
@@ -543,10 +546,10 @@ async function deleteGroup(group_ids) {
     })
 
     if (response.status == 204) {
-        showToast('※ 삭제되었습니다.')
         setTimeout(function () {
             window.location.reload();
         }, 1000);
+        showToast('※ 삭제되었습니다.')
     } else {
         showToast('※ 문제가 발생했습니다!')
     }
@@ -572,10 +575,10 @@ async function deleteNote(note_ids) {
     });
 
     if (response.status == 204) {
-        showToast('※ 삭제되었습니다.')
         setTimeout(function () {
             window.location.reload();
         }, 1000);
+        showToast('※ 삭제되었습니다.')
     } else {
         showToast('※ 문제가 발생했습니다!')
     }
@@ -601,10 +604,10 @@ async function deletePhoto(photo_ids) {
     });
 
     if (response.status == 204) {
-        showToast('※ 삭제되었습니다.')
         setTimeout(function () {
             window.location.reload();
         }, 1000);
+        showToast('※ 삭제되었습니다.')
     } else {
         showToast('※ 문제가 발생했습니다!')
     }

@@ -63,11 +63,10 @@ async function handleSignup() {
   })
 
   if (response.status == 201) {
-    showToast("가입 완료! 그룹이 생성 되었습니다!")
     setTimeout(async () => {
-      // 2초 후 회원가입 후 로그인 함수 호출
       await handleSignin(email, password);
     }, 1000);
+    showToast("가입 완료! 그룹이 생성 되었습니다!")
   } else {
     const errorResponse = await response.json();
     console.log(errorResponse)
@@ -208,7 +207,7 @@ async function handleSignin(email = null, password = null) {
     })
 
     if (response.status == 200) {
-      showToast("로그인 완료!");
+      // showToast("로그인 완료!");
       const response_json = await response.json()
 
       // localstorage에 저장하기
@@ -222,7 +221,10 @@ async function handleSignin(email = null, password = null) {
 
       localStorage.setItem('payload', jsonPayload)
       document.getElementById("login").querySelector('[data-bs-dismiss="modal"]').click();
-      window.location.href = '/index.html'
+      setTimeout(function () {
+        window.location.href = '/index.html'
+      }, 1000);
+      showToast("로그인 완료!");
     }
     else {
       showToast("※이메일 혹은 비밀번호가 올바르지 않습니다!")
@@ -364,7 +366,6 @@ async function kakaoLoginApi(code) {
   response_json = await response.json()
 
   if (response.status === 200) {
-    showToast("로그인 완료!");
     localStorage.setItem("access", response_json.access);
     localStorage.setItem("refresh", response_json.refresh);
 
@@ -378,7 +379,10 @@ async function kakaoLoginApi(code) {
       }).join('')
     );
     localStorage.setItem("payload", jsonPayload);
-    window.location.href = frontend_base_url
+    setTimeout(function () {
+      window.location.href = '/index.html'
+    }, 1000);
+    showToast("로그인 완료!");
   } else if (response_json.status == 400) {
     showToast(response_json['error'])
   } else {
@@ -413,7 +417,6 @@ async function googleLoginApi(decodeCode) {
   response_json = await response.json()
 
   if (response.status === 200) {
-    showToast("로그인 완료!");
     localStorage.setItem("access", response_json.access);
     localStorage.setItem("refresh", response_json.refresh);
 
@@ -427,7 +430,10 @@ async function googleLoginApi(decodeCode) {
       }).join('')
     );
     localStorage.setItem("payload", jsonPayload);
-    window.location.href = frontend_base_url
+    setTimeout(function () {
+      window.location.href = '/index.html'
+    }, 1000);
+    showToast("로그인 완료!");
   } else if (response_json.status == 400) {
     showToast(response_json['error'])
   } else {
@@ -462,7 +468,6 @@ async function naverLoginApi(Code) {
   response_json = await response.json()
 
   if (response.status === 200) {
-    showToast("로그인 완료!");
     localStorage.setItem("access", response_json.access);
     localStorage.setItem("refresh", response_json.refresh);
 
@@ -476,7 +481,10 @@ async function naverLoginApi(Code) {
       }).join('')
     );
     localStorage.setItem("payload", jsonPayload);
-    window.location.href = frontend_base_url
+    setTimeout(function () {
+      window.location.href = '/index.html'
+    }, 1000);
+    showToast("로그인 완료!");
   } else if (response_json.status == 400) {
     showToast(response_json['error'])
   } else {
@@ -551,16 +559,11 @@ async function handlesUserDelete() {
     method: 'DELETE',
   })
   if (response.status == 204) {
+    localStorage.clear()
+    setTimeout(function () {
+      window.location.href = '/index.html'
+    }, 1000);
     showToast("※ 회원탈퇴가 정상적으로 완료되었습니다!")
-    localStorage.removeItem("access")
-    localStorage.removeItem("refresh")
-    localStorage.removeItem("payload")
-    localStorage.removeItem("is_subscribe")
-    localStorage.removeItem("noteName")
-    localStorage.removeItem("trashCount")
-    localStorage.removeItem("code")
-    localStorage.removeItem("state")
-    location.reload()
   }
   if (response.status == 403) {
     showToast("※ 권한이 없습니다!")
@@ -713,13 +716,13 @@ async function updatePassword() {
   }
   )
   const data = await response.json()
-  console.log(data)
+
   if (response.status == 200) {
+    localStorage.clear()
+    setTimeout(function () {
+      window.location.href = '/index.html'
+    }, 1000);
     showToast("회원정보 수정 완료!! 다시 로그인을 진행해 주세요!")
-    localStorage.removeItem("access")
-    localStorage.removeItem("refresh")
-    localStorage.removeItem("payload")
-    location.replace(`${frontend_base_url}/index.html`)
   } else {
     if (data["non_field_errors"]) {
       showToast("※ " + data["non_field_errors"])
@@ -975,15 +978,13 @@ async function addGroup() {
   });
 
   if (response.status == 201) {
-    showToast("그룹이 저장되었습니다.");
     setTimeout(function () {
       window.location.href = '/my_diary.html'
     }, 1000);
+    showToast("그룹이 저장되었습니다.");
   } else {
     const errorResponse = await response.json();
     groupNameInput.classList.remove("custom-class");
-    console.log(errorResponse)
-    console.log(errorResponse["non_field_errors"])
 
     if (errorResponse["non_field_errors"]) {
       showToast("※ " + errorResponse["non_field_errors"])
@@ -1161,8 +1162,10 @@ async function ChangePassword() {
   )
 
   if (response.status == 200) {
+    setTimeout(function () {
+      window.location.href = '/index.html'
+    }, 1000);
     showToast("비밀번호 변경 완료!")
-    location.replace(`${frontend_base_url}/index.html`)
   } else {
     const data = await response.json();
 
@@ -1202,8 +1205,10 @@ async function checkGroup() {
     method: 'GET',
   });
   if (response.status == 403) {
-    alert('접근 권한이 없습니다!')
-    window.location.href = '/index.html'
+    setTimeout(function () {
+      window.location.href = '/index.html'
+    }, 1000);
+    showToast('접근 권한이 없습니다!')
   }
 }
 
