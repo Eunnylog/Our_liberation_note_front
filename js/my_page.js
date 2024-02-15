@@ -39,7 +39,7 @@ async function loadUserprofile() {
 
         $('#group-list').append(temp_html);
 
-        }
+    }
     )
 
 
@@ -147,13 +147,13 @@ async function loadStampPhotopage(location) {
         if (!addedDiaryNames.includes(diary_name)) {
             let diary_temp_html = ` <a href='/photo_page.html?note_id=${diary_id}' onclick="" style="text-decoration: none; color: black;">
                                         <div class="diary-link-text" style="margin-top:10px;">${diary_name} ></div></a>
-                                    <img src="${image}" alt="Image description" style="width: 142px; height: 142px; margin-left:2px;">                                      
+                                    <img src="${backend_base_url}${image}" alt="Image description" style="width: 142px; height: 142px; margin-left:2px;">                                      
                                   `
             $('#stamp-modal-body').append(diary_temp_html)
             addedDiaryNames.push(diary_name)
 
         } else {
-            let diary_temp_html = `<img src=${image} alt="Image description" class="stamp-photo">`
+            let diary_temp_html = `<img src=${backend_base_url}${image} alt="Image description" class="stamp-photo">`
             $('#stamp-modal-body').append(diary_temp_html)
         }
     });
@@ -257,13 +257,13 @@ async function loadGroupStampPhotopage(location, group_name) {
             if (!addedDiaryNames.includes(diary_name)) {
                 let diary_temp_html = ` <a href='/photo_page.html?note_id=${diary_id}' onclick="" style="text-decoration: none; color: black;">
                                             <div class="diary-link-text" style="margin-top:10px;">${diary_name} ></div></a>
-                                        <img src="${image}" alt="Image description" style="width: 142px; height: 142px; margin-left:2px;">                                      
+                                        <img src="${backend_base_url}${image}" alt="Image description" style="width: 142px; height: 142px; margin-left:2px;">                                      
                                     `
                 $('#stamp-modal-body').append(diary_temp_html)
                 addedDiaryNames.push(diary_name)
 
             } else {
-                let diary_temp_html = `<img src=${image} alt="Image description" class="stamp-photo">`
+                let diary_temp_html = `<img src=${backend_base_url}${image} alt="Image description" class="stamp-photo">`
                 $('#stamp-modal-body').append(diary_temp_html)
             }
         }

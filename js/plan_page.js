@@ -609,9 +609,11 @@ async function selectEmailMember() {
         method: 'GET',
     });
     const response_json = await response.json()
+    console.log(response_json)
     $('#member_list').empty()
     if (response.status == 200) {
-        emails = response_json['group_set']['members'].split(", ")
+        // emails = response_json['group_set']['members'].split(", ")
+        emails = response_json['group_set']['members']
         emails.forEach((email) => {
             let temp_html = `
                             <div>
@@ -623,6 +625,7 @@ async function selectEmailMember() {
             $('#member_list').append(temp_html);
         });
         $('#select_email_member').modal('show');
+        console.log("email", email)
     } else {
         showToast('문제가 발생했습니다!')
     }
@@ -694,8 +697,17 @@ async function loadGroupMembers() {
 
     const group_set = response_json.group_set
 
-    const membersArray = group_set.members.split(',');
-    const filteredMembers = membersArray.filter(member => member.trim() !== group_set.master);
+    // const membersArray = group_set.members.split(',');
+    // const filteredMembers = membersArray.filter(member => member.trim() !== group_set.master);
+
+    let membersArray = []
+    if (Array.isArray(group_set.members)) {
+        membersArray = group_set.members
+    } else if (typeof group_set.members === 'string') {
+        membersArray = group_set.members.split(',')
+    }
+
+    const filteredMembers = membersArray.filter(member => member.trim() !== group_set.master)
 
     $('#members-list').empty()
 

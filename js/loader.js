@@ -111,7 +111,7 @@ function checkAccessTokeExp() {
 }
 
 // 주기적으로 액세스 토큰 유효기간 체크
-setInterval(checkAccessTokeExp, 3 * 60 * 1000)
+setInterval(checkAccessTokeExp, 30 * 60 * 1000)
 
 window.onload = function () {
     checkAccessTokeExp()

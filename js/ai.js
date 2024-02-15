@@ -278,13 +278,13 @@ function updateCheckAllStatus() {
 
 
 async function aiStart() {
-  let is_subscribe = aiSubscribeCheck();
+  // let is_subscribe = aiSubscribeCheck();
   params = new URLSearchParams(window.location.search);
   note_id = params.get("note_id");
 
-  if (!is_subscribe && note_id != 3) {
-    return false;
-  }
+  // if (!is_subscribe && note_id != 3) {
+  //   return false;
+  // }
 
   let total;
 

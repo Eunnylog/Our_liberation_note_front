@@ -1,5 +1,5 @@
 /* // {% comment %} ================================= API KEY 세팅 ================================== {% endcomment %} */
-let clientKey = 'test_ck_5mBZ1gQ4YVXkllX4eX23l2KPoqNb'; // [TODO] https://developers.tosspayments.com 로그인 후 API Key발급 가능
+let clientKey = 'test_ck_P9BRQmyarY5ZqkM674eXrJ07KzLN'; // [TODO] https://developers.tosspayments.com 로그인 후 API Key발급 가능
 let tossPayments = TossPayments(clientKey);
 
 

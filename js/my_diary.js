@@ -1,6 +1,6 @@
 let access_token = localStorage.getItem('access')
 // let back_url = 'https://api.liberationnote.shop'
-let back_url = 'http://127.0.0.1:5500'
+let back_url = 'http://127.0.0.1:8000'
 
 
 let group_data = [] // 그룹 정보 저장

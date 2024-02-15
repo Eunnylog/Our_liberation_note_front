@@ -366,7 +366,7 @@ function patchPhotoBox(photo_id) {
     $('#photo-deta').empty();
     $('#photo-info').empty();
     let temp_html = `<div class="input-group" style="flex-wrap: nowrap; ">
-                        <input class="upload-name" id="p_imgbox" src="${image}" placeholder="${decodedPath}" multiple
+                        <input class="upload-name" id="p_imgbox" src="${backend_base_url}${image}" placeholder="${decodedPath}" multiple
                             accept=".jpg, .png, .jpeg" style="width: 80%; border-radius: 5px 0 0 5px; margin-bottom: 15px;">
                         <label for="image" style="margin-top:0px; height:40px; font-size:20px;  width: 20%; border-radius: 0 5px 5px 0; background-color:  #485D86; display: flex; justify-content: center; align-items: center;">업로드</label>
                         <input type="file" id="image" style="display: none">

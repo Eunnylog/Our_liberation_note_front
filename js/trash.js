@@ -196,7 +196,7 @@ async function loadTrash(contentType) {
                 const image = photo.image
 
                 let temp_html = `<div style="display: inline-flex; flex-direction: column; align-items: center; padding-left:10px;">
-                                    <img src="${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px; cursor: pointer;" onclick="photoCheckbox('${photo_id}'); handleTrashCheckbox('photo');">
+                                    <img src="${backend_base_url}${image}" alt="Image description" style="width: 135px; height: 135px; margin-top:15px; cursor: pointer;" onclick="photoCheckbox('${photo_id}'); handleTrashCheckbox('photo');">
                                     <span id='name_${index}' class="shortname">${photo_name}</span>
                                     <input type="checkbox" name="trash-checkbox" id="trash-checkbox${photo_id}" value="${index}" style="width:10px" onclick="handleTrashCheckbox('photo')">
                                     <label for="trash-checkbox${photo_id}"></label>
